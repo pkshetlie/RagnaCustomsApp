@@ -31,4 +31,4 @@ jobs:
       uses: actions/upload-artifact@v2.2.2
       with:
         name: App Release
-        path: RagnaCustoms\bin\Release
+        path: RagnaCustoms\bin\RagnaCustoms
