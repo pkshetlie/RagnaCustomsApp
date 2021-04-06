@@ -35,4 +35,6 @@ jobs:
         prerelease: false
         title: "Latest build"
         files: |
-          RagnaCustoms\bin\Release\*
+          RagnaCustoms\bin\RagnaCustoms\*.dll
+          RagnaCustoms\bin\RagnaCustoms\*.exe
+          RagnaCustoms\bin\RagnaCustoms\*.config
