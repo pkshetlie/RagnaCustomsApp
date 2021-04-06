@@ -35,4 +35,4 @@ jobs:
         prerelease: false
         title: "Latest build"
         files: |
-          RagnaCustoms\bin\RagnaCustoms\*
+          RagnaCustoms\bin\Release\*
