@@ -27,8 +27,12 @@ jobs:
     - name: Build Solution
       run: msbuild RagnaCustoms.sln /p:Configuration=Release
       
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2.2.2
+    - name: Publish Solution
+      uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        name: App Release
-        path: RagnaCustoms\bin\RagnaCustoms
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: false
+        title: "Latest build"
+        files: |
+          RagnaCustoms\bin\RagnaCustoms\*
