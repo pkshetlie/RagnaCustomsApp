@@ -61,6 +61,15 @@ namespace RagnaCustoms.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Close.
+        /// </summary>
+        internal static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Difficulties.
         /// </summary>
         internal static string Difficulties {

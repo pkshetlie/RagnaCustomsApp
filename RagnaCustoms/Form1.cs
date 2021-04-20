@@ -23,7 +23,6 @@ namespace RagnaCustoms
 
     public partial class Form1 : Form
     {
-
         public Form1()
         {
             //Icon = new Icon("Logo.ico");
@@ -130,6 +129,7 @@ namespace RagnaCustoms
             label3.Text = Resources.strings.Your_Twitch_channel;
             bot_enabled.Text = Resources.strings.Enabled__;
         }
+
 
         public void StartDownload(string song)
         {
@@ -268,6 +268,7 @@ namespace RagnaCustoms
                     {
                         TwitchClient.SendMessage(joinedChannel, $"{Resources.strings.RequestInfo} : {s.fullTitle}, {Resources.strings.Mapped_by} : {s.Mapper}, asked by @{e.ChatMessage.Username}");
                         StartDownload(s.Id.ToString());
+                        AddSongRequestToList(s, e.ChatMessage.Username);
                         TwitchClient.SendMessage(joinedChannel, $"Ready !");
                     }
                     else
@@ -276,6 +277,15 @@ namespace RagnaCustoms
                     }
                     break;
             }
+        }
+
+        private void AddSongRequestToList(Song song, string viewer)
+        {
+            songRequests.Invoke(new MethodInvoker(delegate
+             {
+                 songRequests.Rows.Add(song.fullTitle, song.Author, viewer);
+             }
+             ));
         }
 
 
@@ -320,7 +330,7 @@ namespace RagnaCustoms
 
         public void refreshApplication()
         {
-            RagnarockApp = Process.GetProcesses().FirstOrDefault(x => x.ProcessName.Contains("Ragnarock"));
+            RagnarockApp = Process.GetProcesses().FirstOrDefault(x => x.ProcessName.Contains("Ragnarock-Win64"));
             if (RagnarockApp == null)
             {
                 ragnarockApp.Text = Resources.strings.Ragnarock_application_not_found_please_refresh;
@@ -360,6 +370,14 @@ namespace RagnaCustoms
             }
         }
 
+        private void songRequests_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
+        }
+
+        private void tabPage2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

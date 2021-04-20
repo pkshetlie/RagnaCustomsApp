@@ -20,17 +20,9 @@ namespace RagnaCustoms
         /// </summary>
         [STAThread]
         static void Main(string[] args)
-        {
-            //if (!File.Exists("Config.json"))
-            //{
-                Settings = new AppSettings();
-            //    Settings.Save();
-            //}
-            //var json = File.ReadAllText("Config.json");
-            //Settings = JsonConvert.DeserializeObject<AppSettings>(json);
-
-
-
+        {         
+            Settings = new AppSettings();
+         
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Culture);
 
             if (args.Length == 0)
@@ -44,9 +36,9 @@ namespace RagnaCustoms
                 else
                 {   
 #endif
-                    Application.EnableVisualStyles();
-                    Application.SetCompatibleTextRenderingDefault(false);
-                    Application.Run(new Form1());
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new Form1());
 #if !DEBUG
             }
 #endif
