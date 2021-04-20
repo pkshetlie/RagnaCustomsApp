@@ -128,6 +128,7 @@ namespace RagnaCustoms
             label2.Text = Resources.strings.Twitch_Chat_OAuth_password;
             label3.Text = Resources.strings.Your_Twitch_channel;
             bot_enabled.Text = Resources.strings.Enabled__;
+            refreshApps.Text = Resources.strings.Refresh;
         }
 
 

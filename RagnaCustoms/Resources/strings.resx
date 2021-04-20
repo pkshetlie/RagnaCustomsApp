@@ -159,6 +159,9 @@
   <data name="Ragnarock application not found please refresh" xml:space="preserve">
     <value>Ragnarock application not found please refresh</value>
   </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="RequestInfo" xml:space="preserve">
     <value>Request informations</value>
   </data>

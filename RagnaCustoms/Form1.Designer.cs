@@ -31,6 +31,7 @@ namespace RagnaCustoms
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
@@ -44,6 +45,10 @@ namespace RagnaCustoms
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Téléchargement = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.songRequests = new System.Windows.Forms.DataGridView();
+            this.Song = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Author = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Viewer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.refreshApps = new System.Windows.Forms.Button();
             this.ragnarockApp = new System.Windows.Forms.Label();
             this.bot_enabled = new System.Windows.Forms.CheckBox();
@@ -53,14 +58,12 @@ namespace RagnaCustoms
             this.label2 = new System.Windows.Forms.Label();
             this.helptwitchtmi = new System.Windows.Forms.Label();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.songRequests = new System.Windows.Forms.DataGridView();
-            this.Song = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Author = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Viewer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1.SuspendLayout();
             this.Téléchargement.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.songRequests)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // checkBox1
@@ -111,22 +114,22 @@ namespace RagnaCustoms
             // 
             this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(6, 199);
+            this.comboBox3.Location = new System.Drawing.Point(6, 139);
             this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(344, 21);
+            this.comboBox3.Size = new System.Drawing.Size(601, 21);
             this.comboBox3.TabIndex = 12;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(77, 172);
+            this.textBox1.Location = new System.Drawing.Point(6, 112);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(273, 20);
+            this.textBox1.Size = new System.Drawing.Size(601, 20);
             this.textBox1.TabIndex = 13;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // downloadButton
             // 
-            this.downloadButton.Location = new System.Drawing.Point(6, 227);
+            this.downloadButton.Location = new System.Drawing.Point(6, 167);
             this.downloadButton.Name = "downloadButton";
             this.downloadButton.Size = new System.Drawing.Size(121, 23);
             this.downloadButton.TabIndex = 14;
@@ -139,7 +142,7 @@ namespace RagnaCustoms
             this.searchLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.searchLabel.AutoSize = true;
-            this.searchLabel.Location = new System.Drawing.Point(6, 175);
+            this.searchLabel.Location = new System.Drawing.Point(9, 96);
             this.searchLabel.Name = "searchLabel";
             this.searchLabel.Size = new System.Drawing.Size(35, 13);
             this.searchLabel.TabIndex = 15;
@@ -148,7 +151,7 @@ namespace RagnaCustoms
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 20);
+            this.label1.Location = new System.Drawing.Point(8, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 16;
@@ -203,6 +206,39 @@ namespace RagnaCustoms
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             // 
+            // songRequests
+            // 
+            this.songRequests.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.songRequests.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Song,
+            this.Author,
+            this.Viewer});
+            this.songRequests.Location = new System.Drawing.Point(6, 147);
+            this.songRequests.Name = "songRequests";
+            this.songRequests.Size = new System.Drawing.Size(595, 291);
+            this.songRequests.TabIndex = 10;
+            // 
+            // Song
+            // 
+            this.Song.HeaderText = "Song";
+            this.Song.Name = "Song";
+            this.Song.ReadOnly = true;
+            this.Song.Width = 250;
+            // 
+            // Author
+            // 
+            this.Author.HeaderText = "Author";
+            this.Author.Name = "Author";
+            this.Author.ReadOnly = true;
+            this.Author.Width = 150;
+            // 
+            // Viewer
+            // 
+            this.Viewer.HeaderText = "Viewer";
+            this.Viewer.Name = "Viewer";
+            this.Viewer.ReadOnly = true;
+            this.Viewer.Width = 150;
+            // 
             // refreshApps
             // 
             this.refreshApps.Location = new System.Drawing.Point(9, 118);
@@ -255,6 +291,7 @@ namespace RagnaCustoms
             // 
             this.twitchOAuth.Location = new System.Drawing.Point(160, 7);
             this.twitchOAuth.Name = "twitchOAuth";
+            this.twitchOAuth.PasswordChar = '*';
             this.twitchOAuth.Size = new System.Drawing.Size(201, 20);
             this.twitchOAuth.TabIndex = 3;
             this.twitchOAuth.TextChanged += new System.EventHandler(this.twitchOAuth_TextChanged);
@@ -290,39 +327,6 @@ namespace RagnaCustoms
             this.linkLabel2.Text = "https://twitchapps.com/tmi/";
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
-            // songRequests
-            // 
-            this.songRequests.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.songRequests.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Song,
-            this.Author,
-            this.Viewer});
-            this.songRequests.Location = new System.Drawing.Point(6, 147);
-            this.songRequests.Name = "songRequests";
-            this.songRequests.Size = new System.Drawing.Size(595, 291);
-            this.songRequests.TabIndex = 10;
-            // 
-            // Song
-            // 
-            this.Song.HeaderText = "Song";
-            this.Song.Name = "Song";
-            this.Song.ReadOnly = true;
-            this.Song.Width = 250;
-            // 
-            // Author
-            // 
-            this.Author.HeaderText = "Author";
-            this.Author.Name = "Author";
-            this.Author.ReadOnly = true;
-            this.Author.Width = 150;
-            // 
-            // Viewer
-            // 
-            this.Viewer.HeaderText = "Viewer";
-            this.Viewer.Name = "Viewer";
-            this.Viewer.ReadOnly = true;
-            this.Viewer.Width = 150;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -341,6 +345,7 @@ namespace RagnaCustoms
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.songRequests)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -374,6 +379,7 @@ namespace RagnaCustoms
         private System.Windows.Forms.DataGridViewTextBoxColumn Song;
         private System.Windows.Forms.DataGridViewTextBoxColumn Author;
         private System.Windows.Forms.DataGridViewTextBoxColumn Viewer;
+        private System.Windows.Forms.BindingSource bindingSource1;
     }
 }
 
