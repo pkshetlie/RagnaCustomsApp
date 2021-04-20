@@ -9,17 +9,32 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+    - name: Checkout Code
+      uses: actions/checkout@v2
+          
+    - name: Setup MSBuild Path
+      uses: microsoft/setup-msbuild@v1
+      
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+      
+    - name: Restore NuGet Packages
+      run: nuget restore RagnaCustoms.sln
+         
+    - name: Build Solution
+      run: msbuild RagnaCustoms.sln /p:Configuration=Release
+      
+    - name: Publish Solution
+      uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        dotnet-version: 5.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: false
+        title: "Latest build"
+        files: |
+          RagnaCustoms\bin\RagnaCustoms\*.dll
+          RagnaCustoms\bin\RagnaCustoms\*.exe
+          RagnaCustoms\bin\RagnaCustoms\*.config
