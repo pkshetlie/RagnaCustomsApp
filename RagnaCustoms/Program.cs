@@ -26,7 +26,7 @@ namespace RagnaCustoms
         {         
             Settings = new AppSettings();
 
-            StartWebServer();
+         
 
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Culture);
 
@@ -44,6 +44,7 @@ namespace RagnaCustoms
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new Form1());
+                StartWebServer();
 #if !DEBUG
             }
 #endif
