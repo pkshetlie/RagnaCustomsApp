@@ -218,7 +218,7 @@ namespace RagnaCustoms
         private void OnConnected(object sender, OnConnectedArgs e)
         {
             joinedChannel = TwitchClient.GetJoinedChannel(twitchChannel.Text);
-            TwitchClient.SendMessage(joinedChannel, Resources.strings.WelcomeBot);
+            TwitchClient.SendMessage(joinedChannel, $"!{Resources.strings.WelcomeBot}");
         }
 
         private void OnMessageReceived(object sender, OnMessageReceivedArgs e)
@@ -235,7 +235,7 @@ namespace RagnaCustoms
                     switch (command[1])
                     {
                         case "dev":
-                            TwitchClient.SendMessage(joinedChannel, $"My dev is https://www.twitch.tv/rhokapa");
+                            TwitchClient.SendMessage(joinedChannel, $"!My dev is https://www.twitch.tv/rhokapa");
                             return;
                         case "cam":
                             //try
@@ -246,11 +246,11 @@ namespace RagnaCustoms
                                 if (camera >= 1 && camera <= 5)
                                 {
                                     ChangeCamera(command[2]);
-                                    TwitchClient.SendMessage(joinedChannel, $"Camera changed");
+                                    TwitchClient.SendMessage(joinedChannel, $"!Camera changed");
                                 }
                                 else
                                 {
-                                    TwitchClient.SendMessage(joinedChannel, $"Camera error");
+                                    TwitchClient.SendMessage(joinedChannel, $"!Camera error");
                                 }
                             }
                             //}
@@ -261,20 +261,20 @@ namespace RagnaCustoms
 
                             return;
                         case "help":
-                            TwitchClient.SendMessage(joinedChannel, $"commands : !rc cam <numero cam [1-5]> !rc dev (information about dev), !rc help (this command), !rc <song id> (download the map)");
+                            TwitchClient.SendMessage(joinedChannel, $"!commands : !rc cam <numero cam [1-5]> !rc dev (information about dev), !rc help (this command), !rc <song id> (download the map)");
                             return;
                     }
                     var s = GetSongInfo(command[1]);
                     if (s != null)
                     {
-                        TwitchClient.SendMessage(joinedChannel, $"{Resources.strings.RequestInfo} : {s.fullTitle}, {Resources.strings.Mapped_by} : {s.Mapper}, asked by @{e.ChatMessage.Username}");
+                        TwitchClient.SendMessage(joinedChannel, $"!{Resources.strings.RequestInfo} : {s.fullTitle}, {Resources.strings.Mapped_by} : {s.Mapper}, asked by @{e.ChatMessage.Username}");
                         StartDownload(s.Id.ToString());
                         AddSongRequestToList(s, e.ChatMessage.Username);
-                        TwitchClient.SendMessage(joinedChannel, $"Ready !");
+                        TwitchClient.SendMessage(joinedChannel, $"!Ready !");
                     }
                     else
                     {
-                        TwitchClient.SendMessage(joinedChannel, $"@{e.ChatMessage.Username} {Resources.strings.Map_not_found}");
+                        TwitchClient.SendMessage(joinedChannel, $"!@{e.ChatMessage.Username} {Resources.strings.Map_not_found}");
                     }
                     break;
             }

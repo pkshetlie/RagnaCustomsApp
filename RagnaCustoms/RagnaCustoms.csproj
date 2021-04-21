@@ -204,6 +204,7 @@
     <Compile Include="Class\AppSettings.cs" />
     <Compile Include="Class\Language.cs" />
     <Compile Include="Class\ProcessHelper.cs" />
+    <Compile Include="Class\SimpleServer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

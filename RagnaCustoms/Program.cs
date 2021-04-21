@@ -4,8 +4,11 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Net;
 using System.Net.Http;
+using System.Net.Sockets;
 using System.Security.Principal;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -22,7 +25,9 @@ namespace RagnaCustoms
         static void Main(string[] args)
         {         
             Settings = new AppSettings();
-         
+
+            StartWebServer();
+
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Culture);
 
             if (args.Length == 0)
@@ -54,6 +59,18 @@ namespace RagnaCustoms
             }
         }
 
+        private static void StartWebServer()
+        {
+
+            var httpListener = new HttpListener();
+            var simpleServer = new SimpleServer(httpListener, "http://127.0.0.1:1234/score/", ProcessYourResponse);
+            simpleServer.Start();
+        }
+        public static byte[] ProcessYourResponse(string test)
+        {
+            Console.WriteLine(test);
+            return new byte[0]; // TODO when you want return some response
+        }
         public static void enableRunAs()
         {
             ProcessStartInfo proc = new ProcessStartInfo();
