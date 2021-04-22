@@ -44,7 +44,7 @@ namespace RagnaCustoms
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new Form1());
-                StartWebServer();
+                //StartWebServer();
 #if !DEBUG
             }
 #endif

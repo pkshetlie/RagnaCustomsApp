@@ -214,29 +214,162 @@ namespace RagnaCustoms
 
             }
         }
-
+        private string prefixe = "! ";
         private void OnConnected(object sender, OnConnectedArgs e)
         {
             joinedChannel = TwitchClient.GetJoinedChannel(twitchChannel.Text);
-            TwitchClient.SendMessage(joinedChannel, $"!{Resources.strings.WelcomeBot}");
+            TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.strings.WelcomeBot}");
         }
-
+        public bool QueueIsOpen = true;
         private void OnMessageReceived(object sender, OnMessageReceivedArgs e)
         {
-
             string[] command = e.ChatMessage.Message.Split(' ');
-            if (e.ChatMessage.Message.Contains("RagnaCam"))
-            {
 
+            var part1 = command[0];
+            if (command.Length < 2)
+            {
+                TwitchClient.SendMessage(joinedChannel, $"{prefixe}Error on command.");
+                return;
             }
-            switch (command[0])
+            var part2 = command[1];
+
+            switch (part1)
             {
                 case "!rc":
-                    switch (command[1])
+                    #region specific commands
+                    switch (part2)
                     {
-                        case "dev":
-                            TwitchClient.SendMessage(joinedChannel, $"!My dev is https://www.twitch.tv/rhokapa");
+                        case "open":
+                            if (e.ChatMessage.UserType == TwitchLib.Client.Enums.UserType.Viewer)
+                            {
+                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}Sorry only moderator can do that.");
+                                return;
+                            }
+                            if (!QueueIsOpen)
+                            {
+                                QueueIsOpen = true;
+                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}Queue is now open");
+                            }
+                            else
+                            {
+                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}Queue is already open");
+                            }
                             return;
+                        case "close":
+                            if (e.ChatMessage.UserType == TwitchLib.Client.Enums.UserType.Viewer)
+                            {
+                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}Sorry only moderator can do that.");
+                                return;
+                            }
+                            if (!QueueIsOpen)
+                            {
+                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}Queue is already closed");
+                            }
+                            else
+                            {
+                                QueueIsOpen = false;
+                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}Queue is now closed");
+                            }
+                            return;
+                        case "shift":
+                        case "done":
+                            if (e.ChatMessage.UserType == TwitchLib.Client.Enums.UserType.Viewer)
+                            {
+                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}Sorry only moderator can do that.");
+                                return;
+                            }
+                            try
+                            {
+                                RemoveAtSongRequestInList(0);
+                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}Song removed");
+
+                                var sog = songRequests.Rows[0].Cells["Song"].Value.ToString();
+                                if (sog != null)
+                                {
+                                    TwitchClient.SendMessage(joinedChannel, $"{prefixe}Next song : {sog} ");
+                                }
+                                else
+                                {
+                                    TwitchClient.SendMessage(joinedChannel, $"{prefixe}End of the queue");
+                                }
+                            }
+                            catch (Exception O_o)
+                            {
+                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}No More song to remove");
+                            }
+                            return;
+                        case "next":
+                            var song = songRequests.Rows[0].Cells["Song"].Value.ToString();
+                            if (song != null)
+                            {
+                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}Next song : {song} ");
+                            }
+                            else
+                            {
+                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}End of the queue");
+                            }
+                            return;
+
+                        case "queue":
+                            var songs = new List<string>();
+                            var counter = 0;
+                            var concatStr = "";
+                            for (var i = 0; songRequests.Rows.Count - 1 > i; i++)
+                            {
+                                var songStr = songRequests.Rows[i].Cells["Song"].Value.ToString();
+                                if (concatStr.Length + songStr.Length > 500)
+                                {
+                                    songs.Add(concatStr);
+                                    concatStr = songStr;
+                                    counter = songStr.Length;
+                                }
+                                else
+                                {
+                                    if (!String.IsNullOrEmpty(concatStr))
+                                    {
+                                        concatStr += " // ";
+                                    }
+                                    concatStr += songStr;
+                                }
+                            }
+                            songs.Add(concatStr);
+
+                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}Next songs ({(songRequests.Rows.Count - 1)}) are :");
+                            Thread.Sleep(400);
+                            foreach (var songMessage in songs)
+                            {
+                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}{songMessage}");
+                            }
+                            return;
+                        case "cancel":
+
+                            for (var i = songRequests.Rows.Count - 2; 0 <= i; i--)
+                            {
+                                if (songRequests.Rows[i].Cells["Viewer"].Value.ToString() == e.ChatMessage.Username)
+                                {
+                                    var sng = songRequests.Rows[i].Cells["Song"].Value.ToString();
+                                    try
+                                    {
+                                        RemoveAtSongRequestInList(i);
+                                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}Song Cancelled : {sng} ");
+                                    }
+                                    catch (Exception o_O)
+                                    {
+                                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}No More song to remove");
+                                    }
+                                    return;
+                                }
+                            }
+                            return;
+                        case "dev":
+                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}My dev is Rhokapa");
+                            return;
+
+                        case "version":
+                        case "v":
+                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}I'm version 1.2.6");
+                            return;
+
                         case "cam":
                             //try
                             //{
@@ -246,11 +379,11 @@ namespace RagnaCustoms
                                 if (camera >= 1 && camera <= 5)
                                 {
                                     ChangeCamera(command[2]);
-                                    TwitchClient.SendMessage(joinedChannel, $"!Camera changed");
+                                    TwitchClient.SendMessage(joinedChannel, $"{prefixe}Camera changed");
                                 }
                                 else
                                 {
-                                    TwitchClient.SendMessage(joinedChannel, $"!Camera error");
+                                    TwitchClient.SendMessage(joinedChannel, $"{prefixe}Camera error");
                                 }
                             }
                             //}
@@ -260,21 +393,36 @@ namespace RagnaCustoms
                             //}
 
                             return;
+                        case "how-to":
+                        case "ht":
+                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}Go to https://ragnacustoms.com, click on the twitch button to copy !rc <songid> and paste it here");
+
+                            return;
                         case "help":
-                            TwitchClient.SendMessage(joinedChannel, $"!commands : !rc cam <numero cam [1-5]> !rc dev (information about dev), !rc help (this command), !rc <song id> (download the map)");
+                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}Help 1/2 : !rc cam <numero cam [1-5]> (switch camera), !rc dev (information about dev), !rc help (this command), !rc <song id> (download the map), !rc cancel (remove last song you request)");
+                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}Help 2/2 : !rc open (open queue), !rc close (close queue), !rc shift (remove first song in list), !rc queue (list of songs not played), !rc next (next song to play), !rc version (to know current version)");
                             return;
                     }
-                    var s = GetSongInfo(command[1]);
+                    #endregion
+                    if (!QueueIsOpen)
+                    {
+                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}Queue is closed.");
+                        return;
+                    }
+
+                    var s = GetSongInfo(part2);
                     if (s != null)
                     {
-                        TwitchClient.SendMessage(joinedChannel, $"!{Resources.strings.RequestInfo} : {s.fullTitle}, {Resources.strings.Mapped_by} : {s.Mapper}, asked by @{e.ChatMessage.Username}");
+                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.strings.RequestInfo} : {s.fullTitle}, {Resources.strings.Mapped_by} : {s.Mapper}, asked by @{e.ChatMessage.Username}");
+#if !DEBUG  
                         StartDownload(s.Id.ToString());
+#endif
                         AddSongRequestToList(s, e.ChatMessage.Username);
-                        TwitchClient.SendMessage(joinedChannel, $"!Ready !");
+                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}Ready !");
                     }
                     else
                     {
-                        TwitchClient.SendMessage(joinedChannel, $"!@{e.ChatMessage.Username} {Resources.strings.Map_not_found}");
+                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}@{e.ChatMessage.Username} {Resources.strings.Map_not_found}");
                     }
                     break;
             }
@@ -284,8 +432,16 @@ namespace RagnaCustoms
         {
             songRequests.Invoke(new MethodInvoker(delegate
              {
-                 songRequests.Rows.Add(song.fullTitle, song.Author, viewer);
+                 songRequests.Rows.Add(song.Name, song.Author, viewer, song.Id);
              }
+             ));
+        }
+        private void RemoveAtSongRequestInList(int i)
+        {
+            songRequests.Invoke(new MethodInvoker(delegate
+            {
+                songRequests.Rows.RemoveAt(i);
+            }
              ));
         }
 
@@ -377,6 +533,11 @@ namespace RagnaCustoms
         }
 
         private void tabPage2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void doneButton_Click(object sender, EventArgs e)
         {
 
         }

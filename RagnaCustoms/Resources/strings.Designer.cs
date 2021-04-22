@@ -232,7 +232,7 @@ namespace RagnaCustoms.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Hi ! I&apos;m http://RagnaCustoms.com &apos;s bot, you can click on the purple button of a song and paste it here..
+        ///   Recherche une chaîne localisée semblable à Hi ! I&apos;m http://RagnaCustoms.com &apos;s bot, you can click on the purple button of a song and paste it here. &quot;!rc help&quot; for more informations.
         /// </summary>
         internal static string WelcomeBot {
             get {

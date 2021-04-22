@@ -49,6 +49,7 @@ namespace RagnaCustoms
             this.Song = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Author = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Viewer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.refreshApps = new System.Windows.Forms.Button();
             this.ragnarockApp = new System.Windows.Forms.Label();
             this.bot_enabled = new System.Windows.Forms.CheckBox();
@@ -59,6 +60,7 @@ namespace RagnaCustoms
             this.helptwitchtmi = new System.Windows.Forms.Label();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.doneButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.Téléchargement.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -164,7 +166,7 @@ namespace RagnaCustoms
             this.tabControl1.Location = new System.Drawing.Point(13, 13);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(621, 470);
+            this.tabControl1.Size = new System.Drawing.Size(662, 470);
             this.tabControl1.TabIndex = 17;
             // 
             // Téléchargement
@@ -180,13 +182,14 @@ namespace RagnaCustoms
             this.Téléchargement.Location = new System.Drawing.Point(4, 22);
             this.Téléchargement.Name = "Téléchargement";
             this.Téléchargement.Padding = new System.Windows.Forms.Padding(3);
-            this.Téléchargement.Size = new System.Drawing.Size(613, 444);
+            this.Téléchargement.Size = new System.Drawing.Size(654, 444);
             this.Téléchargement.TabIndex = 0;
             this.Téléchargement.Text = global::RagnaCustoms.Resources.strings.Download;
             this.Téléchargement.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.doneButton);
             this.tabPage2.Controls.Add(this.songRequests);
             this.tabPage2.Controls.Add(this.refreshApps);
             this.tabPage2.Controls.Add(this.ragnarockApp);
@@ -200,7 +203,7 @@ namespace RagnaCustoms
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(613, 444);
+            this.tabPage2.Size = new System.Drawing.Size(654, 444);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = global::RagnaCustoms.Resources.strings.Twitch_bot;
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -212,10 +215,11 @@ namespace RagnaCustoms
             this.songRequests.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Song,
             this.Author,
-            this.Viewer});
+            this.Viewer,
+            this.Id});
             this.songRequests.Location = new System.Drawing.Point(6, 147);
             this.songRequests.Name = "songRequests";
-            this.songRequests.Size = new System.Drawing.Size(595, 291);
+            this.songRequests.Size = new System.Drawing.Size(645, 291);
             this.songRequests.TabIndex = 10;
             // 
             // Song
@@ -238,6 +242,12 @@ namespace RagnaCustoms
             this.Viewer.Name = "Viewer";
             this.Viewer.ReadOnly = true;
             this.Viewer.Width = 150;
+            // 
+            // Id
+            // 
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
             // 
             // refreshApps
             // 
@@ -327,11 +337,21 @@ namespace RagnaCustoms
             this.linkLabel2.Text = "https://twitchapps.com/tmi/";
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
+            // doneButton
+            // 
+            this.doneButton.Location = new System.Drawing.Point(573, 118);
+            this.doneButton.Name = "doneButton";
+            this.doneButton.Size = new System.Drawing.Size(75, 23);
+            this.doneButton.TabIndex = 11;
+            this.doneButton.Text = "button1";
+            this.doneButton.UseVisualStyleBackColor = true;
+            this.doneButton.Click += new System.EventHandler(this.doneButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(646, 529);
+            this.ClientSize = new System.Drawing.Size(687, 527);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.linkLabel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -380,6 +400,8 @@ namespace RagnaCustoms
         private System.Windows.Forms.DataGridViewTextBoxColumn Author;
         private System.Windows.Forms.DataGridViewTextBoxColumn Viewer;
         private System.Windows.Forms.BindingSource bindingSource1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.Button doneButton;
     }
 }
 

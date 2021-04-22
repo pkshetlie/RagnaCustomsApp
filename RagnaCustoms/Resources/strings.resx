@@ -175,7 +175,7 @@
     <value>Twitch Chat OAuth password</value>
   </data>
   <data name="WelcomeBot" xml:space="preserve">
-    <value>Hi ! I'm http://RagnaCustoms.com 's bot, you can click on the purple button of a song and paste it here.</value>
+    <value>Hi ! I'm http://RagnaCustoms.com 's bot, you can click on the purple button of a song and paste it here. "!rc help" for more informations</value>
   </data>
   <data name="Your Twitch channel" xml:space="preserve">
     <value>Your Twitch channel</value>

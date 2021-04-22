@@ -175,7 +175,7 @@
     <value>Clé Chat Twitch OAuth</value>
   </data>
   <data name="WelcomeBot" xml:space="preserve">
-    <value>Salut ! Je suis le bot de http://RagnaCustoms.com sur le site vous pouvez cliquer sur le bouton violet  d'une chanson et la coller ici.</value>
+    <value>Salut ! Je suis le bot de http://RagnaCustoms.com sur le site vous pouvez cliquer sur le bouton violet  d'une chanson et la coller ici. "!rc help" pour plus d'information</value>
   </data>
   <data name="Your Twitch channel" xml:space="preserve">
     <value>Votre chaine Twitch</value>
