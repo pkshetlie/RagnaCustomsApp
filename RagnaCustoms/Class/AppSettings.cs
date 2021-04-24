@@ -40,6 +40,20 @@ namespace RagnaCustoms.Class
                 this["Culture"] = value;
             }
         }
+           
+        [UserScopedSetting()]
+        [DefaultSettingValue("! ")]
+        public string Prefix
+        {
+            get
+            {
+                return (string)this["Prefix"];
+            }
+            set
+            {
+                this["Prefix"] = value;
+            }
+        }
 
         [UserScopedSetting()]
         [DefaultSettingValue("False")]

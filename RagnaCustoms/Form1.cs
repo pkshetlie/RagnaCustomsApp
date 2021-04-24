@@ -78,13 +78,14 @@ namespace RagnaCustoms
             };
 
             setTexts();
-
+            prefixe = Program.Settings.Prefix;
+            prefix.Text = Program.Settings.Prefix;
             checkBox1.Checked = Program.Settings.AutoDownload;
             checkBox2.Checked = Program.Settings.AutoClose;
             twitchChannel.Text = Program.Settings.TwitchChannel;
             twitchOAuth.Text = Program.Settings.AuthTmi;
             bot_enabled.Checked = Program.Settings.TwitchBotEnabled;
-            textBox2.Text= Program.Settings.ScoringApiKey;
+            textBox2.Text = Program.Settings.ScoringApiKey;
             comboBox1.DataSource = list;
             refreshApplication();
 
@@ -228,23 +229,31 @@ namespace RagnaCustoms
 
             }
         }
-        private string prefixe = "! ";
+        public string prefixe { get; set; }
         private void OnConnected(object sender, OnConnectedArgs e)
         {
             joinedChannel = TwitchClient.GetJoinedChannel(twitchChannel.Text);
-            TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.strings.WelcomeBot}");
+            TwitchClient.SendMessage(joinedChannel, $"{prefixe}bot connected !");
+            //TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.strings.WelcomeBot}");
         }
         public bool QueueIsOpen = true;
+
         private void OnMessageReceived(object sender, OnMessageReceivedArgs e)
         {
             string[] command = e.ChatMessage.Message.Split(' ');
 
             var part1 = command[0];
-            if (part1 == "!rc" &&  command.Length < 2)
+            if (part1 != "!rc")
+            {
+                return;
+            }
+
+            if (command.Length < 2)
             {
                 TwitchClient.SendMessage(joinedChannel, $"{prefixe}Error on command.");
                 return;
             }
+
             var part2 = command[1];
 
             switch (part1)
@@ -556,7 +565,7 @@ namespace RagnaCustoms
 
         }
 
-
+        #region score
         public void computeScore()
         {
             var log = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/Ragnarock/Saved/Logs/Ragnarock.log";
@@ -574,14 +583,14 @@ namespace RagnaCustoms
             for (var i = 0; lines.Count() > i; i++)
             {
                 var line = lines.ElementAt(i);
-                if(i == 10208)
+                if (i == 10208)
                 {
                     var x = 12;
                 }
                 if (line.Contains("LogTemp: Loading song"))
                 {
-                    current = line.PregReplace("^(.*)LogTemp: Loading song (.*)/([a-zA-Z]{0,}.ogg)(.*)$", "$2");
-                    current_level += "_"+current;
+                    current = line.PregReplace("^(.*)LogTemp: Loading song (.*)/([a-zA-Z0-9]{0,}.ogg)(.*)$", "$2");
+                    current_level += "_" + current;
                     continue;
                 }
                 if (line.Contains("LogTemp: Warning: Song level"))
@@ -630,8 +639,8 @@ namespace RagnaCustoms
                 }
                 var level = song.Key.Split('_').First();
                 var hash = CalculateMD5(info);
-                scores.Scores.Add(new SubScore() { HashInfo = hash, Score = (song.Value / 100).ToString(), Level = level }) ;
-            }            
+                scores.Scores.Add(new SubScore() { HashInfo = hash, Score = (song.Value / 100).ToString(), Level = level });
+            }
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
                 string json = new JavaScriptSerializer().Serialize(scores);
@@ -647,6 +656,8 @@ namespace RagnaCustoms
             }
 
         }
+
+        #endregion
 
         private void apiKey_Click(object sender, EventArgs e)
         {
@@ -675,6 +686,13 @@ namespace RagnaCustoms
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
             Program.Settings.ScoringApiKey = textBox2.Text;
+            Program.Settings.Save();
+        }
+
+        private void prefix_TextChanged(object sender, EventArgs e)
+        {
+            prefixe = prefix.Text;
+            Program.Settings.Prefix = prefix.Text;
             Program.Settings.Save();
         }
     }

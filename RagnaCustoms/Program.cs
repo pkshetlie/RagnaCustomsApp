@@ -62,18 +62,18 @@ namespace RagnaCustoms
             }
         }
 
-        private static void StartWebServer()
-        {
+        //private static void StartWebServer()
+        //{
 
-            var httpListener = new HttpListener();
-            var simpleServer = new SimpleServer(httpListener, "http://127.0.0.1:1234/score/", ProcessYourResponse);
-            simpleServer.Start();
-        }
-        public static byte[] ProcessYourResponse(string test)
-        {
-            Console.WriteLine(test);
-            return new byte[0]; // TODO when you want return some response
-        }
+        //    var httpListener = new HttpListener();
+        //    var simpleServer = new SimpleServer(httpListener, "http://127.0.0.1:1234/score/", ProcessYourResponse);
+        //    simpleServer.Start();
+        //}
+        //public static byte[] ProcessYourResponse(string test)
+        //{
+        //    Console.WriteLine(test);
+        //    return new byte[0]; // TODO when you want return some response
+        //}
         public static void enableRunAs()
         {
             ProcessStartInfo proc = new ProcessStartInfo();

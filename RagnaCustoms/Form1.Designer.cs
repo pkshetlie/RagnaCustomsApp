@@ -47,7 +47,8 @@ namespace RagnaCustoms
             this.apiKey = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.doneButton = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.prefix = new System.Windows.Forms.TextBox();
             this.songRequests = new System.Windows.Forms.DataGridView();
             this.Song = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Author = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -212,7 +213,8 @@ namespace RagnaCustoms
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.doneButton);
+            this.tabPage2.Controls.Add(this.label4);
+            this.tabPage2.Controls.Add(this.prefix);
             this.tabPage2.Controls.Add(this.songRequests);
             this.tabPage2.Controls.Add(this.refreshApps);
             this.tabPage2.Controls.Add(this.ragnarockApp);
@@ -232,15 +234,23 @@ namespace RagnaCustoms
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             // 
-            // doneButton
+            // label4
             // 
-            this.doneButton.Location = new System.Drawing.Point(573, 118);
-            this.doneButton.Name = "doneButton";
-            this.doneButton.Size = new System.Drawing.Size(75, 23);
-            this.doneButton.TabIndex = 11;
-            this.doneButton.Text = "button1";
-            this.doneButton.UseVisualStyleBackColor = true;
-            this.doneButton.Click += new System.EventHandler(this.doneButton_Click);
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(509, 125);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(96, 13);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Bot message prefix";
+            // 
+            // prefix
+            // 
+            this.prefix.Location = new System.Drawing.Point(611, 121);
+            this.prefix.Name = "prefix";
+            this.prefix.Size = new System.Drawing.Size(37, 20);
+            this.prefix.TabIndex = 11;
+            this.prefix.Text = "! ";
+            this.prefix.TextChanged += new System.EventHandler(this.prefix_TextChanged);
             // 
             // songRequests
             // 
@@ -424,9 +434,10 @@ namespace RagnaCustoms
         private System.Windows.Forms.DataGridViewTextBoxColumn Viewer;
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
-        private System.Windows.Forms.Button doneButton;
         private System.Windows.Forms.Label apiKey;
         private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox prefix;
     }
 }
 
