@@ -1,14 +1,17 @@
 ﻿using Newtonsoft.Json;
 using RagnaCustoms.Class;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
 using System.Security.Principal;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -17,16 +20,15 @@ namespace RagnaCustoms
     static class Program
     {
         public static AppSettings Settings;
-
+        public static string Version = "2.0.1";
         /// <summary>
         /// Point d'entrée principal de l'application.
         /// </summary>
         [STAThread]
         static void Main(string[] args)
-        {         
-            Settings = new AppSettings();
-
-         
+        {
+        
+            Settings = new AppSettings();      
 
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Culture);
 
@@ -104,5 +106,14 @@ namespace RagnaCustoms
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
+    }
+}
+public static class ExtensionMethods
+{
+    public static String PregReplace(this String input,string pattern, string replacements)
+    {
+              
+        input = Regex.Replace(input, pattern, replacements);  
+        return input;
     }
 }

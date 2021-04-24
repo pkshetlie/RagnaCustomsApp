@@ -134,6 +134,7 @@
     </Reference>
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -204,6 +205,7 @@
     <Compile Include="Class\AppSettings.cs" />
     <Compile Include="Class\Language.cs" />
     <Compile Include="Class\ProcessHelper.cs" />
+    <Compile Include="Class\Score.cs" />
     <Compile Include="Class\SimpleServer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

@@ -5,10 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Threading;
+using System.Web.Script.Serialization;
 using System.Windows.Forms;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
@@ -37,6 +40,16 @@ namespace RagnaCustoms
             {
                 checkBox1.Checked = false;
             }
+
+            var timer = new System.Windows.Forms.Timer();
+            timer.Interval = 10000;
+            timer.Tick += delegate (object sender, EventArgs args)
+            {
+                computeScore();
+                timer.Stop();
+                timer.Start();
+            };
+            timer.Start();
         }
 
 
@@ -71,6 +84,7 @@ namespace RagnaCustoms
             twitchChannel.Text = Program.Settings.TwitchChannel;
             twitchOAuth.Text = Program.Settings.AuthTmi;
             bot_enabled.Checked = Program.Settings.TwitchBotEnabled;
+            textBox2.Text= Program.Settings.ScoringApiKey;
             comboBox1.DataSource = list;
             refreshApplication();
 
@@ -226,7 +240,7 @@ namespace RagnaCustoms
             string[] command = e.ChatMessage.Message.Split(' ');
 
             var part1 = command[0];
-            if (command.Length < 2)
+            if (part1 == "!rc" &&  command.Length < 2)
             {
                 TwitchClient.SendMessage(joinedChannel, $"{prefixe}Error on command.");
                 return;
@@ -367,7 +381,7 @@ namespace RagnaCustoms
 
                         case "version":
                         case "v":
-                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}I'm version 1.2.6");
+                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}I'm version {Program.Version}");
                             return;
 
                         case "cam":
@@ -540,6 +554,128 @@ namespace RagnaCustoms
         private void doneButton_Click(object sender, EventArgs e)
         {
 
+        }
+
+
+        public void computeScore()
+        {
+            var log = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/Ragnarock/Saved/Logs/Ragnarock.log";
+            if (File.Exists(log + ".cpy"))
+            {
+                File.Delete(log + ".cpy");
+            }
+            File.Copy(log, log + ".cpy");
+
+            IEnumerable<string> lines = File.ReadAllLines(log + ".cpy").ToList();
+            var songs = new Dictionary<string, float>();
+            var folders = new Dictionary<string, string>();
+            var current = "";
+            var current_level = "";
+            for (var i = 0; lines.Count() > i; i++)
+            {
+                var line = lines.ElementAt(i);
+                if(i == 10208)
+                {
+                    var x = 12;
+                }
+                if (line.Contains("LogTemp: Loading song"))
+                {
+                    current = line.PregReplace("^(.*)LogTemp: Loading song (.*)/([a-zA-Z]{0,}.ogg)(.*)$", "$2");
+                    current_level += "_"+current;
+                    continue;
+                }
+                if (line.Contains("LogTemp: Warning: Song level"))
+                {
+                    current_level = line.PregReplace("^(.*)([0-9]{1,2})$", "$2");
+                    continue;
+                }
+                if (line.Contains("raw distance"))
+                {
+                    var content = line.PregReplace("^(.*)raw distance = (.*) and (.*)$", "$2").Replace('.', ',');
+                    var score = float.Parse(content);
+                    if (songs.ContainsKey(current_level))
+                    {
+                        if (songs[current_level] < score)
+                        {
+                            songs[current_level] = score;
+                        }
+                    }
+                    else
+                    {
+                        songs.Add(current_level, score);
+                        folders.Add(current_level, current);
+                    }
+                    continue;
+                }
+            }
+            SendScore(songs, folders);
+        }
+
+        private void SendScore(Dictionary<string, float> songs, Dictionary<string, string> folders)
+        {
+            if (string.IsNullOrEmpty(textBox2.Text)) return;
+
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://ragnacustoms.com/api/score");
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "POST";
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var scores = new Score();
+            scores.ApiKey = textBox2.Text;
+            foreach (var song in songs)
+            {
+                var info = folders[song.Key] + "/Info.dat";
+                if (!File.Exists(info))
+                {
+                    info = folders[song.Key] + "/info.dat";
+                }
+                var level = song.Key.Split('_').First();
+                var hash = CalculateMD5(info);
+                scores.Scores.Add(new SubScore() { HashInfo = hash, Score = (song.Value / 100).ToString(), Level = level }) ;
+            }            
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                string json = new JavaScriptSerializer().Serialize(scores);
+                streamWriter.Write(json);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+            }
+
+        }
+
+        private void apiKey_Click(object sender, EventArgs e)
+        {
+            computeScore();
+        }
+
+        static string CalculateMD5(string filename)
+        {
+            using (var md5 = MD5.Create())
+            {
+                try
+                {
+                    using (var stream = File.OpenRead(filename))
+                    {
+                        var hash = md5.ComputeHash(stream);
+                        return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+                    }
+                }
+                catch (Exception e)
+                {
+                    return "";
+                }
+            }
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            Program.Settings.ScoringApiKey = textBox2.Text;
+            Program.Settings.Save();
         }
     }
 }

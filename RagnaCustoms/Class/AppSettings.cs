@@ -57,6 +57,20 @@ namespace RagnaCustoms.Class
 
         [UserScopedSetting()]
         [DefaultSettingValue("")]
+        public string ScoringApiKey
+        {
+            get
+            {
+                return (string)this["ScoringApiKey"];
+            }
+            set
+            {
+                this["ScoringApiKey"] = value;
+            }
+        } 
+        
+        [UserScopedSetting()]
+        [DefaultSettingValue("")]
         public string AuthTmi
         {
             get

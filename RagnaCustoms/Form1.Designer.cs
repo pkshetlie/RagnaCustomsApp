@@ -44,7 +44,10 @@ namespace RagnaCustoms
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Téléchargement = new System.Windows.Forms.TabPage();
+            this.apiKey = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.doneButton = new System.Windows.Forms.Button();
             this.songRequests = new System.Windows.Forms.DataGridView();
             this.Song = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Author = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -60,7 +63,6 @@ namespace RagnaCustoms
             this.helptwitchtmi = new System.Windows.Forms.Label();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.doneButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.Téléchargement.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -171,6 +173,8 @@ namespace RagnaCustoms
             // 
             // Téléchargement
             // 
+            this.Téléchargement.Controls.Add(this.apiKey);
+            this.Téléchargement.Controls.Add(this.textBox2);
             this.Téléchargement.Controls.Add(this.comboBox1);
             this.Téléchargement.Controls.Add(this.label1);
             this.Téléchargement.Controls.Add(this.checkBox2);
@@ -186,6 +190,25 @@ namespace RagnaCustoms
             this.Téléchargement.TabIndex = 0;
             this.Téléchargement.Text = global::RagnaCustoms.Resources.strings.Download;
             this.Téléchargement.UseVisualStyleBackColor = true;
+            // 
+            // apiKey
+            // 
+            this.apiKey.AutoSize = true;
+            this.apiKey.Location = new System.Drawing.Point(9, 212);
+            this.apiKey.Name = "apiKey";
+            this.apiKey.Size = new System.Drawing.Size(43, 13);
+            this.apiKey.TabIndex = 18;
+            this.apiKey.Text = "Api Key";
+            this.apiKey.Click += new System.EventHandler(this.apiKey_Click);
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(7, 228);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.PasswordChar = '*';
+            this.textBox2.Size = new System.Drawing.Size(600, 20);
+            this.textBox2.TabIndex = 17;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // tabPage2
             // 
@@ -208,6 +231,16 @@ namespace RagnaCustoms
             this.tabPage2.Text = global::RagnaCustoms.Resources.strings.Twitch_bot;
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
+            // 
+            // doneButton
+            // 
+            this.doneButton.Location = new System.Drawing.Point(573, 118);
+            this.doneButton.Name = "doneButton";
+            this.doneButton.Size = new System.Drawing.Size(75, 23);
+            this.doneButton.TabIndex = 11;
+            this.doneButton.Text = "button1";
+            this.doneButton.UseVisualStyleBackColor = true;
+            this.doneButton.Click += new System.EventHandler(this.doneButton_Click);
             // 
             // songRequests
             // 
@@ -337,16 +370,6 @@ namespace RagnaCustoms
             this.linkLabel2.Text = "https://twitchapps.com/tmi/";
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
-            // doneButton
-            // 
-            this.doneButton.Location = new System.Drawing.Point(573, 118);
-            this.doneButton.Name = "doneButton";
-            this.doneButton.Size = new System.Drawing.Size(75, 23);
-            this.doneButton.TabIndex = 11;
-            this.doneButton.Text = "button1";
-            this.doneButton.UseVisualStyleBackColor = true;
-            this.doneButton.Click += new System.EventHandler(this.doneButton_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -402,6 +425,8 @@ namespace RagnaCustoms
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.Button doneButton;
+        private System.Windows.Forms.Label apiKey;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }
 
