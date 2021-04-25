@@ -65,6 +65,7 @@ namespace RagnaCustoms
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.versionLabel = new System.Windows.Forms.Label();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.tabControl1.SuspendLayout();
             this.Téléchargement.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -390,6 +391,15 @@ namespace RagnaCustoms
             this.versionLabel.TabIndex = 18;
             this.versionLabel.Text = "label5";
             // 
+            // notifyIcon
+            // 
+            this.notifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.notifyIcon.BalloonTipText = "I\'m here now\\r\\nDouble click to maximize";
+            this.notifyIcon.BalloonTipTitle = "Do you know ? ";
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "RagnaCustoms.com";
+            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -402,7 +412,9 @@ namespace RagnaCustoms
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             this.tabControl1.ResumeLayout(false);
             this.Téléchargement.ResumeLayout(false);
             this.Téléchargement.PerformLayout();
@@ -450,6 +462,7 @@ namespace RagnaCustoms
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox prefix;
         private System.Windows.Forms.Label versionLabel;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
     }
 }
 

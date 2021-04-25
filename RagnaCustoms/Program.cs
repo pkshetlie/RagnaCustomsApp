@@ -20,7 +20,7 @@ namespace RagnaCustoms
     static class Program
     {
         public static AppSettings Settings;
-        public static string Version = "2.0.2";
+        public static string Version = "2.0.3";
         /// <summary>
         /// Point d'entrée principal de l'application.
         /// </summary>

@@ -30,6 +30,7 @@ namespace RagnaCustoms
         {
             //Icon = new Icon("Logo.ico");
             InitializeComponent();
+            CreateContextMenu();
             Text = "RagnaCustoms.com";
 
             if (Program.Settings.AutoDownload)
@@ -42,7 +43,7 @@ namespace RagnaCustoms
             }
 
             var timer = new System.Windows.Forms.Timer();
-            timer.Interval = 10000;
+            timer.Interval = 20000;
             timer.Tick += delegate (object sender, EventArgs args)
             {
                 computeScore();
@@ -51,7 +52,53 @@ namespace RagnaCustoms
             };
             timer.Start();
         }
+        void menuItem_Click(object sender, EventArgs e)
 
+        {
+
+            ToolStripItem menuItem = (ToolStripItem)sender;
+
+            if (menuItem.Name == "Exit")
+            {
+                computeScore();
+                Application.Exit();
+            }
+            if(menuItem.Name == "Open")
+            {
+                Show();
+                this.WindowState = FormWindowState.Normal;
+                notifyIcon.Visible = false;
+            }
+
+        }
+       
+
+        private void CreateContextMenu()
+
+        {
+
+            ContextMenuStrip menuStrip = new ContextMenuStrip();
+
+            ToolStripMenuItem menuItem = new ToolStripMenuItem("Exit");
+            ToolStripMenuItem menuItem2 = new ToolStripMenuItem("Open");
+
+
+
+            menuItem.Click += new EventHandler(menuItem_Click);
+
+            menuItem.Name = "Exit";
+
+
+            menuItem2.Click += new EventHandler(menuItem_Click);
+
+            menuItem2.Name = "Open";
+
+            menuStrip.Items.Add(menuItem2);
+            menuStrip.Items.Add(menuItem);
+
+            notifyIcon.ContextMenuStrip = menuStrip;
+
+        }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -692,6 +739,28 @@ namespace RagnaCustoms
             prefixe = prefix.Text;
             Program.Settings.Prefix = prefix.Text;
             Program.Settings.Save();
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Show();
+            this.WindowState = FormWindowState.Normal;
+            notifyIcon.Visible = false;
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                Hide();
+                notifyIcon.Visible = true;
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            computeScore();
         }
     }
 }

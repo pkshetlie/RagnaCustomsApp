@@ -100,38 +100,44 @@ namespace RagnaCustoms
             using (ZipArchive archive = ZipFile.OpenRead(zipPath))
             {
                 var songFolder = ((System.Net.WebClient)(sender)).QueryString["SongTitle"];
-                
-                
+
+
                 var userPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 string fullPath = Path.Combine(userPath, "Ragnarock/CustomSongs");
 
                 foreach (ZipArchiveEntry entry in archive.Entries)
                 {
-
-                    var name = entry.FullName;
-                    if (!name.Contains("/autosaves/"))
+                    try
                     {
-                        var spl = name.Split('/');
-                        if (spl.Length == 1)
+                        var name = entry.FullName;
+                        if (!name.Contains("/autosaves/"))
                         {
-                            if (!Directory.Exists(Path.Combine(fullPath, songFolder)))
+                            var spl = name.Split('/');
+                            if (spl.Length == 1)
                             {
-                                Directory.CreateDirectory(Path.Combine(fullPath, songFolder));
+                                if (!Directory.Exists(Path.Combine(fullPath, songFolder)))
+                                {
+                                    Directory.CreateDirectory(Path.Combine(fullPath, songFolder));
+                                }
+                                entry.ExtractToFile(Path.Combine(fullPath, songFolder, entry.FullName));
                             }
-                            entry.ExtractToFile(Path.Combine(fullPath, songFolder, entry.FullName));
+                            else
+                            {
+                                spl[0] = songFolder;
+                                if (!Directory.Exists(Path.Combine(fullPath, spl[0])))
+                                {
+                                    Directory.CreateDirectory(Path.Combine(fullPath, spl[0]));
+                                }
+                                if (!String.IsNullOrEmpty(entry.Name))
+                                {
+                                    entry.ExtractToFile(Path.Combine(fullPath, String.Join("/", spl)), true);
+                                }
+                            }
                         }
-                        else
-                        {
-                            spl[0] = songFolder;
-                            if (!Directory.Exists(Path.Combine(fullPath, spl[0])))
-                            {
-                                Directory.CreateDirectory(Path.Combine(fullPath, spl[0]));
-                            }
-                            if (!String.IsNullOrEmpty(entry.Name))
-                            {
-                                entry.ExtractToFile(Path.Combine(fullPath, String.Join("/", spl)), true);
-                            }
-                        }
+                    }
+                    catch (Exception o_O)
+                    {
+
                     }
                 }
             }
@@ -160,7 +166,7 @@ namespace RagnaCustoms
             {
                 button1.Enabled = false;
             }
-                button1.Text = Resources.strings.Close;
+            button1.Text = Resources.strings.Close;
         }
 
         private void debug_console_SelectedIndexChanged(object sender, EventArgs e)
