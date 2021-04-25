@@ -122,7 +122,7 @@ namespace RagnaCustoms
             {
                 new Language() { Text = "Français", Code = "fr-FR" },
                 new Language() { Text = "English", Code = "en-US" },
-                new Language() { Text = "Deutch", Code = "de-DE" }
+                new Language() { Text = "Deutsch", Code = "de-DE" }
             };
 
             setTexts();
