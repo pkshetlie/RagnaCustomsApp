@@ -576,17 +576,14 @@ namespace RagnaCustoms
             File.Copy(log, log + ".cpy");
 
             IEnumerable<string> lines = File.ReadAllLines(log + ".cpy").ToList();
+            File.Delete(log + ".cpy");
             var songs = new Dictionary<string, float>();
             var folders = new Dictionary<string, string>();
             var current = "";
             var current_level = "";
             for (var i = 0; lines.Count() > i; i++)
             {
-                var line = lines.ElementAt(i);
-                if (i == 10208)
-                {
-                    var x = 12;
-                }
+                var line = lines.ElementAt(i);              
                 if (line.Contains("LogTemp: Loading song"))
                 {
                     current = line.PregReplace("^(.*)LogTemp: Loading song (.*)/([a-zA-Z0-9]{0,}.ogg)(.*)$", "$2");
@@ -601,7 +598,7 @@ namespace RagnaCustoms
                 if (line.Contains("raw distance"))
                 {
                     var content = line.PregReplace("^(.*)raw distance = (.*) and (.*)$", "$2").Replace('.', ',');
-                    var score = float.Parse(content);
+                    var score = float.Parse(content, CultureInfo.InvariantCulture.NumberFormat);
                     if (songs.ContainsKey(current_level))
                     {
                         if (songs[current_level] < score)
