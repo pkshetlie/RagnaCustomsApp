@@ -134,6 +134,7 @@ namespace RagnaCustoms
 
         private void setTexts()
         {
+            versionLabel.Text = Program.Version;
             checkBox1.Text = Resources.strings.Enable_OneClick_download_;
             checkBox2.Text = Resources.strings.Enable_auto_close_after_download_;
             searchLabel.Text = Resources.strings.Search;
