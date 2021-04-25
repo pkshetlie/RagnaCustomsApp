@@ -121,7 +121,8 @@ namespace RagnaCustoms
             var list = new List<Language>()
             {
                 new Language() { Text = "Français", Code = "fr-FR" },
-                new Language() { Text = "English", Code = "en-US" }
+                new Language() { Text = "English", Code = "en-US" },
+                new Language() { Text = "Deutch", Code = "de-DE" }
             };
 
             setTexts();
