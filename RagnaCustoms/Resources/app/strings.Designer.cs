@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RagnaCustoms.Resources {
+namespace RagnaCustoms.Resources.app {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace RagnaCustoms.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("RagnaCustoms.Resources.strings", typeof(strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("RagnaCustoms.Resources.app.strings", typeof(strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

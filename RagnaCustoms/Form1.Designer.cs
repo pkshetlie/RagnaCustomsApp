@@ -191,7 +191,7 @@ namespace RagnaCustoms
             this.Téléchargement.Padding = new System.Windows.Forms.Padding(3);
             this.Téléchargement.Size = new System.Drawing.Size(654, 444);
             this.Téléchargement.TabIndex = 0;
-            this.Téléchargement.Text = global::RagnaCustoms.Resources.strings.Download;
+            this.Téléchargement.Text = global::RagnaCustoms.Resources.app.strings.Download;
             this.Téléchargement.UseVisualStyleBackColor = true;
             // 
             // apiKey
@@ -232,7 +232,7 @@ namespace RagnaCustoms
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(654, 444);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = global::RagnaCustoms.Resources.strings.Twitch_bot;
+            this.tabPage2.Text = global::RagnaCustoms.Resources.app.strings.Twitch_bot;
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             // 

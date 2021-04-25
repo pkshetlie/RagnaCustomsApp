@@ -183,16 +183,16 @@ namespace RagnaCustoms
         private void setTexts()
         {
             versionLabel.Text = Program.Version;
-            checkBox1.Text = Resources.strings.Enable_OneClick_download_;
-            checkBox2.Text = Resources.strings.Enable_auto_close_after_download_;
-            searchLabel.Text = Resources.strings.Search;
-            label1.Text = Resources.strings.Language;
-            downloadButton.Text = Resources.strings.Download;
-            helptwitchtmi.Text = Resources.strings.Get_your_Twitch_Chat_OAuth_Password_on;
-            label2.Text = Resources.strings.Twitch_Chat_OAuth_password;
-            label3.Text = Resources.strings.Your_Twitch_channel;
-            bot_enabled.Text = Resources.strings.Enabled__;
-            refreshApps.Text = Resources.strings.Refresh;
+            checkBox1.Text = Resources.app.strings.Enable_OneClick_download_;
+            checkBox2.Text = Resources.app.strings.Enable_auto_close_after_download_;
+            searchLabel.Text = Resources.app.strings.Search;
+            label1.Text = Resources.app.strings.Language;
+            downloadButton.Text = Resources.app.strings.Download;
+            helptwitchtmi.Text = Resources.app.strings.Get_your_Twitch_Chat_OAuth_Password_on;
+            label2.Text = Resources.app.strings.Twitch_Chat_OAuth_password;
+            label3.Text = Resources.app.strings.Your_Twitch_channel;
+            bot_enabled.Text = Resources.app.strings.Enabled__;
+            refreshApps.Text = Resources.app.strings.Refresh;
         }
 
 
@@ -213,7 +213,7 @@ namespace RagnaCustoms
             }
             else
             {
-                MessageBox.Show(Resources.strings.Error_1, "RagnaCustoms.com", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(Resources.app.strings.Error_1, "RagnaCustoms.com", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -233,7 +233,7 @@ namespace RagnaCustoms
         {
             if (bot_enabled.Checked && (String.IsNullOrEmpty(twitchOAuth.Text.ToString()) || String.IsNullOrEmpty(twitchChannel.Text)))
             {
-                MessageBox.Show(Resources.strings.Error_2, "RagnaCustoms.com", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(Resources.app.strings.Error_2, "RagnaCustoms.com", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 bot_enabled.Checked = false;
                 Program.Settings.TwitchBotEnabled = bot_enabled.Checked;
                 Program.Settings.Save();
@@ -282,8 +282,8 @@ namespace RagnaCustoms
         private void OnConnected(object sender, OnConnectedArgs e)
         {
             joinedChannel = TwitchClient.GetJoinedChannel(twitchChannel.Text);
-            TwitchClient.SendMessage(joinedChannel, $"{prefixe}bot connected !");
-            //TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.strings.WelcomeBot}");
+            TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.twitchBot.strings.bot_connected__}");
+            //TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.app.strings.WelcomeBot}");
         }
         public bool QueueIsOpen = true;
 
@@ -299,7 +299,7 @@ namespace RagnaCustoms
 
             if (command.Length < 2)
             {
-                TwitchClient.SendMessage(joinedChannel, $"{prefixe}Error on command.");
+                TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.twitchBot.strings.Error_on_command_}");
                 return;
             }
 
@@ -314,23 +314,23 @@ namespace RagnaCustoms
                         case "open":
                             if (e.ChatMessage.UserType == TwitchLib.Client.Enums.UserType.Viewer)
                             {
-                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}Sorry only moderator can do that.");
+                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.twitchBot.strings.Sorry_only_moderator_can_do_that_}");
                                 return;
                             }
                             if (!QueueIsOpen)
                             {
                                 QueueIsOpen = true;
-                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}Queue is now open");
+                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.twitchBot.strings.Queue_is_now_open}");
                             }
                             else
                             {
-                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}Queue is already open");
+                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.twitchBot.strings.Queue_is_already_open}");
                             }
                             return;
                         case "close":
                             if (e.ChatMessage.UserType == TwitchLib.Client.Enums.UserType.Viewer)
                             {
-                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}Sorry only moderator can do that.");
+                                TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.twitchBot.strings.Sorry_only_moderator_can_do_that_}");
                                 return;
                             }
                             if (!QueueIsOpen)
@@ -406,7 +406,7 @@ namespace RagnaCustoms
                             }
                             songs.Add(concatStr);
 
-                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}Next songs ({(songRequests.Rows.Count - 1)}) are :");
+                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.twitchBot.strings.Next_songs_are__}");
                             Thread.Sleep(400);
                             foreach (var songMessage in songs)
                             {
@@ -423,23 +423,23 @@ namespace RagnaCustoms
                                     try
                                     {
                                         RemoveAtSongRequestInList(i);
-                                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}Song Cancelled : {sng} ");
+                                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.twitchBot.strings.Song_Cancelled__} {sng} ");
                                     }
                                     catch (Exception o_O)
                                     {
-                                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}No More song to remove");
+                                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.twitchBot.strings.No_More_song_to_remove}");
                                     }
                                     return;
                                 }
                             }
                             return;
                         case "dev":
-                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}My dev is Rhokapa");
+                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.twitchBot.strings.My_dev_is_Rhokapa}");
                             return;
 
                         case "version":
                         case "v":
-                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}I'm version {Program.Version}");
+                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.twitchBot.strings.I_m_version} {Program.Version}");
                             return;
 
                         case "cam":
@@ -451,11 +451,11 @@ namespace RagnaCustoms
                                 if (camera >= 1 && camera <= 5)
                                 {
                                     ChangeCamera(command[2]);
-                                    TwitchClient.SendMessage(joinedChannel, $"{prefixe}Camera changed");
+                                    TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.twitchBot.strings.Camera_changed}");
                                 }
                                 else
                                 {
-                                    TwitchClient.SendMessage(joinedChannel, $"{prefixe}Camera error");
+                                    TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.twitchBot.strings.Camera_error}");
                                 }
                             }
                             //}
@@ -467,34 +467,34 @@ namespace RagnaCustoms
                             return;
                         case "how-to":
                         case "ht":
-                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}Go to https://ragnacustoms.com, click on the twitch button to copy !rc <songid> and paste it here");
+                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.twitchBot.strings.Go_to_https___ragnacustoms_com__click_on_the_twitch_button_to_copy__rc__songid__and_paste_it_here}");
 
                             return;
                         case "help":
-                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}Help 1/2 : !rc cam <numero cam [1-5]> (switch camera), !rc dev (information about dev), !rc help (this command), !rc <song id> (download the map), !rc cancel (remove last song you request)");
-                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}Help 2/2 : !rc open (open queue), !rc close (close queue), !rc shift (remove first song in list), !rc queue (list of songs not played), !rc next (next song to play), !rc version (to know current version)");
+                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.twitchBot.strings.Help_1_2____rc_cam__numero_cam__1_5____switch_camera____rc_dev__information_about_dev____rc_help__this_command____rc__song_id___download_the_map____rc_cancel__remove_last_song_you_request_}");
+                            TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.twitchBot.strings.Help_2_2____rc_open__open_queue____rc_close__close_queue____rc_shift__remove_first_song_in_list____rc_queue__list_of_songs_not_played____rc_next__next_song_to_play____rc_version__to_know_current_version_}");
                             return;
                     }
                     #endregion
                     if (!QueueIsOpen)
                     {
-                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}Queue is closed.");
+                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.twitchBot.strings.Queue_is_closed}");
                         return;
                     }
 
                     var s = GetSongInfo(part2);
                     if (s != null)
                     {
-                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.strings.RequestInfo} : {s.fullTitle}, {Resources.strings.Mapped_by} : {s.Mapper}, asked by @{e.ChatMessage.Username}");
+                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.app.strings.RequestInfo} : {s.fullTitle}, {Resources.app.strings.Mapped_by} : {s.Mapper}, {Resources.twitchBot.strings.asked_by} @{e.ChatMessage.Username}");
 #if !DEBUG  
                         StartDownload(s.Id.ToString());
 #endif
                         AddSongRequestToList(s, e.ChatMessage.Username);
-                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}Ready !");
+                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.twitchBot.strings.Ready__}");
                     }
                     else
                     {
-                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}@{e.ChatMessage.Username} {Resources.strings.Map_not_found}");
+                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}@{e.ChatMessage.Username} {Resources.app.strings.Map_not_found}");
                     }
                     break;
             }
@@ -562,11 +562,11 @@ namespace RagnaCustoms
             RagnarockApp = Process.GetProcesses().FirstOrDefault(x => x.ProcessName.Contains("Ragnarock-Win64"));
             if (RagnarockApp == null)
             {
-                ragnarockApp.Text = Resources.strings.Ragnarock_application_not_found_please_refresh;
+                ragnarockApp.Text = Resources.app.strings.Ragnarock_application_not_found_please_refresh;
             }
             else
             {
-                ragnarockApp.Text = Resources.strings.Ragnarock_application_found;
+                ragnarockApp.Text = Resources.app.strings.Ragnarock_application_found;
             }
         }
 

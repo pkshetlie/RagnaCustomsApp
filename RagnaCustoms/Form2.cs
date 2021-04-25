@@ -43,8 +43,8 @@ namespace RagnaCustoms
                 var coverUrl = "https://ragnacustoms.com/covers/" + songId + stuff.CoverImageExtension;
                 this.pictureBox1.Load(coverUrl);
                 this.label1.Text = $"{stuff.Author} - {stuff.Name}";
-                this.label2.Text = $"{Resources.strings.Difficulties} : {stuff.Difficulties}";
-                this.label3.Text = $"{Resources.strings.Mapped_by} : {stuff.Mapper}";
+                this.label2.Text = $"{Resources.app.strings.Difficulties} : {stuff.Difficulties}";
+                this.label3.Text = $"{Resources.app.strings.Mapped_by} : {stuff.Mapper}";
             }
             var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Ragnarock/CustomSongs/";
             if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Ragnarock/"))
@@ -166,7 +166,7 @@ namespace RagnaCustoms
             {
                 button1.Enabled = false;
             }
-            button1.Text = Resources.strings.Close;
+            button1.Text = Resources.app.strings.Close;
         }
 
         private void debug_console_SelectedIndexChanged(object sender, EventArgs e)
