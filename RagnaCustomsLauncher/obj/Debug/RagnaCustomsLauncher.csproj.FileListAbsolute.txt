@@ -1,9 +1,0 @@
-C:\Projets\C#\RagnaCustoms\RagnaCustomsLauncher\obj\Debug\RagnaCustomsLauncher.Properties.Resources.resources
-C:\Projets\C#\RagnaCustoms\RagnaCustomsLauncher\obj\Debug\RagnaCustomsLauncher.Updater.resources
-C:\Projets\C#\RagnaCustoms\RagnaCustomsLauncher\obj\Debug\RagnaCustomsLauncher.csproj.GenerateResource.cache
-C:\Projets\C#\RagnaCustoms\RagnaCustomsLauncher\obj\Debug\RagnaCustomsLauncher.csproj.CoreCompileInputs.cache
-C:\Projets\C#\RagnaCustoms\RagnaCustoms\bin\Debug\RagnaCustomsLauncher.exe.config
-C:\Projets\C#\RagnaCustoms\RagnaCustoms\bin\Debug\RagnaCustomsLauncher.exe
-C:\Projets\C#\RagnaCustoms\RagnaCustoms\bin\Debug\RagnaCustomsLauncher.pdb
-C:\Projets\C#\RagnaCustoms\RagnaCustomsLauncher\obj\Debug\RagnaCustomsLauncher.exe
-C:\Projets\C#\RagnaCustoms\RagnaCustomsLauncher\obj\Debug\RagnaCustomsLauncher.pdb
