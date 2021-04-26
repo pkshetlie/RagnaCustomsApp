@@ -3,7 +3,7 @@ using System;
 
 namespace RagnaCustoms
 {
-    partial class Form1
+    partial class Main
     {
         /// <summary>
         /// Variable nécessaire au concepteur.
@@ -32,7 +32,7 @@ namespace RagnaCustoms
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -47,7 +47,7 @@ namespace RagnaCustoms
             this.apiKey = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label4 = new System.Windows.Forms.Label();
+            this.botMessagePrefixLabel = new System.Windows.Forms.Label();
             this.prefix = new System.Windows.Forms.TextBox();
             this.songRequests = new System.Windows.Forms.DataGridView();
             this.Song = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -66,11 +66,17 @@ namespace RagnaCustoms
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.versionLabel = new System.Windows.Forms.Label();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.creditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.versionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.githubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.Téléchargement.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.songRequests)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // checkBox1
@@ -88,7 +94,7 @@ namespace RagnaCustoms
             // 
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.LinkColor = System.Drawing.Color.DodgerBlue;
-            this.linkLabel1.Location = new System.Drawing.Point(224, 498);
+            this.linkLabel1.Location = new System.Drawing.Point(224, 529);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(165, 13);
             this.linkLabel1.TabIndex = 8;
@@ -168,10 +174,10 @@ namespace RagnaCustoms
             // 
             this.tabControl1.Controls.Add(this.Téléchargement);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(13, 13);
+            this.tabControl1.Location = new System.Drawing.Point(13, 27);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(662, 470);
+            this.tabControl1.Size = new System.Drawing.Size(662, 499);
             this.tabControl1.TabIndex = 17;
             // 
             // Téléchargement
@@ -189,7 +195,7 @@ namespace RagnaCustoms
             this.Téléchargement.Location = new System.Drawing.Point(4, 22);
             this.Téléchargement.Name = "Téléchargement";
             this.Téléchargement.Padding = new System.Windows.Forms.Padding(3);
-            this.Téléchargement.Size = new System.Drawing.Size(654, 444);
+            this.Téléchargement.Size = new System.Drawing.Size(654, 473);
             this.Téléchargement.TabIndex = 0;
             this.Téléchargement.Text = global::RagnaCustoms.Resources.app.strings.Download;
             this.Téléchargement.UseVisualStyleBackColor = true;
@@ -215,7 +221,7 @@ namespace RagnaCustoms
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.label4);
+            this.tabPage2.Controls.Add(this.botMessagePrefixLabel);
             this.tabPage2.Controls.Add(this.prefix);
             this.tabPage2.Controls.Add(this.songRequests);
             this.tabPage2.Controls.Add(this.refreshApps);
@@ -230,20 +236,20 @@ namespace RagnaCustoms
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(654, 444);
+            this.tabPage2.Size = new System.Drawing.Size(654, 473);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = global::RagnaCustoms.Resources.app.strings.Twitch_bot;
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             // 
-            // label4
+            // botMessagePrefixLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(509, 125);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(96, 13);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Bot message prefix";
+            this.botMessagePrefixLabel.AutoSize = true;
+            this.botMessagePrefixLabel.Location = new System.Drawing.Point(509, 125);
+            this.botMessagePrefixLabel.Name = "botMessagePrefixLabel";
+            this.botMessagePrefixLabel.Size = new System.Drawing.Size(96, 13);
+            this.botMessagePrefixLabel.TabIndex = 12;
+            this.botMessagePrefixLabel.Text = "Bot message prefix";
             // 
             // prefix
             // 
@@ -264,7 +270,7 @@ namespace RagnaCustoms
             this.Id});
             this.songRequests.Location = new System.Drawing.Point(6, 147);
             this.songRequests.Name = "songRequests";
-            this.songRequests.Size = new System.Drawing.Size(645, 291);
+            this.songRequests.Size = new System.Drawing.Size(645, 320);
             this.songRequests.TabIndex = 10;
             // 
             // Song
@@ -385,7 +391,7 @@ namespace RagnaCustoms
             // versionLabel
             // 
             this.versionLabel.AutoSize = true;
-            this.versionLabel.Location = new System.Drawing.Point(14, 486);
+            this.versionLabel.Location = new System.Drawing.Point(14, 529);
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(35, 13);
             this.versionLabel.TabIndex = 18;
@@ -400,17 +406,57 @@ namespace RagnaCustoms
             this.notifyIcon.Text = "RagnaCustoms.com";
             this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
-            // Form1
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(687, 24);
+            this.menuStrip1.TabIndex = 19;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.creditsToolStripMenuItem,
+            this.versionToolStripMenuItem,
+            this.githubToolStripMenuItem});
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.aboutToolStripMenuItem.Text = "about";
+            this.aboutToolStripMenuItem.Visible = false;
+            // 
+            // creditsToolStripMenuItem
+            // 
+            this.creditsToolStripMenuItem.Name = "creditsToolStripMenuItem";
+            this.creditsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.creditsToolStripMenuItem.Text = "Credits";
+            // 
+            // versionToolStripMenuItem
+            // 
+            this.versionToolStripMenuItem.Name = "versionToolStripMenuItem";
+            this.versionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.versionToolStripMenuItem.Text = "Version";
+            // 
+            // githubToolStripMenuItem
+            // 
+            this.githubToolStripMenuItem.Name = "githubToolStripMenuItem";
+            this.githubToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.githubToolStripMenuItem.Text = "Github";
+            // 
+            // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(687, 527);
+            this.ClientSize = new System.Drawing.Size(687, 551);
             this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.linkLabel1);
+            this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "Main";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -422,6 +468,8 @@ namespace RagnaCustoms
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.songRequests)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -459,10 +507,15 @@ namespace RagnaCustoms
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.Label apiKey;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label botMessagePrefixLabel;
         private System.Windows.Forms.TextBox prefix;
         private System.Windows.Forms.Label versionLabel;
         private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem creditsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem versionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem githubToolStripMenuItem;
     }
 }
 

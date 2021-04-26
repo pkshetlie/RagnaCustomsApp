@@ -21,31 +21,39 @@ namespace RagnaCustoms
     {
         public static AppSettings Settings;
         public static string Version = "2.0.4";
+        public static string newVersion = Version;
         /// <summary>
         /// Point d'entrée principal de l'application.
         /// </summary>
         [STAThread]
         static void Main(string[] args)
         {
-        
-            Settings = new AppSettings();      
+
+            Settings = new AppSettings();
 
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Culture);
 
+
             if (args.Length == 0)
             {
-
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+               
 #if !DEBUG
                 if (!IsAdministrator())
                 {
                     enableRunAs();
                 }
                 else
-                {   
+                {
 #endif
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new Form1());
+                    newVersion = CheckNewVersion();
+                    if (newVersion != Version)
+                    {
+
+                        Application.Run(new Updater());
+                    }
+                    Application.Run(new Main());
                 //StartWebServer();
 #if !DEBUG
             }
@@ -57,10 +65,11 @@ namespace RagnaCustoms
                 {
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
-                    Application.Run(new Form2(args));
+                    Application.Run(new Downloader(args));
                 }
             }
         }
+
 
         //private static void StartWebServer()
         //{
@@ -106,14 +115,27 @@ namespace RagnaCustoms
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
+        private static string CheckNewVersion()
+        {
+            var result = Version;
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://ragnacustoms.com/application/version");
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                result = streamReader.ReadToEnd();
+            }
+            return result;
+        }
+
     }
 }
 public static class ExtensionMethods
 {
-    public static String PregReplace(this String input,string pattern, string replacements)
+    public static String PregReplace(this String input, string pattern, string replacements)
     {
-              
-        input = Regex.Replace(input, pattern, replacements);  
+
+        input = Regex.Replace(input, pattern, replacements);
         return input;
     }
 }

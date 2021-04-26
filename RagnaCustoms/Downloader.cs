@@ -13,9 +13,9 @@ using System.Windows.Forms;
 
 namespace RagnaCustoms
 {
-    public partial class Form2 : Form
+    public partial class Downloader : Form
     {
-        public Form2(string[] args)
+        public Downloader(string[] args)
         {
             InitializeComponent();
             this.Text = "RagnaCustoms.com";
