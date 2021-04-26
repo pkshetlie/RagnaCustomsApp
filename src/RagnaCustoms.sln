@@ -5,7 +5,11 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagnaCustoms", "RagnaCustoms\RagnaCustoms.csproj", "{94D11559-503E-4E8A-ACD3-49E7D4B316EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagnaCustomsLauncher", "RagnaCustomsLauncher\RagnaCustomsLauncher.csproj", "{B74F1E98-9B33-4649-9C59-74514D5D7CCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RagnaCustoms.Launcher", "RagnaCustoms.Launcher\RagnaCustoms.Launcher.csproj", "{9FB56E0A-B8C0-4EB9-BBAC-A9EF1CF99059}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "RagnaCustoms.Installer", "RagnaCustoms.Installer\RagnaCustoms.Installer.vdproj", "{A328C61A-2AD2-4008-8D93-F3410FF0BB3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagnaCustoms.App", "RagnaCustoms.App\RagnaCustoms.App.csproj", "{929F3FD5-C4F5-4567-B24B-E5A30EC71B60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +21,16 @@ Global
 		{94D11559-503E-4E8A-ACD3-49E7D4B316EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94D11559-503E-4E8A-ACD3-49E7D4B316EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94D11559-503E-4E8A-ACD3-49E7D4B316EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B74F1E98-9B33-4649-9C59-74514D5D7CCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B74F1E98-9B33-4649-9C59-74514D5D7CCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B74F1E98-9B33-4649-9C59-74514D5D7CCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B74F1E98-9B33-4649-9C59-74514D5D7CCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FB56E0A-B8C0-4EB9-BBAC-A9EF1CF99059}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FB56E0A-B8C0-4EB9-BBAC-A9EF1CF99059}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FB56E0A-B8C0-4EB9-BBAC-A9EF1CF99059}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FB56E0A-B8C0-4EB9-BBAC-A9EF1CF99059}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A328C61A-2AD2-4008-8D93-F3410FF0BB3B}.Debug|Any CPU.ActiveCfg = Debug
+		{A328C61A-2AD2-4008-8D93-F3410FF0BB3B}.Release|Any CPU.ActiveCfg = Release
+		{929F3FD5-C4F5-4567-B24B-E5A30EC71B60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{929F3FD5-C4F5-4567-B24B-E5A30EC71B60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{929F3FD5-C4F5-4567-B24B-E5A30EC71B60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{929F3FD5-C4F5-4567-B24B-E5A30EC71B60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
