@@ -22,10 +22,10 @@ jobs:
       uses: NuGet/setup-nuget@v1.0.5
       
     - name: Restore NuGet Packages
-      run: nuget restore RagnaCustoms.sln
+      run: nuget restore src\RagnaCustoms.sln
          
     - name: Build Solution
-      run: msbuild RagnaCustoms.sln /p:Configuration=Release
+      run: msbuild src\RagnaCustoms.sln /p:Configuration=Release
       
     - name: Publish Solution
       uses: "marvinpinto/action-automatic-releases@latest"
