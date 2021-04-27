@@ -641,7 +641,7 @@ namespace RagnaCustoms
                 }
                 if (line.Contains("LogTemp: Warning: Song level"))
                 {
-                    current_level = line.PregReplace("^(.*)([0-9]{1,2})$", "$2");
+                    current_level = line.PregReplace("^(.*) ([0-9]{1,2})$", "$2");
                     continue;
                 }
                 if (line.Contains("raw distance"))

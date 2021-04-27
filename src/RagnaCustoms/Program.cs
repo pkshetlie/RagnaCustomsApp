@@ -46,13 +46,7 @@ namespace RagnaCustoms
                 }
                 else
                 {
-#endif
-                    newVersion = CheckNewVersion();
-                    if (newVersion != Version)
-                    {
-
-                        Application.Run(new Updater());
-                    }
+#endif                
                     Application.Run(new Main());
                 //StartWebServer();
 #if !DEBUG
@@ -113,21 +107,7 @@ namespace RagnaCustoms
             var identity = WindowsIdentity.GetCurrent();
             var principal = new WindowsPrincipal(identity);
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
-        }
-
-        private static string CheckNewVersion()
-        {
-            var result = Version;
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://ragnacustoms.com/application/version");
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                result = streamReader.ReadToEnd();
-            }
-            return result;
-        }
-
+        }                
     }
 }
 public static class ExtensionMethods
