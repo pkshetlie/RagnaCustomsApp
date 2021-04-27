@@ -26,7 +26,7 @@ namespace RagnaCustoms.Launcher
         const string GitHubProductName = "RagnaCustoms.Launcher";
         const string GitHubAppOwner = "pkshetlie";
         const string GitHubRepoName = "RagnaCustomsApp";
-        const string GitHubAppAssetName = "RagnaCustoms.App.zip";
+        const string GitHubAppAssetName = "RagnaCustoms.zip";
 
         static readonly string CurrentAppPath = Assembly.GetEntryAssembly().Location;
         static readonly string CurrentDirectoryPath = Path.GetDirectoryName(CurrentAppPath);

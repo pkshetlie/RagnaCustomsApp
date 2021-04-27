@@ -4,12 +4,10 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>RagnaCustoms</RootNamespace>
+    <AssemblyName>RagnaCustoms</AssemblyName>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Views\" />
-    <Folder Include="Presenters\" />
-  </ItemGroup>
 
 </Project>
