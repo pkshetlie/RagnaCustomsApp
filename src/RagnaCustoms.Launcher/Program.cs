@@ -144,6 +144,9 @@ namespace RagnaCustoms.Launcher
             using var client = new WebClient();
             client.DownloadFile(downloadUrl, tempFilePath);
 
+            if (Directory.Exists(AppDirectoryPath))
+                Directory.Delete(AppDirectoryPath, recursive: true);
+
             ZipFile.ExtractToDirectory(tempFilePath, AppDirectoryPath);
             File.Delete(tempFilePath);
         }
