@@ -9,13 +9,14 @@ namespace RagnaCustoms.Presenters
         protected virtual ISongView View { get; }
         protected virtual ISongProvider SongProvider { get; }
 
-        public SongPresenter(ISongView view, ISongProvider songProvider)
+        public SongPresenter(ISongProvider songProvider)
+        {
+            SongProvider = songProvider;
+        }
+        public SongPresenter(ISongView view, ISongProvider songProvider) : this(songProvider)
         {
             View = view;
             View.Presenter = this;
-            SongProvider = songProvider;
-
-            SearchLocal(term: null);
         }
 
         public void SearchLocal(string term)

@@ -21,7 +21,7 @@ namespace RagnaCustoms.App
             if (args.Contains("--install"))
             {
                 var songProvider = new SongProvider();
-                var presenter = new SongPresenter(view: null, songProvider);
+                var presenter = new SongPresenter(songProvider);
                 var uri = args.ElementAtOrDefault(1);
                 var songIdStr = uri.Replace(RagnacInstallCommand, string.Empty);
                 var songId = int.Parse(songIdStr);
