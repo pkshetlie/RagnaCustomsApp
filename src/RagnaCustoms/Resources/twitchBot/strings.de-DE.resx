@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
+    <!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,131 +59,131 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+        <xsd:element name="root" msdata:IsDataSet="true">
             <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="metadata">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" use="required" type="xsd:string"/>
+                            <xsd:attribute name="type" type="xsd:string"/>
+                            <xsd:attribute name="mimetype" type="xsd:string"/>
+                            <xsd:attribute ref="xml:space"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="assembly">
+                        <xsd:complexType>
+                            <xsd:attribute name="alias" type="xsd:string"/>
+                            <xsd:attribute name="name" type="xsd:string"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+                            <xsd:attribute ref="xml:space"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
             </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="asked by" xml:space="preserve">
-    <value>asked by</value>
-  </data>
-  <data name="bot connected !" xml:space="preserve">
-    <value>bot connected !</value>
-  </data>
-  <data name="Camera changed" xml:space="preserve">
-    <value>Camera changed</value>
-  </data>
-  <data name="Camera error" xml:space="preserve">
-    <value>Camera error</value>
-  </data>
-  <data name="End of the queue" xml:space="preserve">
-    <value>End of the queue</value>
-  </data>
-  <data name="Error on command." xml:space="preserve">
-    <value>Error on command.</value>
-  </data>
-  <data name="Go to https://ragnacustoms.com, click on the twitch button to copy !rc &lt;songid&gt; and paste it here" xml:space="preserve">
-    <value>Go to https://ragnacustoms.com, click on the twitch button to copy !rc &lt;songid&gt; and paste it here</value>
-  </data>
-  <data name="Help 1/2 : !rc cam &lt;numero cam [1-5]&gt; (switch camera), !rc dev (information about dev), !rc help (this command), !rc &lt;song id&gt; (download the map), !rc cancel (remove last song you request)" xml:space="preserve">
-    <value>Help 1/2 : !rc cam &lt;numero cam [1-5]&gt; (switch camera), !rc dev (information about dev), !rc help (this command), !rc &lt;song id&gt; (download the map), !rc cancel (remove last song you request)</value>
-  </data>
-  <data name="Help 2/2 : !rc open (open queue), !rc close (close queue), !rc shift (remove first song in list), !rc queue (list of songs not played), !rc next (next song to play), !rc version (to know current version)" xml:space="preserve">
-    <value>Help 2/2 : !rc open (open queue), !rc close (close queue), !rc shift (remove first song in list), !rc queue (list of songs not played), !rc next (next song to play), !rc version (to know current version)</value>
-  </data>
-  <data name="I'm version" xml:space="preserve">
-    <value>I'm version</value>
-  </data>
-  <data name="My dev is Rhokapa" xml:space="preserve">
-    <value>My dev is Rhokapa</value>
-  </data>
-  <data name="Next song :" xml:space="preserve">
-    <value>Next song :</value>
-  </data>
-  <data name="Next songs are :" xml:space="preserve">
-    <value>Next songs are :</value>
-  </data>
-  <data name="No More song to remove" xml:space="preserve">
-    <value>No More song to remove</value>
-  </data>
-  <data name="Queue is already closed" xml:space="preserve">
-    <value>Queue is already closed</value>
-  </data>
-  <data name="Queue is already open" xml:space="preserve">
-    <value>Queue is already open</value>
-  </data>
-  <data name="Queue is closed" xml:space="preserve">
-    <value>Queue is closed</value>
-  </data>
-  <data name="Queue is now closed" xml:space="preserve">
-    <value>Queue is now closed</value>
-  </data>
-  <data name="Queue is now open" xml:space="preserve">
-    <value>Queue is now open</value>
-  </data>
-  <data name="Ready !" xml:space="preserve">
-    <value>Ready !</value>
-  </data>
-  <data name="Song Cancelled :" xml:space="preserve">
-    <value>Song Cancelled :</value>
-  </data>
-  <data name="Song removed" xml:space="preserve">
-    <value>Song removed</value>
-  </data>
-  <data name="Sorry only moderator can do that." xml:space="preserve">
-    <value>Sorry only moderator can do that.</value>
-  </data>
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="asked by" xml:space="preserve">
+        <value>gewünscht von</value>
+    </data>
+    <data name="bot connected !" xml:space="preserve">
+        <value>Bot verbunden !</value>
+    </data>
+    <data name="Camera changed" xml:space="preserve">
+        <value>Kamera gewechselt</value>
+    </data>
+    <data name="Camera error" xml:space="preserve">
+        <value>Kamera Fehler</value>
+    </data>
+    <data name="End of the queue" xml:space="preserve">
+        <value>Ende der Liste</value>
+    </data>
+    <data name="Error on command." xml:space="preserve">
+        <value>Fehler im Befehl.</value>
+    </data>
+    <data name="Go to https://ragnacustoms.com, click on the twitch button to copy !rc <songid> and paste it here" xml:space="preserve">
+        <value>Gehe auf https://ragnacustoms.com, klicke auf den Twitch Button um !rc &lt;songid&gt; zu kopieren und füge es hier ein</value>
+    </data>
+    <data name="Help 1/2 : !rc cam <numero cam [1-5]> (switch camera), !rc dev (information about dev), !rc help (this command), !rc <song id> (download the map), !rc cancel (remove last song you request)" xml:space="preserve">
+        <value>Hilfe 1/2 : !rc cam &lt;numero cam [1-5]&gt; (Kamera wechseln), !rc dev (Information über den Entwickler), !rc help (dieser Befehl), !rc &lt;song id&gt; (den Track herunterladen), !rc cancel (deine letzte Song Anfrage entfernen)</value>
+    </data>
+    <data name="Help 2/2 : !rc open (open queue), !rc close (close queue), !rc shift (remove first song in list), !rc queue (list of songs not played), !rc next (next song to play), !rc version (to know current version)" xml:space="preserve">
+        <value>Help 2/2 : !rc open (Liste öffnen), !rc close (Liste schließen), !rc shift (den ersten Song von der Liste entfernen), !rc queue (Liste nicht gespielter Songs), !rc next (nächsten Song zeigen), !rc version (aktuelle Version anzeigen)</value>
+    </data>
+    <data name="I'm version" xml:space="preserve">
+        <value>Ich bin Version</value>
+    </data>
+    <data name="My dev is Rhokapa" xml:space="preserve">
+        <value>Mein Entwickler ist Rhokapa</value>
+    </data>
+    <data name="Next song :" xml:space="preserve">
+        <value>Nächster Song :</value>
+    </data>
+    <data name="Next songs are :" xml:space="preserve">
+        <value>Die nächsten Songs sind :</value>
+    </data>
+    <data name="No More song to remove" xml:space="preserve">
+        <value>Keine Songs mehr zum Entfernen</value>
+    </data>
+    <data name="Queue is already closed" xml:space="preserve">
+        <value>Die Liste ist schon geschlossen</value>
+    </data>
+    <data name="Queue is already open" xml:space="preserve">
+        <value>Die Liste ist schon geöffnet</value>
+    </data>
+    <data name="Queue is closed" xml:space="preserve">
+        <value>Die Liste ist geschlossen</value>
+    </data>
+    <data name="Queue is now closed" xml:space="preserve">
+        <value>Die Liste ist jetzt geschlossen</value>
+    </data>
+    <data name="Queue is now open" xml:space="preserve">
+        <value>Die Liste ist jetzt geöffnet</value>
+    </data>
+    <data name="Ready !" xml:space="preserve">
+        <value>Bereit !</value>
+    </data>
+    <data name="Song Cancelled :" xml:space="preserve">
+        <value>Song gecancelt :</value>
+    </data>
+    <data name="Song removed" xml:space="preserve">
+        <value>Song entfernt</value>
+    </data>
+    <data name="Sorry only moderator can do that." xml:space="preserve">
+        <value>Sorry, nur Moderatoren dürfen das tun.</value>
+    </data>
 </root>
