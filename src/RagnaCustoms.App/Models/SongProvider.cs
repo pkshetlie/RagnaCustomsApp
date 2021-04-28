@@ -66,12 +66,25 @@ namespace RagnaCustoms.Models
             using var client = new WebClient();
 
             var uri = new Uri($"https://ragnacustoms.com/songs/download/{songId}");
+
+            var tempDirectoryPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            var tempDirectory = Directory.CreateDirectory(tempDirectoryPath);
             var tempFilePath = Path.GetTempFileName();
 
             await client.DownloadFileTaskAsync(uri, tempFilePath);
 
-            ZipFile.ExtractToDirectory(tempFilePath, RagnarockSongDirectoryPath);
+            ZipFile.ExtractToDirectory(tempFilePath, tempDirectoryPath);
+
+            var songDirectory = tempDirectory.EnumerateDirectories().First();
+            var ragnarockSongDirectoryPath = Path.Combine(RagnarockSongDirectoryPath, songDirectory.Name);
+
+            if (Directory.Exists(ragnarockSongDirectoryPath))
+                Directory.Delete(ragnarockSongDirectoryPath, recursive: true);
+
+            songDirectory.MoveTo(ragnarockSongDirectoryPath);
+
             File.Delete(tempFilePath);
+            Directory.Delete(tempDirectoryPath);
         }
 
         protected virtual IEnumerable<FileInfo> GetLocalFiles() => RagnarockSongDirectory.EnumerateFiles(SongSearchPattern);
