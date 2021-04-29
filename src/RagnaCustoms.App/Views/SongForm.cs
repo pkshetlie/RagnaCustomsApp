@@ -2,6 +2,7 @@
 using RagnaCustoms.Presenters;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace RagnaCustoms.Views
@@ -18,6 +19,13 @@ namespace RagnaCustoms.Views
         public SongForm()
         {
             InitializeComponent();
+
+            Text += $" {Assembly.GetExecutingAssembly().GetName().Version.ToString(3)}";
+        }
+
+        public virtual void ShowAsPopup()
+        {
+            ShowDialog();
         }
 
         private async void SearchButton_Click(object sender, EventArgs e)
@@ -33,14 +41,14 @@ namespace RagnaCustoms.Views
             }
         }
 
-        private async void SearchResultGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void SearchResultGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             var senderGrid = (DataGridView)sender;
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
                 var song = (Song)senderGrid.Rows[e.RowIndex].DataBoundItem;
 
-                await Presenter.DownloadAsync(song.Id);
+                Presenter.DownloadAsync(song.Id);
             }
         }
     }

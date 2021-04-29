@@ -7,16 +7,15 @@ namespace RagnaCustoms.Presenters
     public class SongPresenter
     {
         protected virtual ISongView View { get; }
+        protected virtual IDownloadingPresenter DownloadingPresenter { get; }
         protected virtual ISongProvider SongProvider { get; }
 
-        public SongPresenter(ISongProvider songProvider)
-        {
-            SongProvider = songProvider;
-        }
-        public SongPresenter(ISongView view, ISongProvider songProvider) : this(songProvider)
+        public SongPresenter(ISongView view, IDownloadingPresenter downloadingPresenter, ISongProvider songProvider)
         {
             View = view;
             View.Presenter = this;
+            DownloadingPresenter = downloadingPresenter;
+            SongProvider = songProvider;
         }
 
         public void SearchLocal(string term)
@@ -29,9 +28,10 @@ namespace RagnaCustoms.Presenters
             View.Songs = await SongProvider.SearchOnlineAsync(term);
         }
 
-        public async Task DownloadAsync(int songId)
+        public virtual void DownloadAsync(int songId)
         {
-            await SongProvider.DownloadAsync(songId);
+            DownloadingPresenter.Download(songId);
+            DownloadingPresenter.ShowAsPopup();
         }
     }
 }

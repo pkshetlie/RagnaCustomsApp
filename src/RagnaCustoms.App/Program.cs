@@ -16,29 +16,32 @@ namespace RagnaCustoms.App
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            var songProvider = new SongProvider();
+            var downloadingView = new DownloadingForm();
+            var downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
+
             if (args.Contains("--install"))
             {
-                var songProvider = new SongProvider();
-                var presenter = new SongPresenter(songProvider);
                 var uri = args.ElementAtOrDefault(1);
                 var songIdStr = uri.Replace(RagnacInstallCommand, string.Empty);
                 var songId = int.Parse(songIdStr);
 
-                await presenter.DownloadAsync(songId);
+                downloadingPresenter.Download(songId);
+
+                Application.Run(downloadingView);
             }
             else
             {
-                Application.SetHighDpiMode(HighDpiMode.SystemAware);
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
+                var songView = new SongForm();
+                var songPresenter = new SongPresenter(songView, downloadingPresenter, songProvider);
 
-                var songProvider = new SongProvider();
-                var view = new SongForm();
-                var presenter = new SongPresenter(view, songProvider);
-
-                Application.Run(view);
+                Application.Run(songView);
             }
         }
     }

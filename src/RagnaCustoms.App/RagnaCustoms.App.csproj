@@ -7,9 +7,9 @@
     <RootNamespace>RagnaCustoms</RootNamespace>
     <AssemblyName>RagnaCustoms</AssemblyName>
     <ApplicationIcon>icon.ico</ApplicationIcon>
-    <AssemblyVersion>1.0.1</AssemblyVersion>
-    <Version>1.0.1</Version>
-    <FileVersion>1.0.1</FileVersion>
+    <AssemblyVersion>1.0.2</AssemblyVersion>
+    <Version>1.0.2</Version>
+    <FileVersion>1.0.2</FileVersion>
   </PropertyGroup>
 
 </Project>

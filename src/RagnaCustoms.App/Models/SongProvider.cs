@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -61,7 +62,7 @@ namespace RagnaCustoms.Models
             return Enumerable.Empty<Song>();
         }
 
-        public async Task DownloadAsync(int songId)
+        public virtual void DownloadAsync(int songId, Action<int> downloadProgressChanged, Action downloadCompleted)
         {
             using var client = new WebClient();
 
@@ -71,20 +72,27 @@ namespace RagnaCustoms.Models
             var tempDirectory = Directory.CreateDirectory(tempDirectoryPath);
             var tempFilePath = Path.GetTempFileName();
 
-            await client.DownloadFileTaskAsync(uri, tempFilePath);
+            client.DownloadProgressChanged += (sender, args) => downloadProgressChanged?.Invoke(args.ProgressPercentage);
+            client.DownloadFileCompleted += Client_DownloadFileCompleted;
+            client.DownloadFileAsync(uri, tempFilePath);
 
-            ZipFile.ExtractToDirectory(tempFilePath, tempDirectoryPath);
+            void Client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+            {
+                ZipFile.ExtractToDirectory(tempFilePath, tempDirectoryPath);
 
-            var songDirectory = tempDirectory.EnumerateDirectories().First();
-            var ragnarockSongDirectoryPath = Path.Combine(RagnarockSongDirectoryPath, songDirectory.Name);
+                var songDirectory = tempDirectory.EnumerateDirectories().First();
+                var ragnarockSongDirectoryPath = Path.Combine(RagnarockSongDirectoryPath, songDirectory.Name);
 
-            if (Directory.Exists(ragnarockSongDirectoryPath))
-                Directory.Delete(ragnarockSongDirectoryPath, recursive: true);
+                if (Directory.Exists(ragnarockSongDirectoryPath))
+                    Directory.Delete(ragnarockSongDirectoryPath, recursive: true);
 
-            songDirectory.MoveTo(ragnarockSongDirectoryPath);
+                songDirectory.MoveTo(ragnarockSongDirectoryPath);
 
-            File.Delete(tempFilePath);
-            Directory.Delete(tempDirectoryPath);
+                File.Delete(tempFilePath);
+                Directory.Delete(tempDirectoryPath);
+
+                downloadCompleted?.Invoke();
+            }
         }
 
         protected virtual IEnumerable<FileInfo> GetLocalFiles() => RagnarockSongDirectory.EnumerateFiles(SongSearchPattern);
