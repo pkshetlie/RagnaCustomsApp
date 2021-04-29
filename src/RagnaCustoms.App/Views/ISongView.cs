@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace RagnaCustoms.Views
 {
-    public interface ISongView
+    public interface ISongView : IView
     {
         SongPresenter Presenter { set; }
         IEnumerable<Song> Songs { get; set; }

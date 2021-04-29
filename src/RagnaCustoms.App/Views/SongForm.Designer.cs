@@ -45,6 +45,7 @@ namespace RagnaCustoms.Views
             // 
             this.SearchTextBox.Location = new System.Drawing.Point(12, 12);
             this.SearchTextBox.Name = "SearchTextBox";
+            this.SearchTextBox.PlaceholderText = "Search for a song";
             this.SearchTextBox.Size = new System.Drawing.Size(519, 23);
             this.SearchTextBox.TabIndex = 0;
             this.SearchTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SearchTextBox_KeyPress);
@@ -61,6 +62,10 @@ namespace RagnaCustoms.Views
             // 
             // SearchResultGridView
             // 
+            this.SearchResultGridView.AllowUserToAddRows = false;
+            this.SearchResultGridView.AllowUserToDeleteRows = false;
+            this.SearchResultGridView.AllowUserToResizeColumns = false;
+            this.SearchResultGridView.AllowUserToResizeRows = false;
             this.SearchResultGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.SearchResultGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Id,
@@ -125,8 +130,10 @@ namespace RagnaCustoms.Views
             this.Controls.Add(this.SearchButton);
             this.Controls.Add(this.SearchTextBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "SongForm";
-            this.Text = "RagnaCustoms - Online search";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "RagnaCustoms";
             ((System.ComponentModel.ISupportInitialize)(this.SearchResultGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
