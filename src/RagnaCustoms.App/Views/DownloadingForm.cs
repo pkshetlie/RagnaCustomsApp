@@ -24,7 +24,7 @@ namespace RagnaCustoms.Views
 
         public virtual void ShowSuccessMessage(string message, string title)
         {
-            MessageBox.Show(this, message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(this, message, title, MessageBoxButtons.OK, MessageBoxIcon.None);
         }
     }
 }

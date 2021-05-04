@@ -45,7 +45,7 @@ namespace RagnaCustoms.Models
             return GetLocalSongs().Where(song => song.Name.Contains(term)).ToList();
         }
 
-        public async Task<IEnumerable<Song>> SearchOnlineAsync(string term)
+        public async Task<IEnumerable<SongSearchModel>> SearchOnlineAsync(string term)
         {
             using var client = new HttpClient();
 
@@ -54,12 +54,12 @@ namespace RagnaCustoms.Models
             if (result.IsSuccessStatusCode)
             {
                 var content = await result.Content.ReadAsStringAsync();
-                var searchResult = JsonSerializer.Deserialize<SearchResult<Song>>(content);
+                var searchResult = JsonSerializer.Deserialize<Result<SongSearchModel>>(content);
 
                 return searchResult.Results;
             }
 
-            return Enumerable.Empty<Song>();
+            return Enumerable.Empty<SongSearchModel>();
         }
 
         public virtual void DownloadAsync(int songId, Action<int> downloadProgressChanged, Action downloadCompleted)

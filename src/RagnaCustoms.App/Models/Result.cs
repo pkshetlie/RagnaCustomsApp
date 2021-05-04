@@ -2,7 +2,7 @@
 
 namespace RagnaCustoms.Models
 {
-    public class SearchResult<TResult>
+    public class Result<TResult>
     {
         public IEnumerable<TResult> Results { get; set; }
         public int Count { get; set; }

@@ -7,9 +7,15 @@
     <RootNamespace>RagnaCustoms</RootNamespace>
     <AssemblyName>RagnaCustoms</AssemblyName>
     <ApplicationIcon>icon.ico</ApplicationIcon>
-    <AssemblyVersion>1.0.2</AssemblyVersion>
-    <Version>1.0.2</Version>
-    <FileVersion>1.0.2</FileVersion>
+    <AssemblyVersion>1.1.0</AssemblyVersion>
+    <Version>1.1.0</Version>
+    <FileVersion>1.1.0</FileVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

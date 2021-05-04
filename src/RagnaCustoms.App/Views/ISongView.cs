@@ -7,6 +7,6 @@ namespace RagnaCustoms.Views
     public interface ISongView : IView
     {
         SongPresenter Presenter { set; }
-        IEnumerable<Song> Songs { get; set; }
+        IEnumerable<SongSearchModel> Songs { get; set; }
     }
 }
