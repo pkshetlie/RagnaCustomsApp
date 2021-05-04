@@ -15,6 +15,11 @@ namespace RagnaCustoms.Views
             get => (IEnumerable<SongSearchModel>)SearchResultGridView.DataSource;
             set => SearchResultGridView.DataSource = value;
         }
+        public bool SendScoreAutomatically
+        {
+            get => SendScoreAutomaticallyMenuItem.Checked;
+            set => SendScoreAutomaticallyMenuItem.Checked = value;
+        }
 
         public SongForm()
         {

@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using System.Windows.Forms;
 
 namespace RagnaCustoms.Services
 {
@@ -17,6 +18,11 @@ namespace RagnaCustoms.Services
         }
 
         private string Get(string key) => ConfigurationManager.AppSettings[key];
-        private void Set(string key, string value) => ConfigurationManager.AppSettings[key] = value;
+        private void Set(string key, string value)
+        {
+            var config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath.Replace(".exe", ".dll"));
+            config.AppSettings.Settings[key].Value = value;
+            config.Save(ConfigurationSaveMode.Modified);
+        }
     }
 }

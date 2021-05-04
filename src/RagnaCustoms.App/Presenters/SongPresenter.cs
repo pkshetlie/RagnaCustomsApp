@@ -29,6 +29,7 @@ namespace RagnaCustoms.Presenters
             Configuration = configuration;
             View = view;
             View.Presenter = this;
+            View.SendScoreAutomatically = SendScoreAutomatically;
             DownloadingPresenter = downloadingPresenter;
             SongProvider = songProvider;
         }

@@ -8,5 +8,7 @@ namespace RagnaCustoms.Views
     {
         SongPresenter Presenter { set; }
         IEnumerable<SongSearchModel> Songs { get; set; }
+
+        bool SendScoreAutomatically { get; set; }
     }
 }
