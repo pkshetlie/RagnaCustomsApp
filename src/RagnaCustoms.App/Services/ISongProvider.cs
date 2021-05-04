@@ -10,6 +10,6 @@ namespace RagnaCustoms.Models
 
         IEnumerable<Song> SearchLocal();
         IEnumerable<Song> SearchLocal(string term);
-        Task<IEnumerable<Song>> SearchOnlineAsync(string term);
+        Task<IEnumerable<SongSearchModel>> SearchOnlineAsync(string term);
     }
 }
