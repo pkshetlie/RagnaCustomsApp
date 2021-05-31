@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -6,7 +7,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace RagnaCustoms.Models
@@ -54,7 +54,7 @@ namespace RagnaCustoms.Models
             if (result.IsSuccessStatusCode)
             {
                 var content = await result.Content.ReadAsStringAsync();
-                var searchResult = JsonSerializer.Deserialize<Result<SongSearchModel>>(content);
+                var searchResult = JsonConvert.DeserializeObject<Result<SongSearchModel>>(content);
 
                 return searchResult.Results;
             }

@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagnaCustoms", "RagnaCustoms\RagnaCustoms.csproj", "{94D11559-503E-4E8A-ACD3-49E7D4B316EE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RagnaCustoms.Launcher", "RagnaCustoms.Launcher\RagnaCustoms.Launcher.csproj", "{9FB56E0A-B8C0-4EB9-BBAC-A9EF1CF99059}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagnaCustoms.Launcher", "RagnaCustoms.Launcher\RagnaCustoms.Launcher.csproj", "{A48057D9-ABE3-4B9F-98D1-C4C7F4DD1CC2}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "RagnaCustoms.Installer", "RagnaCustoms.Installer\RagnaCustoms.Installer.vdproj", "{A328C61A-2AD2-4008-8D93-F3410FF0BB3B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagnaCustoms.App", "RagnaCustoms.App\RagnaCustoms.App.csproj", "{C6A7B343-F2DD-4BA6-98FD-92475B1E7109}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagnaCustoms.App", "RagnaCustoms.App\RagnaCustoms.App.csproj", "{929F3FD5-C4F5-4567-B24B-E5A30EC71B60}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "RagnaCustoms.Installer", "RagnaCustoms.Installer\RagnaCustoms.Installer.vdproj", "{71F12607-713B-4182-A9E1-E9C6D8B50545}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,9 +31,27 @@ Global
 		{929F3FD5-C4F5-4567-B24B-E5A30EC71B60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{929F3FD5-C4F5-4567-B24B-E5A30EC71B60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{929F3FD5-C4F5-4567-B24B-E5A30EC71B60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A48057D9-ABE3-4B9F-98D1-C4C7F4DD1CC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A48057D9-ABE3-4B9F-98D1-C4C7F4DD1CC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A48057D9-ABE3-4B9F-98D1-C4C7F4DD1CC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A48057D9-ABE3-4B9F-98D1-C4C7F4DD1CC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6A7B343-F2DD-4BA6-98FD-92475B1E7109}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6A7B343-F2DD-4BA6-98FD-92475B1E7109}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6A7B343-F2DD-4BA6-98FD-92475B1E7109}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6A7B343-F2DD-4BA6-98FD-92475B1E7109}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71F12607-713B-4182-A9E1-E9C6D8B50545}.Debug|Any CPU.ActiveCfg = Debug
+		{71F12607-713B-4182-A9E1-E9C6D8B50545}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9FB56E0A-B8C0-4EB9-BBAC-A9EF1CF99059} = {0A383718-6D46-4635-B9A7-4EA949BC0EA9}
+		{A328C61A-2AD2-4008-8D93-F3410FF0BB3B} = {0A383718-6D46-4635-B9A7-4EA949BC0EA9}
+		{929F3FD5-C4F5-4567-B24B-E5A30EC71B60} = {0A383718-6D46-4635-B9A7-4EA949BC0EA9}
+		{A48057D9-ABE3-4B9F-98D1-C4C7F4DD1CC2} = {82B7410D-0438-4B10-9180-B6D85B614684}
+		{C6A7B343-F2DD-4BA6-98FD-92475B1E7109} = {82B7410D-0438-4B10-9180-B6D85B614684}
+		{71F12607-713B-4182-A9E1-E9C6D8B50545} = {82B7410D-0438-4B10-9180-B6D85B614684}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {476DCDC5-E8B0-4998-A8D2-F5B3538F687D}

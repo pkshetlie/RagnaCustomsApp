@@ -1,4 +1,4 @@
-using RagnaCustoms.Models;
+﻿using RagnaCustoms.Models;
 using RagnaCustoms.Presenters;
 using RagnaCustoms.Services;
 using RagnaCustoms.Views;
@@ -30,7 +30,6 @@ namespace RagnaCustoms.App
         [STAThread]
         static void Main(string[] args)
         {
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

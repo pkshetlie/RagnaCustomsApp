@@ -55,7 +55,6 @@ namespace RagnaCustoms.Views
             // 
             this.SearchTextBox.Location = new System.Drawing.Point(12, 27);
             this.SearchTextBox.Name = "SearchTextBox";
-            this.SearchTextBox.PlaceholderText = "Search for a song";
             this.SearchTextBox.Size = new System.Drawing.Size(519, 23);
             this.SearchTextBox.TabIndex = 1;
             // 

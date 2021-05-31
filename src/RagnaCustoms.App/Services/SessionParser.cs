@@ -50,11 +50,11 @@ namespace RagnaCustoms.Services
                     if (line.Contains(songLevelLineHint))
                     {
                         session = new Session();
-                        session.Song.Level = line[(line.IndexOf(songLevelLineHint) + songLevelLineHint.Length)..].Trim(new[] { ' ', '.' });
+                        session.Song.Level = line.Substring(line.IndexOf(songLevelLineHint) + songLevelLineHint.Length).Trim(new[] { ' ', '.' });
                     }
                     else if (line.Contains(songNameLineHint))
                     {
-                        var songOggPath = line[(line.IndexOf(songNameLineHint) + songNameLineHint.Length)..].Trim(new[] { ' ', '.' });
+                        var songOggPath = line.Substring(line.IndexOf(songNameLineHint) + songNameLineHint.Length).Trim(new[] { ' ', '.' });
 
                         var songDirectoryPath = Path.GetDirectoryName(songOggPath);
                         var songDirectory = new DirectoryInfo(songDirectoryPath);
@@ -72,7 +72,7 @@ namespace RagnaCustoms.Services
                         var startIndex = line.IndexOf(songScoreLineHint) + songScoreLineHint.Length;
                         var endIndex = line.IndexOf("and adjusted distance =");
 
-                        session.Score = line[startIndex..endIndex].Trim(new[] { ' ', '.' });
+                        session.Score = line.Substring(startIndex, endIndex - startIndex).Trim(new[] { ' ', '.' });
 
                         if (session.Song.Hash is null) continue;
 

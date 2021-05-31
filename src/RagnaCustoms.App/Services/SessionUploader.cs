@@ -2,7 +2,6 @@
 using System;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace RagnaCustoms.Services
@@ -40,5 +39,17 @@ namespace RagnaCustoms.Services
         }
     }
 
-    public record SessionModel(string HashInfo, string Score, string Level);
+    public class SessionModel
+    {
+        public string HashInfo { get; set; }
+        public string Score { get; set; }
+        public string Level { get; set; }
+
+        public SessionModel(string hashInfo, string score, string level)
+        {
+            HashInfo = hashInfo;
+            Score = score;
+            Level = level;
+        }
+    } 
 }

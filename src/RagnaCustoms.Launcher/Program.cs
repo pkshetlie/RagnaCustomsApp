@@ -1,6 +1,5 @@
-using Octokit;
+﻿using Octokit;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -103,10 +102,10 @@ namespace RagnaCustoms.Launcher
         static async Task<Version> GetOnlineVersion()
         {
             var client = new GitHubClient(new ProductHeaderValue(GitHubProductName));
-            
+
             LatestRelease = await client.Repository.Release.GetLatest(GitHubAppOwner, GitHubRepoName);
             if (LatestRelease is null) return default;
-            
+
             var versionStr = LatestRelease.TagName.Trim('v');
             if (!Version.TryParse(versionStr, out Version version)) return default;
 
