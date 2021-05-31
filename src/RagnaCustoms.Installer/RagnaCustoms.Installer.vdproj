@@ -104,6 +104,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -128,6 +136,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -312,7 +328,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_F7556274699D497EACB281A2D6FAF0A1"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[LocalAppDataFolder]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -325,6 +341,13 @@
         }
         "LaunchCondition"
         {
+            "{836E08B8-0285-4809-BA42-01DB6754A45D}:_A82ADA5CDA1149CD98B01AA60811DEB9"
+            {
+            "Name" = "8:AdminPrivilege"
+            "Condition" = "8:AdminUser"
+            "Message" = "8:<Error Message>"
+            "InstallUrl" = "8:"
+            }
         }
         "Locator"
         {
@@ -337,22 +360,22 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:RagnaCustoms.Installer"
-        "ProductCode" = "8:{22594A42-2A0A-45D3-86D0-F52295BC09A6}"
-        "PackageCode" = "8:{F86E277A-680A-4105-9145-8A407A3B789B}"
+        "ProductName" = "8:RagnaCustoms"
+        "ProductCode" = "8:{B563F773-D0B6-4529-B424-E1CFF87B91EB}"
+        "PackageCode" = "8:{38DB8648-D3B6-4912-B417-6F7BA00B9A9E}"
         "UpgradeCode" = "8:{51E73A36-25A2-4451-97E4-114C3AEA5299}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Othane"
+        "ProductVersion" = "8:1.1.0"
+        "Manufacturer" = "8:RagnaCustoms"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:RagnaCustoms.Installer"
+        "Title" = "8:RagnaCustoms"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Othane"
+        "ARPCONTACT" = "8:RagnaCustoms"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
@@ -439,6 +462,86 @@
             {
                 "Keys"
                 {
+                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_E95CCAD1427242C9967DB2F48893E28E"
+                    {
+                    "Name" = "8:ragnac"
+                    "Condition" = "8:"
+                    "AlwaysCreate" = "11:FALSE"
+                    "DeleteAtUninstall" = "11:FALSE"
+                    "Transitive" = "11:FALSE"
+                        "Keys"
+                        {
+                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_A93B7DF3FDEF43E1A24DEA0CB20637B5"
+                            {
+                            "Name" = "8:shell"
+                            "Condition" = "8:"
+                            "AlwaysCreate" = "11:FALSE"
+                            "DeleteAtUninstall" = "11:FALSE"
+                            "Transitive" = "11:FALSE"
+                                "Keys"
+                                {
+                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_AC22003241C6486E8BC2415322DBCD7C"
+                                    {
+                                    "Name" = "8:open"
+                                    "Condition" = "8:"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "DeleteAtUninstall" = "11:FALSE"
+                                    "Transitive" = "11:FALSE"
+                                        "Keys"
+                                        {
+                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_B253F854B5AA4B349271AEF6FE04D536"
+                                            {
+                                            "Name" = "8:command"
+                                            "Condition" = "8:"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "Transitive" = "11:FALSE"
+                                                "Keys"
+                                                {
+                                                }
+                                                "Values"
+                                                {
+                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_50DC7F2AFA224AAE9827F6FE16B556F1"
+                                                    {
+                                                    "Name" = "8:"
+                                                    "Condition" = "8:"
+                                                    "Transitive" = "11:FALSE"
+                                                    "ValueTypes" = "3:1"
+                                                    "Value" = "8:[TARGETDIR]RagnaCustoms.App\\RagnaCustoms.exe --install \"%1\""
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        "Values"
+                                        {
+                                        }
+                                    }
+                                }
+                                "Values"
+                                {
+                                }
+                            }
+                        }
+                        "Values"
+                        {
+                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_7C65B7CBC2BC4690AB012F67545144BB"
+                            {
+                            "Name" = "8:"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "ValueTypes" = "3:1"
+                            "Value" = "8:URL to RagnaCustoms"
+                            }
+                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_CC92C022969A43DA81D2FBA02A83F622"
+                            {
+                            "Name" = "8:URL Protocol"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "ValueTypes" = "3:1"
+                            "Value" = "8:"
+                            }
+                        }
+                    }
                 }
             }
             "HKU"
@@ -459,6 +562,34 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_8682CFD70E55402381627153B2166F99"
+            {
+            "Name" = "8:RagnaCustoms"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:32512"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_677CC9565727457FA5742614516D430B"
+            "Folder" = "8:_5599274D585D4977A6965D26D97EA361"
+            "WorkingFolder" = "8:_F7556274699D497EACB281A2D6FAF0A1"
+            "Icon" = "8:_677CC9565727457FA5742614516D430B"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_FB541BF603164A9CBE861A2AD63F5215"
+            {
+            "Name" = "8:RagnaCustoms"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:32512"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_677CC9565727457FA5742614516D430B"
+            "Folder" = "8:_7F6560115BCC447481BEDAE02902316D"
+            "WorkingFolder" = "8:_F7556274699D497EACB281A2D6FAF0A1"
+            "Icon" = "8:_677CC9565727457FA5742614516D430B"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
@@ -497,8 +628,8 @@
                             "Type" = "3:15"
                             "ContextData" = "8:"
                             "Attributes" = "3:0"
-                            "Setting" = "3:1"
-                            "Value" = "8:#1258"
+                            "Setting" = "3:2"
+                            "Value" = "8:"
                             "DefaultValue" = "8:#1258"
                             "UsePlugInResources" = "11:TRUE"
                             }
@@ -660,8 +791,8 @@
                             "Type" = "3:3"
                             "ContextData" = "8:"
                             "Attributes" = "3:0"
-                            "Setting" = "3:1"
-                            "Value" = "8:#1202"
+                            "Setting" = "3:2"
+                            "Value" = "8:"
                             "DefaultValue" = "8:#1202"
                             "UsePlugInResources" = "11:TRUE"
                             }
@@ -768,7 +899,7 @@
                             "ContextData" = "8:1;True=1;False=0"
                             "Attributes" = "3:0"
                             "Setting" = "3:0"
-                            "Value" = "3:1"
+                            "Value" = "3:0"
                             "DefaultValue" = "3:1"
                             "UsePlugInResources" = "11:TRUE"
                             }
@@ -802,8 +933,8 @@
                             "Type" = "3:3"
                             "ContextData" = "8:"
                             "Attributes" = "3:0"
-                            "Setting" = "3:1"
-                            "Value" = "8:#1202"
+                            "Setting" = "3:2"
+                            "Value" = "8:"
                             "DefaultValue" = "8:#1202"
                             "UsePlugInResources" = "11:TRUE"
                             }
@@ -860,7 +991,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_677CC9565727457FA5742614516D430B"
             {
-            "SourcePath" = "8:..\\RagnaCustoms.Launcher\\obj\\Release\\RagnaCustoms.Launcher.exe"
+            "SourcePath" = "8:..\\RagnaCustoms.Launcher\\obj\\Debug\\RagnaCustoms.Launcher.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F7556274699D497EACB281A2D6FAF0A1"
