@@ -1,5 +1,6 @@
 ﻿using RagnaCustoms.Models;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -30,11 +31,11 @@ namespace RagnaCustoms.Services
             var result = await client.PostAsJsonAsync(Uri, models);
             if (result.IsSuccessStatusCode)
             {
-                // TODO: Do something with the result
+                Trace.WriteLine($"{DateTime.Now} - Upload success - Hash: {sessions[0].Song.Hash}; Score: {sessions[0].Score}");
             }
             else
             {
-                // TODO: Do something with the result
+                Trace.WriteLine($"{DateTime.Now} - Upload error ({result.ReasonPhrase}) - Hash: { sessions[0].Song.Hash}; Score: {sessions[0].Score}");
             }
         }
     }
