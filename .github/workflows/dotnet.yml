@@ -22,7 +22,7 @@ jobs:
       uses: NuGet/setup-nuget@v1.0.5
       
     - name: Restore NuGet Packages
-      run: nuget restore src\RagnaCustoms.sln
+      run: dotnet restore src\RagnaCustoms.sln
          
     - name: Build Solution
       run: msbuild src\RagnaCustoms.sln /p:Configuration=Release
