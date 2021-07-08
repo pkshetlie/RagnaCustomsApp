@@ -1,5 +1,6 @@
 ﻿using RagnaCustoms.Models;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -66,6 +67,7 @@ namespace RagnaCustoms.Services
                         var concatenatedHashs = string.Concat(filesHashs);
 
                         session.Song.Hash = ComputeMD5(concatenatedHashs);
+                        Trace.WriteLine($"{DateTime.Now} - New file - Hash: {session.Song.Hash}; File: {songDirectoryPath}");
                     }
                     else if (line.Contains(songScoreLineHint))
                     {
@@ -75,7 +77,7 @@ namespace RagnaCustoms.Services
                         session.Score = line.Substring(startIndex, endIndex - startIndex).Trim(new[] { ' ', '.' });
 
                         if (session.Song.Hash is null) continue;
-
+                        Trace.WriteLine($"{DateTime.Now} - New session - Hash: {session.Song.Hash}; Level: {session.Song.Level}; Score: {session.Score}");
                         OnNewSession?.Invoke(session);
                     }
 
