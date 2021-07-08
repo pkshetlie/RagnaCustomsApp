@@ -28,7 +28,7 @@ jobs:
       run: nuget restore src\RagnaCustoms.sln
          
     - name: Restore msbuild
-      run: msbuild src\RagnaCustoms.sl /t:restore
+      run: msbuild src\RagnaCustoms.sln /t:restore
 
     - name: Build Solution
       run: msbuild src\RagnaCustoms.sln /p:Configuration=Release
