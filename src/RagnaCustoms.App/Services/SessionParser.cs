@@ -79,6 +79,8 @@ namespace RagnaCustoms.Services
                         if (session.Song.Hash is null) continue;
                         Trace.WriteLine($"{DateTime.Now} - New session - Hash: {session.Song.Hash}; Level: {session.Song.Level}; Score: {session.Score}");
                         OnNewSession?.Invoke(session);
+                        line = reader.ReadLine();
+
                     }
 
                     while (reader.EndOfStream)
