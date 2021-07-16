@@ -9,6 +9,9 @@
     <OutputName>RagnaCustoms.Installer2</OutputName>
     <OutputType>Package</OutputType>
   </PropertyGroup>
+  <PropertyGroup>
+    <SuppressIces>ICE91;ICE69</SuppressIces>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>

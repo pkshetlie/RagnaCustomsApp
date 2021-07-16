@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagnaCustoms", "RagnaCustoms\RagnaCustoms.csproj", "{94D11559-503E-4E8A-ACD3-49E7D4B316EE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagnaCustoms.Launcher", "RagnaCustoms.Launcher\RagnaCustoms.Launcher.csproj", "{A48057D9-ABE3-4B9F-98D1-C4C7F4DD1CC2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagnaCustoms.App", "RagnaCustoms.App\RagnaCustoms.App.csproj", "{C6A7B343-F2DD-4BA6-98FD-92475B1E7109}"
-EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "RagnaCustoms.Installer", "RagnaCustoms.Installer\RagnaCustoms.Installer.vdproj", "{71F12607-713B-4182-A9E1-E9C6D8B50545}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "RagnaCustoms.Installer2", "RagnaCustoms.Installer2\RagnaCustoms.Installer2.wixproj", "{EC272E76-5B40-4130-874C-E66932BFA30A}"
 EndProject
@@ -21,14 +17,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{94D11559-503E-4E8A-ACD3-49E7D4B316EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{94D11559-503E-4E8A-ACD3-49E7D4B316EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{94D11559-503E-4E8A-ACD3-49E7D4B316EE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{94D11559-503E-4E8A-ACD3-49E7D4B316EE}.Debug|x86.Build.0 = Debug|Any CPU
-		{94D11559-503E-4E8A-ACD3-49E7D4B316EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{94D11559-503E-4E8A-ACD3-49E7D4B316EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{94D11559-503E-4E8A-ACD3-49E7D4B316EE}.Release|x86.ActiveCfg = Release|Any CPU
-		{94D11559-503E-4E8A-ACD3-49E7D4B316EE}.Release|x86.Build.0 = Release|Any CPU
 		{A48057D9-ABE3-4B9F-98D1-C4C7F4DD1CC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A48057D9-ABE3-4B9F-98D1-C4C7F4DD1CC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A48057D9-ABE3-4B9F-98D1-C4C7F4DD1CC2}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -45,13 +33,6 @@ Global
 		{C6A7B343-F2DD-4BA6-98FD-92475B1E7109}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C6A7B343-F2DD-4BA6-98FD-92475B1E7109}.Release|x86.ActiveCfg = Release|Any CPU
 		{C6A7B343-F2DD-4BA6-98FD-92475B1E7109}.Release|x86.Build.0 = Release|Any CPU
-		{71F12607-713B-4182-A9E1-E9C6D8B50545}.Debug|Any CPU.ActiveCfg = Debug
-		{71F12607-713B-4182-A9E1-E9C6D8B50545}.Debug|x86.ActiveCfg = Debug
-		{71F12607-713B-4182-A9E1-E9C6D8B50545}.Debug|x86.Build.0 = Debug
-		{71F12607-713B-4182-A9E1-E9C6D8B50545}.Release|Any CPU.ActiveCfg = Release
-		{71F12607-713B-4182-A9E1-E9C6D8B50545}.Release|Any CPU.Build.0 = Release
-		{71F12607-713B-4182-A9E1-E9C6D8B50545}.Release|x86.ActiveCfg = Release
-		{71F12607-713B-4182-A9E1-E9C6D8B50545}.Release|x86.Build.0 = Release
 		{EC272E76-5B40-4130-874C-E66932BFA30A}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{EC272E76-5B40-4130-874C-E66932BFA30A}.Debug|x86.ActiveCfg = Debug|x86
 		{EC272E76-5B40-4130-874C-E66932BFA30A}.Debug|x86.Build.0 = Debug|x86
