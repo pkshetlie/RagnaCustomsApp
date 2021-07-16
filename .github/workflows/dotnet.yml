@@ -33,11 +33,17 @@ jobs:
     - name: Build Solution
       run: msbuild src\RagnaCustoms.sln /p:Configuration=Release
       
-    - uses: papeloto/action-zip@v1
+    - name: Prepare Zip
+      uses: papeloto/action-zip@v1
       with:
         files: src\RagnaCustoms.App\bin\Release
         dest:  RagnaCustoms.zip
 
+  publish:
+
+    runs-on: windows-latest
+
+    steps:
     - name: Publish Solution
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
@@ -46,5 +52,5 @@ jobs:
         prerelease: false
         title: "Latest build"
         files: |
-          src\RagnaCustoms.Installer2\Release\RagnaCustoms.Installer2github.msi
+          src\RagnaCustoms.Installer2\bin\Release\RagnaCustoms.Installer2.msi
           RagnaCustoms.zip
