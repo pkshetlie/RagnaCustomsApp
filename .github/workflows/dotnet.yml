@@ -28,7 +28,7 @@ jobs:
       run: msbuild src\RagnaCustoms.sln /t:restore
 
     - name: Build Solution
-      run: msbuild /nologo src\RagnaCustoms.sln /p:Configuration=Release /p:Platform="Any CPU" /p:Verbose=True
+      run: msbuild /nologo src\RagnaCustoms.sln /p:Configuration=Release /p:Platform="Any CPU"
       
     - name: Prepare Zip
       uses: papeloto/action-zip@v1
@@ -44,5 +44,5 @@ jobs:
         prerelease: false
         title: "Latest build"
         files: |
-          src\RagnaCustoms.Installer2\bin\Release\RagnaCustoms.Installer2.msi
+          RagnaCustoms.Installer2.msi
           RagnaCustoms.zip
