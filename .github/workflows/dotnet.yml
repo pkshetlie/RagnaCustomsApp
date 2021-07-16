@@ -46,7 +46,7 @@ jobs:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: ${{ github.event.release.tag_name }}
         prerelease: false
-        title: "Latest build"
+        title: ${{ github.event.release.tag_name }}
         files: |
           src/RagnaCustoms.Installer2/bin/Release/RagnaCustoms.Installer2.msi
           RagnaCustoms.zip
@@ -56,9 +56,8 @@ jobs:
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "latest"
         prerelease: true
-        title: "Latest build"
+        title: "Development Build"
         files: |
           src/RagnaCustoms.Installer2/bin/Release/RagnaCustoms.Installer2.msi
           RagnaCustoms.zip
