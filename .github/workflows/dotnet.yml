@@ -44,5 +44,5 @@ jobs:
         prerelease: false
         title: "Latest build"
         files: |
-          RagnaCustoms.Installer2.msi
+          src/RagnaCustoms.Installer2/bin/Release/RagnaCustoms.Installer2.msi
           RagnaCustoms.zip
