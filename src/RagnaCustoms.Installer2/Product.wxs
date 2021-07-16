@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"><?define RagnaCustoms.Launcher_TargetDir=$(var.RagnaCustoms.Launcher.TargetDir)?>
-	<Product Id="*" Name="RagnaCustoms.Installer2" Language="1033" Version="1.0.0.0" Manufacturer="a" UpgradeCode="fdb857c0-f926-4cd9-b45e-dff05b91a34c">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?define RagnaCustoms.Launcher_TargetDir=$(var.RagnaCustoms.Launcher.TargetDir)?>
+  <?define RagnaCustoms.App_TargetDir=$(var.RagnaCustoms.App.TargetDir)?>
+	<Product Id="*" Name="RagnaCustoms.Installer2" Language="1033" Version="1.0.0.0" Manufacturer="RagnaCustoms" UpgradeCode="fdb857c0-f926-4cd9-b45e-dff05b91a34c">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" InstallPrivileges="limited"  />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate EmbedCab="yes" />
 
 		<Feature Id="ProductFeature" Title="RagnaCustoms.Installer2" Level="1">
+      <ComponentRef  Id="RagnaCustomsInstaller" />
       <ComponentRef  Id="RagnaCustomsApp" />
       <ComponentRef  Id="RagnaCustomsShortcut" />
 		</Feature>
@@ -15,7 +18,9 @@
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="LocalAppDataFolder">
-				<Directory Id="InstallFolder" Name="RagnaCustoms.Installer2" />
+				<Directory Id="InstallFolder" Name="RagnaCustoms2" >
+          <Directory Id="AppFolder" Name="RagnaCustoms.App"/>
+        </Directory>
 			</Directory>
       <Directory Id="ProgramMenuFolder">
         <Directory Id="ApplicationProgramsFolder" Name="RagnaCustoms"/>
@@ -25,10 +30,10 @@
 
 	<Fragment>
     <DirectoryRef Id="InstallFolder">	
-			<Component Id="RagnaCustomsApp" Guid="81c744cc-b0fd-49d4-aba9-58ac3965d36e">
+			<Component Id="RagnaCustomsInstaller" Guid="81c744cc-b0fd-49d4-aba9-58ac3965d36e">
         <RemoveFolder Id='RemoveProgramMenuDir' Directory='InstallFolder' On='uninstall' />
         <RegistryKey Root="HKCU" Key="Software\RagnaCustoms\RagnaCustoms">
-          <RegistryValue Name="MainExe" Value="1" KeyPath="yes" Type="integer" />
+          <RegistryValue Name="RagnaInstaller" Value="1" KeyPath="yes" Type="integer" />
         </RegistryKey>
 			  <File Id="RagnaCustoms.Launcher.exe" Name="RagnaCustoms.Launcher.exe" Source="$(var.RagnaCustoms.Launcher_TargetDir)RagnaCustoms.Launcher.exe" />
 			  <File Id="Octokit.dll" Name="Octokit.dll" Source="$(var.RagnaCustoms.Launcher_TargetDir)Octokit.dll" />
@@ -47,4 +52,17 @@
       </Component>
     </DirectoryRef>
 	</Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="AppFolder_files" Directory="AppFolder">
+      <Component Id="RagnaCustomsApp" Guid="19fb1f3f-afc2-417a-8a7e-c5fcf704c7f7">
+        <RemoveFolder Id="AppFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\RagnaCustoms\RagnaCustoms" Name="RagnaApp" Type="integer" Value="1" KeyPath="yes"/>
+        <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.RagnaCustoms.App_TargetDir)Newtonsoft.Json.dll" />
+        <File Id="System.Net.Http.Formatting.dll" Name="System.Net.Http.Formatting.dll" Source="$(var.RagnaCustoms.App_TargetDir)System.Net.Http.Formatting.dll" />
+        <File Id="RagnaCustoms.exe.config" Name="RagnaCustoms.exe.config" Source="$(var.RagnaCustoms.App_TargetDir)RagnaCustoms.exe.config" />
+        <File Id="RagnaCustoms.exe" Name="RagnaCustoms.exe" Source="$(var.RagnaCustoms.App_TargetDir)RagnaCustoms.exe" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
 </Wix>
