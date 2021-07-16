@@ -45,7 +45,7 @@ namespace RagnaCustoms.App
 
                 downloadingPresenter.Download(songId);
 
-                Application.Run(downloadingView);
+                Application.Run(downloadingView); 
             }
             else
             {

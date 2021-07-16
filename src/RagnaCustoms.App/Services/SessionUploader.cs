@@ -45,9 +45,11 @@ namespace RagnaCustoms.Services
         public string HashInfo { get; set; }
         public string Score { get; set; }
         public string Level { get; set; }
+        public string AppVersion { get; set; }
 
         public SessionModel(string hashInfo, string score, string level)
         {
+            AppVersion =  "1.2.3";
             HashInfo = hashInfo;
             Score = score;
             Level = level;

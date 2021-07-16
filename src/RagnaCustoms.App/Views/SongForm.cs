@@ -2,6 +2,8 @@
 using RagnaCustoms.Presenters;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -64,6 +66,12 @@ namespace RagnaCustoms.Views
         private void SendScoreMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             Presenter.SendScoreAutomatically = SendScoreAutomaticallyMenuItem.Checked;
+        }
+
+        private void logFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var dir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+            Process.Start("explorer.exe", dir);
         }
     }
 }
