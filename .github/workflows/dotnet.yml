@@ -30,18 +30,31 @@ jobs:
     - name: Build Solution
       run: msbuild /nologo src\RagnaCustoms.sln /p:Configuration=Release /p:Platform="Any CPU"
       
-    - name: Prepare Zip
+    - name: Zip RagnaCustoms.App
       uses: papeloto/action-zip@v1
       with:
         files: src\RagnaCustoms.App\bin\Release
         dest:  RagnaCustoms.zip
 
-    - name: Publish Solution
+    - name: Publish release
+      if: ${{ github.event_name == 'release' && github.event.action == 'created' }}
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: "latest"
         prerelease: false
+        title: "Latest build"
+        files: |
+          src/RagnaCustoms.Installer2/bin/Release/RagnaCustoms.Installer2.msi
+          RagnaCustoms.zip
+
+    - name: Publish pre-release
+      if: ${{ ! (github.event_name == 'release' && github.event.action == 'created') }}
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: true
         title: "Latest build"
         files: |
           src/RagnaCustoms.Installer2/bin/Release/RagnaCustoms.Installer2.msi
