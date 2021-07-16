@@ -31,7 +31,7 @@ jobs:
       run: msbuild src\RagnaCustoms.sln /t:restore
 
     - name: Build Solution
-      run: msbuild src\RagnaCustoms.sln /p:Configuration=Release
+      run: msbuild src\RagnaCustoms.sln /p:Configuration=Release /p:Platform="Any CPU"
       
     - name: Prepare Zip
       uses: papeloto/action-zip@v1
