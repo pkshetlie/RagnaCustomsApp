@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"><?define RagnaCustoms.Launcher_TargetDir=$(var.RagnaCustoms.Launcher.TargetDir)?>
+	<Product Id="*" Name="RagnaCustoms.Installer2" Language="1033" Version="1.0.0.0" Manufacturer="a" UpgradeCode="fdb857c0-f926-4cd9-b45e-dff05b91a34c">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" InstallPrivileges="limited"  />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+		<Feature Id="ProductFeature" Title="RagnaCustoms.Installer2" Level="1">
+      <ComponentRef  Id="RagnaCustomsApp" />
+      <ComponentRef  Id="RagnaCustomsShortcut" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="LocalAppDataFolder">
+				<Directory Id="InstallFolder" Name="RagnaCustoms.Installer2" />
+			</Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="RagnaCustoms"/>
+      </Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+    <DirectoryRef Id="InstallFolder">	
+			<Component Id="RagnaCustomsApp" Guid="81c744cc-b0fd-49d4-aba9-58ac3965d36e">
+        <RemoveFolder Id='RemoveProgramMenuDir' Directory='InstallFolder' On='uninstall' />
+        <RegistryKey Root="HKCU" Key="Software\RagnaCustoms\RagnaCustoms">
+          <RegistryValue Name="MainExe" Value="1" KeyPath="yes" Type="integer" />
+        </RegistryKey>
+			  <File Id="RagnaCustoms.Launcher.exe" Name="RagnaCustoms.Launcher.exe" Source="$(var.RagnaCustoms.Launcher_TargetDir)RagnaCustoms.Launcher.exe" />
+			  <File Id="Octokit.dll" Name="Octokit.dll" Source="$(var.RagnaCustoms.Launcher_TargetDir)Octokit.dll" />
+			</Component>
+		</DirectoryRef>
+    
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="RagnaCustomsShortcut" Guid="81c744cc-b0fd-49d4-aba9-58ac3965d36f">
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\RagnaCustoms\RagnaCustoms" Name="Shorcut" Type="integer" Value="1" KeyPath="yes"/>
+        <Shortcut Id="ApplicationStartMenuShortcut"
+          Name="RagnaCustoms"
+          Description="RagnaCustoms"
+          Target="[#RagnaCustoms.Launcher.exe]"
+          WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+      </Component>
+    </DirectoryRef>
+	</Fragment>
+</Wix>
