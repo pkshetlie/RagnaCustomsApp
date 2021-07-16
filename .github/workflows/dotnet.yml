@@ -39,11 +39,6 @@ jobs:
         files: src\RagnaCustoms.App\bin\Release
         dest:  RagnaCustoms.zip
 
-  publish:
-
-    runs-on: windows-latest
-
-    steps:
     - name: Publish Solution
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
