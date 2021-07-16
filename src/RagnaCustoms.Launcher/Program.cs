@@ -23,7 +23,7 @@ namespace RagnaCustoms.Launcher
         const string AppName = "RagnaCustoms.exe";
 
         const string GitHubProductName = "RagnaCustoms.Launcher";
-        const string GitHubAppOwner = "Crypt0-M3lon";
+        const string GitHubAppOwner = "pkshetlie";
         const string GitHubRepoName = "RagnaCustomsApp";
         const string GitHubAppAssetName = "RagnaCustoms.zip";
 
