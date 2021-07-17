@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\Session.cs" />
+    <Compile Include="Models\Logs.cs" />
     <Compile Include="Models\Song.cs" />
     <Compile Include="Presenters\DownloadingPresenter.cs" />
     <Compile Include="Presenters\IDownloadingPresenter.cs" />
@@ -87,6 +88,12 @@
     </Compile>
     <Compile Include="Views\DownloadingForm.Designer.cs">
       <DependentUpon>DownloadingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LogsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\LogsForm.Designer.cs">
+      <DependentUpon>LogsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\IDownloadingView.cs" />
     <Compile Include="Views\ISongView.cs" />
@@ -109,6 +116,9 @@
     </Compile>
     <EmbeddedResource Include="Views\DownloadingForm.resx">
       <DependentUpon>DownloadingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\LogsForm.resx">
+      <DependentUpon>LogsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SongForm.resx">
       <DependentUpon>SongForm.cs</DependentUpon>

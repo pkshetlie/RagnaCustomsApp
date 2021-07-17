@@ -47,6 +47,7 @@ namespace RagnaCustoms.Views
             this.ApiKeyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logsScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.SearchResultGridView)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -200,7 +201,8 @@ namespace RagnaCustoms.Views
             // HelpMenuItem
             // 
             this.HelpMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.logFileToolStripMenuItem});
+            this.logFileToolStripMenuItem,
+            this.logsScreenToolStripMenuItem});
             this.HelpMenuItem.Name = "HelpMenuItem";
             this.HelpMenuItem.Size = new System.Drawing.Size(44, 20);
             this.HelpMenuItem.Text = "&Help";
@@ -211,6 +213,13 @@ namespace RagnaCustoms.Views
             this.logFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.logFileToolStripMenuItem.Text = "Log file";
             this.logFileToolStripMenuItem.Click += new System.EventHandler(this.logFileToolStripMenuItem_Click);
+            // 
+            // logsScreenToolStripMenuItem
+            // 
+            this.logsScreenToolStripMenuItem.Name = "logsScreenToolStripMenuItem";
+            this.logsScreenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.logsScreenToolStripMenuItem.Text = "Logs screen";
+            this.logsScreenToolStripMenuItem.Click += new System.EventHandler(this.logScreenToolStripMenuItem_Click);
             // 
             // SongForm
             // 
@@ -255,5 +264,6 @@ namespace RagnaCustoms.Views
         private System.Windows.Forms.DataGridViewTextBoxColumn SongMapper;
         private System.Windows.Forms.DataGridViewButtonColumn SongDownload;
         private System.Windows.Forms.ToolStripMenuItem logFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem logsScreenToolStripMenuItem;
     }
 }

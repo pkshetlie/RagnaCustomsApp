@@ -73,5 +73,11 @@ namespace RagnaCustoms.Views
             var dir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
             Process.Start("explorer.exe", dir);
         }
+
+        private void logScreenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            App.Views.LogsForm logsForm = new App.Views.LogsForm();
+            logsForm.Show();
+        }
     }
 }
