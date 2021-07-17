@@ -30,6 +30,7 @@ namespace RagnaCustoms.App.Views
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LogsForm));
             this.LogsDataGridView = new System.Windows.Forms.DataGridView();
             this.dateLogsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.songNameLogsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -171,6 +172,7 @@ namespace RagnaCustoms.App.Views
             this.Controls.Add(this.button1);
             this.Controls.Add(this.LogsDataGridView);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
