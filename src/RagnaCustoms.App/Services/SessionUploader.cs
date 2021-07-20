@@ -49,7 +49,7 @@ namespace RagnaCustoms.Services
 
         public SessionModel(string hashInfo, string score, string level)
         {
-            AppVersion =  "1.2.3";
+            AppVersion = "1.2.4";
             HashInfo = hashInfo;
             Score = score;
             Level = level;
