@@ -39,17 +39,13 @@ jobs:
         files: src\RagnaCustoms.App\bin\Release
         dest:  RagnaCustoms.zip
 
-    - name: Publish release
+    - name: Upload Zip to release
       if: ${{ github.event_name == 'release' && github.event.action == 'created' }}
-      uses: "marvinpinto/action-automatic-releases@latest"
+      uses: svenstaro/upload-release-action@v2
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: ${{ github.event.release.tag_name }}
-        prerelease: false
-        title: ${{ github.event.release.tag_name }}
-        files: |
-          src/RagnaCustoms.Installer2/bin/Release/RagnaCustoms.Installer2.msi
-          RagnaCustoms.zip
+        tag: ${{ github.ref }}
+        file: RagnaCustoms.zip
 
     - name: Publish pre-release
       if: ${{ github.event_name == 'push' }}
