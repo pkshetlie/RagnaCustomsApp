@@ -46,6 +46,14 @@ jobs:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         tag: ${{ github.ref }}
         file: RagnaCustoms.zip
+    
+    - name: Upload MSI to release
+      if: ${{ github.event_name == 'release' && github.event.action == 'created' }}
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        tag: ${{ github.ref }}
+        file: src/RagnaCustoms.Installer2/bin/Release/RagnaCustoms.Installer2.msi
 
     - name: Publish pre-release
       if: ${{ github.event_name == 'push' }}
