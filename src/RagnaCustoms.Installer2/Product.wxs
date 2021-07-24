@@ -10,7 +10,7 @@
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate EmbedCab="yes" />
 
-		<Feature Id="ProductFeature" Title="RagnaCustoms.Installer2" Level="1">
+		<Feature Id="ProductFeature" Title="RagnaCustoms.Installer" Level="1">
       <ComponentRef  Id="RagnaCustomsInstaller" />
       <ComponentRef  Id="RagnaCustomsApp" />
       <ComponentRef  Id="RagnaCustomsShortcut" />
@@ -57,7 +57,7 @@
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="LocalAppDataFolder">
-				<Directory Id="InstallFolder" Name="RagnaCustoms2" >
+				<Directory Id="InstallFolder" Name="RagnaCustoms" >
           <Directory Id="AppFolder" Name="RagnaCustoms.App"/>
         </Directory>
 			</Directory>

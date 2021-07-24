@@ -54,6 +54,7 @@ jobs:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         tag: ${{ github.ref }}
         file: src/RagnaCustoms.Installer2/bin/Release/RagnaCustoms.Installer2.msi
+        asset_name: RagnaCustoms.Installer.msi
 
     - name: Publish pre-release
       if: ${{ github.event_name == 'push' }}
