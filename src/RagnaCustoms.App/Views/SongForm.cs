@@ -1,4 +1,5 @@
-﻿using RagnaCustoms.Models;
+﻿using RagnaCustoms.App.Views;
+using RagnaCustoms.Models;
 using RagnaCustoms.Presenters;
 using System;
 using System.Collections.Generic;
@@ -72,6 +73,11 @@ namespace RagnaCustoms.Views
         {
             var dir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
             Process.Start("explorer.exe", dir);
+        }
+
+        private void twitchBotToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           (new TwitchBotForm()).ShowDialog();
         }
     }
 }

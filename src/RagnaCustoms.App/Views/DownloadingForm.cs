@@ -26,5 +26,10 @@ namespace RagnaCustoms.Views
         {
             MessageBox.Show(this, message, title, MessageBoxButtons.OK, MessageBoxIcon.None);
         }
+
+        private void DownloadingForm_Load(object sender, System.EventArgs e)
+        {
+
+        }
     }
 }

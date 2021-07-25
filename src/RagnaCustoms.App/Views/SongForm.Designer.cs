@@ -47,6 +47,7 @@ namespace RagnaCustoms.Views
             this.ApiKeyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.twitchBotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.SearchResultGridView)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -175,16 +176,15 @@ namespace RagnaCustoms.Views
             // 
             this.ToolsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.SendScoreAutomaticallyMenuItem,
-            this.ApiKeyMenuItem});
+            this.ApiKeyMenuItem,
+            this.twitchBotToolStripMenuItem});
             this.ToolsMenuItem.Name = "ToolsMenuItem";
             this.ToolsMenuItem.Size = new System.Drawing.Size(46, 20);
             this.ToolsMenuItem.Text = "&Tools";
             // 
             // SendScoreAutomaticallyMenuItem
             // 
-            this.SendScoreAutomaticallyMenuItem.Checked = true;
             this.SendScoreAutomaticallyMenuItem.CheckOnClick = true;
-            this.SendScoreAutomaticallyMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.SendScoreAutomaticallyMenuItem.Name = "SendScoreAutomaticallyMenuItem";
             this.SendScoreAutomaticallyMenuItem.Size = new System.Drawing.Size(206, 22);
             this.SendScoreAutomaticallyMenuItem.Text = "&Send score automatically";
@@ -208,9 +208,16 @@ namespace RagnaCustoms.Views
             // logFileToolStripMenuItem
             // 
             this.logFileToolStripMenuItem.Name = "logFileToolStripMenuItem";
-            this.logFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.logFileToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.logFileToolStripMenuItem.Text = "Log file";
             this.logFileToolStripMenuItem.Click += new System.EventHandler(this.logFileToolStripMenuItem_Click);
+            // 
+            // twitchBotToolStripMenuItem
+            // 
+            this.twitchBotToolStripMenuItem.Name = "twitchBotToolStripMenuItem";
+            this.twitchBotToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.twitchBotToolStripMenuItem.Text = "TwitchBot";
+            this.twitchBotToolStripMenuItem.Click += new System.EventHandler(this.twitchBotToolStripMenuItem_Click);
             // 
             // SongForm
             // 
@@ -255,5 +262,6 @@ namespace RagnaCustoms.Views
         private System.Windows.Forms.DataGridViewTextBoxColumn SongMapper;
         private System.Windows.Forms.DataGridViewButtonColumn SongDownload;
         private System.Windows.Forms.ToolStripMenuItem logFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem twitchBotToolStripMenuItem;
     }
 }
