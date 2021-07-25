@@ -122,6 +122,9 @@
     <EmbeddedResource Include="Views\SongForm.resx">
       <DependentUpon>SongForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\TwitchBotForm.resx">
+      <DependentUpon>TwitchBotForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
