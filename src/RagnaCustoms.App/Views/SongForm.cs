@@ -23,6 +23,11 @@ namespace RagnaCustoms.Views
             get => SendScoreAutomaticallyMenuItem.Checked;
             set => SendScoreAutomaticallyMenuItem.Checked = value;
         }
+         public bool AutoCloseDownload
+        {
+            get => autoCloseDownloadToolStripMenuItem.Checked;
+            set => autoCloseDownloadToolStripMenuItem.Checked = value;
+        }
 
         public SongForm()
         {
@@ -87,7 +92,7 @@ namespace RagnaCustoms.Views
 
         private void autoCloseDownloadToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
-            Presenter.AutoCloseDownload =autoCloseDownloadToolStripMenuItem.Checked;
+            Presenter.AutoCloseDownload = autoCloseDownloadToolStripMenuItem.Checked;
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
