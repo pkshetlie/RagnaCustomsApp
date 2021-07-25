@@ -62,7 +62,7 @@ namespace RagnaCustoms.Models
             return Enumerable.Empty<SongSearchModel>();
         }
 
-        public virtual void DownloadAsync(int songId, Action<int> downloadProgressChanged, Action downloadCompleted)
+        public virtual void DownloadAsync(int songId, Action<int> downloadProgressChanged, Action<bool> downloadCompleted, bool autoClose = false)
         {
             using var client = new WebClient();
 
@@ -91,7 +91,7 @@ namespace RagnaCustoms.Models
                 File.Delete(tempFilePath);
                 Directory.Delete(tempDirectoryPath);
 
-                downloadCompleted?.Invoke();
+                downloadCompleted?.Invoke(autoClose);
             }
         }
 

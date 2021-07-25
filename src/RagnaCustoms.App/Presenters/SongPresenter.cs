@@ -24,6 +24,12 @@ namespace RagnaCustoms.Presenters
             set => Configuration.SendScoreAutomatically = value;
         }
 
+        public virtual bool AutoCloseDownload
+        {
+            get => Configuration.AutoCloseDownload;
+            set => Configuration.AutoCloseDownload = value;
+        }
+
         public SongPresenter(Configuration configuration, ISongView view, IDownloadingPresenter downloadingPresenter, ISongProvider songProvider)
         {
             Configuration = configuration;
@@ -45,7 +51,7 @@ namespace RagnaCustoms.Presenters
 
         public virtual void DownloadAsync(int songId)
         {
-            DownloadingPresenter.Download(songId);
+            DownloadingPresenter.Download(songId, Configuration.AutoCloseDownload);
             DownloadingPresenter.ShowAsPopup();
         }
 

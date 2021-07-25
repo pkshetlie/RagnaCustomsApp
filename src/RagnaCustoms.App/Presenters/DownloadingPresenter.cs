@@ -22,11 +22,11 @@ namespace RagnaCustoms.Presenters
         public virtual void ShowAsPopup() => View.ShowAsPopup();
         public virtual void Close() => View.Close();
 
-        public virtual void Download(int songId)
+        public virtual void Download(int songId, bool autoClose = false)
         {
             View.DownloadPercent = default;
 
-            SongProvider.DownloadAsync(songId, DownloadProgressChanged, DownloadCompleted);
+            SongProvider.DownloadAsync(songId, DownloadProgressChanged, DownloadCompleted, autoClose);
         }
 
         public virtual void DownloadProgressChanged(int downloadPercent)
@@ -34,9 +34,12 @@ namespace RagnaCustoms.Presenters
             View.DownloadPercent = downloadPercent;
         }
 
-        public virtual void DownloadCompleted()
+        public virtual void DownloadCompleted(bool autoClose = false)
         {
-            View.ShowSuccessMessage("Download completed successfuly.", "Information");
+            if (!autoClose)
+            {
+                View.ShowSuccessMessage("Download completed successfuly.", "Information");
+            }
             View.Close();
         }
     }

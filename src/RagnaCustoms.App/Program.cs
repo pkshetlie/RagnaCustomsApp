@@ -43,7 +43,7 @@ namespace RagnaCustoms.App
                 var songIdStr = uri.Replace(RagnacInstallCommand, string.Empty);
                 var songId = int.Parse(songIdStr);
 
-                downloadingPresenter.Download(songId);
+                downloadingPresenter.Download(songId, false);
 
                 Application.Run(downloadingView); 
             }
@@ -55,11 +55,14 @@ namespace RagnaCustoms.App
                 var songResultParser = new SessionParser(RagnarockSongLogsFilePath);
                 songResultParser.OnNewSession += async (session) => await sessionUploader.UploadAsync(configuration.ApiKey, session);
                 songResultParser.StartAsync();
-
+                
                 // Create first view to display
                 var songView = new SongForm();
                 var songPresenter = new SongPresenter(configuration, songView, downloadingPresenter, songProvider);
-
+                if (string.IsNullOrEmpty(configuration.ApiKey))
+                {
+                    MessageBox.Show(songView,"Be careful, the API key is missing.\r\nGo to Tools > Score system > Configure Api key... " , "API key is missing", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
                 Application.Run(songView);
             }
         }

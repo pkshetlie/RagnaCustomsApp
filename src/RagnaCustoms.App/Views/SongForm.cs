@@ -77,7 +77,22 @@ namespace RagnaCustoms.Views
 
         private void twitchBotToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           (new TwitchBotForm()).ShowDialog();
+           (new TwitchBotForm()).Show();
+        }
+
+        private void testToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void autoCloseDownloadToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            Presenter.AutoCloseDownload =autoCloseDownloadToolStripMenuItem.Checked;
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            (new AboutForm()).ShowDialog();
         }
     }
 }

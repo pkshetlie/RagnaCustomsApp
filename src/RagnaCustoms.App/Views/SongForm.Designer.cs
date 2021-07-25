@@ -43,11 +43,15 @@ namespace RagnaCustoms.Views
             this.FileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.twitchBotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scoreSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SendScoreAutomaticallyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ApiKeyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.autoCloseDownloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.twitchBotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.SearchResultGridView)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -175,12 +179,28 @@ namespace RagnaCustoms.Views
             // ToolsMenuItem
             // 
             this.ToolsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SendScoreAutomaticallyMenuItem,
-            this.ApiKeyMenuItem,
-            this.twitchBotToolStripMenuItem});
+            this.twitchBotToolStripMenuItem,
+            this.scoreSystemToolStripMenuItem,
+            this.settingsToolStripMenuItem});
             this.ToolsMenuItem.Name = "ToolsMenuItem";
             this.ToolsMenuItem.Size = new System.Drawing.Size(46, 20);
             this.ToolsMenuItem.Text = "&Tools";
+            // 
+            // twitchBotToolStripMenuItem
+            // 
+            this.twitchBotToolStripMenuItem.Name = "twitchBotToolStripMenuItem";
+            this.twitchBotToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.twitchBotToolStripMenuItem.Text = "TwitchBot";
+            this.twitchBotToolStripMenuItem.Click += new System.EventHandler(this.twitchBotToolStripMenuItem_Click);
+            // 
+            // scoreSystemToolStripMenuItem
+            // 
+            this.scoreSystemToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SendScoreAutomaticallyMenuItem,
+            this.ApiKeyMenuItem});
+            this.scoreSystemToolStripMenuItem.Name = "scoreSystemToolStripMenuItem";
+            this.scoreSystemToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.scoreSystemToolStripMenuItem.Text = "Score system";
             // 
             // SendScoreAutomaticallyMenuItem
             // 
@@ -197,10 +217,27 @@ namespace RagnaCustoms.Views
             this.ApiKeyMenuItem.Text = "&Configure API key...";
             this.ApiKeyMenuItem.Click += new System.EventHandler(this.ApiKeyMenuItem_Click);
             // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.autoCloseDownloadToolStripMenuItem});
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            // 
+            // autoCloseDownloadToolStripMenuItem
+            // 
+            this.autoCloseDownloadToolStripMenuItem.CheckOnClick = true;
+            this.autoCloseDownloadToolStripMenuItem.Name = "autoCloseDownloadToolStripMenuItem";
+            this.autoCloseDownloadToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.autoCloseDownloadToolStripMenuItem.Text = "Auto close download";
+            this.autoCloseDownloadToolStripMenuItem.CheckedChanged += new System.EventHandler(this.autoCloseDownloadToolStripMenuItem_CheckedChanged);
+            // 
             // HelpMenuItem
             // 
             this.HelpMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.logFileToolStripMenuItem});
+            this.logFileToolStripMenuItem,
+            this.aboutToolStripMenuItem});
             this.HelpMenuItem.Name = "HelpMenuItem";
             this.HelpMenuItem.Size = new System.Drawing.Size(44, 20);
             this.HelpMenuItem.Text = "&Help";
@@ -208,16 +245,16 @@ namespace RagnaCustoms.Views
             // logFileToolStripMenuItem
             // 
             this.logFileToolStripMenuItem.Name = "logFileToolStripMenuItem";
-            this.logFileToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.logFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.logFileToolStripMenuItem.Text = "Log file";
             this.logFileToolStripMenuItem.Click += new System.EventHandler(this.logFileToolStripMenuItem_Click);
             // 
-            // twitchBotToolStripMenuItem
+            // aboutToolStripMenuItem
             // 
-            this.twitchBotToolStripMenuItem.Name = "twitchBotToolStripMenuItem";
-            this.twitchBotToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.twitchBotToolStripMenuItem.Text = "TwitchBot";
-            this.twitchBotToolStripMenuItem.Click += new System.EventHandler(this.twitchBotToolStripMenuItem_Click);
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // SongForm
             // 
@@ -252,9 +289,7 @@ namespace RagnaCustoms.Views
         private System.Windows.Forms.ToolStripMenuItem FileMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ToolsMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem SendScoreAutomaticallyMenuItem;
         private System.Windows.Forms.ToolStripMenuItem HelpMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ApiKeyMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn SongName;
         private System.Windows.Forms.DataGridViewTextBoxColumn SongDifficulties;
@@ -263,5 +298,11 @@ namespace RagnaCustoms.Views
         private System.Windows.Forms.DataGridViewButtonColumn SongDownload;
         private System.Windows.Forms.ToolStripMenuItem logFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem twitchBotToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem scoreSystemToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem autoCloseDownloadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem SendScoreAutomaticallyMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ApiKeyMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }

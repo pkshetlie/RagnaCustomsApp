@@ -1,4 +1,6 @@
 ﻿
+using RagnaCustoms.Services;
+
 namespace RagnaCustoms.App.Views
 {
     partial class TwitchBotForm
@@ -29,6 +31,7 @@ namespace RagnaCustoms.App.Views
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TwitchBotForm));
             this.botMessagePrefixLabel = new System.Windows.Forms.Label();
             this.prefix = new System.Windows.Forms.TextBox();
             this.songRequests = new System.Windows.Forms.DataGridView();
@@ -36,8 +39,6 @@ namespace RagnaCustoms.App.Views
             this.Author = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Viewer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.refreshApps = new System.Windows.Forms.Button();
-            this.ragnarockApp = new System.Windows.Forms.Label();
             this.bot_enabled = new System.Windows.Forms.CheckBox();
             this.twitchChannel = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -45,7 +46,6 @@ namespace RagnaCustoms.App.Views
             this.label2 = new System.Windows.Forms.Label();
             this.helptwitchtmi = new System.Windows.Forms.Label();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.versionLabel = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.songRequests)).BeginInit();
             this.SuspendLayout();
@@ -53,15 +53,16 @@ namespace RagnaCustoms.App.Views
             // botMessagePrefixLabel
             // 
             this.botMessagePrefixLabel.AutoSize = true;
-            this.botMessagePrefixLabel.Location = new System.Drawing.Point(515, 124);
+            this.botMessagePrefixLabel.Location = new System.Drawing.Point(15, 77);
             this.botMessagePrefixLabel.Name = "botMessagePrefixLabel";
             this.botMessagePrefixLabel.Size = new System.Drawing.Size(96, 13);
             this.botMessagePrefixLabel.TabIndex = 31;
             this.botMessagePrefixLabel.Text = "Bot message prefix";
+            this.botMessagePrefixLabel.Click += new System.EventHandler(this.botMessagePrefixLabel_Click);
             // 
             // prefix
             // 
-            this.prefix.Location = new System.Drawing.Point(617, 120);
+            this.prefix.Location = new System.Drawing.Point(166, 71);
             this.prefix.Name = "prefix";
             this.prefix.Size = new System.Drawing.Size(37, 20);
             this.prefix.TabIndex = 30;
@@ -75,9 +76,9 @@ namespace RagnaCustoms.App.Views
             this.Author,
             this.Viewer,
             this.Id});
-            this.songRequests.Location = new System.Drawing.Point(12, 146);
+            this.songRequests.Location = new System.Drawing.Point(12, 99);
             this.songRequests.Name = "songRequests";
-            this.songRequests.Size = new System.Drawing.Size(645, 373);
+            this.songRequests.Size = new System.Drawing.Size(645, 420);
             this.songRequests.TabIndex = 29;
             // 
             // Song
@@ -107,34 +108,16 @@ namespace RagnaCustoms.App.Views
             this.Id.Name = "Id";
             this.Id.ReadOnly = true;
             // 
-            // refreshApps
-            // 
-            this.refreshApps.Location = new System.Drawing.Point(56, 92);
-            this.refreshApps.Name = "refreshApps";
-            this.refreshApps.Size = new System.Drawing.Size(75, 76);
-            this.refreshApps.TabIndex = 27;
-            this.refreshApps.Text = "button1";
-            this.refreshApps.UseVisualStyleBackColor = true;
-            // 
-            // ragnarockApp
-            // 
-            this.ragnarockApp.AutoSize = true;
-            this.ragnarockApp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ragnarockApp.Location = new System.Drawing.Point(15, 100);
-            this.ragnarockApp.Name = "ragnarockApp";
-            this.ragnarockApp.Size = new System.Drawing.Size(35, 13);
-            this.ragnarockApp.TabIndex = 26;
-            this.ragnarockApp.Text = "label4";
-            // 
             // bot_enabled
             // 
             this.bot_enabled.AutoSize = true;
-            this.bot_enabled.Location = new System.Drawing.Point(15, 76);
+            this.bot_enabled.Location = new System.Drawing.Point(583, 73);
             this.bot_enabled.Name = "bot_enabled";
             this.bot_enabled.Size = new System.Drawing.Size(74, 17);
             this.bot_enabled.TabIndex = 25;
             this.bot_enabled.Text = "Enabled ?";
             this.bot_enabled.UseVisualStyleBackColor = true;
+            this.bot_enabled.CheckedChanged += new System.EventHandler(this.bot_enabled_CheckedChanged_1);
             // 
             // twitchChannel
             // 
@@ -142,6 +125,7 @@ namespace RagnaCustoms.App.Views
             this.twitchChannel.Name = "twitchChannel";
             this.twitchChannel.Size = new System.Drawing.Size(201, 20);
             this.twitchChannel.TabIndex = 24;
+            this.twitchChannel.TextChanged += new System.EventHandler(this.twitchChannel_TextChanged);
             // 
             // label3
             // 
@@ -159,6 +143,7 @@ namespace RagnaCustoms.App.Views
             this.twitchOAuth.PasswordChar = '*';
             this.twitchOAuth.Size = new System.Drawing.Size(201, 20);
             this.twitchOAuth.TabIndex = 22;
+            this.twitchOAuth.TextChanged += new System.EventHandler(this.twitchOAuth_TextChanged_1);
             // 
             // label2
             // 
@@ -175,29 +160,22 @@ namespace RagnaCustoms.App.Views
             this.helptwitchtmi.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.helptwitchtmi.Location = new System.Drawing.Point(15, 29);
             this.helptwitchtmi.Name = "helptwitchtmi";
-            this.helptwitchtmi.Size = new System.Drawing.Size(207, 13);
+            this.helptwitchtmi.Size = new System.Drawing.Size(171, 13);
             this.helptwitchtmi.TabIndex = 20;
-            this.helptwitchtmi.Text = "Récupérez votre clé Chat OAuth Twitch sur";
+            this.helptwitchtmi.Text = "Get your Chat OAuth Twitch key at ";
+            this.helptwitchtmi.Click += new System.EventHandler(this.helptwitchtmi_Click);
             // 
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
             this.linkLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel2.Location = new System.Drawing.Point(225, 29);
+            this.linkLabel2.Location = new System.Drawing.Point(192, 30);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(130, 13);
             this.linkLabel2.TabIndex = 19;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "https://twitchapps.com/tmi/";
-            // 
-            // versionLabel
-            // 
-            this.versionLabel.AutoSize = true;
-            this.versionLabel.Location = new System.Drawing.Point(20, 528);
-            this.versionLabel.Name = "versionLabel";
-            this.versionLabel.Size = new System.Drawing.Size(35, 13);
-            this.versionLabel.TabIndex = 32;
-            this.versionLabel.Text = "label5";
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked_1);
             // 
             // linkLabel1
             // 
@@ -209,6 +187,7 @@ namespace RagnaCustoms.App.Views
             this.linkLabel1.TabIndex = 28;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Application by twitch.tv/Rhokapa";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // TwitchBotForm
             // 
@@ -218,8 +197,6 @@ namespace RagnaCustoms.App.Views
             this.Controls.Add(this.botMessagePrefixLabel);
             this.Controls.Add(this.prefix);
             this.Controls.Add(this.songRequests);
-            this.Controls.Add(this.refreshApps);
-            this.Controls.Add(this.ragnarockApp);
             this.Controls.Add(this.bot_enabled);
             this.Controls.Add(this.twitchChannel);
             this.Controls.Add(this.label3);
@@ -227,10 +204,11 @@ namespace RagnaCustoms.App.Views
             this.Controls.Add(this.label2);
             this.Controls.Add(this.helptwitchtmi);
             this.Controls.Add(this.linkLabel2);
-            this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.linkLabel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TwitchBotForm";
             this.Text = "TwitchBotForm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TwitchBotForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.songRequests)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -246,8 +224,6 @@ namespace RagnaCustoms.App.Views
         private System.Windows.Forms.DataGridViewTextBoxColumn Author;
         private System.Windows.Forms.DataGridViewTextBoxColumn Viewer;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
-        private System.Windows.Forms.Button refreshApps;
-        private System.Windows.Forms.Label ragnarockApp;
         private System.Windows.Forms.CheckBox bot_enabled;
         private System.Windows.Forms.TextBox twitchChannel;
         private System.Windows.Forms.Label label3;
@@ -255,7 +231,6 @@ namespace RagnaCustoms.App.Views
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label helptwitchtmi;
         private System.Windows.Forms.LinkLabel linkLabel2;
-        private System.Windows.Forms.Label versionLabel;
         private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
