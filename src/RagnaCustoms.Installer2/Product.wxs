@@ -105,6 +105,7 @@
         <File Id="TwitchLib.Client.Models.dll" Name="TwitchLib.Client.Models.dll" Source="$(var.RagnaCustoms.App_TargetDir)TwitchLib.Client.Models.dll" />
         <File Id="TwitchLib.Communication.dll" Name="TwitchLib.Communication.dll" Source="$(var.RagnaCustoms.App_TargetDir)TwitchLib.Communication.dll" />
         <File Id="Microsoft.Extensions.Logging.Abstractions.dll" Name="Microsoft.Extensions.Logging.Abstractions.dll" Source="$(var.RagnaCustoms.App_TargetDir)Microsoft.Extensions.Logging.Abstractions.dll" />
+        <File Id="System.IO.Compression.dll" Name="System.IO.Compression.dll" Source="$(var.RagnaCustoms.App_TargetDir)System.IO.Compression.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
