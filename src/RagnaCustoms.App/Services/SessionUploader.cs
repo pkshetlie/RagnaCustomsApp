@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace RagnaCustoms.Services
 {
@@ -49,7 +50,7 @@ namespace RagnaCustoms.Services
 
         public SessionModel(string hashInfo, string score, string level)
         {
-            AppVersion =  "1.2.3";
+            AppVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             HashInfo = hashInfo;
             Score = score;
             Level = level;

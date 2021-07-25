@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?define ProductVersion="!(bind.FileVersion.RagnaCustomsLauncherexe)"?>
+<?define UpgradeCode="f4d7f199-28f6-45d5-ad99-7c62938274be"?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?define RagnaCustoms.Launcher_TargetDir=$(var.RagnaCustoms.Launcher.TargetDir)?>
+  <?define RagnaCustoms.App_TargetDir=$(var.RagnaCustoms.App.TargetDir)?>
+	<Product Id="*" Name="RagnaCustoms" Language="1033" Version="$(var.ProductVersion)" Manufacturer="RagnaCustoms" UpgradeCode="$(var.UpgradeCode)">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" InstallPrivileges="limited"  />
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+		<Feature Id="ProductFeature" Title="RagnaCustoms.Installer" Level="1">
+      <ComponentRef  Id="RagnaCustomsInstaller" />
+      <ComponentRef  Id="RagnaCustomsApp" />
+      <ComponentRef  Id="RagnaCustomsShortcut" />
+      <ComponentRef  Id="URLHandler"/>
+		</Feature>
+
+    <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+    
+    <UI Id="UserInterface">
+      <Property Id="WIXUI_INSTALLDIR" Value="TARGETDIR" />
+      <Property Id="WixUI_Mode" Value="Custom" />
+      <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1"/>
+      <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch RagnaCustoms" />
+      <Property Id="WixShellExecTarget" Value="[#RagnaCustomsLauncherexe]" />
+      
+      <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+      <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="9" Bold="yes" />
+      <TextStyle Id="WixUI_Font_Title"  FaceName="Tahoma" Size="9" Bold="yes" />
+
+      <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+
+      <DialogRef Id="ProgressDlg" />
+      <DialogRef Id="ErrorDlg" />
+      <DialogRef Id="FilesInUse" />
+      <DialogRef Id="FatalError" />
+      <DialogRef Id="UserExit" />
+
+      <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="EndDialog" Value="Return" Order="2"></Publish>
+      <Publish Dialog="ExitDialog"
+        Control="Finish"
+        Event="DoAction"
+        Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
+
+    </UI>
+    <UIRef Id="WixUI_Common" />
+    <WixVariable Id="WixUIDialogBmp" Value="background.png" />
+
+    <Icon Id="icon.ico" SourceFile="icon.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="icon.ico" />
+
+  </Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="LocalAppDataFolder">
+				<Directory Id="InstallFolder" Name="RagnaCustoms" >
+          <Directory Id="AppFolder" Name="RagnaCustoms.App"/>
+        </Directory>
+			</Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="RagnaCustoms"/>
+      </Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+    <DirectoryRef Id="InstallFolder">	
+			<Component Id="RagnaCustomsInstaller" Guid="81c744cc-b0fd-49d4-aba9-58ac3965d36e">
+        <RemoveFolder Id='RemoveProgramMenuDir' Directory='InstallFolder' On='uninstall' />
+        <RegistryKey Root="HKCU" Key="Software\RagnaCustoms\RagnaCustoms">
+          <RegistryValue Name="RagnaInstaller" Value="1" KeyPath="yes" Type="integer" />
+        </RegistryKey>
+			  <File Id="RagnaCustomsLauncherexe" Name="RagnaCustoms.Launcher.exe" Source="$(var.RagnaCustoms.Launcher_TargetDir)RagnaCustoms.Launcher.exe" />
+			  <File Id="Octokit.dll" Name="Octokit.dll" Source="$(var.RagnaCustoms.Launcher_TargetDir)Octokit.dll" />
+			</Component>
+		</DirectoryRef>
+    
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="RagnaCustomsShortcut" Guid="81c744cc-b0fd-49d4-aba9-58ac3965d36f">
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\RagnaCustoms\RagnaCustoms" Name="Shorcut" Type="integer" Value="1" KeyPath="yes"/>
+        <Shortcut Id="ApplicationStartMenuShortcut"
+          Name="RagnaCustoms"
+          Description="RagnaCustoms"
+          Target="[#RagnaCustomsLauncherexe]"
+          WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+      </Component>
+    </DirectoryRef>
+    
+    <ComponentGroup Id="AppFolder_files" Directory="AppFolder">
+      <Component Id="RagnaCustomsApp" Guid="19fb1f3f-afc2-417a-8a7e-c5fcf704c7f7">
+        <RemoveFolder Id="AppFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\RagnaCustoms\RagnaCustoms" Name="RagnaApp" Type="integer" Value="1" KeyPath="yes"/>
+        <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.RagnaCustoms.App_TargetDir)Newtonsoft.Json.dll" />
+        <File Id="System.Net.Http.Formatting.dll" Name="System.Net.Http.Formatting.dll" Source="$(var.RagnaCustoms.App_TargetDir)System.Net.Http.Formatting.dll" />
+        <File Id="RagnaCustoms.exe.config" Name="RagnaCustoms.exe.config" Source="$(var.RagnaCustoms.App_TargetDir)RagnaCustoms.exe.config" />
+        <File Id="RagnaCustomsexe" Name="RagnaCustoms.exe" Source="$(var.RagnaCustoms.App_TargetDir)RagnaCustoms.exe" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  
+  <Fragment> 
+    <Component Id="URLHandler" Guid="ead10692-e879-4067-addf-0de6c316d2c2" Directory="InstallFolder">
+      <RegistryValue Root="HKCU" Key="Software\RagnaCustoms\RagnaCustoms" Name="URLHandler" Type="integer" Value="1" KeyPath="yes"/>
+      <RegistryKey Root="HKCR" Key="ragnac">
+        <RegistryKey Key="shell\open\command">
+          <RegistryValue Value="&#34;[#RagnaCustomsexe]&#34; &#34;--install&#34; &#34;&#37;1&#34;"  Type="string" />
+        </RegistryKey>
+        <RegistryValue Name="URL Protocol" Value=""  Type="string" />
+        <RegistryValue Name="OneClickRS-Provider" Value="RagnaCustoms"  Type="string" />
+      </RegistryKey>
+    </Component>
+  </Fragment>
+</Wix>
