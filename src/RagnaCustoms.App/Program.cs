@@ -13,6 +13,7 @@ namespace RagnaCustoms.App
     static class Program
     {
         const string RagnacInstallCommand = "ragnac://install/";
+        const string RagnacApiCommand = "ragnac://api/";
 
         const string UploadSessionUri = "https://ragnacustoms.com/api/score/v2";
 
@@ -36,21 +37,30 @@ namespace RagnaCustoms.App
             var songProvider = new SongProvider();
             var downloadingView = new DownloadingForm();
             var downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
+            var configuration = new Configuration();
 
             if (args.Contains("--install"))
             {
                 var uri = args.ElementAtOrDefault(1);
-                var songIdStr = uri.Replace(RagnacInstallCommand, string.Empty);
-                var songId = int.Parse(songIdStr);
+                if (uri.StartsWith(RagnacInstallCommand))
+                {
+                    var songIdStr = uri.Replace(RagnacInstallCommand, string.Empty);
+                    var songId = int.Parse(songIdStr);
 
-                downloadingPresenter.Download(songId, false);
+                    downloadingPresenter.Download(songId);
 
-                Application.Run(downloadingView); 
+                    Application.Run(downloadingView);
+                }
+                else if (uri.StartsWith(RagnacApiCommand))
+                {
+                    var api = uri.Replace(RagnacApiCommand, string.Empty);
+                    configuration.ApiKey = api;
+                    MessageBox.Show("API key set", "RagnaCutoms", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                }
             }
             else
             {
                 // Starts background services
-                var configuration = new Configuration();
                 var sessionUploader = new SessionUploader(configuration, UploadSessionUri);
                 var songResultParser = new SessionParser(RagnarockSongLogsFilePath);
                 songResultParser.OnNewSession += async (session) => await sessionUploader.UploadAsync(configuration.ApiKey, session);
