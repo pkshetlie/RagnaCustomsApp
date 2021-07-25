@@ -29,6 +29,10 @@ namespace RagnaCustoms.App.Views
         {
             InitializeComponent();
             configuration = new Configuration();
+
+            twitchChannel.Text = configuration.TwitchChannel;
+            twitchOAuth.Text = configuration.AuthTmi;
+
         }
 
         private void linkLabel2_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
