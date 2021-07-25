@@ -100,9 +100,11 @@
         <File Id="RagnaCustoms.exe.config" Name="RagnaCustoms.exe.config" Source="$(var.RagnaCustoms.App_TargetDir)RagnaCustoms.exe.config" />
         <File Id="RagnaCustomsexe" Name="RagnaCustoms.exe" Source="$(var.RagnaCustoms.App_TargetDir)RagnaCustoms.exe" />
         <File Id="System.Net.Http.dll" Name="System.Net.Http.dll" Source="$(var.RagnaCustoms.App_TargetDir)System.Net.Http.dll" />
+        <File Id="TwitchLib.Client.dll" Name="TwitchLib.Client.dll" Source="$(var.RagnaCustoms.App_TargetDir)TwitchLib.Client.dll" />
         <File Id="TwitchLib.Client.Enums.dll" Name="TwitchLib.Client.Enums.dll" Source="$(var.RagnaCustoms.App_TargetDir)TwitchLib.Client.Enums.dll" />
         <File Id="TwitchLib.Client.Models.dll" Name="TwitchLib.Client.Models.dll" Source="$(var.RagnaCustoms.App_TargetDir)TwitchLib.Client.Models.dll" />
         <File Id="TwitchLib.Communication.dll" Name="TwitchLib.Communication.dll" Source="$(var.RagnaCustoms.App_TargetDir)TwitchLib.Communication.dll" />
+        <File Id="Microsoft.Extensions.Logging.Abstractions.dll" Name="Microsoft.Extensions.Logging.Abstractions.dll" Source="$(var.RagnaCustoms.App_TargetDir)Microsoft.Extensions.Logging.Abstractions.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
