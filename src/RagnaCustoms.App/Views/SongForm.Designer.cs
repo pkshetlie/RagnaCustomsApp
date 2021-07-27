@@ -204,11 +204,14 @@ namespace RagnaCustoms.Views
             // 
             // SendScoreAutomaticallyMenuItem
             // 
+            this.SendScoreAutomaticallyMenuItem.Checked = true;
             this.SendScoreAutomaticallyMenuItem.CheckOnClick = true;
+            this.SendScoreAutomaticallyMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.SendScoreAutomaticallyMenuItem.Name = "SendScoreAutomaticallyMenuItem";
             this.SendScoreAutomaticallyMenuItem.Size = new System.Drawing.Size(206, 22);
             this.SendScoreAutomaticallyMenuItem.Text = "&Send score automatically";
             this.SendScoreAutomaticallyMenuItem.CheckedChanged += new System.EventHandler(this.SendScoreMenuItem_CheckedChanged);
+            this.SendScoreAutomaticallyMenuItem.Click += new System.EventHandler(this.SendScoreAutomaticallyMenuItem_Click);
             // 
             // ApiKeyMenuItem
             // 
@@ -245,14 +248,14 @@ namespace RagnaCustoms.Views
             // logFileToolStripMenuItem
             // 
             this.logFileToolStripMenuItem.Name = "logFileToolStripMenuItem";
-            this.logFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.logFileToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.logFileToolStripMenuItem.Text = "Log file";
             this.logFileToolStripMenuItem.Click += new System.EventHandler(this.logFileToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 

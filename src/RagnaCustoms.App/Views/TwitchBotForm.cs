@@ -83,7 +83,7 @@ namespace RagnaCustoms.App.Views
         private void OnConnected(object sender, OnConnectedArgs e)
         {
             joinedChannel = TwitchClient.GetJoinedChannel(twitchChannel.Text);
-            TwitchClient.SendMessage(joinedChannel, $"{prefixe} Ragnacusoms.com's bot connected");
+            TwitchClient.SendMessage(joinedChannel, $"{prefixe} Ragnacustoms.com's bot connected");
             //TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.app.strings.WelcomeBot}");
         }
         public bool QueueIsOpen = true;

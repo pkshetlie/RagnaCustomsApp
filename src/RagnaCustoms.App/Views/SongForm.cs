@@ -99,5 +99,10 @@ namespace RagnaCustoms.Views
         {
             (new AboutForm()).ShowDialog();
         }
+
+        private void SendScoreAutomaticallyMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
