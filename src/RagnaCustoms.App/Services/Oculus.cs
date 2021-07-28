@@ -74,12 +74,12 @@ namespace RagnaCustoms.Services
                         var songToSync = $"{LocalRagnarockSongDirectoryPath}\\{folderName}";
                         var destinationFolder = $"{QuestSongDirectoryPath}\\{folderName}";
 
-                        /*syncingView.SyncingLabel.Text = $"Copying {folderName}";
+                        syncingView.SyncingLabel.Text = $"Copying {folderName}";
                         if (device.DirectoryExists(destinationFolder))
                         {
                             device.DeleteDirectory(destinationFolder, true);
-                        }*/
-                        /*device.CreateDirectory(destinationFolder);*/
+                        }
+                        device.CreateDirectory(destinationFolder);
 
                         device.UploadFolder(songToSync, destinationFolder);
                         syncingView.SyncingProgressBar.PerformStep();
