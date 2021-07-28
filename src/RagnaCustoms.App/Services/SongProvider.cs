@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using RagnaCustoms.Services;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -90,6 +91,8 @@ namespace RagnaCustoms.Models
 
                 File.Delete(tempFilePath);
                 Directory.Delete(tempDirectoryPath);
+
+                Oculus.PushSong(ragnarockSongDirectoryPath);
 
                 downloadCompleted?.Invoke(autoClose);
             }

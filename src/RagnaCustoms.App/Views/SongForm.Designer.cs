@@ -52,6 +52,9 @@ namespace RagnaCustoms.Views
             this.HelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.questToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkAccessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.syncSongsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.SearchResultGridView)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -153,6 +156,7 @@ namespace RagnaCustoms.Views
             this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FileMenuItem,
             this.ToolsMenuItem,
+            this.questToolStripMenuItem,
             this.HelpMenuItem});
             this.Menu.Location = new System.Drawing.Point(0, 0);
             this.Menu.Name = "Menu";
@@ -172,7 +176,7 @@ namespace RagnaCustoms.Views
             // ExitMenuItem
             // 
             this.ExitMenuItem.Name = "ExitMenuItem";
-            this.ExitMenuItem.Size = new System.Drawing.Size(93, 22);
+            this.ExitMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ExitMenuItem.Text = "E&xit";
             this.ExitMenuItem.Click += new System.EventHandler(this.ExitMenuItem_Click);
             // 
@@ -259,6 +263,29 @@ namespace RagnaCustoms.Views
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
+            // questToolStripMenuItem
+            // 
+            this.questToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.checkAccessToolStripMenuItem,
+            this.syncSongsToolStripMenuItem});
+            this.questToolStripMenuItem.Name = "questToolStripMenuItem";
+            this.questToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.questToolStripMenuItem.Text = "Quest";
+            // 
+            // checkAccessToolStripMenuItem
+            // 
+            this.checkAccessToolStripMenuItem.Name = "checkAccessToolStripMenuItem";
+            this.checkAccessToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.checkAccessToolStripMenuItem.Text = "Check access";
+            this.checkAccessToolStripMenuItem.Click += new System.EventHandler(this.checkAccessToolStripMenuItem_Click);
+            // 
+            // syncSongsToolStripMenuItem
+            // 
+            this.syncSongsToolStripMenuItem.Name = "syncSongsToolStripMenuItem";
+            this.syncSongsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.syncSongsToolStripMenuItem.Text = "Sync songs";
+            this.syncSongsToolStripMenuItem.Click += new System.EventHandler(this.syncSongsToolStripMenuItem_Click);
+            // 
             // SongForm
             // 
             this.AcceptButton = this.SearchButton;
@@ -307,5 +334,8 @@ namespace RagnaCustoms.Views
         private System.Windows.Forms.ToolStripMenuItem SendScoreAutomaticallyMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ApiKeyMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem questToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkAccessToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem syncSongsToolStripMenuItem;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using RagnaCustoms.App.Views;
 using RagnaCustoms.Models;
 using RagnaCustoms.Presenters;
+using RagnaCustoms.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -103,6 +104,34 @@ namespace RagnaCustoms.Views
         private void SendScoreAutomaticallyMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void checkAccessToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            var device = Oculus.GetDevice();
+            if(device != null)
+            {
+                MessageBox.Show($"{device.Manufacturer} {device.Description} found", "RagnaCutoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("No compatible device found", "RagnaCutoms", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void syncSongsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var result = Oculus.SyncSongs();
+            if (result == 0)
+            {
+                MessageBox.Show("Sync complete", "RagnaCutoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (result == 1)
+            {
+                MessageBox.Show("No compatible device found", "RagnaCutoms", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }  
         }
     }
 }
