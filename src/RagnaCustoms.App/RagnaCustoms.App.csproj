@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\Song.cs" />

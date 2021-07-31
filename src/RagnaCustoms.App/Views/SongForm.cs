@@ -133,5 +133,10 @@ namespace RagnaCustoms.Views
                 MessageBox.Show("No compatible device found", "RagnaCutoms", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }  
         }
+
+        private void compareSongsVersionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Presenter.CompareSongsAsync();
+        }
     }
 }

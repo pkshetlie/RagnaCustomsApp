@@ -6,10 +6,12 @@ namespace RagnaCustoms.Models
 {
     public interface ISongProvider
     {
-        void DownloadAsync(int songId, Action<int> downloadProgressChanged, Action<bool> downloadCompleted, bool autoClose);
+        Task DownloadAsync(int songId, Action<int> downloadProgressChanged, Action<bool> downloadCompleted, bool autoClose);
 
         IEnumerable<Song> SearchLocal();
         IEnumerable<Song> SearchLocal(string term);
         Task<IEnumerable<SongSearchModel>> SearchOnlineAsync(string term);
+        Task<SongSearchModel> SearchOnlineAsync(int id);
+        Task<IEnumerable<SongSearchModel>> CompareSongsWithOnlineAsync();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using RagnaCustoms.Models;
 using RagnaCustoms.Services;
 using RagnaCustoms.Views;
+using System;
 using System.Threading.Tasks;
 
 namespace RagnaCustoms.Presenters
@@ -72,6 +73,11 @@ namespace RagnaCustoms.Presenters
         public virtual void SetApiKey(string apiKey)
         {
             Configuration.ApiKey = apiKey;
+        }
+
+        internal async Task CompareSongsAsync()
+        {
+            View.Songs = await SongProvider.CompareSongsWithOnlineAsync();
         }
     }
 }
