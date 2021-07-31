@@ -47,7 +47,7 @@ namespace RagnaCustoms.App
                     var songIdStr = uri.Replace(RagnacInstallCommand, string.Empty);
                     var songId = int.Parse(songIdStr);
 
-                    downloadingPresenter.Download(songId);
+                    downloadingPresenter.Download(songId, configuration.AutoCloseDownload);
 
                     Application.Run(downloadingView);
                 }
