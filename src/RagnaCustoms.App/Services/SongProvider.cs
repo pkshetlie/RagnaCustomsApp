@@ -87,10 +87,25 @@ namespace RagnaCustoms.Models
                 if (Directory.Exists(ragnarockSongDirectoryPath))
                     Directory.Delete(ragnarockSongDirectoryPath, recursive: true);
 
-                songDirectory.MoveTo(ragnarockSongDirectoryPath);
+                if (Path.GetPathRoot(ragnarockSongDirectoryPath) == songDirectory.Root.FullName)
+                {
+                    songDirectory.MoveTo(ragnarockSongDirectoryPath);
+                }
+                else
+                {
+                    Directory.CreateDirectory(ragnarockSongDirectoryPath);
+
+                    FileInfo[] files = songDirectory.GetFiles();
+                    foreach (FileInfo file in files)
+                    {
+                        string tempPath = Path.Combine(ragnarockSongDirectoryPath, file.Name);
+                        file.CopyTo(tempPath, false);
+                    }
+                }
+                
 
                 File.Delete(tempFilePath);
-                Directory.Delete(tempDirectoryPath);
+                Directory.Delete(tempDirectoryPath, recursive: true);
 
                 Oculus.PushSong(ragnarockSongDirectoryPath);
 
