@@ -71,6 +71,7 @@
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\Session.cs" />
+    <Compile Include="Models\InfoDat.cs" />
     <Compile Include="Models\Song.cs" />
     <Compile Include="Presenters\DownloadingPresenter.cs" />
     <Compile Include="Presenters\IDownloadingPresenter.cs" />

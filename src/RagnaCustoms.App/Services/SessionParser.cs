@@ -1,4 +1,5 @@
-﻿using RagnaCustoms.Models;
+﻿using Newtonsoft.Json;
+using RagnaCustoms.Models;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -37,7 +38,7 @@ namespace RagnaCustoms.Services
 
                 using var stream = File.Open(SongLogFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                 using var reader = new StreamReader(stream);
-                
+
                 var session = new Session();
 
                 while (IsRunning)
@@ -50,6 +51,7 @@ namespace RagnaCustoms.Services
 
                     if (line.Contains(songLevelLineHint))
                     {
+                        ResetOverlay();
                         session = new Session();
                         session.Song.Level = line.Substring(line.IndexOf(songLevelLineHint) + songLevelLineHint.Length).Trim(new[] { ' ', '.' });
                     }
@@ -68,6 +70,39 @@ namespace RagnaCustoms.Services
 
                         session.Song.Hash = ComputeMD5(concatenatedHashs);
                         Trace.WriteLine($"{DateTime.Now} - New file - Hash: {session.Song.Hash}; File: {songDirectoryPath}");
+
+                        var infoFile = songDirectory.GetFiles().FirstOrDefault(x => x.FullName.ToLower().Contains("info.dat"));
+                        var infoText = File.ReadAllText(infoFile.FullName);
+                        var info = JsonConvert.DeserializeObject<InfoDat>(infoText);
+
+                        File.WriteAllText("overlay.html",
+                            "<html>" +
+                            "<head>" +
+                            "<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css' integrity='sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l' crossorigin='anonymous'>" +
+                            "<style>" +
+                            "html,body{background:transparent;}" +
+
+                            "h1,h3,h4{" +
+                            "	color: #ffffff;" +
+                            "	text-shadow: 0 0 10px #000000;" +
+                            "}" +
+                            "</style>" +
+                            "</head>" +
+                            "<body>" +
+                            "	<div class='d-flex'>" +
+                            "	<div><img class='pr-3' style='width:160px;' src='" + Path.Combine(songDirectoryPath, info._coverImageFilename).ToString() + "'></div>" +
+                            "	<div><h1>" + info._songName + " level " + session.Song.Level + "</h1>" +
+                            "	<h3>" + info._songAuthorName + "</h3>" +
+                            "	<h4>mapped by : " + info._levelAuthorName + "</h4>" +
+                            "	</div>" +
+                            "	</div>" +
+                            "	<script>" +
+                            "	setTimeout(function(){window.location.reload();},5000);" +
+                            "</script>" +
+                            "</body>" +
+                            "</html>"
+
+                            ); ;
                     }
                     else if (line.Contains(songScoreLineHint))
                     {
@@ -80,7 +115,7 @@ namespace RagnaCustoms.Services
                         Trace.WriteLine($"{DateTime.Now} - New session - Hash: {session.Song.Hash}; Level: {session.Song.Level}; Score: {session.Score}");
                         OnNewSession?.Invoke(session);
                         line = reader.ReadLine();
-
+                        ResetOverlay();
                     }
 
                     while (reader.EndOfStream)
@@ -99,6 +134,28 @@ namespace RagnaCustoms.Services
                     }
                 }
             });
+        }
+
+        private void ResetOverlay()
+        {
+            File.WriteAllText("overlay.html",
+                            "<html>" +
+                            "<head>" +
+                            "<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css' integrity='sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l' crossorigin='anonymous'>" +
+                            "<style>" +
+                            "h1,h3,h4{" +
+                            "	color: #ffffff;" +
+                            "	text-shadow: 0 0 10px #000000;" +
+                            "}" +
+                            "</style>" +
+                            "</head>" +
+                            "<body>" +
+                            "	<script>" +
+                            "	setTimeout(function(){window.location.reload();},5000);" +
+                            "</script>" +
+                            "</body>" +
+                            "</html>");
+
         }
 
         public virtual void Stop()
