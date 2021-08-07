@@ -21,6 +21,7 @@ namespace RagnaCustoms.Services
         protected virtual string SongLogFilePath { get; }
         protected virtual Task RunningTask { get; set; }
 
+        protected string OverlayPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "overlay.html");
         public SessionParser(string songLogFilePath)
         {
             IsRunning = false;
@@ -75,7 +76,7 @@ namespace RagnaCustoms.Services
                         var infoText = File.ReadAllText(infoFile.FullName);
                         var info = JsonConvert.DeserializeObject<InfoDat>(infoText);
 
-                        File.WriteAllText("overlay.html",
+                        File.WriteAllText(OverlayPath,
                             "<html>" +
                             "<head>" +
                             "<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css' integrity='sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l' crossorigin='anonymous'>" +
@@ -138,7 +139,7 @@ namespace RagnaCustoms.Services
 
         private void ResetOverlay()
         {
-            File.WriteAllText("overlay.html",
+            File.WriteAllText(OverlayPath,
                             "<html>" +
                             "<head>" +
                             "<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css' integrity='sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l' crossorigin='anonymous'>" +
