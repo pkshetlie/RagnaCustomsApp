@@ -11,17 +11,19 @@ using System.Threading.Tasks;
 
 namespace RagnaCustoms.Services
 {
-    public class SessionParser
+    public class OverlayParser
     {
         const int WaitForNewContentMilliseconds = 1000;
 
-        public event Action<Session> OnNewSession;
+        public event Action<Session> OnOverlayNewGame;
+        public event Action<Session> OnOverlayStartGame;
+        public event Action<Session> OnOverlayEndGame;
 
         protected virtual bool IsRunning { get; set; }
         protected virtual string SongLogFilePath { get; }
         protected virtual Task RunningTask { get; set; }
 
-        public SessionParser(string songLogFilePath)
+        public OverlayParser(string songLogFilePath)
         {
             IsRunning = false;
             SongLogFilePath = songLogFilePath;
@@ -52,6 +54,7 @@ namespace RagnaCustoms.Services
                     if (line.Contains(songLevelLineHint))
                     {
                         session = new Session();
+                        OnOverlayNewGame?.Invoke(session);
                         session.Song.Level = line.Substring(line.IndexOf(songLevelLineHint) + songLevelLineHint.Length).Trim(new[] { ' ', '.' });
                     }
                     else if (line.Contains(songNameLineHint))
@@ -68,19 +71,16 @@ namespace RagnaCustoms.Services
                         var concatenatedHashs = string.Concat(filesHashs);
 
                         session.Song.Hash = ComputeMD5(concatenatedHashs);
-                        Trace.WriteLine($"{DateTime.Now} - New file - Hash: {session.Song.Hash}; File: {songDirectoryPath}");                     
+                        var OverlaySession = new SessionModel(hashInfo: session.Song.Hash, score:"0",level:session.Song.Level);
+                        OnOverlayStartGame?.Invoke(session);
+
+                      
                     }
                     else if (line.Contains(songScoreLineHint))
                     {
-                        var startIndex = line.IndexOf(songScoreLineHint) + songScoreLineHint.Length;
-                        var endIndex = line.IndexOf("and adjusted distance =");
+                        session.Song.Hash = "EndOfSong";
+                        OnOverlayEndGame?.Invoke(session);
 
-                        session.Score = line.Substring(startIndex, endIndex - startIndex).Trim(new[] { ' ', '.' });
-
-                        if (session.Song.Hash is null) continue;
-                        Trace.WriteLine($"{DateTime.Now} - New session - Hash: {session.Song.Hash}; Level: {session.Song.Level}; Score: {session.Score}");
-                        OnNewSession?.Invoke(session);
-                        line = reader.ReadLine();
                     }
 
                     while (reader.EndOfStream)
@@ -99,7 +99,8 @@ namespace RagnaCustoms.Services
                     }
                 }
             });
-        }   
+        }
+ 
         public virtual void Stop()
         {
             IsRunning = false;

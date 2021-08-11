@@ -11,5 +11,6 @@ namespace RagnaCustoms.Views
 
         bool SendScoreAutomatically { get; set; }
         bool AutoCloseDownload { get; set; }
+        bool Overlay { get; set; }
     }
 }

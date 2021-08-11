@@ -35,6 +35,12 @@ namespace RagnaCustoms.Services
             set => Set(nameof(SendScoreAutomatically), value ? bool.TrueString : bool.FalseString);     
         } 
         
+        public bool Overlay
+        {
+            get => Get(nameof(Overlay)) == bool.TrueString;
+            set => Set(nameof(Overlay), value ? bool.TrueString : bool.FalseString);     
+        } 
+        
         public bool AutoCloseDownload
         {
             get => Get(nameof(AutoCloseDownload)) == bool.TrueString;

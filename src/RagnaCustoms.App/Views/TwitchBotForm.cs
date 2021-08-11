@@ -348,7 +348,10 @@ namespace RagnaCustoms.App.Views
         {
             bot_enabled.Checked = false;
             TwitchBotEnabled = false;
-            TwitchClient.Disconnect();
+            if (TwitchClient.IsConnected)
+            {
+                TwitchClient.Disconnect();
+            }
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

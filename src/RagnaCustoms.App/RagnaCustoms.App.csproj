@@ -85,7 +85,9 @@
     <Compile Include="Services\Oculus.cs" />
     <Compile Include="Services\Configuration.cs" />
     <Compile Include="Services\ISongProvider.cs" />
+    <Compile Include="Services\OverlayParser.cs" />
     <Compile Include="Services\SessionParser.cs" />
+    <Compile Include="Services\OverlayUploader.cs" />
     <Compile Include="Services\SessionUploader.cs" />
     <Compile Include="Services\SongProvider.cs" />
     <Compile Include="Views\AboutForm.cs">

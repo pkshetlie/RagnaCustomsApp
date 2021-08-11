@@ -29,6 +29,11 @@ namespace RagnaCustoms.Views
             get => autoCloseDownloadToolStripMenuItem.Checked;
             set => autoCloseDownloadToolStripMenuItem.Checked = value;
         }
+        public bool Overlay
+        {
+            get => overlayToolStripMenuItem.Checked;
+            set => overlayToolStripMenuItem.Checked = value;
+        }
 
         public SongForm()
         {
@@ -81,17 +86,7 @@ namespace RagnaCustoms.Views
             Process.Start("explorer.exe", dir);
         }
 
-        private void twitchBotToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-           (new TwitchBotForm()).Show();
-        }
-
-        private void testToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void autoCloseDownloadToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+         private void autoCloseDownloadToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             Presenter.AutoCloseDownload = autoCloseDownloadToolStripMenuItem.Checked;
         }
@@ -112,11 +107,11 @@ namespace RagnaCustoms.Views
             var device = Oculus.GetDevice();
             if(device != null)
             {
-                MessageBox.Show($"{device.Manufacturer} {device.Description} found", "RagnaCutoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"{device.Manufacturer} {device.Description} found", "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("No compatible device found", "RagnaCutoms", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No compatible device found", "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -126,17 +121,47 @@ namespace RagnaCustoms.Views
             var result = Oculus.SyncSongs();
             if (result == 0)
             {
-                MessageBox.Show("Sync complete", "RagnaCutoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Sync complete", "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else if (result == 1)
             {
-                MessageBox.Show("No compatible device found", "RagnaCutoms", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No compatible device found", "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }  
         }
 
         private void compareSongsVersionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Presenter.CompareSongsAsync();
+        }
+
+        private void twitchBotToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            (new TwitchBotForm()).Show();
+        }
+
+        private void gotoOverlayUrlToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(Presenter.ApiKey))
+            {
+                MessageBox.Show("You need to set your API key first", "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                ProcessStartInfo sInfo = new ProcessStartInfo($"https://ragnacustoms.com/overlay/display/{Presenter.ApiKey}");
+                Process.Start(sInfo);
+            }
+         
+        }
+
+        private void overlayToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            Presenter.Overlay = overlayToolStripMenuItem.Checked;
+
+        }
+
+        private void configureApiKeyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Presenter.ApiKey = Prompt.ShowDialog("Enter your API key :", "RagnaCustoms", Presenter.ApiKey);
         }
     }
 }

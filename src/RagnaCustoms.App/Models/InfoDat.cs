@@ -6,6 +6,7 @@
         public string _songName { get; set; }
         public string _songAuthorName { get; set; }
         public string _levelAuthorName { get; set; }
+        public string _level{ get; set; }
     }
 
 }

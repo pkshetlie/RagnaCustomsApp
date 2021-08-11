@@ -15,8 +15,16 @@ namespace RagnaCustoms.App
         const string RagnacInstallCommand = "ragnac://install/";
         const string RagnacApiCommand = "ragnac://api/";
 
+#if DEBUG 
+        const string UploadSessionUri = "https://127.0.0.1:8000/api/score/v2?XDEBUG_SESSION_START=PHPSTORM";
+#else
         const string UploadSessionUri = "https://ragnacustoms.com/api/score/v2";
-
+#endif
+#if DEBUG
+        const string UploadOverlayUri = "https://127.0.0.1:8000/api/overlay/?XDEBUG_SESSION_START=PHPSTORM";
+#else
+        const string UploadOverlayUri = "https://ragnacustoms.com/api/overlay/";
+#endif
         static readonly string RagnarockSongLogsFilePath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "Ragnarock",
@@ -58,14 +66,23 @@ namespace RagnaCustoms.App
                     MessageBox.Show("API key set", "RagnaCutoms", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }
             }
-            else
+            else 
             {
                 // Starts background services
                 var sessionUploader = new SessionUploader(configuration, UploadSessionUri);
                 var songResultParser = new SessionParser(RagnarockSongLogsFilePath);
+
                 songResultParser.OnNewSession += async (session) => await sessionUploader.UploadAsync(configuration.ApiKey, session);
                 songResultParser.StartAsync();
-                
+
+                var overlayUploader = new OverlayUploader(configuration, UploadOverlayUri);
+                var songOverlayParser = new OverlayParser(RagnarockSongLogsFilePath);
+
+                songOverlayParser.OnOverlayEndGame += async (session) => await overlayUploader.UploadAsync(configuration.ApiKey, session);
+                songOverlayParser.OnOverlayNewGame += async (session) => await overlayUploader.UploadAsync(configuration.ApiKey, session);
+                songOverlayParser.OnOverlayStartGame += async (session) => await overlayUploader.UploadAsync(configuration.ApiKey, session);
+                songOverlayParser.StartAsync();
+
                 // Create first view to display
                 var songView = new SongForm();
                 var songPresenter = new SongPresenter(configuration, songView, downloadingPresenter, songProvider);
