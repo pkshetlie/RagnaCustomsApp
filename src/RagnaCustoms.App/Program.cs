@@ -53,11 +53,18 @@ namespace RagnaCustoms.App
                 if (uri.StartsWith(RagnacInstallCommand))
                 {
                     var songIdStr = uri.Replace(RagnacInstallCommand, string.Empty);
-                    var songId = int.Parse(songIdStr);
 
-                    downloadingPresenter.Download(songId, configuration.AutoCloseDownload);
+                    var songsId = songIdStr.Split('-');
+                    foreach (var id in songsId)
+                    {
+                        var songId = int.Parse(id);
+                        downloadingView = new DownloadingForm();
+                        downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
+                        downloadingPresenter.Download(songId, configuration.AutoCloseDownload);
+                        Application.Run(downloadingView);
 
-                    Application.Run(downloadingView);
+                    }
+
                 }
                 else if (uri.StartsWith(RagnacApiCommand))
                 {

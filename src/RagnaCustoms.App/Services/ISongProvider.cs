@@ -6,7 +6,7 @@ namespace RagnaCustoms.Models
 {
     public interface ISongProvider
     {
-        Task DownloadAsync(int songId, Action<int> downloadProgressChanged, Action<bool> downloadCompleted, bool autoClose);
+        Task DownloadAsync(int songId, Action<int> downloadProgressChanged, Action<bool> downloadCompleted, Action<string> downloadTitle, bool autoClose);
 
         IEnumerable<Song> SearchLocal();
         IEnumerable<Song> SearchLocal(string term);

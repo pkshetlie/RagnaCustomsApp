@@ -100,7 +100,7 @@ namespace RagnaCustoms.Models
             return songs;
         }
 
-        public virtual async Task DownloadAsync(int songId, Action<int> downloadProgressChanged, Action<bool> downloadCompleted, bool autoClose = false)
+        public virtual async Task DownloadAsync(int songId, Action<int> downloadProgressChanged, Action<bool> downloadCompleted, Action<string> downloadTitle, bool autoClose = false)
         {
             using var client = new WebClient();
 
@@ -111,7 +111,14 @@ namespace RagnaCustoms.Models
             var tempFilePath = Path.GetTempFileName();
 
             var songInfo = await SearchOnlineAsync(songId);
+            if(songInfo == null)
+            {
+                downloadCompleted?.Invoke(autoClose);
+                return; 
+            }
+            downloadTitle?.Invoke($"{songInfo.Name} by {songInfo.Mapper}");
             var SongDirectoryPath = Path.Combine(RagnarockSongDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Mapper.Slug()}");
+
             if (File.Exists(Path.Combine(SongDirectoryPath, ".hash")) && File.ReadAllText(Path.Combine(SongDirectoryPath, ".hash")) == songInfo.Hash)
             {
                 Oculus.PushSong(SongDirectoryPath);
