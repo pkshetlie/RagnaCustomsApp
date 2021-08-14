@@ -90,6 +90,7 @@ namespace RagnaCustoms.Views
         {
             App.Views.LogsForm logsForm = new App.Views.LogsForm();
             logsForm.Show();
+        }
          private void autoCloseDownloadToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             Presenter.AutoCloseDownload = autoCloseDownloadToolStripMenuItem.Checked;

@@ -108,6 +108,7 @@
     </Compile>
     <Compile Include="Views\LogsForm.Designer.cs">
       <DependentUpon>LogsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\OculusSyncForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +148,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\LogsForm.resx">
       <DependentUpon>LogsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\OculusSyncForm.resx">
       <DependentUpon>OculusSyncForm.cs</DependentUpon>
     </EmbeddedResource>

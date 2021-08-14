@@ -307,7 +307,7 @@ namespace RagnaCustoms.Views
             // 
             this.HelpMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.logFileToolStripMenuItem,
-            this.logsScreenToolStripMenuItem});
+            this.logsScreenToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.HelpMenuItem.Name = "HelpMenuItem";
             this.HelpMenuItem.Size = new System.Drawing.Size(44, 20);
@@ -391,7 +391,6 @@ namespace RagnaCustoms.Views
         private System.Windows.Forms.DataGridViewTextBoxColumn SongAuthor;
         private System.Windows.Forms.DataGridViewTextBoxColumn SongMapper;
         private System.Windows.Forms.DataGridViewButtonColumn SongDownload;
-        private System.Windows.Forms.ToolStripMenuItem logFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logsScreenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem streamingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem twitchBotToolStripMenuItem1;
