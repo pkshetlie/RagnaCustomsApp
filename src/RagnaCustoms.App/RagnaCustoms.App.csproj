@@ -97,12 +97,23 @@
     <Compile Include="Views\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Commandes\BaseCommand.cs" />
+    <Compile Include="Views\Commandes\CancelCommand.cs" />
+    <Compile Include="Views\Commandes\CloseQueue.cs" />
+    <Compile Include="Views\Commandes\HelpCommand.cs" />
+    <Compile Include="Views\Commandes\HowToCommand.cs" />
+    <Compile Include="Views\Commandes\NextCommand.cs" />
+    <Compile Include="Views\Commandes\OpenQueue.cs" />
+    <Compile Include="Views\Commandes\QueueCommand.cs" />
+    <Compile Include="Views\Commandes\ShiftCommand.cs" />
+    <Compile Include="Views\Commandes\VersionCommand.cs" />
     <Compile Include="Views\DownloadingForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\DownloadingForm.Designer.cs">
       <DependentUpon>DownloadingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\ICommandes.cs" />
     <Compile Include="Views\LogsForm.cs">
       <SubType>Form</SubType>
     </Compile>

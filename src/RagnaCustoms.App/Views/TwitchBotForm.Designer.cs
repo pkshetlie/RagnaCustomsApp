@@ -217,20 +217,20 @@ namespace RagnaCustoms.App.Views
 
         #endregion
 
-        private System.Windows.Forms.Label botMessagePrefixLabel;
-        private System.Windows.Forms.TextBox prefix;
-        private System.Windows.Forms.DataGridView songRequests;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Song;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Author;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Viewer;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
-        private System.Windows.Forms.CheckBox bot_enabled;
-        private System.Windows.Forms.TextBox twitchChannel;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox twitchOAuth;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label helptwitchtmi;
-        private System.Windows.Forms.LinkLabel linkLabel2;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        public System.Windows.Forms.Label botMessagePrefixLabel;
+        public System.Windows.Forms.TextBox prefix;
+        public System.Windows.Forms.DataGridView songRequests;
+        public System.Windows.Forms.DataGridViewTextBoxColumn Song;
+        public System.Windows.Forms.DataGridViewTextBoxColumn Author;
+        public System.Windows.Forms.DataGridViewTextBoxColumn Viewer;
+        public System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        public System.Windows.Forms.CheckBox bot_enabled;
+        public System.Windows.Forms.TextBox twitchChannel;
+        public System.Windows.Forms.Label label3;
+        public System.Windows.Forms.TextBox twitchOAuth;
+        public System.Windows.Forms.Label label2;
+        public System.Windows.Forms.Label helptwitchtmi;
+        public System.Windows.Forms.LinkLabel linkLabel2;
+        public System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
