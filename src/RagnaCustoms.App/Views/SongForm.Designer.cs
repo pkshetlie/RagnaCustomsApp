@@ -58,6 +58,7 @@ namespace RagnaCustoms.Views
             this.syncSongsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logsScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configureApiKeyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.SearchResultGridView)).BeginInit();
@@ -306,6 +307,7 @@ namespace RagnaCustoms.Views
             // 
             this.HelpMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.logFileToolStripMenuItem,
+            this.logsScreenToolStripMenuItem});
             this.aboutToolStripMenuItem});
             this.HelpMenuItem.Name = "HelpMenuItem";
             this.HelpMenuItem.Size = new System.Drawing.Size(44, 20);
@@ -318,6 +320,12 @@ namespace RagnaCustoms.Views
             this.logFileToolStripMenuItem.Text = "Log file";
             this.logFileToolStripMenuItem.Click += new System.EventHandler(this.logFileToolStripMenuItem_Click);
             // 
+            // logsScreenToolStripMenuItem
+            // 
+            this.logsScreenToolStripMenuItem.Name = "logsScreenToolStripMenuItem";
+            this.logsScreenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.logsScreenToolStripMenuItem.Text = "Logs screen";
+            this.logsScreenToolStripMenuItem.Click += new System.EventHandler(this.logScreenToolStripMenuItem_Click);
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
@@ -383,6 +391,8 @@ namespace RagnaCustoms.Views
         private System.Windows.Forms.DataGridViewTextBoxColumn SongAuthor;
         private System.Windows.Forms.DataGridViewTextBoxColumn SongMapper;
         private System.Windows.Forms.DataGridViewButtonColumn SongDownload;
+        private System.Windows.Forms.ToolStripMenuItem logFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem logsScreenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem streamingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem twitchBotToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem overlayToolStripMenuItem;
