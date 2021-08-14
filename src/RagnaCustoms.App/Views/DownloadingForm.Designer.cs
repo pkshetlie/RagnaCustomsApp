@@ -36,26 +36,26 @@ namespace RagnaCustoms.Views
             // 
             // DownloadingProgressBar
             // 
-            this.DownloadingProgressBar.Location = new System.Drawing.Point(12, 12);
+            this.DownloadingProgressBar.Location = new System.Drawing.Point(10, 10);
             this.DownloadingProgressBar.Name = "DownloadingProgressBar";
-            this.DownloadingProgressBar.Size = new System.Drawing.Size(280, 23);
+            this.DownloadingProgressBar.Size = new System.Drawing.Size(240, 20);
             this.DownloadingProgressBar.TabIndex = 0;
             // 
             // DownloadingLabel
             // 
             this.DownloadingLabel.AutoSize = true;
-            this.DownloadingLabel.Location = new System.Drawing.Point(13, 42);
+            this.DownloadingLabel.Location = new System.Drawing.Point(11, 36);
             this.DownloadingLabel.Name = "DownloadingLabel";
-            this.DownloadingLabel.Size = new System.Drawing.Size(230, 15);
+            this.DownloadingLabel.Size = new System.Drawing.Size(207, 13);
             this.DownloadingLabel.TabIndex = 1;
             this.DownloadingLabel.Text = "Downloading, sit back and relax, we got it.";
             this.DownloadingLabel.UseWaitCursor = true;
             // 
             // DownloadingForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 68);
+            this.ClientSize = new System.Drawing.Size(261, 59);
             this.Controls.Add(this.DownloadingLabel);
             this.Controls.Add(this.DownloadingProgressBar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -63,6 +63,7 @@ namespace RagnaCustoms.Views
             this.Name = "DownloadingForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RagnaCustoms";
+            this.Load += new System.EventHandler(this.DownloadingForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

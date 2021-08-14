@@ -10,5 +10,7 @@ namespace RagnaCustoms.Views
         IEnumerable<SongSearchModel> Songs { get; set; }
 
         bool SendScoreAutomatically { get; set; }
+        bool AutoCloseDownload { get; set; }
+        bool Overlay { get; set; }
     }
 }

@@ -11,6 +11,10 @@ namespace RagnaCustoms.Views
             get => DownloadingProgressBar.Value;
             set => DownloadingProgressBar.Value = value;
         }
+        public string Title { 
+            get => Text; 
+            set => Text = value;
+        }
 
         public DownloadingForm()
         {
@@ -25,6 +29,11 @@ namespace RagnaCustoms.Views
         public virtual void ShowSuccessMessage(string message, string title)
         {
             MessageBox.Show(this, message, title, MessageBoxButtons.OK, MessageBoxIcon.None);
+        }
+
+        private void DownloadingForm_Load(object sender, System.EventArgs e)
+        {
+
         }
     }
 }

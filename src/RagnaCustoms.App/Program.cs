@@ -13,9 +13,18 @@ namespace RagnaCustoms.App
     static class Program
     {
         const string RagnacInstallCommand = "ragnac://install/";
+        const string RagnacApiCommand = "ragnac://api/";
 
+#if DEBUG 
+        const string UploadSessionUri = "https://127.0.0.1:8000/api/score/v2?XDEBUG_SESSION_START=PHPSTORM";
+#else
         const string UploadSessionUri = "https://ragnacustoms.com/api/score/v2";
-
+#endif
+#if DEBUG
+        const string UploadOverlayUri = "https://127.0.0.1:8000/api/overlay/?XDEBUG_SESSION_START=PHPSTORM";
+#else
+        const string UploadOverlayUri = "https://ragnacustoms.com/api/overlay/";
+#endif
         static readonly string RagnarockSongLogsFilePath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "Ragnarock",
@@ -36,30 +45,58 @@ namespace RagnaCustoms.App
             var songProvider = new SongProvider();
             var downloadingView = new DownloadingForm();
             var downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
+            var configuration = new Configuration();
 
             if (args.Contains("--install"))
             {
                 var uri = args.ElementAtOrDefault(1);
-                var songIdStr = uri.Replace(RagnacInstallCommand, string.Empty);
-                var songId = int.Parse(songIdStr);
+                if (uri.StartsWith(RagnacInstallCommand))
+                {
+                    var songIdStr = uri.Replace(RagnacInstallCommand, string.Empty);
 
-                downloadingPresenter.Download(songId);
+                    var songsId = songIdStr.Split('-');
+                    foreach (var id in songsId)
+                    {
+                        var songId = int.Parse(id);
+                        downloadingView = new DownloadingForm();
+                        downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
+                        downloadingPresenter.Download(songId, configuration.AutoCloseDownload);
+                        Application.Run(downloadingView);
 
-                Application.Run(downloadingView); 
+                    }
+
+                }
+                else if (uri.StartsWith(RagnacApiCommand))
+                {
+                    var api = uri.Replace(RagnacApiCommand, string.Empty);
+                    configuration.ApiKey = api;
+                    MessageBox.Show("API key set", "RagnaCutoms", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                }
             }
-            else
+            else 
             {
                 // Starts background services
-                var configuration = new Configuration();
                 var sessionUploader = new SessionUploader(configuration, UploadSessionUri);
                 var songResultParser = new SessionParser(RagnarockSongLogsFilePath);
+
                 songResultParser.OnNewSession += async (session) => await sessionUploader.UploadAsync(configuration.ApiKey, session);
                 songResultParser.StartAsync();
+
+                var overlayUploader = new OverlayUploader(configuration, UploadOverlayUri);
+                var songOverlayParser = new OverlayParser(RagnarockSongLogsFilePath);
+
+                songOverlayParser.OnOverlayEndGame += async (session) => await overlayUploader.UploadAsync(configuration.ApiKey, session);
+                songOverlayParser.OnOverlayNewGame += async (session) => await overlayUploader.UploadAsync(configuration.ApiKey, session);
+                songOverlayParser.OnOverlayStartGame += async (session) => await overlayUploader.UploadAsync(configuration.ApiKey, session);
+                songOverlayParser.StartAsync();
 
                 // Create first view to display
                 var songView = new SongForm();
                 var songPresenter = new SongPresenter(configuration, songView, downloadingPresenter, songProvider);
-
+                if (string.IsNullOrEmpty(configuration.ApiKey))
+                {
+                    MessageBox.Show(songView,"Be careful, the API key is missing.\r\nGo to Tools > Score system > Configure Api key... " , "API key is missing", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
                 Application.Run(songView);
             }
         }
