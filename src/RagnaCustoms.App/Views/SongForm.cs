@@ -86,6 +86,11 @@ namespace RagnaCustoms.Views
             Process.Start("explorer.exe", dir);
         }
 
+        private void logScreenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            App.Views.LogsForm logsForm = new App.Views.LogsForm();
+            logsForm.Show();
+        }
          private void autoCloseDownloadToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             Presenter.AutoCloseDownload = autoCloseDownloadToolStripMenuItem.Checked;
