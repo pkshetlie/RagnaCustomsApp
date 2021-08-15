@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 using TwitchLib.Client;
+using TwitchLib.Client.Enums;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
 
@@ -11,15 +12,19 @@ namespace RagnaCustoms.App.Commandes
 {
     class QueueCommand: ICommandes
     {
-        List<string> ICommandes.names()
+        List<string> ICommandes.Names()
         {
             return new List<string>() { "queue" };
         }
-        string ICommandes.help()
+        string ICommandes.Help()
         {
             return "affiche la queue";
         }
-        bool ICommandes.action(
+        public List<UserType> IllegalUsers()
+        {
+            return new List<UserType>();
+        }
+        bool ICommandes.Action(
             JoinedChannel joinedChannel, 
             TextBox prefixe, 
             TwitchClient client, 

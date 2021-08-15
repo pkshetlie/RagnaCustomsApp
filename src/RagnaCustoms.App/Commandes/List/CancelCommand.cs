@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using TwitchLib.Client;
+using TwitchLib.Client.Enums;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
 
@@ -10,15 +11,19 @@ namespace RagnaCustoms.App.Commandes
 {
     class CancelCommand: ICommandes
     {
-        List<string> ICommandes.names()
+        List<string> ICommandes.Names()
         {
             return new List<string>() { "cancel" };
         }
-        string ICommandes.help()
+        string ICommandes.Help()
         {
             return "retirer une de vos requests";
         }
-        bool ICommandes.action(
+        public List<UserType> IllegalUsers()
+        {
+            return new List<UserType>();
+        }
+        bool ICommandes.Action(
             JoinedChannel joinedChannel, 
             TextBox prefixe, 
             TwitchClient client, 
@@ -36,7 +41,7 @@ namespace RagnaCustoms.App.Commandes
                         me.RemoveAtSongRequestInList(i);
                         client.SendMessage(joinedChannel, $"Song Cancelled: {sng} ");
                     }
-                    catch (Exception o_O)
+                    catch (Exception oO)
                     {
                         client.SendMessage(joinedChannel, "No More song to remove");
                     }

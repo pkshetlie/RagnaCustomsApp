@@ -3,6 +3,7 @@ using RagnaCustoms.App.Views;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using TwitchLib.Client;
+using TwitchLib.Client.Enums;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
 
@@ -10,15 +11,19 @@ namespace RagnaCustoms.App.Commandes
 {
     class HelpCommand: ICommandes
     {
-        List<string> ICommandes.names()
+        List<string> ICommandes.Names()
         {
             return new List<string>() { "help", "h" };
         }
-        string ICommandes.help()
+        string ICommandes.Help()
         {
             return "affiche la liste des commandes";
         }
-        bool ICommandes.action(
+        public List<UserType> IllegalUsers()
+        {
+            return new List<UserType>();
+        }
+        bool ICommandes.Action(
             JoinedChannel joinedChannel, 
             TextBox prefixe, 
             TwitchClient client, 
@@ -30,10 +35,10 @@ namespace RagnaCustoms.App.Commandes
             if (args.Length >= 3)
             {
                 var searshedCmd = args[2];
-                if (me.commandes.ContainsKey(searshedCmd))
+                if (me.Commandes.ContainsKey(searshedCmd))
                 {
-                    var commande = me.commandes[searshedCmd];
-                    client.SendMessage(joinedChannel, $"Commande {searshedCmd} ---> {commande.help()}");
+                    var commande = me.Commandes[searshedCmd];
+                    client.SendMessage(joinedChannel, $"Commande {searshedCmd} ---> {commande.Help()}");
                 }
                 else
                 {
@@ -46,7 +51,7 @@ namespace RagnaCustoms.App.Commandes
                 var stringCommandList = new List<String>();
                 var index = 0;
                 stringCommandList.Add("");
-                foreach (KeyValuePair<string,ICommandes> cmd in me.commandes)
+                foreach (KeyValuePair<string,ICommandes> cmd in me.Commandes)
                 {
                     if (!cmdList.Contains(cmd.Value))
                     {

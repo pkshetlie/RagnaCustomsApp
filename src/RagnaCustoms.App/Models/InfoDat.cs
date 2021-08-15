@@ -2,11 +2,11 @@
 {
     public class InfoDat
     {
-        public string _coverImageFilename { get; set; }
-        public string _songName { get; set; }
-        public string _songAuthorName { get; set; }
-        public string _levelAuthorName { get; set; }
-        public string _level{ get; set; }
+        public string CoverImageFilename { get; set; }
+        public string SongName { get; set; }
+        public string SongAuthorName { get; set; }
+        public string LevelAuthorName { get; set; }
+        public string Level{ get; set; }
     }
 
 }

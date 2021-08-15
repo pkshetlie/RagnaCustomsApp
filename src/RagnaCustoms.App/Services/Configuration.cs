@@ -7,9 +7,9 @@ namespace RagnaCustoms.Services
     public class Configuration
     {
 
-        const string userRoot = "HKEY_CURRENT_USER";
-        const string subkey = "Software\\RagnaCustoms\\RagnaCustoms";
-        const string keyName = userRoot + "\\" + subkey;
+        const string UserRoot = "HKEY_CURRENT_USER";
+        const string Subkey = "Software\\RagnaCustoms\\RagnaCustoms";
+        const string KeyName = UserRoot + "\\" + Subkey;
 
         public string ApiKey
         {
@@ -53,13 +53,13 @@ namespace RagnaCustoms.Services
 
         private string Get(string key)
         {
-           return (string) Registry.GetValue(keyName,
+           return (string) Registry.GetValue(KeyName,
             key,
             "");
         }
         private void Set(string key, string value)
         {
-            Registry.SetValue(keyName, key, value);
+            Registry.SetValue(KeyName, key, value);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Windows.Input;
 using TwitchLib.Client;
+using TwitchLib.Client.Enums;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
 
@@ -10,15 +11,19 @@ namespace RagnaCustoms.App.Commandes
 {
     class OpenQueue: ICommandes
     {
-        List<string> ICommandes.names()
+        List<string> ICommandes.Names()
         {
             return new List<string>() { "open" };
         }
-        string ICommandes.help()
+        string ICommandes.Help()
         {
             return "Vous permet d'ouvrir la queue (moderateur uniquement)";
         }
-        bool ICommandes.action(
+        public List<UserType> IllegalUsers()
+        {
+            return new List<UserType>() { UserType.Viewer };
+        }
+        bool ICommandes.Action(
             JoinedChannel joinedChannel, 
             TextBox prefixe, 
             TwitchClient client, 
@@ -26,10 +31,6 @@ namespace RagnaCustoms.App.Commandes
             OnMessageReceivedArgs e
         )
         {
-            if (e.ChatMessage.UserType == TwitchLib.Client.Enums.UserType.Viewer)
-            {
-                client.SendMessage(joinedChannel, "Sorry only moderator can do that");
-            }
             if (!me.QueueIsOpen)
             {
                 me.QueueIsOpen = true;

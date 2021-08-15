@@ -64,10 +64,10 @@ namespace RagnaCustoms.Services
 
                         var songDatFiles = songDirectory.EnumerateFiles("*.dat");
 
-                        var filesHashs = songDatFiles.Select(ComputeMD5).OrderBy(hash => hash);
+                        var filesHashs = songDatFiles.Select(ComputeMd5).OrderBy(hash => hash);
                         var concatenatedHashs = string.Concat(filesHashs);
 
-                        session.Song.Hash = ComputeMD5(concatenatedHashs);
+                        session.Song.Hash = ComputeMd5(concatenatedHashs);
                         Trace.WriteLine($"{DateTime.Now} - New file - Hash: {session.Song.Hash}; File: {songDirectoryPath}");                     
                     }
                     else if (line.Contains(songScoreLineHint))
@@ -106,7 +106,7 @@ namespace RagnaCustoms.Services
             RunningTask.Wait();
         }
 
-        protected virtual string ComputeMD5(FileInfo file)
+        protected virtual string ComputeMd5(FileInfo file)
         {
             using var md5 = MD5.Create();
             using var stream = file.OpenRead();
@@ -117,7 +117,7 @@ namespace RagnaCustoms.Services
             return hashStr;
         }
 
-        protected virtual string ComputeMD5(string str)
+        protected virtual string ComputeMd5(string str)
         {
             using var md5 = MD5.Create();
 
