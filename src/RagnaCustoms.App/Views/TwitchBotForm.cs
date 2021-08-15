@@ -244,7 +244,7 @@ namespace RagnaCustoms.App.Views
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) 
         {
-            ProcessStartInfo sInfo = new ProcessStartInfo("https://twitch.tv/rhokapa");
+            ProcessStartInfo sInfo = new ProcessStartInfo("https://www.twitch.tv/ragnacustoms_com");
             Process.Start(sInfo);
         }
     }
