@@ -81,7 +81,7 @@ namespace RagnaCustoms.App.Views
         
         public bool QueueIsOpen = true;
 
-        private Dictionary<string, ICommandes> commandes = new Dictionary<string, ICommandes>();
+        public Dictionary<string, ICommandes> commandes = new Dictionary<string, ICommandes>();
 
         private void loadCommands()
         {
