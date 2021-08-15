@@ -45,14 +45,15 @@ namespace RagnaCustoms.Views
             this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scoreSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SendScoreAutomaticallyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ApiKeyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SendScoreAutomaticallyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoCloseDownloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.streamingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.twitchBotToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.configureApiKeyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.overlayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gotoOverlayUrlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.twitchBotToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.questToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkAccessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.syncSongsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,7 +61,6 @@ namespace RagnaCustoms.Views
             this.logFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logsScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.configureApiKeyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.SearchResultGridView)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -210,8 +210,15 @@ namespace RagnaCustoms.Views
             this.ApiKeyMenuItem,
             this.SendScoreAutomaticallyMenuItem});
             this.scoreSystemToolStripMenuItem.Name = "scoreSystemToolStripMenuItem";
-            this.scoreSystemToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.scoreSystemToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.scoreSystemToolStripMenuItem.Text = "Score system";
+            // 
+            // ApiKeyMenuItem
+            // 
+            this.ApiKeyMenuItem.Name = "ApiKeyMenuItem";
+            this.ApiKeyMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.ApiKeyMenuItem.Text = "&Configure API key...";
+            this.ApiKeyMenuItem.Click += new System.EventHandler(this.ApiKeyMenuItem_Click);
             // 
             // SendScoreAutomaticallyMenuItem
             // 
@@ -224,19 +231,12 @@ namespace RagnaCustoms.Views
             this.SendScoreAutomaticallyMenuItem.CheckedChanged += new System.EventHandler(this.SendScoreMenuItem_CheckedChanged);
             this.SendScoreAutomaticallyMenuItem.Click += new System.EventHandler(this.SendScoreAutomaticallyMenuItem_Click);
             // 
-            // ApiKeyMenuItem
-            // 
-            this.ApiKeyMenuItem.Name = "ApiKeyMenuItem";
-            this.ApiKeyMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.ApiKeyMenuItem.Text = "&Configure API key...";
-            this.ApiKeyMenuItem.Click += new System.EventHandler(this.ApiKeyMenuItem_Click);
-            // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.autoCloseDownloadToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // autoCloseDownloadToolStripMenuItem
@@ -255,15 +255,15 @@ namespace RagnaCustoms.Views
             this.gotoOverlayUrlToolStripMenuItem,
             this.twitchBotToolStripMenuItem1});
             this.streamingToolStripMenuItem.Name = "streamingToolStripMenuItem";
-            this.streamingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.streamingToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.streamingToolStripMenuItem.Text = "Streaming";
             // 
-            // twitchBotToolStripMenuItem1
+            // configureApiKeyToolStripMenuItem
             // 
-            this.twitchBotToolStripMenuItem1.Name = "twitchBotToolStripMenuItem1";
-            this.twitchBotToolStripMenuItem1.Size = new System.Drawing.Size(181, 22);
-            this.twitchBotToolStripMenuItem1.Text = "TwitchBot";
-            this.twitchBotToolStripMenuItem1.Click += new System.EventHandler(this.twitchBotToolStripMenuItem1_Click);
+            this.configureApiKeyToolStripMenuItem.Name = "configureApiKeyToolStripMenuItem";
+            this.configureApiKeyToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.configureApiKeyToolStripMenuItem.Text = "Configure API key ...";
+            this.configureApiKeyToolStripMenuItem.Click += new System.EventHandler(this.configureApiKeyToolStripMenuItem_Click);
             // 
             // overlayToolStripMenuItem
             // 
@@ -279,6 +279,13 @@ namespace RagnaCustoms.Views
             this.gotoOverlayUrlToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.gotoOverlayUrlToolStripMenuItem.Text = "Get overlay url";
             this.gotoOverlayUrlToolStripMenuItem.Click += new System.EventHandler(this.gotoOverlayUrlToolStripMenuItem_Click);
+            // 
+            // twitchBotToolStripMenuItem1
+            // 
+            this.twitchBotToolStripMenuItem1.Name = "twitchBotToolStripMenuItem1";
+            this.twitchBotToolStripMenuItem1.Size = new System.Drawing.Size(181, 22);
+            this.twitchBotToolStripMenuItem1.Text = "TwitchBot";
+            this.twitchBotToolStripMenuItem1.Click += new System.EventHandler(this.twitchBotToolStripMenuItem1_Click);
             // 
             // questToolStripMenuItem
             // 
@@ -316,7 +323,7 @@ namespace RagnaCustoms.Views
             // logFileToolStripMenuItem
             // 
             this.logFileToolStripMenuItem.Name = "logFileToolStripMenuItem";
-            this.logFileToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.logFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.logFileToolStripMenuItem.Text = "Log file";
             this.logFileToolStripMenuItem.Click += new System.EventHandler(this.logFileToolStripMenuItem_Click);
             // 
@@ -325,20 +332,15 @@ namespace RagnaCustoms.Views
             this.logsScreenToolStripMenuItem.Name = "logsScreenToolStripMenuItem";
             this.logsScreenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.logsScreenToolStripMenuItem.Text = "Logs screen";
+            this.logsScreenToolStripMenuItem.Visible = false;
             this.logsScreenToolStripMenuItem.Click += new System.EventHandler(this.logScreenToolStripMenuItem_Click);
+            // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
-            // configureApiKeyToolStripMenuItem
-            // 
-            this.configureApiKeyToolStripMenuItem.Name = "configureApiKeyToolStripMenuItem";
-            this.configureApiKeyToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.configureApiKeyToolStripMenuItem.Text = "Configure API key ...";
-            this.configureApiKeyToolStripMenuItem.Click += new System.EventHandler(this.configureApiKeyToolStripMenuItem_Click);
             // 
             // SongForm
             // 

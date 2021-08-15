@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 
 namespace RagnaCustoms.App.Views
@@ -21,7 +22,7 @@ namespace RagnaCustoms.App.Views
 
                 // Read each line of the file into a string array. Each element
                 // of the array is one line of the file.
-                string[] lines = System.IO.File.ReadAllLines(@".\ragnacustom.log");
+                string[] lines = System.IO.File.ReadAllLines(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location),"ragnacustom.log"));
 
                 List<string> listFile = new();
                 List<string> listSession = new();

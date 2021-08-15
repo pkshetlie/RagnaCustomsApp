@@ -1,21 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using RagnaCustoms.App.Views;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Windows.Input;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
 
-namespace RagnaCustoms.App.Views.Commandes
+namespace RagnaCustoms.App.Commandes
 {
-    class CloseQueue: ICommandes
+    class OpenQueue: ICommandes
     {
         List<string> ICommandes.names()
         {
-            return new List<string>() { "close" };
+            return new List<string>() { "open" };
         }
         string ICommandes.help()
         {
-            return "Vous permet de clore la queue (moderateur uniquement)";
+            return "Vous permet d'ouvrir la queue (moderateur uniquement)";
         }
         bool ICommandes.action(
             JoinedChannel joinedChannel, 
@@ -29,14 +30,14 @@ namespace RagnaCustoms.App.Views.Commandes
             {
                 client.SendMessage(joinedChannel, "Sorry only moderator can do that");
             }
-            if (me.QueueIsOpen)
+            if (!me.QueueIsOpen)
             {
-                me.QueueIsOpen = false;
-                client.SendMessage(joinedChannel, "Queue is now closed");
+                me.QueueIsOpen = true;
+                client.SendMessage(joinedChannel, "Queue is now open");
             }
             else
             {
-                client.SendMessage(joinedChannel, "Queue is already closes");
+                client.SendMessage(joinedChannel, "Queue is already open");
             }            
             return true;
         }

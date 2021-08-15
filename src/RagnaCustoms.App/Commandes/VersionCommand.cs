@@ -1,20 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using RagnaCustoms.App.Views;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Windows.Forms;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
 
-namespace RagnaCustoms.App.Views.Commandes
+namespace RagnaCustoms.App.Commandes
 {
-    class BaseCommand: ICommandes
+    class VersionCommand: ICommandes
     {
         List<string> ICommandes.names()
         {
-            return new List<string>() { "" };
+            return new List<string>() { "version", "v" };
         }
         string ICommandes.help()
         {
-            return "Affiche aux viewers comment proposer des maps au streameur";
+            return "Affiche la version de l'application";
         }
         bool ICommandes.action(
             JoinedChannel joinedChannel, 
@@ -24,7 +26,7 @@ namespace RagnaCustoms.App.Views.Commandes
             OnMessageReceivedArgs e
         )
         {
-            client.SendMessage(joinedChannel, $"You can propose custom maps to {joinedChannel.Channel} thanks to the command !rc [map_id] simply by clicking on the corresponding button on the site https://ragnacustoms.com/");
+            client.SendMessage(joinedChannel, $"I'm version {Assembly.GetExecutingAssembly().GetName().Version.ToString()}");
             return true;
         }
     }

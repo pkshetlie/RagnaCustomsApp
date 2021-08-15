@@ -89,6 +89,7 @@ namespace RagnaCustoms.App.Views
             var types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
                 .Where(p => type.IsAssignableFrom(p));
+
             foreach (Type command in types)
             {
                 try

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using RagnaCustoms.App.Views;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
 
-namespace RagnaCustoms.App.Views.Commandes
+namespace RagnaCustoms.App.Commandes
 {
     class ShiftCommand: ICommandes
     {
