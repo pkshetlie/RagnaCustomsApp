@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using RagnaCustoms.App.Views;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
 
-namespace RagnaCustoms.App.Views.Commandes
+namespace RagnaCustoms.App.Commandes
 {
     class HelpCommand: ICommandes
     {
@@ -24,8 +25,8 @@ namespace RagnaCustoms.App.Views.Commandes
             OnMessageReceivedArgs e
         )
         {
-            client.SendMessage(joinedChannel, $"Help 1/2 : !rc help (this command), !rc {}song id} (download the map), !rc cancel (remove last song you request)");
-            client.SendMessage(joinedChannel, $"Help 2/2 : !rc open (open queue), !rc close (close queue), !rc shift (remove first song in list), !rc queue (list of songs not played), !rc next (next song to play), !rc version (to know current version)");
+            client.SendMessage(joinedChannel, "Help 1/2 : !rc help (this command), !rc {song id} (download the map), !rc cancel (remove last song you request)");
+            client.SendMessage(joinedChannel, "Help 2/2 : !rc open (open queue), !rc close (close queue), !rc shift (remove first song in list), !rc queue (list of songs not played), !rc next (next song to play), !rc version (to know current version)");
             return true;
         }
     }

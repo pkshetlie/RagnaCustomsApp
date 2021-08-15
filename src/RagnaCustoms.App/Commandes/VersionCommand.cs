@@ -1,20 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using RagnaCustoms.App.Views;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Windows.Forms;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
 
-namespace RagnaCustoms.App.Views.Commandes
+namespace RagnaCustoms.App.Commandes
 {
-    class HowToCommand: ICommandes
+    class VersionCommand: ICommandes
     {
         List<string> ICommandes.names()
         {
-            return new List<string>() { "how-to", "ht" };
+            return new List<string>() { "version", "v" };
         }
         string ICommandes.help()
         {
-            return "affiche l'aide pour request une map";
+            return "Affiche la version de l'application";
         }
         bool ICommandes.action(
             JoinedChannel joinedChannel, 
@@ -24,7 +26,7 @@ namespace RagnaCustoms.App.Views.Commandes
             OnMessageReceivedArgs e
         )
         {
-            client.SendMessage(joinedChannel, $"Go to https://ragnacustoms.com, click on the twitch button to copy !rc [songid] and paste it here");
+            client.SendMessage(joinedChannel, $"I'm version {Assembly.GetExecutingAssembly().GetName().Version.ToString()}");
             return true;
         }
     }
