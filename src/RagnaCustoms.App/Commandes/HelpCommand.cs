@@ -1,4 +1,5 @@
-﻿using RagnaCustoms.App.Views;
+﻿using System;
+using RagnaCustoms.App.Views;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using TwitchLib.Client;
@@ -25,8 +26,50 @@ namespace RagnaCustoms.App.Commandes
             OnMessageReceivedArgs e
         )
         {
-            client.SendMessage(joinedChannel, "Help 1/2 : !rc help (this command), !rc {song id} (download the map), !rc cancel (remove last song you request)");
-            client.SendMessage(joinedChannel, "Help 2/2 : !rc open (open queue), !rc close (close queue), !rc shift (remove first song in list), !rc queue (list of songs not played), !rc next (next song to play), !rc version (to know current version)");
+            var args = e.ChatMessage.Message.Split(' ');
+            if (args.Length >= 3)
+            {
+                var searshedCmd = args[2];
+                if (me.commandes.ContainsKey(searshedCmd))
+                {
+                    var commande = me.commandes[searshedCmd];
+                    client.SendMessage(joinedChannel, $"Commande {searshedCmd} ---> {commande.help()}");
+                }
+                else
+                {
+                    client.SendMessage(joinedChannel, "Cette commande n'existe pas, vérifiez le nom de la commande.");
+                }
+            }
+            else
+            {
+                var cmdList = new List<ICommandes>();
+                var stringCommandList = new List<String>();
+                var index = 0;
+                stringCommandList.Add("");
+                foreach (KeyValuePair<string,ICommandes> cmd in me.commandes)
+                {
+                    if (!cmdList.Contains(cmd.Value))
+                    {
+                        cmdList.Add(cmd.Value);
+                        if (stringCommandList[index].Length <= 450)
+                        {
+                            if (stringCommandList[index].Length == 0) stringCommandList[index] = $"!rc {cmd.Key}";
+                            else stringCommandList[index] = $"{stringCommandList[index]}, !rc {cmd.Key}";
+                        }
+                        else
+                        {
+                            index++;
+                            stringCommandList.Add("");
+                            stringCommandList[index] = $"!rc {cmd.Key}";
+                        }
+                    }
+                }
+                foreach (string s in stringCommandList)
+                {
+                    client.SendMessage(joinedChannel, $"Liste des commandes ---> {s}");
+                }
+                client.SendMessage(joinedChannel, "Pour voir la description complete d'une commande utiliser \"!rc help [nom_de_la_commande]\"");
+            }
             return true;
         }
     }

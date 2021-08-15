@@ -25,14 +25,14 @@ namespace RagnaCustoms.App.Commandes
             OnMessageReceivedArgs e
         )
         {
-            var song = me.songRequests.Rows[0].Cells["Song"].Value.ToString();
+            var song = me.songRequests?.Rows[0]?.Cells["Song"]?.Value?.ToString() ?? null;
             if (song != null)
             {
                 client.SendMessage(joinedChannel, $"Next song : {song} ");
             }
             else
             {
-                client.SendMessage(joinedChannel, $"End of the queue");
+                client.SendMessage(joinedChannel, "End of the queue");
             }
             return true;
         }

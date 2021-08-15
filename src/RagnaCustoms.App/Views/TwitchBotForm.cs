@@ -81,7 +81,7 @@ namespace RagnaCustoms.App.Views
         
         public bool QueueIsOpen = true;
 
-        private Dictionary<string, ICommandes> commandes = new Dictionary<string, ICommandes>();
+        public Dictionary<string, ICommandes> commandes = new Dictionary<string, ICommandes>();
 
         private void loadCommands()
         {
@@ -163,18 +163,22 @@ namespace RagnaCustoms.App.Views
             }
             else
             {
-                var arg1 = command[1];
-                if (!commandes.ContainsKey(arg1))
+                new Thread(() => 
                 {
-                    addRequest(arg1, e);
-                    return;
-                }
-                var cmd = commandes[arg1];
-                var success = cmd.action(joinedChannel, prefix, TwitchClient, this, e);
-                if (!success)
-                {
-                    TwitchClient.SendMessage(joinedChannel, $"{prefixe}An error has occurred !");
-                }
+                    Thread.CurrentThread.IsBackground = true; 
+                    var arg1 = command[1];
+                    if (!commandes.ContainsKey(arg1))
+                    {
+                        addRequest(arg1, e);
+                        return;
+                    }
+                    var cmd = commandes[arg1];
+                    var success = cmd.action(joinedChannel, prefix, TwitchClient, this, e);
+                    if (!success)
+                    {
+                        TwitchClient.SendMessage(joinedChannel, $"{prefixe}An error has occurred !");
+                    }
+                }).Start();
             }
         }
 

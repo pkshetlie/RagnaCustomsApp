@@ -25,7 +25,7 @@ namespace RagnaCustoms.App.Commandes
             OnMessageReceivedArgs e
         )
         {
-            client.SendMessage(joinedChannel, $"Go to https://ragnacustoms.com, click on the twitch button to copy !rc [songid] and paste it here");
+            client.SendMessage(joinedChannel, "Go to https://ragnacustoms.com, click on the twitch button to copy !rc [songid] and paste it here");
             return true;
         }
     }

@@ -28,16 +28,16 @@ namespace RagnaCustoms.App.Commandes
         {
             if (e.ChatMessage.UserType == TwitchLib.Client.Enums.UserType.Viewer)
             {
-                client.SendMessage(joinedChannel, $"Sorry only moderator can do that");
+                client.SendMessage(joinedChannel, "Sorry only moderator can do that");
             }
             if (!me.QueueIsOpen)
             {
                 me.QueueIsOpen = true;
-                client.SendMessage(joinedChannel, $"Queue is now open");
+                client.SendMessage(joinedChannel, "Queue is now open");
             }
             else
             {
-                client.SendMessage(joinedChannel, $"Queue is already open");
+                client.SendMessage(joinedChannel, "Queue is already open");
             }            
             return true;
         }

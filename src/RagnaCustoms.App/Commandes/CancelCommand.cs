@@ -38,7 +38,7 @@ namespace RagnaCustoms.App.Commandes
                     }
                     catch (Exception o_O)
                     {
-                        client.SendMessage(joinedChannel, $"No More song to remove");
+                        client.SendMessage(joinedChannel, "No More song to remove");
                     }
                 }
             }

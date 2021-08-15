@@ -54,7 +54,7 @@ namespace RagnaCustoms.App.Commandes
             Thread.Sleep(400);
             foreach (var songMessage in songs)
             {
-                client.SendMessage(joinedChannel, $"{songMessage}");
+                client.SendMessage(joinedChannel, songMessage);
             }
             return true;
         }
