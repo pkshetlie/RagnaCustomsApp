@@ -24,7 +24,7 @@ namespace RagnaCustoms.App.Views.Commandes
             OnMessageReceivedArgs e
         )
         {
-            client.SendMessage(joinedChannel, $"You can propose custom maps to " + joinedChannel.Channel + " thanks to the command !rc {map_id} simply by clicking on the corresponding button on the site https://ragnacustoms.com/");
+            client.SendMessage(joinedChannel, $"You can propose custom maps to {joinedChannel.Channel} thanks to the command !rc [map_id] simply by clicking on the corresponding button on the site https://ragnacustoms.com/");
             return true;
         }
     }
