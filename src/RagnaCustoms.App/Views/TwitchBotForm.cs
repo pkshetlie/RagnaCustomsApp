@@ -42,7 +42,7 @@ namespace RagnaCustoms.App.Views
 
         private TwitchClient TwitchClient;
         private JoinedChannel joinedChannel;
-        private bool TwitchBotEnabled = false;
+        private bool _twitchBotEnabled = false;
         public Process RagnarockApp { get; set; }
         
         private void bot_enabled_CheckedChanged_1(object sender, EventArgs e)
@@ -69,7 +69,7 @@ namespace RagnaCustoms.App.Views
                 TwitchClient.Connect();
 
             }
-            TwitchBotEnabled = bot_enabled.Checked;
+            _twitchBotEnabled = bot_enabled.Checked;
         }
         
         public string prefixe { get; set; }
@@ -138,7 +138,7 @@ namespace RagnaCustoms.App.Views
         
         private void OnMessageReceived(object sender, OnMessageReceivedArgs e)
         {
-            if (!TwitchBotEnabled) { return; }
+            if (!_twitchBotEnabled) { return; }
 
             string[] command = e.ChatMessage.Message.Split(' ');
 
@@ -236,10 +236,13 @@ namespace RagnaCustoms.App.Views
 
         private void TwitchBotForm_FormClosed(object sender, FormClosedEventArgs e) 
         {
-            bot_enabled.Checked = false;
-            TwitchBotEnabled = false;
-            if (TwitchClient.IsConnected) 
-                TwitchClient.Disconnect();
+            if (bot_enabled.Checked)
+            {
+                bot_enabled.Checked = false;
+                _twitchBotEnabled = false;
+                if (TwitchClient.IsConnected) 
+                    TwitchClient.Disconnect();
+            }
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) 
