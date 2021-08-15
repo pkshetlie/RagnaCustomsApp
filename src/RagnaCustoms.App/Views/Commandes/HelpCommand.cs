@@ -44,20 +44,22 @@ namespace RagnaCustoms.App.Views.Commandes
                 var cmdList = new List<ICommandes>();
                 var stringCommandList = new List<String>();
                 var index = 0;
+                stringCommandList.Add("");
                 foreach (KeyValuePair<string,ICommandes> cmd in me.commandes)
                 {
                     if (!cmdList.Contains(cmd.Value))
                     {
                         cmdList.Add(cmd.Value);
-                        if (stringCommandList[index].Length < 450)
+                        if (stringCommandList[index].Length <= 450)
                         {
-                            if (stringCommandList[index].Length == 0) stringCommandList[index] += $"!rc {cmd.Key}";
-                            else stringCommandList[index] += $", !rc {cmd.Key}";
+                            if (stringCommandList[index].Length == 0) stringCommandList[index] = $"!rc {cmd.Key}";
+                            else stringCommandList[index] = $"{stringCommandList[index]}, !rc {cmd.Key}";
                         }
                         else
                         {
                             index++;
-                            stringCommandList[index] += $"!rc {cmd.Key}";
+                            stringCommandList.Add("");
+                            stringCommandList[index] = $"!rc {cmd.Key}";
                         }
                     }
                 }
