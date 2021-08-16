@@ -17,7 +17,6 @@ namespace RagnaCustoms.App.Commandes
         string ICommandes.Help()
         {
             return "Display how to request map to streamer";
-            return "Affiche aux viewers comment proposer des maps au streameur";
         }
 
         public List<UserType> IllegalUsers()

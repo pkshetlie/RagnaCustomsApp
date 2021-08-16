@@ -18,7 +18,6 @@ namespace RagnaCustoms.App.Commandes
         string ICommandes.Help()
         {
             return "open the queue (moderator only)";
-            return "Vous permet d'ouvrir la queue (moderateur uniquement)";
         }
         public List<UserType> IllegalUsers()
         {

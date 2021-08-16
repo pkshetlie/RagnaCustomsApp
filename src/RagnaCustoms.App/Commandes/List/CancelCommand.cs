@@ -18,7 +18,6 @@ namespace RagnaCustoms.App.Commandes
         string ICommandes.Help()
         {
             return "Remove your last request";
-            return "retirer une de vos requests";
         }
         public List<UserType> IllegalUsers()
         {
@@ -42,7 +41,7 @@ namespace RagnaCustoms.App.Commandes
                         me.RemoveAtSongRequestInList(i);
                         client.SendMessage(joinedChannel, $"Song Cancelled: {sng} ");
                     }
-                    catch (Exception oO)
+                    catch (Exception)
                     {
                         client.SendMessage(joinedChannel, "No More song to remove");
                     }

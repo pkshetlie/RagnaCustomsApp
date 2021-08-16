@@ -18,7 +18,6 @@ namespace RagnaCustoms.App.Commandes
         string ICommandes.Help()
         {
             return "display list of commands";
-            return "affiche la liste des commandes";
         }
         public List<UserType> IllegalUsers()
         {
