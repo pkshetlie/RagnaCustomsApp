@@ -371,7 +371,7 @@ namespace RagnaCustoms.Views
         private System.Windows.Forms.TextBox SearchTextBox;
         private System.Windows.Forms.Button SearchButton;
         private System.Windows.Forms.DataGridView SearchResultGridView;
-        private System.Windows.Forms.MenuStrip Menu;
+        private new System.Windows.Forms.MenuStrip Menu;
         private System.Windows.Forms.ToolStripMenuItem FileMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ToolsMenuItem;
