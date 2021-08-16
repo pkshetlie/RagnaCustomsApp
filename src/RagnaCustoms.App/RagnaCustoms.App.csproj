@@ -68,6 +68,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commandes\List\BaseCommand.cs" />
+    <Compile Include="Commandes\List\CancelCommand.cs" />
+    <Compile Include="Commandes\List\CloseQueue.cs" />
+    <Compile Include="Commandes\List\HelpCommand.cs" />
+    <Compile Include="Commandes\List\HowToCommand.cs" />
+    <Compile Include="Commandes\List\NextCommand.cs" />
+    <Compile Include="Commandes\List\OpenQueue.cs" />
+    <Compile Include="Commandes\List\QueueCommand.cs" />
+    <Compile Include="Commandes\List\ShiftCommand.cs" />
+    <Compile Include="Commandes\List\VersionCommand.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\Session.cs" />
@@ -97,16 +107,6 @@
     <Compile Include="Views\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Commandes\BaseCommand.cs" />
-    <Compile Include="Commandes\CancelCommand.cs" />
-    <Compile Include="Commandes\CloseQueue.cs" />
-    <Compile Include="Commandes\HelpCommand.cs" />
-    <Compile Include="Commandes\HowToCommand.cs" />
-    <Compile Include="Commandes\NextCommand.cs" />
-    <Compile Include="Commandes\OpenQueue.cs" />
-    <Compile Include="Commandes\QueueCommand.cs" />
-    <Compile Include="Commandes\ShiftCommand.cs" />
-    <Compile Include="Commandes\VersionCommand.cs" />
     <Compile Include="Views\DownloadingForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using TwitchLib.Client;
+using TwitchLib.Client.Enums;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
 
@@ -10,15 +11,19 @@ namespace RagnaCustoms.App.Commandes
 {
     class ShiftCommand: ICommandes
     {
-        List<string> ICommandes.names()
+        List<string> ICommandes.Names()
         {
             return new List<string>() { "shift", "done" };
         }
-        string ICommandes.help()
+        string ICommandes.Help()
         {
             return "?";
         }
-        bool ICommandes.action(
+        public List<UserType> IllegalUsers()
+        {
+            return new List<UserType>() { UserType.Viewer };
+        }
+        bool ICommandes.Action(
             JoinedChannel joinedChannel, 
             TextBox prefixe, 
             TwitchClient client, 
@@ -47,7 +52,7 @@ namespace RagnaCustoms.App.Commandes
                         client.SendMessage(joinedChannel, "End of the queue");
                     }
                 }
-                catch (Exception O_o)
+                catch (Exception oO)
                 {
                     client.SendMessage(joinedChannel, "No More song to remove");
                 }

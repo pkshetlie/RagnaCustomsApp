@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 using TwitchLib.Client;
+using TwitchLib.Client.Enums;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
 
@@ -10,15 +11,19 @@ namespace RagnaCustoms.App.Commandes
 {
     class VersionCommand: ICommandes
     {
-        List<string> ICommandes.names()
+        List<string> ICommandes.Names()
         {
             return new List<string>() { "version", "v" };
         }
-        string ICommandes.help()
+        string ICommandes.Help()
         {
             return "Affiche la version de l'application";
         }
-        bool ICommandes.action(
+        public List<UserType> IllegalUsers()
+        {
+            return new List<UserType>();
+        }
+        bool ICommandes.Action(
             JoinedChannel joinedChannel, 
             TextBox prefixe, 
             TwitchClient client, 

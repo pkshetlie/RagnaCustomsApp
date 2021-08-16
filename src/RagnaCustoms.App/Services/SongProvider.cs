@@ -117,21 +117,21 @@ namespace RagnaCustoms.Models
                 return; 
             }
             downloadTitle?.Invoke($"{songInfo.Name} by {songInfo.Mapper}");
-            var SongDirectoryPath = Path.Combine(RagnarockSongDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Mapper.Slug()}");
+            var songDirectoryPath = Path.Combine(RagnarockSongDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Mapper.Slug()}");
 
-            if (File.Exists(Path.Combine(SongDirectoryPath, ".hash")) && File.ReadAllText(Path.Combine(SongDirectoryPath, ".hash")) == songInfo.Hash)
+            if (File.Exists(Path.Combine(songDirectoryPath, ".hash")) && File.ReadAllText(Path.Combine(songDirectoryPath, ".hash")) == songInfo.Hash)
             {
-                Oculus.PushSong(SongDirectoryPath);
+                Oculus.PushSong(songDirectoryPath);
                 downloadCompleted?.Invoke(autoClose);
                 return;
             }
 
 
             client.DownloadProgressChanged += (sender, args) => downloadProgressChanged?.Invoke(args.ProgressPercentage);
-            client.DownloadFileCompleted += Client_DownloadFileCompleted;
+            client.DownloadFileCompleted += ClientDownloadFileCompleted;
             client.DownloadFileAsync(uri, tempFilePath);
 
-            void Client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+            void ClientDownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
             {
                 ZipFile.ExtractToDirectory(tempFilePath, tempDirectoryPath);
 
