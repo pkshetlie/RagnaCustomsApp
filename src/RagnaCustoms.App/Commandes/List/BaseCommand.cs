@@ -1,6 +1,8 @@
-﻿using RagnaCustoms.App.Views;
+﻿using System;
+using RagnaCustoms.App.Views;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using RagnaCustoms.App.Properties;
 using TwitchLib.Client;
 using TwitchLib.Client.Enums;
 using TwitchLib.Client.Events;
@@ -16,8 +18,7 @@ namespace RagnaCustoms.App.Commandes
         }
         string ICommandes.Help()
         {
-            return "Display how to request map to streamer";
-            return "Affiche aux viewers comment proposer des maps au streameur";
+            return Resources.Command_Base_Help;
         }
 
         public List<UserType> IllegalUsers()
@@ -33,9 +34,7 @@ namespace RagnaCustoms.App.Commandes
             OnMessageReceivedArgs e
         )
         {
-            client.SendMessage(joinedChannel, $"You can request custom maps to " + joinedChannel.Channel + 
-                " with the command !rc {map_id}, to find it go to https://ragnacustoms.com and click on the twitch button" +
-                " (the purple one) to copy !rc {map_id} command and come back here to paste the command.");
+            client.SendMessage(joinedChannel, String.Format(Resources.Command_Base_Action_Message, joinedChannel.Channel));
             return true;
         }
     }

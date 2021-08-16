@@ -2,6 +2,7 @@
 using RagnaCustoms.App.Views;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using RagnaCustoms.App.Properties;
 using TwitchLib.Client;
 using TwitchLib.Client.Enums;
 using TwitchLib.Client.Events;
@@ -17,8 +18,7 @@ namespace RagnaCustoms.App.Commandes
         }
         string ICommandes.Help()
         {
-            return "display list of commands";
-            return "affiche la liste des commandes";
+            return Resources.Command_Help_Help;
         }
         public List<UserType> IllegalUsers()
         {
@@ -39,11 +39,11 @@ namespace RagnaCustoms.App.Commandes
                 if (me.Commandes.ContainsKey(searshedCmd))
                 {
                     var commande = me.Commandes[searshedCmd];
-                    client.SendMessage(joinedChannel, $"Commande {searshedCmd} ---> {commande.Help()}");
+                    client.SendMessage(joinedChannel, $"{Resources.Command_Help_Action_Cmd} {searshedCmd} ---> {commande.Help()}");
                 }
                 else
                 {
-                    client.SendMessage(joinedChannel, "Cette commande n'existe pas, vérifiez le nom de la commande.");
+                    client.SendMessage(joinedChannel, Resources.Command_Help_Action_UnknowCommand);
                 }
             }
             else
@@ -72,9 +72,9 @@ namespace RagnaCustoms.App.Commandes
                 }
                 foreach (string s in stringCommandList)
                 {
-                    client.SendMessage(joinedChannel, $"Liste des commandes ---> {s}");
+                    client.SendMessage(joinedChannel, $"{Resources.Command_Help_Action_CommandList} ---> {s}");
                 }
-                client.SendMessage(joinedChannel, "Pour voir la description complete d'une commande utiliser \"!rc help [nom_de_la_commande]\"");
+                client.SendMessage(joinedChannel, Resources.Command_Help_Action_OthersCommand);
             }
             return true;
         }

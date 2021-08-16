@@ -114,4 +114,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Command.Base.Help" xml:space="preserve">
+    <value>Display how to request map to streamer</value>
+  </data>
+  <data name="Command.Base.Action.Message" xml:space="preserve">
+    <value>You can request custom maps to {0} with the command !rc [map_id], to find it go to https://ragnacustoms.com and click on the twitch button (the purple one) to copy !rc [map_id] command and come back here to paste the command.</value>
+  </data>
+  <data name="Command.Help.Help" xml:space="preserve">
+    <value>display list of commands</value>
+  </data>
+  <data name="Command.Help.Action.Cmd" xml:space="preserve">
+    <value>Commande</value>
+  </data>
+  <data name="Command.Help.Action.UnknowCommand" xml:space="preserve">
+    <value>Cette commande n'existe pas, vérifiez le nom de la commande.</value>
+  </data>
+  <data name="Command.Help.Action.CommandList" xml:space="preserve">
+    <value>Liste des commandes</value>
+  </data>
+  <data name="Command.Help.Action.OthersCommand" xml:space="preserve">
+    <value>Pour voir la description complete d'une commande utiliser "!rc help [nom_de_la_commande]"</value>
+  </data>
+  <data name="Command.Cancel.Help" xml:space="preserve">
+    <value>Remove your last request</value>
+  </data>
+  <data name="Command.Cancel.Action.Canceled" xml:space="preserve">
+    <value>Song Cancelled :</value>
+  </data>
+  <data name="Command.Cancel.Action.NoSongToCancel" xml:space="preserve">
+    <value>No More song to remove</value>
+  </data>
 </root>

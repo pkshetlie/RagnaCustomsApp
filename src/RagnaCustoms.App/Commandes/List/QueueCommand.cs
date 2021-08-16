@@ -19,7 +19,6 @@ namespace RagnaCustoms.App.Commandes
         string ICommandes.Help()
         {
             return "display queue";
-            return "affiche la queue";
         }
         public List<UserType> IllegalUsers()
         {

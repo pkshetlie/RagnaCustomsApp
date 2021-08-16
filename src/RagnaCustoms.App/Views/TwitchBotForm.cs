@@ -7,13 +7,17 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Resources;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RagnaCustoms.App.Properties;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
@@ -24,12 +28,13 @@ namespace RagnaCustoms.App.Views
 {
     public partial class TwitchBotForm : Form
     {
-        private Configuration _configuration;
-        
+        public Configuration _configuration;
+        public ResourceManager Resource;
         public TwitchBotForm() {
             InitializeComponent();
+            
             _configuration = new Configuration();
-
+            Resource = Resources.ResourceManager;
             twitchChannel.Text = _configuration.TwitchChannel;
             twitchOAuth.Text = _configuration.AuthTmi;
             LoadCommands();
@@ -147,25 +152,30 @@ namespace RagnaCustoms.App.Views
             {
                 return;
             }
-
-            if (command.Length < 2)
+            new Thread((() =>
             {
-                if (!Commandes.ContainsKey(""))
+                Thread.CurrentThread.IsBackground = true;
+                if (_configuration.ViewerLang.ContainsKey(e.ChatMessage.UserId))
                 {
-                    return;
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo(_configuration.ViewerLang[e.ChatMessage.UserId], true);
+                    Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
                 }
-                var cmd = Commandes[""];
-                var success = cmd.Action(_joinedChannel, prefix, _twitchClient,this,  e);
-                if (!success)
+                
+                if (command.Length < 2)
                 {
-                    _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}An error has occurred !");
+                    if (!Commandes.ContainsKey(""))
+                    {
+                        return;
+                    }
+                    var cmd = Commandes[""];
+                    var success = cmd.Action(_joinedChannel, prefix, _twitchClient,this,  e);
+                    if (!success)
+                    {
+                        _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}An error has occurred !");
+                    }
                 }
-            }
-            else
-            {
-                new Thread(() => 
+                else
                 {
-                    Thread.CurrentThread.IsBackground = true; 
                     var arg1 = command[1];
                     if (!Commandes.ContainsKey(arg1))
                     {
@@ -183,8 +193,8 @@ namespace RagnaCustoms.App.Views
                     {
                         _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}An error has occurred !");
                     }
-                }).Start();
-            }
+                }
+            })).Start();
         }
 
         private void StartDownload(string v) 
@@ -217,7 +227,7 @@ namespace RagnaCustoms.App.Views
                 //debug_console.Items.Add($"Début de la récuperation de {stuff.title}");
                 return stuff;
             }
-            catch (WebException oO) 
+            catch (WebException) 
             {
                 return null;
             }

@@ -7,7 +7,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Resources;
 using System.Windows.Forms;
+using System.Windows.Forms.PropertyGridInternal;
+using RagnaCustoms.App.Properties;
 
 namespace RagnaCustoms.Views
 {
@@ -24,7 +27,7 @@ namespace RagnaCustoms.Views
             get => SendScoreAutomaticallyMenuItem.Checked;
             set => SendScoreAutomaticallyMenuItem.Checked = value;
         }
-         public bool AutoCloseDownload
+        public bool AutoCloseDownload
         {
             get => autoCloseDownloadToolStripMenuItem.Checked;
             set => autoCloseDownloadToolStripMenuItem.Checked = value;
@@ -91,7 +94,7 @@ namespace RagnaCustoms.Views
             App.Views.LogsForm logsForm = new App.Views.LogsForm();
             logsForm.Show();
         }
-         private void autoCloseDownloadToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        private void autoCloseDownloadToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             Presenter.AutoCloseDownload = autoCloseDownloadToolStripMenuItem.Checked;
         }

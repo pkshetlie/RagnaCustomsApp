@@ -1,4 +1,6 @@
 ﻿
+using System.Windows.Forms;
+
 namespace RagnaCustoms.Views
 {
     partial class SongForm
@@ -355,6 +357,7 @@ namespace RagnaCustoms.Views
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.Menu;
             this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.Name = "SongForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RagnaCustoms";
@@ -371,7 +374,7 @@ namespace RagnaCustoms.Views
         private System.Windows.Forms.TextBox SearchTextBox;
         private System.Windows.Forms.Button SearchButton;
         private System.Windows.Forms.DataGridView SearchResultGridView;
-        private System.Windows.Forms.MenuStrip Menu;
+        private new System.Windows.Forms.MenuStrip Menu;
         private System.Windows.Forms.ToolStripMenuItem FileMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ToolsMenuItem;

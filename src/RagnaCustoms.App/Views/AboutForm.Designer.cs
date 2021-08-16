@@ -1,4 +1,6 @@
 ﻿
+using System.Windows.Forms;
+
 namespace RagnaCustoms.App.Views
 {
     partial class AboutForm
@@ -29,6 +31,9 @@ namespace RagnaCustoms.App.Views
         /// </summary>
         private void InitializeComponent()
         {
+            this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
             this.label1 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();

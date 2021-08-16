@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using RagnaCustoms.App.Properties;
 using TwitchLib.Client;
 using TwitchLib.Client.Enums;
 using TwitchLib.Client.Events;
@@ -17,8 +18,7 @@ namespace RagnaCustoms.App.Commandes
         }
         string ICommandes.Help()
         {
-            return "Remove your last request";
-            return "retirer une de vos requests";
+            return Resources.Command_Cancel_Help;
         }
         public List<UserType> IllegalUsers()
         {
@@ -40,11 +40,11 @@ namespace RagnaCustoms.App.Commandes
                     try
                     {
                         me.RemoveAtSongRequestInList(i);
-                        client.SendMessage(joinedChannel, $"Song Cancelled: {sng} ");
+                        client.SendMessage(joinedChannel, $"{Resources.Command_Cancel_Action_Canceled} {sng} ");
                     }
-                    catch (Exception oO)
+                    catch (Exception)
                     {
-                        client.SendMessage(joinedChannel, "No More song to remove");
+                        client.SendMessage(joinedChannel, Resources.Command_Cancel_Action_NoSongToCancel);
                     }
                 }
             }
