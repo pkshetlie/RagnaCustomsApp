@@ -217,7 +217,7 @@ namespace RagnaCustoms.App.Views
                 //debug_console.Items.Add($"Début de la récuperation de {stuff.title}");
                 return stuff;
             }
-            catch (WebException oO) 
+            catch (WebException) 
             {
                 return null;
             }

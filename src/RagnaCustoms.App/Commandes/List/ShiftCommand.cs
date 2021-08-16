@@ -52,7 +52,7 @@ namespace RagnaCustoms.App.Commandes
                         client.SendMessage(joinedChannel, "End of the queue");
                     }
                 }
-                catch (Exception oO)
+                catch (Exception)
                 {
                     client.SendMessage(joinedChannel, "No More song to remove");
                 }
