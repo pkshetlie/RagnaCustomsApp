@@ -14,10 +14,11 @@ namespace RagnaCustoms.App.Commandes
     {
         List<string> ICommandes.Names()
         {
-            return new List<string>() { "queue" };
+            return new List<string>() { "queue","list" };
         }
         string ICommandes.Help()
         {
+            return "display queue";
             return "affiche la queue";
         }
         public List<UserType> IllegalUsers()

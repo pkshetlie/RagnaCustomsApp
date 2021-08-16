@@ -40,5 +40,18 @@ namespace RagnaCustoms.App.Views
             ProcessStartInfo sInfo = new ProcessStartInfo("https://github.com/Crypt0-M3lon");
             Process.Start(sInfo); 
         }
+
+        private void linkLabel4_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ProcessStartInfo sInfo = new ProcessStartInfo("https://github.com/watsu78");
+            Process.Start(sInfo);
+        }
+
+        private void linkLabel5_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+            ProcessStartInfo sInfo = new ProcessStartInfo("https://github.com/OcelusPRO");
+            Process.Start(sInfo);
+        }
     }
 }

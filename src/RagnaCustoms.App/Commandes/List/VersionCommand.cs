@@ -17,6 +17,7 @@ namespace RagnaCustoms.App.Commandes
         }
         string ICommandes.Help()
         {
+            return "display the application version";
             return "Affiche la version de l'application";
         }
         public List<UserType> IllegalUsers()

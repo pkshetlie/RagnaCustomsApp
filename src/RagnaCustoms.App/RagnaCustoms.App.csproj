@@ -72,7 +72,6 @@
     <Compile Include="Commandes\List\CancelCommand.cs" />
     <Compile Include="Commandes\List\CloseQueue.cs" />
     <Compile Include="Commandes\List\HelpCommand.cs" />
-    <Compile Include="Commandes\List\HowToCommand.cs" />
     <Compile Include="Commandes\List\NextCommand.cs" />
     <Compile Include="Commandes\List\OpenQueue.cs" />
     <Compile Include="Commandes\List\QueueCommand.cs" />

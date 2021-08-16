@@ -46,7 +46,6 @@ namespace RagnaCustoms.App.Views
             this.label2 = new System.Windows.Forms.Label();
             this.helptwitchtmi = new System.Windows.Forms.Label();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.songRequests)).BeginInit();
             this.SuspendLayout();
             // 
@@ -177,23 +176,11 @@ namespace RagnaCustoms.App.Views
             this.linkLabel2.Text = "https://twitchapps.com/tmi/";
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked_1);
             // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.LinkColor = System.Drawing.Color.DodgerBlue;
-            this.linkLabel1.Location = new System.Drawing.Point(230, 528);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(165, 13);
-            this.linkLabel1.TabIndex = 28;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Application by twitch.tv/Rhokapa";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-            // 
             // TwitchBotForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(669, 552);
+            this.ClientSize = new System.Drawing.Size(669, 530);
             this.Controls.Add(this.botMessagePrefixLabel);
             this.Controls.Add(this.prefix);
             this.Controls.Add(this.songRequests);
@@ -204,7 +191,6 @@ namespace RagnaCustoms.App.Views
             this.Controls.Add(this.label2);
             this.Controls.Add(this.helptwitchtmi);
             this.Controls.Add(this.linkLabel2);
-            this.Controls.Add(this.linkLabel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TwitchBotForm";
             this.Text = "TwitchBotForm";
@@ -231,6 +217,5 @@ namespace RagnaCustoms.App.Views
         public System.Windows.Forms.Label label2;
         public System.Windows.Forms.Label helptwitchtmi;
         public System.Windows.Forms.LinkLabel linkLabel2;
-        public System.Windows.Forms.LinkLabel linkLabel1;
     }
 }

@@ -17,6 +17,7 @@ namespace RagnaCustoms.App.Commandes
         }
         string ICommandes.Help()
         {
+            return "Close the queue (moderator only)";
             return "Vous permet de clore la queue (moderateur uniquement)";
         }
         public List<UserType> IllegalUsers()

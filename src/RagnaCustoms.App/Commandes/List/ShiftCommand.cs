@@ -17,7 +17,7 @@ namespace RagnaCustoms.App.Commandes
         }
         string ICommandes.Help()
         {
-            return "?";
+            return "remove the first song in the queue and display the next one";
         }
         public List<UserType> IllegalUsers()
         {

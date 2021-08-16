@@ -16,7 +16,7 @@ namespace RagnaCustoms.App.Commandes
         }
         string ICommandes.Help()
         {
-            return "?";
+            return "display in chat the next song to play";
         }
         public List<UserType> IllegalUsers()
         {

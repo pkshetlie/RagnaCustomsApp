@@ -17,6 +17,7 @@ namespace RagnaCustoms.App.Commandes
         }
         string ICommandes.Help()
         {
+            return "Remove your last request";
             return "retirer une de vos requests";
         }
         public List<UserType> IllegalUsers()
