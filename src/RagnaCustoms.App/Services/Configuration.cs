@@ -1,6 +1,8 @@
-﻿using System.Configuration;
+﻿using System.Collections.Generic;
+using System.Configuration;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 
 namespace RagnaCustoms.Services
 {
@@ -49,6 +51,18 @@ namespace RagnaCustoms.Services
         public string BotPrefix {
             get => Get(nameof(BotPrefix));
             set => Set(nameof(BotPrefix), value);
+        }
+
+        public Dictionary<string, string> ViewerLang
+        {
+            get
+            {
+                return JsonConvert.DeserializeObject<Dictionary<string, string>>(Get(nameof(ViewerLang)));
+            }
+            set
+            {
+                Set(nameof(ViewerLang), JsonConvert.SerializeObject(value));
+            }
         }
 
         private string Get(string key)
