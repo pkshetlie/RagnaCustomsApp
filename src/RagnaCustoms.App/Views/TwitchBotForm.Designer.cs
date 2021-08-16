@@ -1,4 +1,5 @@
 ﻿
+using System.Windows.Forms;
 using RagnaCustoms.Services;
 
 namespace RagnaCustoms.App.Views
@@ -31,6 +32,9 @@ namespace RagnaCustoms.App.Views
         /// </summary>
         private void InitializeComponent()
         {
+            this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TwitchBotForm));
             this.botMessagePrefixLabel = new System.Windows.Forms.Label();
             this.prefix = new System.Windows.Forms.TextBox();

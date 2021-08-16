@@ -1,4 +1,6 @@
 ﻿
+using System.Windows.Forms;
+
 namespace RagnaCustoms.App.Views
 {
     partial class LogsForm
@@ -29,6 +31,9 @@ namespace RagnaCustoms.App.Views
         /// </summary>
         private void InitializeComponent()
         {
+            this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LogsForm));
             this.LogsDataGridView = new System.Windows.Forms.DataGridView();

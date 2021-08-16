@@ -1,4 +1,6 @@
 ﻿
+using System.Windows.Forms;
+
 namespace RagnaCustoms.Views
 {
     partial class SongForm
@@ -355,6 +357,7 @@ namespace RagnaCustoms.Views
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.Menu;
             this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.Name = "SongForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RagnaCustoms";

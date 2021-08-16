@@ -1,4 +1,6 @@
 ﻿
+using System.Windows.Forms;
+
 namespace RagnaCustoms.App.Views
 {
     partial class OculusSyncForm
@@ -29,6 +31,9 @@ namespace RagnaCustoms.App.Views
         /// </summary>
         private void InitializeComponent()
         {
+            this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OculusSyncForm));
             this.SyncingProgressBar = new System.Windows.Forms.ProgressBar();
             this.SyncingLabel = new System.Windows.Forms.Label();
