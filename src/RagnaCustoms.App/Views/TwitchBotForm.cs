@@ -179,7 +179,7 @@ namespace RagnaCustoms.App.Views
                     var success = cmd.Action(_joinedChannel, prefix, _twitchClient,this,  e);
                     if (!success)
                     {
-                        _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}An error has occurred !");
+                        _twitchClient.SendMessage(_joinedChannel,$"{Prefixe}An error has occurred !");
                     }
                 }
                 else

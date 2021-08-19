@@ -5,6 +5,7 @@ using RagnaCustoms.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Resources;
@@ -65,9 +66,10 @@ namespace RagnaCustoms.Views
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
                 var song = (SongSearchModel)senderGrid.Rows[e.RowIndex].DataBoundItem;
-
+                senderGrid.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Aquamarine;
                 Presenter.DownloadAsync(song.Id);
             }
+
         }
 
         private void ExitMenuItem_Click(object sender, EventArgs e)
@@ -77,7 +79,7 @@ namespace RagnaCustoms.Views
 
         private void ApiKeyMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.ApiKey = Prompt.ShowDialog("Enter your API key :", "RagnaCustoms", Presenter.ApiKey);
+            Presenter.ApiKey = Prompt.ShowDialog(Resources.Song_Form_EnterYourApiKey, "RagnaCustoms", Presenter.ApiKey);
         }
 
         private void SendScoreMenuItem_CheckedChanged(object sender, EventArgs e)
@@ -115,13 +117,13 @@ namespace RagnaCustoms.Views
         {
 
             var device = Oculus.GetDevice();
-            if(device != null)
+            if (device != null)
             {
-                MessageBox.Show($"{device.Manufacturer} {device.Description} found", "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(String.Format(Resources.Command_Base_Action_Message, device.Manufacturer, device.Description), "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("No compatible device found", "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Resources.Song_Form_NoCompatibleDeviceFound, "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -131,12 +133,12 @@ namespace RagnaCustoms.Views
             var result = Oculus.SyncSongs();
             if (result == 0)
             {
-                MessageBox.Show("Sync complete", "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Resources.Song_Form_SyncComplete, "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else if (result == 1)
             {
-                MessageBox.Show("No compatible device found", "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }  
+                MessageBox.Show(Resources.Song_Form_NoCompatibleDeviceFound, "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void compareSongsVersionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -153,14 +155,14 @@ namespace RagnaCustoms.Views
         {
             if (string.IsNullOrEmpty(Presenter.ApiKey))
             {
-                MessageBox.Show("You need to set your API key first", "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Resources.Song_Form_NeedToSetYourApiKeyFirst,"RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
                 ProcessStartInfo sInfo = new ProcessStartInfo($"https://ragnacustoms.com/overlay/display/{Presenter.ApiKey}");
                 Process.Start(sInfo);
             }
-         
+
         }
 
         private void overlayToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
@@ -171,15 +173,27 @@ namespace RagnaCustoms.Views
 
         private void configureApiKeyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.ApiKey = Prompt.ShowDialog("Enter your API key :", "RagnaCustoms", Presenter.ApiKey);
+            Presenter.ApiKey = Prompt.ShowDialog(Resources.Song_Form_EnterYourApiKey, "RagnaCustoms", Presenter.ApiKey);
         }
 
         private void englishToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
             // c'est de la merde, mais ces lignes sont utiles !!! ! ! ! ! ! ! !
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(Presenter.Lang, true);
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
+        }
+
+        private void SearchResultGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            var senderGrid = (DataGridView)sender;
+            foreach (DataGridViewRow row in senderGrid.Rows)
+            {
+                var song = (SongSearchModel)row.DataBoundItem;
+                row.DefaultCellStyle.BackColor =
+                    song.UpToDate ? Color.Aquamarine : Color.DarkSalmon;
+                row.Cells[row.Cells.Count - 1].Dispose();
+            }
         }
     }
 }

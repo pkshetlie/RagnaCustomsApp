@@ -1,5 +1,6 @@
 ﻿
 using System.Windows.Forms;
+using RagnaCustoms.App.Properties;
 
 namespace RagnaCustoms.Views
 {
@@ -35,12 +36,6 @@ namespace RagnaCustoms.Views
             this.SearchTextBox = new System.Windows.Forms.TextBox();
             this.SearchButton = new System.Windows.Forms.Button();
             this.SearchResultGridView = new System.Windows.Forms.DataGridView();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SongName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SongDifficulties = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SongAuthor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SongMapper = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SongDownload = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Menu = new System.Windows.Forms.MenuStrip();
             this.FileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compareSongsVersionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,6 +61,12 @@ namespace RagnaCustoms.Views
             this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.englishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.frenchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SongName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SongDifficulties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SongAuthor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SongMapper = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SongDownload = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.SearchResultGridView)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -83,7 +84,7 @@ namespace RagnaCustoms.Views
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(64, 20);
             this.SearchButton.TabIndex = 2;
-            this.SearchButton.Text = "Search";
+            this.SearchButton.Text = Resources.Song_Form_Search;
             this.SearchButton.UseVisualStyleBackColor = true;
             this.SearchButton.Click += new System.EventHandler(this.SearchButton_Click);
             // 
@@ -109,58 +110,7 @@ namespace RagnaCustoms.Views
             this.SearchResultGridView.Size = new System.Drawing.Size(514, 323);
             this.SearchResultGridView.TabIndex = 3;
             this.SearchResultGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SearchResultGridView_CellContentClick);
-            // 
-            // Id
-            // 
-            this.Id.DataPropertyName = "Id";
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
-            this.Id.Visible = false;
-            // 
-            // SongName
-            // 
-            this.SongName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.SongName.DataPropertyName = "Name";
-            this.SongName.HeaderText = "Name";
-            this.SongName.Name = "SongName";
-            this.SongName.ReadOnly = true;
-            // 
-            // SongDifficulties
-            // 
-            this.SongDifficulties.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.SongDifficulties.DataPropertyName = "Difficulties";
-            this.SongDifficulties.FillWeight = 50F;
-            this.SongDifficulties.HeaderText = "Difficulties";
-            this.SongDifficulties.Name = "SongDifficulties";
-            this.SongDifficulties.ReadOnly = true;
-            // 
-            // SongAuthor
-            // 
-            this.SongAuthor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.SongAuthor.DataPropertyName = "Author";
-            this.SongAuthor.FillWeight = 80F;
-            this.SongAuthor.HeaderText = "Author";
-            this.SongAuthor.Name = "SongAuthor";
-            this.SongAuthor.ReadOnly = true;
-            // 
-            // SongMapper
-            // 
-            this.SongMapper.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.SongMapper.DataPropertyName = "Mapper";
-            this.SongMapper.FillWeight = 80F;
-            this.SongMapper.HeaderText = "Mapper";
-            this.SongMapper.Name = "SongMapper";
-            this.SongMapper.ReadOnly = true;
-            // 
-            // SongDownload
-            // 
-            this.SongDownload.HeaderText = "";
-            this.SongDownload.Name = "SongDownload";
-            this.SongDownload.ReadOnly = true;
-            this.SongDownload.Text = "↓";
-            this.SongDownload.UseColumnTextForButtonValue = true;
-            this.SongDownload.Width = 30;
+            this.SearchResultGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.SearchResultGridView_RowsAdded);
             // 
             // Menu
             // 
@@ -184,20 +134,20 @@ namespace RagnaCustoms.Views
             this.ExitMenuItem});
             this.FileMenuItem.Name = "FileMenuItem";
             this.FileMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.FileMenuItem.Text = "&File";
+            this.FileMenuItem.Text = Resources.Song_Form_File;
             // 
             // compareSongsVersionToolStripMenuItem
             // 
             this.compareSongsVersionToolStripMenuItem.Name = "compareSongsVersionToolStripMenuItem";
             this.compareSongsVersionToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.compareSongsVersionToolStripMenuItem.Text = "Compare songs version";
+            this.compareSongsVersionToolStripMenuItem.Text = Resources.Song_Form_CompareSongversion;
             this.compareSongsVersionToolStripMenuItem.Click += new System.EventHandler(this.compareSongsVersionToolStripMenuItem_Click);
             // 
             // ExitMenuItem
             // 
             this.ExitMenuItem.Name = "ExitMenuItem";
             this.ExitMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.ExitMenuItem.Text = "E&xit";
+            this.ExitMenuItem.Text = Resources.Song_Form_Exit;
             this.ExitMenuItem.Click += new System.EventHandler(this.ExitMenuItem_Click);
             // 
             // ToolsMenuItem
@@ -208,7 +158,7 @@ namespace RagnaCustoms.Views
             this.streamingToolStripMenuItem});
             this.ToolsMenuItem.Name = "ToolsMenuItem";
             this.ToolsMenuItem.Size = new System.Drawing.Size(46, 20);
-            this.ToolsMenuItem.Text = "&Tools";
+            this.ToolsMenuItem.Text = Resources.Song_Form_Tools;
             // 
             // scoreSystemToolStripMenuItem
             // 
@@ -217,13 +167,13 @@ namespace RagnaCustoms.Views
             this.SendScoreAutomaticallyMenuItem});
             this.scoreSystemToolStripMenuItem.Name = "scoreSystemToolStripMenuItem";
             this.scoreSystemToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
-            this.scoreSystemToolStripMenuItem.Text = "Score system";
+            this.scoreSystemToolStripMenuItem.Text = Resources.Song_Form_ScoreSystem;
             // 
             // ApiKeyMenuItem
             // 
             this.ApiKeyMenuItem.Name = "ApiKeyMenuItem";
             this.ApiKeyMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.ApiKeyMenuItem.Text = "&Configure API key...";
+            this.ApiKeyMenuItem.Text = Resources.Song_Form_ConfigureApiKey;
             this.ApiKeyMenuItem.Click += new System.EventHandler(this.ApiKeyMenuItem_Click);
             // 
             // SendScoreAutomaticallyMenuItem
@@ -233,7 +183,7 @@ namespace RagnaCustoms.Views
             this.SendScoreAutomaticallyMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.SendScoreAutomaticallyMenuItem.Name = "SendScoreAutomaticallyMenuItem";
             this.SendScoreAutomaticallyMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.SendScoreAutomaticallyMenuItem.Text = "&Send score automatically";
+            this.SendScoreAutomaticallyMenuItem.Text = Resources.Song_Form_SendScoreAutomatically;
             this.SendScoreAutomaticallyMenuItem.CheckedChanged += new System.EventHandler(this.SendScoreMenuItem_CheckedChanged);
             this.SendScoreAutomaticallyMenuItem.Click += new System.EventHandler(this.SendScoreAutomaticallyMenuItem_Click);
             // 
@@ -243,14 +193,14 @@ namespace RagnaCustoms.Views
             this.autoCloseDownloadToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
-            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Text = Resources.Song_Form_Settings;
             // 
             // autoCloseDownloadToolStripMenuItem
             // 
             this.autoCloseDownloadToolStripMenuItem.CheckOnClick = true;
             this.autoCloseDownloadToolStripMenuItem.Name = "autoCloseDownloadToolStripMenuItem";
             this.autoCloseDownloadToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.autoCloseDownloadToolStripMenuItem.Text = "Auto close download";
+            this.autoCloseDownloadToolStripMenuItem.Text = Resources.Song_Form_AutoCloseDownload;
             this.autoCloseDownloadToolStripMenuItem.CheckedChanged += new System.EventHandler(this.autoCloseDownloadToolStripMenuItem_CheckedChanged);
             // 
             // streamingToolStripMenuItem
@@ -262,13 +212,13 @@ namespace RagnaCustoms.Views
             this.twitchBotToolStripMenuItem1});
             this.streamingToolStripMenuItem.Name = "streamingToolStripMenuItem";
             this.streamingToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
-            this.streamingToolStripMenuItem.Text = "Streaming";
+            this.streamingToolStripMenuItem.Text = Resources.Song_Form_Streaming;
             // 
             // configureApiKeyToolStripMenuItem
             // 
             this.configureApiKeyToolStripMenuItem.Name = "configureApiKeyToolStripMenuItem";
             this.configureApiKeyToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.configureApiKeyToolStripMenuItem.Text = "Configure API key ...";
+            this.configureApiKeyToolStripMenuItem.Text = Resources.Song_Form_ConfigureApiKey;
             this.configureApiKeyToolStripMenuItem.Click += new System.EventHandler(this.configureApiKeyToolStripMenuItem_Click);
             // 
             // overlayToolStripMenuItem
@@ -276,21 +226,21 @@ namespace RagnaCustoms.Views
             this.overlayToolStripMenuItem.CheckOnClick = true;
             this.overlayToolStripMenuItem.Name = "overlayToolStripMenuItem";
             this.overlayToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.overlayToolStripMenuItem.Text = "Enable overlay";
+            this.overlayToolStripMenuItem.Text = Resources.Song_Form_EnableOverlay;
             this.overlayToolStripMenuItem.CheckedChanged += new System.EventHandler(this.overlayToolStripMenuItem_CheckedChanged);
             // 
             // gotoOverlayUrlToolStripMenuItem
             // 
             this.gotoOverlayUrlToolStripMenuItem.Name = "gotoOverlayUrlToolStripMenuItem";
             this.gotoOverlayUrlToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.gotoOverlayUrlToolStripMenuItem.Text = "Get overlay url";
+            this.gotoOverlayUrlToolStripMenuItem.Text = Resources.Song_Form_getOverlayurl;
             this.gotoOverlayUrlToolStripMenuItem.Click += new System.EventHandler(this.gotoOverlayUrlToolStripMenuItem_Click);
             // 
             // twitchBotToolStripMenuItem1
             // 
             this.twitchBotToolStripMenuItem1.Name = "twitchBotToolStripMenuItem1";
             this.twitchBotToolStripMenuItem1.Size = new System.Drawing.Size(181, 22);
-            this.twitchBotToolStripMenuItem1.Text = "TwitchBot";
+            this.twitchBotToolStripMenuItem1.Text = Resources.Song_Form_TwitchBot;
             this.twitchBotToolStripMenuItem1.Click += new System.EventHandler(this.twitchBotToolStripMenuItem1_Click);
             // 
             // questToolStripMenuItem
@@ -300,20 +250,20 @@ namespace RagnaCustoms.Views
             this.syncSongsToolStripMenuItem});
             this.questToolStripMenuItem.Name = "questToolStripMenuItem";
             this.questToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
-            this.questToolStripMenuItem.Text = "Quest";
+            this.questToolStripMenuItem.Text = Resources.Song_Form_Quest;
             // 
             // checkAccessToolStripMenuItem
             // 
             this.checkAccessToolStripMenuItem.Name = "checkAccessToolStripMenuItem";
             this.checkAccessToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
-            this.checkAccessToolStripMenuItem.Text = "Check access";
+            this.checkAccessToolStripMenuItem.Text = Resources.Song_Form_CheckAccess;
             this.checkAccessToolStripMenuItem.Click += new System.EventHandler(this.checkAccessToolStripMenuItem_Click);
             // 
             // syncSongsToolStripMenuItem
             // 
             this.syncSongsToolStripMenuItem.Name = "syncSongsToolStripMenuItem";
             this.syncSongsToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
-            this.syncSongsToolStripMenuItem.Text = "Sync songs";
+            this.syncSongsToolStripMenuItem.Text = Resources.Song_Form_SyncSong;
             this.syncSongsToolStripMenuItem.Click += new System.EventHandler(this.syncSongsToolStripMenuItem_Click);
             // 
             // HelpMenuItem
@@ -324,28 +274,28 @@ namespace RagnaCustoms.Views
             this.aboutToolStripMenuItem});
             this.HelpMenuItem.Name = "HelpMenuItem";
             this.HelpMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.HelpMenuItem.Text = "&Help";
+            this.HelpMenuItem.Text = Resources.Song_Form_Help;
             // 
             // logFileToolStripMenuItem
             // 
             this.logFileToolStripMenuItem.Name = "logFileToolStripMenuItem";
-            this.logFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.logFileToolStripMenuItem.Text = "Log file";
+            this.logFileToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.logFileToolStripMenuItem.Text = Resources.Song_Form_LogFile;
             this.logFileToolStripMenuItem.Click += new System.EventHandler(this.logFileToolStripMenuItem_Click);
             // 
             // logsScreenToolStripMenuItem
             // 
             this.logsScreenToolStripMenuItem.Name = "logsScreenToolStripMenuItem";
-            this.logsScreenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.logsScreenToolStripMenuItem.Text = "Logs screen";
+            this.logsScreenToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.logsScreenToolStripMenuItem.Text = Resources.Song_Form_LogScreen;
             this.logsScreenToolStripMenuItem.Visible = false;
             this.logsScreenToolStripMenuItem.Click += new System.EventHandler(this.logScreenToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.aboutToolStripMenuItem.Text = Resources.Song_Form_About;
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // languageToolStripMenuItem
@@ -355,13 +305,13 @@ namespace RagnaCustoms.Views
             this.frenchToolStripMenuItem});
             this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
             this.languageToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
-            this.languageToolStripMenuItem.Text = "Language";
+            this.languageToolStripMenuItem.Text = Resources.Song_Form_Language;
             // 
             // englishToolStripMenuItem
             // 
             this.englishToolStripMenuItem.CheckOnClick = true;
             this.englishToolStripMenuItem.Name = "englishToolStripMenuItem";
-            this.englishToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.englishToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.englishToolStripMenuItem.Text = "English";
             this.englishToolStripMenuItem.Click += new System.EventHandler(this.englishToolStripMenuItem_Click);
             // 
@@ -369,8 +319,60 @@ namespace RagnaCustoms.Views
             // 
             this.frenchToolStripMenuItem.CheckOnClick = true;
             this.frenchToolStripMenuItem.Name = "frenchToolStripMenuItem";
-            this.frenchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.frenchToolStripMenuItem.Text = "French";
+            this.frenchToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.frenchToolStripMenuItem.Text = "Français";
+            // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "Id";
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Visible = false;
+            // 
+            // SongName
+            // 
+            this.SongName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.SongName.DataPropertyName = "Name";
+            this.SongName.HeaderText = "Name";
+            this.SongName.Name = "SongName";
+            this.SongName.ReadOnly = true;
+            // 
+            // SongDifficulties
+            // 
+            this.SongDifficulties.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.SongDifficulties.DataPropertyName = "Difficulties";
+            this.SongDifficulties.FillWeight = 50F;
+            this.SongDifficulties.HeaderText = Resources.Song_Form_Difficulties;
+            this.SongDifficulties.Name = "SongDifficulties";
+            this.SongDifficulties.ReadOnly = true;
+            // 
+            // SongAuthor
+            // 
+            this.SongAuthor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.SongAuthor.DataPropertyName = "Author";
+            this.SongAuthor.FillWeight = 80F;
+            this.SongAuthor.HeaderText = Resources.Song_Form_Author;
+            this.SongAuthor.Name = "SongAuthor";
+            this.SongAuthor.ReadOnly = true;
+            // 
+            // SongMapper
+            // 
+            this.SongMapper.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.SongMapper.DataPropertyName = "Mapper";
+            this.SongMapper.FillWeight = 80F;
+            this.SongMapper.HeaderText = Resources.Song_Form_Mapper;
+            this.SongMapper.Name = "SongMapper";
+            this.SongMapper.ReadOnly = true;
+            // 
+            // SongDownload
+            // 
+            this.SongDownload.HeaderText = "";
+            this.SongDownload.Name = "SongDownload";
+            this.SongDownload.ReadOnly = true;
+            this.SongDownload.Text = "↓";
+            this.SongDownload.UseColumnTextForButtonValue = true;
+            this.SongDownload.Width = 30;
             // 
             // SongForm
             // 
@@ -418,12 +420,6 @@ namespace RagnaCustoms.Views
         private System.Windows.Forms.ToolStripMenuItem checkAccessToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem syncSongsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem compareSongsVersionToolStripMenuItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SongName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SongDifficulties;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SongAuthor;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SongMapper;
-        private System.Windows.Forms.DataGridViewButtonColumn SongDownload;
         private System.Windows.Forms.ToolStripMenuItem logsScreenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem streamingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem twitchBotToolStripMenuItem1;
@@ -433,5 +429,11 @@ namespace RagnaCustoms.Views
         private ToolStripMenuItem languageToolStripMenuItem;
         private ToolStripMenuItem englishToolStripMenuItem;
         private ToolStripMenuItem frenchToolStripMenuItem;
+        private DataGridViewTextBoxColumn Id;
+        private DataGridViewTextBoxColumn SongName;
+        private DataGridViewTextBoxColumn SongDifficulties;
+        private DataGridViewTextBoxColumn SongAuthor;
+        private DataGridViewTextBoxColumn SongMapper;
+        private DataGridViewButtonColumn SongDownload;
     }
 }
