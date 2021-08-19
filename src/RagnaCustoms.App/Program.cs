@@ -71,7 +71,7 @@ namespace RagnaCustoms.App
                 {
                     var api = uri.Replace(RagnacApiCommand, string.Empty);
                     configuration.ApiKey = api;
-                    MessageBox.Show(Resources.Api_key_set,"RagnaCutoms", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    MessageBox.Show(Resources.Program_Api_Set_api_key,"RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }
             }
             else 
@@ -96,7 +96,7 @@ namespace RagnaCustoms.App
                 var songPresenter = new SongPresenter(configuration, songView, downloadingPresenter, songProvider);
                 if (string.IsNullOrEmpty(configuration.ApiKey))
                 {
-                    MessageBox.Show(songView,"Be careful, the API key is missing.\r\nGo to Tools > Score system > Configure Api key... " , "API key is missing", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(songView,Resources.Program_Api_Message1 , Resources.Program_Api_Message1_Title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 Application.Run(songView);
             }

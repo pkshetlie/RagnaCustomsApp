@@ -341,7 +341,7 @@ namespace RagnaCustoms.Views
             this.frenchToolStripMenuItem.Name = "frenchToolStripMenuItem";
             this.frenchToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.frenchToolStripMenuItem.Text = "French";
-            this.frenchToolStripMenuItem.Click += new System.EventHandler(this.frenchToolStripMenuItem_Click);
+            this.frenchToolStripMenuItem.Click += new System.EventHandler(this.frenchToolStripMenuItem_Click_1);
             // 
             // SongForm
             // 
@@ -400,7 +400,7 @@ namespace RagnaCustoms.Views
         private System.Windows.Forms.ToolStripMenuItem overlayToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gotoOverlayUrlToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configureApiKeyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem languageToolStripMenuItem;
+        private ToolStripMenuItem languageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem englishToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem frenchToolStripMenuItem;
     }
