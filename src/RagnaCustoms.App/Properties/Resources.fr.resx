@@ -291,4 +291,7 @@
   <data name="Song.Form.TwitchBot" xml:space="preserve">
     <value>Twitch bot</value>
   </data>
+  <data name="Song.Form.CompareSongversion" xml:space="preserve">
+    <value>Comparer les versions des musiques</value>
+  </data>
 </root>

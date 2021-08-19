@@ -5,8 +5,10 @@ using RagnaCustoms.Services;
 using RagnaCustoms.Views;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace RagnaCustoms.App
@@ -48,6 +50,8 @@ namespace RagnaCustoms.App
             var downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
             var configuration = new Configuration();
 
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(configuration.Lang??"en", true);
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
             if (args.Contains("--install"))
             {
                 var uri = args.ElementAtOrDefault(1);

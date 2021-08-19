@@ -44,9 +44,10 @@ namespace RagnaCustoms.Views
         public SongForm()
         {
             InitializeComponent();
-
             SearchResultGridView.AutoGenerateColumns = false;
-
+            var conf = new Configuration();
+            englishToolStripMenuItem.Checked = conf.Lang == "en";
+            frenchToolStripMenuItem.Checked = conf.Lang == "fr";
             Text += $" {Assembly.GetExecutingAssembly().GetName().Version.ToString(3)}";
         }
 
@@ -178,18 +179,20 @@ namespace RagnaCustoms.Views
 
         private void englishToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Configuration conf = new Configuration();
-            conf.Lang = "en";
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(conf.Lang, true);
+            Presenter.Lang = "en";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(Presenter.Lang, true);
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
+            MessageBox.Show(this, "Please restart application to apply language", "Restart needed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
         }
 
-        private void frenchToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void frenchToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Configuration conf = new Configuration();
-            conf.Lang = "fr";
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(conf.Lang, true);
-            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;        
+            Presenter.Lang = "fr";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(Presenter.Lang, true);
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
+            MessageBox.Show(this, "Veuillez redemarrer l'application pour appliquer la nouvelle langue", "Redemarrage nécessaire", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
         }
 
         private void SearchResultGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
