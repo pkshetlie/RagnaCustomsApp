@@ -47,7 +47,7 @@ namespace RagnaCustoms.App.Commandes
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(me._configuration.ViewerLang[e.ChatMessage.UserId], true);
                 Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
             }
-            client.SendMessage(joinedChannel, "Votre langue a bien été changé, si ce message n'est pas afficher dans la bonne langue, c'est que votre langue n'est pas encore disponible, venez donc nous la suggérer sur notre discord -> DISCORD_RAGNACUSTOM");
+            client.SendMessage(joinedChannel, "Votre langue a bien été changé, si ce message n'est pas afficher dans la bonne langue, c'est que votre langue n'est pas encore disponible.");
             return true;
         }
     }

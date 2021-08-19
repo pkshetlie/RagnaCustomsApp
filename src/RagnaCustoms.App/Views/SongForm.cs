@@ -11,6 +11,8 @@ using System.Resources;
 using System.Windows.Forms;
 using System.Windows.Forms.PropertyGridInternal;
 using RagnaCustoms.App.Properties;
+using System.Threading;
+using System.Globalization;
 
 namespace RagnaCustoms.Views
 {
@@ -170,6 +172,14 @@ namespace RagnaCustoms.Views
         private void configureApiKeyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Presenter.ApiKey = Prompt.ShowDialog("Enter your API key :", "RagnaCustoms", Presenter.ApiKey);
+        }
+
+        private void englishToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            // c'est de la merde, mais ces lignes sont utiles !!! ! ! ! ! ! ! !
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(Presenter.Lang, true);
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
         }
     }
 }

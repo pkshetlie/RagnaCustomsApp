@@ -13,12 +13,17 @@ namespace RagnaCustoms.Services
         const string Subkey = "Software\\RagnaCustoms\\RagnaCustoms";
         const string KeyName = UserRoot + "\\" + Subkey;
 
+        public string Lang
+        {
+            get => Get(nameof(Lang));
+            set => Set(nameof(Lang), value);
+        }
+
         public string ApiKey
         {
             get => Get(nameof(ApiKey));
             set => Set(nameof(ApiKey), value);
         }
-
         public string TwitchChannel
         {
             get => Get(nameof(TwitchChannel));

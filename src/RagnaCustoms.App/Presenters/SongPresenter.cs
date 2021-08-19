@@ -34,6 +34,11 @@ namespace RagnaCustoms.Presenters
             get => Configuration.AutoCloseDownload;
             set => Configuration.AutoCloseDownload = value;
         }
+        public string Lang
+        {
+            get => Configuration.Lang;
+            set => Configuration.Lang = value;
+        }
 
         public SongPresenter(Configuration configuration, ISongView view, IDownloadingPresenter downloadingPresenter, ISongProvider songProvider)
         {
