@@ -18,7 +18,6 @@ namespace RagnaCustoms.Services
             get => Get(nameof(Lang));
             set => Set(nameof(Lang), value);
         }
-
         public string ApiKey
         {
             get => Get(nameof(ApiKey));
@@ -35,25 +34,30 @@ namespace RagnaCustoms.Services
             get => Get(nameof(AuthTmi));
             set => Set(nameof(AuthTmi), value);
         }
-
+        public bool TwitchBotAutoStart
+        {
+            get => Get(nameof(TwitchBotAutoStart)) == bool.TrueString;
+            set => Set(nameof(TwitchBotAutoStart), value ? bool.TrueString : bool.FalseString);
+        }
         public bool SendScoreAutomatically
         {
             get => Get(nameof(SendScoreAutomatically)) == bool.TrueString;
-            set => Set(nameof(SendScoreAutomatically), value ? bool.TrueString : bool.FalseString);     
-        } 
-        
+            set => Set(nameof(SendScoreAutomatically), value ? bool.TrueString : bool.FalseString);
+        }
+
         public bool Overlay
         {
             get => Get(nameof(Overlay)) == bool.TrueString;
-            set => Set(nameof(Overlay), value ? bool.TrueString : bool.FalseString);     
-        } 
-        
+            set => Set(nameof(Overlay), value ? bool.TrueString : bool.FalseString);
+        }
+
         public bool AutoCloseDownload
         {
             get => Get(nameof(AutoCloseDownload)) == bool.TrueString;
-            set => Set(nameof(AutoCloseDownload), value ? bool.TrueString : bool.FalseString); 
+            set => Set(nameof(AutoCloseDownload), value ? bool.TrueString : bool.FalseString);
         }
-        public string BotPrefix {
+        public string BotPrefix
+        {
             get => Get(nameof(BotPrefix));
             set => Set(nameof(BotPrefix), value);
         }
@@ -72,9 +76,9 @@ namespace RagnaCustoms.Services
 
         private string Get(string key)
         {
-           return (string) Registry.GetValue(KeyName,
-            key,
-            "");
+            return (string)Registry.GetValue(KeyName,
+             key,
+             "");
         }
         private void Set(string key, string value)
         {
