@@ -43,12 +43,10 @@ namespace RagnaCustoms.Views
 
         public SongForm()
         {
-            Configuration conf = new Configuration();
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(conf.Lang, true);
-            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
-            
             InitializeComponent();
+
             SearchResultGridView.AutoGenerateColumns = false;
+
             Text += $" {Assembly.GetExecutingAssembly().GetName().Version.ToString(3)}";
         }
 
@@ -186,16 +184,12 @@ namespace RagnaCustoms.Views
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
         }
 
-        private void frenchToolStripMenuItem_Click(object sender, EventArgs e)
+        private void frenchToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             Configuration conf = new Configuration();
             conf.Lang = "fr";
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(conf.Lang, true);
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;        
-
-            // c'est de la merde, mais ces lignes sont utiles !!! ! ! ! ! ! ! !
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(Presenter.Lang, true);
-            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
         }
 
         private void SearchResultGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
