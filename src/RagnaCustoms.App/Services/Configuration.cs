@@ -66,7 +66,13 @@ namespace RagnaCustoms.Services
         {
             get
             {
-                return JsonConvert.DeserializeObject<Dictionary<string, string>>(Get(nameof(ViewerLang)));
+                var tmp = JsonConvert.DeserializeObject<Dictionary<string, string>>(Get(nameof(ViewerLang)));
+                if (tmp == null)
+                {
+                    tmp = new Dictionary<string, string>();
+                }
+
+                return tmp;
             }
             set
             {

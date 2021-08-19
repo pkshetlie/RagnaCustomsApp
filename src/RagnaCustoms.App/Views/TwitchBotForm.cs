@@ -29,20 +29,17 @@ namespace RagnaCustoms.App.Views
     public partial class TwitchBotForm : Form
     {
         public Configuration _configuration;
-        public ResourceManager Resource;
         public TwitchBotForm() {
             InitializeComponent();
             
             _configuration = new Configuration();
-            Resource = Resources.ResourceManager;
             twitchChannel.Text = _configuration.TwitchChannel;
             twitchOAuth.Text = _configuration.AuthTmi;
             autoStart.Checked = _configuration.TwitchBotAutoStart;
             bot_enabled.Checked = _configuration.TwitchBotAutoStart;
 
             LoadCommands();
-           
-
+            
         }
 
         private void linkLabel2_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e) {
