@@ -1,5 +1,6 @@
 ﻿
 using System.Windows.Forms;
+using RagnaCustoms.App.Properties;
 using RagnaCustoms.Services;
 
 namespace RagnaCustoms.App.Views
@@ -66,7 +67,7 @@ namespace RagnaCustoms.App.Views
             this.botMessagePrefixLabel.Name = "botMessagePrefixLabel";
             this.botMessagePrefixLabel.Size = new System.Drawing.Size(96, 13);
             this.botMessagePrefixLabel.TabIndex = 31;
-            this.botMessagePrefixLabel.Text = "Bot message prefix";
+            this.botMessagePrefixLabel.Text = Resources.TwitchBot_Form_BotMessagePrefix;
             this.botMessagePrefixLabel.Click += new System.EventHandler(this.botMessagePrefixLabel_Click);
             // 
             // prefix
@@ -85,7 +86,8 @@ namespace RagnaCustoms.App.Views
             this.Song,
             this.Author,
             this.Viewer,
-            this.Id});
+            this.Id
+            });
             this.songRequests.Location = new System.Drawing.Point(12, 83);
             this.songRequests.Name = "songRequests";
             this.songRequests.Size = new System.Drawing.Size(645, 420);
@@ -93,21 +95,21 @@ namespace RagnaCustoms.App.Views
             // 
             // Song
             // 
-            this.Song.HeaderText = "Song";
+            this.Song.HeaderText = Resources.TwitchBot_Form_Song;
             this.Song.Name = "Song";
             this.Song.ReadOnly = true;
             this.Song.Width = 250;
             // 
             // Author
             // 
-            this.Author.HeaderText = "Author";
+            this.Author.HeaderText = Resources.TwitchBot_Form_Author;
             this.Author.Name = "Author";
             this.Author.ReadOnly = true;
             this.Author.Width = 150;
             // 
             // Viewer
             // 
-            this.Viewer.HeaderText = "Viewer";
+            this.Viewer.HeaderText = Resources.TwitchBot_Form_Viewer;
             this.Viewer.Name = "Viewer";
             this.Viewer.ReadOnly = true;
             this.Viewer.Width = 150;
@@ -125,7 +127,7 @@ namespace RagnaCustoms.App.Views
             this.bot_enabled.Name = "bot_enabled";
             this.bot_enabled.Size = new System.Drawing.Size(74, 17);
             this.bot_enabled.TabIndex = 25;
-            this.bot_enabled.Text = "Enabled ?";
+            this.bot_enabled.Text = Resources.TwitchBot_Form_Enabled;
             this.bot_enabled.UseVisualStyleBackColor = true;
             this.bot_enabled.CheckedChanged += new System.EventHandler(this.bot_enabled_CheckedChanged_1);
             // 
@@ -154,7 +156,7 @@ namespace RagnaCustoms.App.Views
             this.helptwitchtmi.Name = "helptwitchtmi";
             this.helptwitchtmi.Size = new System.Drawing.Size(70, 13);
             this.helptwitchtmi.TabIndex = 20;
-            this.helptwitchtmi.Text = "Get Token at ";
+            this.helptwitchtmi.Text = Resources.TwitchBot_Form_GetToken;
             this.helptwitchtmi.Click += new System.EventHandler(this.helptwitchtmi_Click);
             // 
             // linkLabel2
@@ -179,7 +181,7 @@ namespace RagnaCustoms.App.Views
             this.groupBox1.Size = new System.Drawing.Size(200, 69);
             this.groupBox1.TabIndex = 32;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "TMI OAuth password";
+            this.groupBox1.Text = Resources.TwitchBot_Form_TMI;
             // 
             // groupBox2
             // 
@@ -191,7 +193,7 @@ namespace RagnaCustoms.App.Views
             this.groupBox2.Size = new System.Drawing.Size(153, 69);
             this.groupBox2.TabIndex = 33;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Twitch channel";
+            this.groupBox2.Text = Resources.TwitchBot_Form_TwitchChannel;
             // 
             // autoStart
             // 
@@ -213,7 +215,7 @@ namespace RagnaCustoms.App.Views
             this.groupBox3.Size = new System.Drawing.Size(109, 69);
             this.groupBox3.TabIndex = 35;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Config";
+            this.groupBox3.Text = Resources.TwitchBot_Form_Configuration;
             // 
             // groupBox4
             // 
@@ -224,7 +226,7 @@ namespace RagnaCustoms.App.Views
             this.groupBox4.Size = new System.Drawing.Size(165, 69);
             this.groupBox4.TabIndex = 36;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Commands";
+            this.groupBox4.Text = Resources.TwitchBot_Form_Commands;
             this.groupBox4.Visible = false;
             // 
             // button2
@@ -234,7 +236,7 @@ namespace RagnaCustoms.App.Views
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(152, 23);
             this.button2.TabIndex = 1;
-            this.button2.Text = "Manage base commands";
+            this.button2.Text = Resources.TwitchBot_Form_ManagebaseCommands;
             this.button2.UseVisualStyleBackColor = true;
             // 
             // button1
@@ -244,7 +246,7 @@ namespace RagnaCustoms.App.Views
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(152, 23);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Manage custom commands";
+            this.button1.Text = Resources.TwitchBot_Form_ManageCustomCommands;
             this.button1.UseVisualStyleBackColor = true;
             // 
             // TwitchBotForm
@@ -260,8 +262,8 @@ namespace RagnaCustoms.App.Views
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "TwitchBotForm";
-            this.Text = "TwitchBotForm";
+            this.Name = Resources.TwitchBot_Form_Title;
+            this.Text = Resources.TwitchBot_Form_Title;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TwitchBotForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.songRequests)).EndInit();
             this.groupBox1.ResumeLayout(false);
