@@ -47,11 +47,11 @@ namespace RagnaCustoms.App.Views
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.autoStart = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.songRequests)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -193,20 +193,20 @@ namespace RagnaCustoms.App.Views
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Twitch channel";
             // 
-            // checkBox1
+            // autoStart
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(7, 21);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(80, 17);
-            this.checkBox1.TabIndex = 34;
-            this.checkBox1.Text = "Auto-start ?";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.autoStart.AutoSize = true;
+            this.autoStart.Location = new System.Drawing.Point(7, 21);
+            this.autoStart.Name = "autoStart";
+            this.autoStart.Size = new System.Drawing.Size(80, 17);
+            this.autoStart.TabIndex = 34;
+            this.autoStart.Text = "Auto-start ?";
+            this.autoStart.UseVisualStyleBackColor = true;
+            this.autoStart.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.checkBox1);
+            this.groupBox3.Controls.Add(this.autoStart);
             this.groupBox3.Controls.Add(this.bot_enabled);
             this.groupBox3.Location = new System.Drawing.Point(377, 13);
             this.groupBox3.Name = "groupBox3";
@@ -225,24 +225,27 @@ namespace RagnaCustoms.App.Views
             this.groupBox4.TabIndex = 36;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Commands";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(7, 17);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(152, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Manage custom commands";
-            this.button1.UseVisualStyleBackColor = true;
+            this.groupBox4.Visible = false;
             // 
             // button2
             // 
+            this.button2.Enabled = false;
             this.button2.Location = new System.Drawing.Point(7, 43);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(152, 23);
             this.button2.TabIndex = 1;
             this.button2.Text = "Manage base commands";
             this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point(7, 17);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(152, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Manage custom commands";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // TwitchBotForm
             // 
@@ -288,7 +291,7 @@ namespace RagnaCustoms.App.Views
         public System.Windows.Forms.LinkLabel linkLabel2;
         private GroupBox groupBox1;
         private GroupBox groupBox2;
-        public CheckBox checkBox1;
+        public CheckBox autoStart;
         private GroupBox groupBox3;
         private GroupBox groupBox4;
         private Button button2;

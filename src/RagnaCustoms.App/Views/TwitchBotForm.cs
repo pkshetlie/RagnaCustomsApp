@@ -37,7 +37,12 @@ namespace RagnaCustoms.App.Views
             Resource = Resources.ResourceManager;
             twitchChannel.Text = _configuration.TwitchChannel;
             twitchOAuth.Text = _configuration.AuthTmi;
+            autoStart.Checked = _configuration.TwitchBotAutoStart;
+            bot_enabled.Checked = _configuration.TwitchBotAutoStart;
+
             LoadCommands();
+           
+
         }
 
         private void linkLabel2_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -49,9 +54,12 @@ namespace RagnaCustoms.App.Views
         private JoinedChannel _joinedChannel;
         private bool _twitchBotEnabled = false;
         public Process RagnarockApp { get; set; }
-        
+
         private void bot_enabled_CheckedChanged_1(object sender, EventArgs e)
         {
+            checkEnabled();
+        }
+        public void checkEnabled() { 
             if (bot_enabled.Checked && (String.IsNullOrEmpty(twitchOAuth.Text.ToString()) || String.IsNullOrEmpty(twitchChannel.Text))) {
                 MessageBox.Show("You need to configure before enable", "RagnaCustoms.com", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 //MessageBox.Show(Resources.app.strings.Error_2, "RagnaCustoms.com", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -155,7 +163,7 @@ namespace RagnaCustoms.App.Views
             new Thread((() =>
             {
                 Thread.CurrentThread.IsBackground = true;
-                if (_configuration.ViewerLang.ContainsKey(e.ChatMessage.UserId))
+                if (_configuration.ViewerLang != null && _configuration.ViewerLang.ContainsKey(e.ChatMessage.UserId))
                 {
                     Thread.CurrentThread.CurrentUICulture = new CultureInfo(_configuration.ViewerLang[e.ChatMessage.UserId], true);
                     Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
@@ -274,7 +282,7 @@ namespace RagnaCustoms.App.Views
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-
+            _configuration.TwitchBotAutoStart = autoStart.Checked;
         }
 
         private void prefix_TextChanged(object sender, EventArgs e)
