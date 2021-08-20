@@ -27,7 +27,7 @@ namespace RagnaCustoms.Services
             using var client = new HttpClient();
             client.DefaultRequestHeaders.Add("x-api-key", apiKey);
 
-            var models = sessions.Select(session => new SessionModel(session.Song.Hash, session.Score, session.Song.Level)).ToArray();
+            var models = sessions.Select(session => new SessionModel(session)).ToArray();
 
             var result = await client.PostAsJsonAsync(Uri, models);
             if (result.IsSuccessStatusCode)
@@ -48,12 +48,38 @@ namespace RagnaCustoms.Services
         public string Level { get; set; }
         public string AppVersion { get; set; }
 
+        public int NotesMissed { get; set; }
+        public int NotesHit { get; set; }
+        public int NotesNotProcessed { get; set; }
+        public string HitAccuracy { get; set; }
+        public string Percentage { get; set; }
+        public string HitSpeed { get; set; }
+        public string Percentage2 { get; set; }
+        public int Combos { get; set; }
+
         public SessionModel(string hashInfo, string score, string level)
         {
             AppVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             HashInfo = hashInfo;
             Score = score;
             Level = level;
+        }
+
+        public SessionModel(Session session)
+        {
+
+            AppVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            HashInfo = session.Song.Hash;
+            Score = session.Score;
+            Level = session.Song.Level;
+            NotesMissed = session.NotesMissed;
+            NotesHit = session.NotesHit;
+            NotesNotProcessed = session.NotesNotProcessed;
+            HitAccuracy = session.HitAccuracy;
+            Percentage = session.Percentage;
+            HitSpeed = session.HitSpeed;
+            Percentage2 = session.Percentage2;
+            Combos = session.Combos;
         }
     } 
 }

@@ -18,16 +18,16 @@ namespace RagnaCustoms.App
         const string RagnacInstallCommand = "ragnac://install/";
         const string RagnacApiCommand = "ragnac://api/";
 
-//#if DEBUG 
-//        const string UploadSessionUri = "https://127.0.0.1:8000/api/score/v2?XDEBUG_SESSION_START=PHPSTORM";
-//#else
+#if DEBUG 
+        const string UploadSessionUri = "https://127.0.0.1:8000/api/score/v2?XDEBUG_SESSION_START=PHPSTORM";
+#else
         const string UploadSessionUri = "https://ragnacustoms.com/api/score/v2";
-//#endif
-//#if DEBUG
-//        const string UploadOverlayUri = "https://127.0.0.1:8000/api/overlay/?XDEBUG_SESSION_START=PHPSTORM";
-//#else
+#endif
+#if DEBUG
+        const string UploadOverlayUri = "https://127.0.0.1:8000/api/overlay/?XDEBUG_SESSION_START=PHPSTORM";
+#else
         const string UploadOverlayUri = "https://ragnacustoms.com/api/overlay/";
-//#endif
+#endif
         static readonly string RagnarockSongLogsFilePath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "Ragnarock",
