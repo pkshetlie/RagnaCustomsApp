@@ -405,9 +405,6 @@ namespace RagnaCustoms.Views
         private System.Windows.Forms.ToolStripMenuItem languageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem englishToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem frenchToolStripMenuItem;
-        private ToolStripMenuItem languageToolStripMenuItem;
-        private ToolStripMenuItem englishToolStripMenuItem;
-        private ToolStripMenuItem frenchToolStripMenuItem;
         private DataGridViewTextBoxColumn Id;
         private DataGridViewTextBoxColumn SongName;
         private DataGridViewTextBoxColumn SongDifficulties;
