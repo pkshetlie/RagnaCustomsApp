@@ -19,15 +19,16 @@ namespace RagnaCustoms.App
         const string RagnacApiCommand = "ragnac://api/";
 
 #if DEBUG 
-        const string UploadSessionUri = "https://127.0.0.1:8000/api/score/v2?XDEBUG_SESSION_START=PHPSTORM";
+        public const string UploadSessionUri = "https://127.0.0.1:8000/api/score/v2?XDEBUG_SESSION_START=PHPSTORM";
 #else
-        const string UploadSessionUri = "https://ragnacustoms.com/api/score/v2";
+        public const string UploadSessionUri = "https://ragnacustoms.com/api/score/v2";
 #endif
 #if DEBUG
         const string UploadOverlayUri = "https://127.0.0.1:8000/api/overlay/?XDEBUG_SESSION_START=PHPSTORM";
 #else
         const string UploadOverlayUri = "https://ragnacustoms.com/api/overlay/";
 #endif
+
         static readonly string RagnarockSongLogsFilePath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "Ragnarock",
@@ -86,6 +87,9 @@ namespace RagnaCustoms.App
 
                 songResultParser.OnNewSession += async (session) => await sessionUploader.UploadAsync(configuration.ApiKey, session);
                 songResultParser.StartAsync();
+
+                // Send score if Oculus is available
+                Oculus.SendScore();
 
                 var overlayUploader = new OverlayUploader(configuration, UploadOverlayUri);
                 var songOverlayParser = new OverlayParser(RagnarockSongLogsFilePath);
