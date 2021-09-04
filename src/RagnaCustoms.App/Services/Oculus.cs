@@ -1,4 +1,5 @@
 ﻿using RagnaCustoms.App.Views;
+using RagnaCustoms.App;
 using System;
 using System.Linq;
 using System.IO;
@@ -10,7 +11,8 @@ namespace RagnaCustoms.Services
     class Oculus
     {
 
-        const string QuestSongDirectoryName = @"\Android\data\com.wanadev.ragnarockquest\files\UE4Game\Ragnarock\Ragnarock\Saved\CustomSongs";
+        public const string QuestSongDirectoryName = @"\Android\data\com.wanadev.ragnarockquest\files\UE4Game\Ragnarock\Ragnarock\Saved\CustomSongs";
+        const string QuestLogDirectoryName = @"\Android\data\com.wanadev.ragnarockquest\files\UE4Game\Ragnarock\Ragnarock\Saved\Logs";
 
         const string RagnarockDirectoryName = "Ragnarock";
         const string SongDirectoryName = "CustomSongs";
@@ -126,6 +128,49 @@ namespace RagnaCustoms.Services
 
                 device.UploadFolder(path, QuestSongDirectoryPath);
                 device.Disconnect();
+
+                return 0;
+            }
+
+            return 1;
+        }
+
+        public static int SendScore()
+        {
+            var device = GetDevice();
+            if (device != null)
+            {
+                var configuration = new Configuration();
+                var sessionUploader = new SessionUploader(configuration, Program.UploadSessionUri);
+
+                device.Connect();
+                var base_folder = device.GetDirectories(@"\")[0];
+
+                var QuestLogDirectoryName = $"{base_folder}{Oculus.QuestLogDirectoryName}";
+                string tempPath = Path.GetTempPath() + Guid.NewGuid();
+
+                if (!device.IsConnected)
+                {
+                    throw new NotConnectedException("Not connected");
+                }
+
+                if (device.DirectoryExists(QuestLogDirectoryName))
+                {
+                    device.DownloadFolder(QuestLogDirectoryName, tempPath);
+                }
+
+                string[] logFiles = Directory.GetFiles(tempPath);
+                foreach (string logFile in logFiles)
+                {
+                    var songResultParser = new SessionParser(logFile);
+
+                    songResultParser.OnNewSession += async (session) => await sessionUploader.UploadAsync(configuration.ApiKey, session);
+                    songResultParser.StartAsync(device);
+                }
+
+                
+
+                Directory.Delete(tempPath, true);
 
                 return 0;
             }

@@ -15,7 +15,7 @@ namespace RagnaCustoms.App
         const string RagnacInstallCommand = "ragnac://install/";
         const string RagnacApiCommand = "ragnac://api/";
 
-        const string UploadSessionUri = "https://ragnacustoms.com/api/score/v2";
+        public const string UploadSessionUri = "https://ragnacustoms.com/api/score/v2";
 
         static readonly string RagnarockSongLogsFilePath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
