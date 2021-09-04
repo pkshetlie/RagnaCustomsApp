@@ -1,4 +1,5 @@
-﻿using RagnaCustoms.Models;
+﻿using Newtonsoft.Json;
+using RagnaCustoms.Models;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -45,7 +46,7 @@ namespace RagnaCustoms.Services
 
                 using var stream = File.Open(SongLogFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                 using var reader = new StreamReader(stream);
-                
+
                 var session = new Session();
 
                 while (IsRunning)
@@ -54,12 +55,54 @@ namespace RagnaCustoms.Services
 
                     var songLevelLineHint = "LogTemp: Warning: Song level str";
                     var songNameLineHint = "LogTemp: Loading song";
+                    var songScoreDetailLineHint = "LogTemp: Warning: Notes missed :";
                     var songScoreLineHint = "raw distance =";
 
                     if (line.Contains(songLevelLineHint))
                     {
                         session = new Session();
                         session.Song.Level = line.Substring(line.IndexOf(songLevelLineHint) + songLevelLineHint.Length).Trim(new[] { ' ', '.' });
+                    }
+                    else if (line.Contains(songScoreDetailLineHint))
+                    {
+                        //        LogTemp: Warning: Notes missed : 0 / Notes hit  : 784 / Notes not processed : 0 / hit accuracy : 0.015131 / percentage : 0.848690 / hit speed : 1077.700073 / percentage : 0.698357 / combos : 7
+                        var startIndex = line.IndexOf(songScoreDetailLineHint) + songScoreDetailLineHint.Length;
+                        var endIndex = line.IndexOf(" / Notes hit  : ");
+                        session.NotesMissed = int.Parse(line.Substring(startIndex, endIndex - startIndex).Trim(new[] { ' ', '.' }));
+
+                         startIndex = line.IndexOf(" / Notes hit  : ") + (" / Notes hit  : ").Length;
+                         endIndex = line.IndexOf(" / Notes not processed : ");
+                         session.NotesHit = int.Parse(line.Substring(startIndex, endIndex - startIndex).Trim(new[] { ' ', '.' }));
+
+                         startIndex = line.IndexOf(" / Notes not processed : ") + (" / Notes not processed : ").Length;
+                         endIndex = line.IndexOf(" / hit accuracy : ");
+                         session.NotesNotProcessed = int.Parse(line.Substring(startIndex, endIndex - startIndex).Trim(new[] { ' ', '.' }));
+
+                         startIndex = line.IndexOf(" / hit accuracy : ") + (" / hit accuracy : ").Length;
+                         endIndex = line.IndexOf(" / percentage : ");
+                         session.HitAccuracy = line.Substring(startIndex, endIndex - startIndex).Trim(new[] { ' ', '.' });
+
+                         startIndex = line.IndexOf(" / hit accuracy : ") + (" / hit accuracy : ").Length;
+                         endIndex = startIndex+9;
+                         session.HitAccuracy = line.Substring(startIndex, endIndex - startIndex).Trim(new[] { ' ', '.' });
+
+                         startIndex = endIndex+14;
+                         endIndex = startIndex + 9;
+                         session.Percentage = line.Substring(startIndex, endIndex - startIndex).Trim(new[] { ' ', '.' });
+
+                         startIndex = endIndex + 14;
+                         endIndex = startIndex +12;
+                         session.HitSpeed = line.Substring(startIndex, endIndex - startIndex).Trim(new[] { ' ', '.' });
+
+                         startIndex = endIndex + 15;
+                         endIndex = startIndex + 8;
+                         session.Percentage2 = line.Substring(startIndex, endIndex - startIndex).Trim(new[] { ' ', '.' });
+                         
+                         startIndex = endIndex + 12;
+                         endIndex = line.Length;
+                         var content = line.Substring(startIndex, endIndex - startIndex).Trim(new[] {' ', '.'});
+                         session.Combos = int.Parse(content);
+
                     }
                     else if (line.Contains(songNameLineHint))
                     {
@@ -82,11 +125,11 @@ namespace RagnaCustoms.Services
 
                         var songDatFiles = songDirectory.EnumerateFiles("*.dat");
 
-                        var filesHashs = songDatFiles.Select(ComputeMD5).OrderBy(hash => hash);
+                        var filesHashs = songDatFiles.Select(ComputeMd5).OrderBy(hash => hash);
                         var concatenatedHashs = string.Concat(filesHashs);
 
-                        session.Song.Hash = ComputeMD5(concatenatedHashs);
-                        Trace.WriteLine($"{DateTime.Now} - New file - Hash: {session.Song.Hash}; File: {songDirectoryPath}");
+                        session.Song.Hash = ComputeMd5(concatenatedHashs);
+                        Trace.WriteLine($"{DateTime.Now} - New file - Hash: {session.Song.Hash}; File: {songDirectoryPath}");                     
                     }
                     else if (line.Contains(songScoreLineHint))
                     {
@@ -99,7 +142,6 @@ namespace RagnaCustoms.Services
                         Trace.WriteLine($"{DateTime.Now} - New session - Hash: {session.Song.Hash}; Level: {session.Song.Level}; Score: {session.Score}");
                         OnNewSession?.Invoke(session);
                         line = reader.ReadLine();
-
                     }
 
                     while (reader.EndOfStream)
@@ -139,7 +181,7 @@ namespace RagnaCustoms.Services
             RunningTask.Wait();
         }
 
-        protected virtual string ComputeMD5(FileInfo file)
+        protected virtual string ComputeMd5(FileInfo file)
         {
             using var md5 = MD5.Create();
             using var stream = file.OpenRead();
@@ -150,7 +192,7 @@ namespace RagnaCustoms.Services
             return hashStr;
         }
 
-        protected virtual string ComputeMD5(string str)
+        protected virtual string ComputeMd5(string str)
         {
             using var md5 = MD5.Create();
 

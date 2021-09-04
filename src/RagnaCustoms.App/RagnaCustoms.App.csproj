@@ -68,9 +68,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commandes\List\BaseCommand.cs" />
+    <Compile Include="Commandes\List\CancelCommand.cs" />
+    <Compile Include="Commandes\List\CloseQueue.cs" />
+    <Compile Include="Commandes\List\HelpCommand.cs" />
+    <Compile Include="Commandes\List\MyLangCommand.cs" />
+    <Compile Include="Commandes\List\NextCommand.cs" />
+    <Compile Include="Commandes\List\OpenQueue.cs" />
+    <Compile Include="Commandes\List\QueueCommand.cs" />
+    <Compile Include="Commandes\List\ShiftCommand.cs" />
+    <Compile Include="Commandes\List\VersionCommand.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\Session.cs" />
+    <Compile Include="Models\Logs.cs" />
+    <Compile Include="Models\InfoDat.cs" />
     <Compile Include="Models\Song.cs" />
     <Compile Include="Presenters\DownloadingPresenter.cs" />
     <Compile Include="Presenters\IDownloadingPresenter.cs" />
@@ -84,7 +96,9 @@
     <Compile Include="Services\Oculus.cs" />
     <Compile Include="Services\Configuration.cs" />
     <Compile Include="Services\ISongProvider.cs" />
+    <Compile Include="Services\OverlayParser.cs" />
     <Compile Include="Services\SessionParser.cs" />
+    <Compile Include="Services\OverlayUploader.cs" />
     <Compile Include="Services\SessionUploader.cs" />
     <Compile Include="Services\SongProvider.cs" />
     <Compile Include="Views\AboutForm.cs">
@@ -98,6 +112,13 @@
     </Compile>
     <Compile Include="Views\DownloadingForm.Designer.cs">
       <DependentUpon>DownloadingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Commandes\ICommandes.cs" />
+    <Compile Include="Views\LogsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\LogsForm.Designer.cs">
+      <DependentUpon>LogsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\OculusSyncForm.cs">
       <SubType>Form</SubType>
@@ -121,6 +142,9 @@
     <Compile Include="Views\TwitchBotForm.Designer.cs">
       <DependentUpon>TwitchBotForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Properties\Resources.fr.resx">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -129,18 +153,40 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Views\AboutForm.fr.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\DownloadingForm.fr.resx">
+      <DependentUpon>DownloadingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\DownloadingForm.resx">
       <DependentUpon>DownloadingForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\LogsForm.fr.resx">
+      <DependentUpon>LogsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\LogsForm.resx">
+      <DependentUpon>LogsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\OculusSyncForm.fr.resx">
+      <DependentUpon>OculusSyncForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\OculusSyncForm.resx">
       <DependentUpon>OculusSyncForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\SongForm.fr.resx">
+      <DependentUpon>SongForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\SongForm.resx">
       <DependentUpon>SongForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\TwitchBotForm.fr.resx">
+      <DependentUpon>TwitchBotForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\TwitchBotForm.resx">
       <DependentUpon>TwitchBotForm.cs</DependentUpon>

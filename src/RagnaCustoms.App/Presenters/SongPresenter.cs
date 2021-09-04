@@ -24,11 +24,20 @@ namespace RagnaCustoms.Presenters
             get => Configuration.SendScoreAutomatically;
             set => Configuration.SendScoreAutomatically = value;
         }
-
+        public virtual bool Overlay
+        {
+            get => Configuration.Overlay;
+            set => Configuration.Overlay = value;
+        }
         public virtual bool AutoCloseDownload
         {
             get => Configuration.AutoCloseDownload;
             set => Configuration.AutoCloseDownload = value;
+        }
+        public string Lang
+        {
+            get => Configuration.Lang;
+            set => Configuration.Lang = value;
         }
 
         public SongPresenter(Configuration configuration, ISongView view, IDownloadingPresenter downloadingPresenter, ISongProvider songProvider)
@@ -38,6 +47,7 @@ namespace RagnaCustoms.Presenters
             View.Presenter = this;
             View.SendScoreAutomatically = SendScoreAutomatically;
             View.AutoCloseDownload = AutoCloseDownload;
+            View.Overlay = Overlay;
             DownloadingPresenter = downloadingPresenter;
             SongProvider = songProvider;
         }

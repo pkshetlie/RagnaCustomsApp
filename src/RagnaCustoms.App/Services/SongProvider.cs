@@ -100,7 +100,7 @@ namespace RagnaCustoms.Models
             return songs;
         }
 
-        public virtual async Task DownloadAsync(int songId, Action<int> downloadProgressChanged, Action<bool> downloadCompleted, bool autoClose = false)
+        public virtual async Task DownloadAsync(int songId, Action<int> downloadProgressChanged, Action<bool> downloadCompleted, Action<string> downloadTitle, bool autoClose = false)
         {
             using var client = new WebClient();
 
@@ -111,20 +111,27 @@ namespace RagnaCustoms.Models
             var tempFilePath = Path.GetTempFileName();
 
             var songInfo = await SearchOnlineAsync(songId);
-            var SongDirectoryPath = Path.Combine(RagnarockSongDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Mapper.Slug()}");
-            if (File.Exists(Path.Combine(SongDirectoryPath, ".hash")) && File.ReadAllText(Path.Combine(SongDirectoryPath, ".hash")) == songInfo.Hash)
+            if(songInfo == null)
             {
-                Oculus.PushSong(SongDirectoryPath);
+                downloadCompleted?.Invoke(autoClose);
+                return; 
+            }
+            downloadTitle?.Invoke($"{songInfo.Name} by {songInfo.Mapper}");
+            var songDirectoryPath = Path.Combine(RagnarockSongDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Mapper.Slug()}");
+
+            if (File.Exists(Path.Combine(songDirectoryPath, ".hash")) && File.ReadAllText(Path.Combine(songDirectoryPath, ".hash")) == songInfo.Hash)
+            {
+                Oculus.PushSong(songDirectoryPath);
                 downloadCompleted?.Invoke(autoClose);
                 return;
             }
 
 
             client.DownloadProgressChanged += (sender, args) => downloadProgressChanged?.Invoke(args.ProgressPercentage);
-            client.DownloadFileCompleted += Client_DownloadFileCompleted;
+            client.DownloadFileCompleted += ClientDownloadFileCompleted;
             client.DownloadFileAsync(uri, tempFilePath);
 
-            void Client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+            void ClientDownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
             {
                 ZipFile.ExtractToDirectory(tempFilePath, tempDirectoryPath);
 

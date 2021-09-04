@@ -1,4 +1,6 @@
 ﻿
+using System.Windows.Forms;
+
 namespace RagnaCustoms.Views
 {
     partial class DownloadingForm
@@ -29,6 +31,9 @@ namespace RagnaCustoms.Views
         /// </summary>
         private void InitializeComponent()
         {
+            this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DownloadingForm));
             this.DownloadingProgressBar = new System.Windows.Forms.ProgressBar();
             this.DownloadingLabel = new System.Windows.Forms.Label();

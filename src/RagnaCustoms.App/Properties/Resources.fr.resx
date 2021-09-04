@@ -117,181 +117,181 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Command.Base.Help" xml:space="preserve">
-    <value>Display how to request map to streamer</value>
-  </data>
   <data name="Command.Base.Action.Message" xml:space="preserve">
-    <value>You can request custom maps to {0} with the command !rc [map_id], to find it go to https://ragnacustoms.com and click on the twitch button (the purple one) to copy !rc [map_id] command and come back here to paste the command.</value>
-  </data>
-  <data name="Command.Help.Help" xml:space="preserve">
-    <value>Display list of commands</value>
-  </data>
-  <data name="Command.Help.Action.Cmd" xml:space="preserve">
-    <value>Command</value>
-  </data>
-  <data name="Command.Help.Action.UnknowCommand" xml:space="preserve">
-    <value>This commande doesn't exists, check the command name.</value>
-  </data>
-  <data name="Command.Help.Action.CommandList" xml:space="preserve">
-    <value>List of commands</value>
-  </data>
-  <data name="Command.Help.Action.OthersCommand" xml:space="preserve">
-    <value>To display the description of a command use "!rc help [name_of_the_command]"</value>
+    <value>Vous pouvez demander des musiques à {0} avec la commande !rc [map_id], pour les trouver, allez sur https://ragnacustoms.com et cliquez sur le bouton twitch (le violet) pour copier la commande !rc [map_id] et revenez ici pour coller la commande.</value>
   </data>
   <data name="Command.Cancel.Help" xml:space="preserve">
-    <value>Remove your last request</value>
+    <value>Retire votre dernière requete</value>
+  </data>
+  <data name="Command.Base.Help" xml:space="preserve">
+    <value>Explique comment faire une demande au streamer</value>
   </data>
   <data name="Command.Cancel.Action.Canceled" xml:space="preserve">
-    <value>Song Cancelled :</value>
+    <value>Musique anulée</value>
   </data>
   <data name="Command.Cancel.Action.NoSongToCancel" xml:space="preserve">
-    <value>No More song to remove</value>
+    <value>Pas d'autre musique à retirer</value>
+  </data>
+  <data name="Command.Help.Action.Cmd" xml:space="preserve">
+    <value>Commande</value>
+  </data>
+  <data name="Command.Help.Action.CommandList" xml:space="preserve">
+    <value>Liste des commandes</value>
+  </data>
+  <data name="Command.Help.Action.OthersCommand" xml:space="preserve">
+    <value>Pour voir la description complete d'une commande utiliser "!rc help [nom_de_la_commande]"</value>
+  </data>
+  <data name="Command.Help.Action.UnknowCommand" xml:space="preserve">
+    <value>Cette commande n'existe pas, vérifiez le nom de la commande.</value>
+  </data>
+  <data name="Command.Help.Help" xml:space="preserve">
+    <value>Affiche la liste des commandes</value>
   </data>
   <data name="Program.Api.Message1" xml:space="preserve">
-    <value>Be careful, the API key is missing.\r\nGo to Tools &gt; Score system &gt; Configure Api key... </value>
+    <value>Attention, la clé API est manquante.\r\nRendez vous dans Outils &gt; Système de score &gt; Configurer la clé Api...</value>
   </data>
   <data name="Program.Api.Message1_Title" xml:space="preserve">
-    <value>API key is missing</value>
+    <value>La clé API est manquante</value>
   </data>
   <data name="Program.Api.Set_api_key" xml:space="preserve">
-    <value>Enter your Api key:</value>
+    <value>Entrez votre clé Api : </value>
   </data>
   <data name="TwitchBot.Form.Title" xml:space="preserve">
-    <value>Twitch bot requests</value>
+    <value>Requêtes Twitch bot</value>
   </data>
   <data name="TwitchBot.Form.Enabled" xml:space="preserve">
-    <value>Enabled?</value>
+    <value>Activé ?</value>
+  </data>
+  <data name="TwitchBot.Form.AutoStart" xml:space="preserve">
+    <value>Auto-start ?</value>
+  </data>
+  <data name="TwitchBot.Form.Author" xml:space="preserve">
+    <value>Auteur</value>
+  </data>
+  <data name="TwitchBot.Form.BotMessagePrefix" xml:space="preserve">
+    <value>Préfixe des messages</value>
+  </data>
+  <data name="TwitchBot.Form.Commands" xml:space="preserve">
+    <value>Commandes</value>
+  </data>
+  <data name="TwitchBot.Form.GetToken" xml:space="preserve">
+    <value>Récupérez votre Token sur :</value>
+  </data>
+  <data name="TwitchBot.Form.ManagebaseCommands" xml:space="preserve">
+    <value>Gérer les commandes perso.</value>
+  </data>
+  <data name="TwitchBot.Form.ManageCustomCommands" xml:space="preserve">
+    <value>Férer les commandes de base</value>
+  </data>
+  <data name="TwitchBot.Form.Song" xml:space="preserve">
+    <value>Musique</value>
   </data>
   <data name="TwitchBot.Form.TMI" xml:space="preserve">
     <value>TMI OAuth</value>
   </data>
-  <data name="TwitchBot.Form.GetToken" xml:space="preserve">
-    <value>Get Token At:</value>
-  </data>
   <data name="TwitchBot.Form.TwitchChannel" xml:space="preserve">
-    <value>Twitch Channel name</value>
-  </data>
-  <data name="TwitchBot.Form.BotMessagePrefix" xml:space="preserve">
-    <value>Bot message prefix</value>
-  </data>
-  <data name="TwitchBot.Form.AutoStart" xml:space="preserve">
-    <value>Auto-start?</value>
-  </data>
-  <data name="TwitchBot.Form.Commands" xml:space="preserve">
-    <value>Commands</value>
-  </data>
-  <data name="TwitchBot.Form.ManageCustomCommands" xml:space="preserve">
-    <value>Manage base commands</value>
-  </data>
-  <data name="TwitchBot.Form.ManagebaseCommands" xml:space="preserve">
-    <value>Manage custom commands</value>
-  </data>
-  <data name="TwitchBot.Form.Song" xml:space="preserve">
-    <value>Song</value>
-  </data>
-  <data name="TwitchBot.Form.Author" xml:space="preserve">
-    <value>Author</value>
+    <value>Nom chaine Twitch</value>
   </data>
   <data name="TwitchBot.Form.Viewer" xml:space="preserve">
     <value>Viewer</value>
   </data>
   <data name="TwitchBot.Form.withoutHttp" xml:space="preserve">
-    <value>Without https://twitch.tv</value>
+    <value>Sans https://twitch.tv</value>
   </data>
   <data name="TwitchBot.Form.Configuration" xml:space="preserve">
     <value>Configuration</value>
   </data>
   <data name="Song.Form.NeedToSetYourApiKeyFirst" xml:space="preserve">
-    <value>You need to set your API key first</value>
+    <value>Vous devez d'abord définir votre clé API</value>
   </data>
   <data name="Song.Form.EnterYourApiKey" xml:space="preserve">
-    <value>Enter your API key:</value>
+    <value>Entez votre clé API :</value>
   </data>
   <data name="Song.Form.NoCompatibleDeviceFound" xml:space="preserve">
-    <value>No compatible device found</value>
+    <value>Aucun appareil compatible trouvé</value>
   </data>
   <data name="Song.Form.found" xml:space="preserve">
-    <value>{0} {1} found</value>
+    <value>{0} {1} trouvé</value>
   </data>
   <data name="Song.Form.SyncComplete" xml:space="preserve">
-    <value>Sync complete</value>
-  </data>
-  <data name="Song.Form.Search" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="Song.Form.File" xml:space="preserve">
-    <value>File</value>
-  </data>
-  <data name="Song.Form.Exit" xml:space="preserve">
-    <value>Exit</value>
+    <value>Synchronisation terminée</value>
   </data>
   <data name="Song.Form.Tools" xml:space="preserve">
-    <value>Tools</value>
+    <value>Outils</value>
   </data>
-  <data name="Song.Form.ScoreSystem" xml:space="preserve">
-    <value>Score system</value>
+  <data name="Song.Form.Search" xml:space="preserve">
+    <value>Chercher</value>
   </data>
-  <data name="Song.Form.SendScoreAutomatically" xml:space="preserve">
-    <value>Send score automatically</value>
+  <data name="Song.Form.Exit" xml:space="preserve">
+    <value>Quitter</value>
   </data>
-  <data name="Song.Form.ConfigureApiKey" xml:space="preserve">
-    <value>Configure API key...</value>
-  </data>
-  <data name="Song.Form.Settings" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="Song.Form.AutoCloseDownload" xml:space="preserve">
-    <value>Auto close Download</value>
-  </data>
-  <data name="Song.Form.Streaming" xml:space="preserve">
-    <value>Streaming</value>
-  </data>
-  <data name="Song.Form.EnableOverlay" xml:space="preserve">
-    <value>Enable overlay</value>
-  </data>
-  <data name="Song.Form.getOverlayurl" xml:space="preserve">
-    <value>Get overlay URL</value>
-  </data>
-  <data name="Song.Form.TwitchBot" xml:space="preserve">
-    <value>Twitch bot</value>
-  </data>
-  <data name="Song.Form.Quest" xml:space="preserve">
-    <value>Quest</value>
-  </data>
-  <data name="Song.Form.CheckAccess" xml:space="preserve">
-    <value>Check access</value>
-  </data>
-  <data name="Song.Form.SyncSong" xml:space="preserve">
-    <value>Sync songs</value>
-  </data>
-  <data name="Song.Form.Help" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="Song.Form.LogFile" xml:space="preserve">
-    <value>Log file</value>
-  </data>
-  <data name="Song.Form.LogScreen" xml:space="preserve">
-    <value>Log Screen</value>
+  <data name="Song.Form.File" xml:space="preserve">
+    <value>Fichier</value>
   </data>
   <data name="Song.Form.About" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="Song.Form.Language" xml:space="preserve">
-    <value>Language</value>
-  </data>
-  <data name="Song.Form.Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Song.Form.Difficulties" xml:space="preserve">
-    <value>Difficulties</value>
+    <value>A propos</value>
   </data>
   <data name="Song.Form.Author" xml:space="preserve">
-    <value>Author</value>
+    <value>Auteur</value>
+  </data>
+  <data name="Song.Form.AutoCloseDownload" xml:space="preserve">
+    <value>Fermeture auto. des téléchargements</value>
+  </data>
+  <data name="Song.Form.CheckAccess" xml:space="preserve">
+    <value>Verification de l'accès</value>
+  </data>
+  <data name="Song.Form.ConfigureApiKey" xml:space="preserve">
+    <value>Configurer la clé API...</value>
+  </data>
+  <data name="Song.Form.Difficulties" xml:space="preserve">
+    <value>Difficultés</value>
+  </data>
+  <data name="Song.Form.EnableOverlay" xml:space="preserve">
+    <value>Activer l'overlay</value>
+  </data>
+  <data name="Song.Form.getOverlayurl" xml:space="preserve">
+    <value>Accéder à l'URL de l'overlay</value>
+  </data>
+  <data name="Song.Form.Help" xml:space="preserve">
+    <value>Aide</value>
+  </data>
+  <data name="Song.Form.Language" xml:space="preserve">
+    <value>Langue</value>
+  </data>
+  <data name="Song.Form.LogFile" xml:space="preserve">
+    <value>Fichier de log</value>
+  </data>
+  <data name="Song.Form.LogScreen" xml:space="preserve">
+    <value>Ecran de log</value>
   </data>
   <data name="Song.Form.Mapper" xml:space="preserve">
     <value>Mapper</value>
   </data>
+  <data name="Song.Form.Name" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="Song.Form.Quest" xml:space="preserve">
+    <value>Quest</value>
+  </data>
+  <data name="Song.Form.ScoreSystem" xml:space="preserve">
+    <value>Système de score</value>
+  </data>
+  <data name="Song.Form.SendScoreAutomatically" xml:space="preserve">
+    <value>Envoyer le score automatiquement</value>
+  </data>
+  <data name="Song.Form.Settings" xml:space="preserve">
+    <value>Paramètres</value>
+  </data>
+  <data name="Song.Form.Streaming" xml:space="preserve">
+    <value>Streaming</value>
+  </data>
+  <data name="Song.Form.SyncSong" xml:space="preserve">
+    <value>Synchro. des musiques</value>
+  </data>
+  <data name="Song.Form.TwitchBot" xml:space="preserve">
+    <value>Twitch bot</value>
+  </data>
   <data name="Song.Form.CompareSongversion" xml:space="preserve">
-    <value>Compare songs versions</value>
+    <value>Comparer les versions des musiques</value>
   </data>
 </root>

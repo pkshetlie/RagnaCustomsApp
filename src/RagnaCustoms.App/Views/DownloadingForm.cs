@@ -11,6 +11,10 @@ namespace RagnaCustoms.Views
             get => DownloadingProgressBar.Value;
             set => DownloadingProgressBar.Value = value;
         }
+        public string Title { 
+            get => Text; 
+            set => Text = value;
+        }
 
         public DownloadingForm()
         {

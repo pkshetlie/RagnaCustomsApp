@@ -50,8 +50,8 @@ namespace RagnaCustoms.Services
                 try
                 {
                     device.Connect();
-                    var base_folder = device.GetDirectories(@"\")[0];
-                    var QuestSongDirectoryPath = $"{base_folder}{QuestSongDirectoryName}";
+                    var baseFolder = device.GetDirectories(@"\")[0];
+                    var questSongDirectoryPath = $"{baseFolder}{QuestSongDirectoryName}";
 
                     var songs = Directory.GetDirectories(LocalRagnarockSongDirectoryPath);
                     syncingView.SyncingProgressBar.Minimum = 0;
@@ -65,16 +65,16 @@ namespace RagnaCustoms.Services
                     }
 
                     syncingView.SyncingLabel.Text = "Creating CustomSongs directory";
-                    if (!device.DirectoryExists(QuestSongDirectoryPath))
+                    if (!device.DirectoryExists(questSongDirectoryPath))
                     {
-                        device.CreateDirectory(QuestSongDirectoryPath);
+                        device.CreateDirectory(questSongDirectoryPath);
                     }
 
                     foreach (var song in songs)
                     {
                         var folderName = song.Split(Path.DirectorySeparatorChar).Last();
                         var songToSync = $"{LocalRagnarockSongDirectoryPath}\\{folderName}";
-                        var destinationFolder = $"{QuestSongDirectoryPath}\\{folderName}";
+                        var destinationFolder = $"{questSongDirectoryPath}\\{folderName}";
 
                         syncingView.SyncingLabel.Text = $"Copying {folderName}";
                         if (device.DirectoryExists(destinationFolder))
@@ -111,22 +111,22 @@ namespace RagnaCustoms.Services
             {
                 var song = path.Split(Path.DirectorySeparatorChar).Last();
                 device.Connect();
-                var base_folder = device.GetDirectories(@"\")[0];
-                var QuestSongDirectoryPath = $"{base_folder}{QuestSongDirectoryName}\\{song}";
+                var baseFolder = device.GetDirectories(@"\")[0];
+                var questSongDirectoryPath = $"{baseFolder}{QuestSongDirectoryName}\\{song}";
 
                 if (!device.IsConnected)
                 {
                     throw new NotConnectedException("Not connected");
                 }
 
-                if (device.DirectoryExists(QuestSongDirectoryPath))
+                if (device.DirectoryExists(questSongDirectoryPath))
                 {
-                    device.DeleteDirectory(QuestSongDirectoryPath, true);
+                    device.DeleteDirectory(questSongDirectoryPath, true);
                 }
 
-                device.CreateDirectory(QuestSongDirectoryPath);
+                device.CreateDirectory(questSongDirectoryPath);
 
-                device.UploadFolder(path, QuestSongDirectoryPath);
+                device.UploadFolder(path, questSongDirectoryPath);
                 device.Disconnect();
 
                 return 0;
