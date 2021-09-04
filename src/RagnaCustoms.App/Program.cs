@@ -88,6 +88,9 @@ namespace RagnaCustoms.App
                 songResultParser.OnNewSession += async (session) => await sessionUploader.UploadAsync(configuration.ApiKey, session);
                 songResultParser.StartAsync();
 
+                // Send score if Oculus is available
+                Oculus.SendScore();
+
                 var overlayUploader = new OverlayUploader(configuration, UploadOverlayUri);
                 var songOverlayParser = new OverlayParser(RagnarockSongLogsFilePath);
 
