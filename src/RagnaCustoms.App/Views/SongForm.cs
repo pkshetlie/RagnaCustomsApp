@@ -206,5 +206,18 @@ namespace RagnaCustoms.Views
                 row.Cells[row.Cells.Count - 1].Dispose();
             }
         }
+
+        private void sendScoreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var result = Oculus.SendScore();
+            if (result == 0)
+            {
+                MessageBox.Show(Resources.Song_Form_SyncComplete, "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (result == 1)
+            {
+                MessageBox.Show(Resources.Song_Form_NoCompatibleDeviceFound, "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

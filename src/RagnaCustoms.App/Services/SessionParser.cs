@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using MediaDevices;
 
 namespace RagnaCustoms.Services
 {
@@ -27,11 +28,18 @@ namespace RagnaCustoms.Services
             SongLogFilePath = songLogFilePath;
         }
 
-        public void StartAsync()
+        public void StartAsync(MediaDevice device = null)
         {
             RunningTask = Task.Run(() =>
             {
                 IsRunning = true;
+                string questSongDirectoryPath = null;
+
+                if (device != null)
+                {
+                    var base_folder = device.GetDirectories(@"\")[0];
+                    questSongDirectoryPath = $"{base_folder}{Oculus.QuestSongDirectoryName}";
+                }
 
                 var file = new FileInfo(SongLogFilePath);
                 var length = file.Length;
@@ -99,8 +107,19 @@ namespace RagnaCustoms.Services
                     else if (line.Contains(songNameLineHint))
                     {
                         var songOggPath = line.Substring(line.IndexOf(songNameLineHint) + songNameLineHint.Length).Trim(new[] { ' ', '.' });
-
                         var songDirectoryPath = Path.GetDirectoryName(songOggPath);
+
+                        // if log file is coming from quest, we need to download song before calculating hash file
+                        if (device != null)
+                        {
+                            var songName = songDirectoryPath.Split('\\').Last();
+                            var tempDir = Path.GetDirectoryName(SongLogFilePath);
+                            var tempSongFolder = tempDir + "\\" +songName;
+                            var oculusSongFolder = questSongDirectoryPath + "\\" +  songName;
+                            device.DownloadFolder(oculusSongFolder, tempSongFolder);
+                            songDirectoryPath = tempSongFolder;
+                        }
+
                         var songDirectory = new DirectoryInfo(songDirectoryPath);
                         if (!songDirectory.Exists) continue;
 
@@ -138,10 +157,24 @@ namespace RagnaCustoms.Services
                         length = file.Length;
 
                         Thread.Sleep(WaitForNewContentMilliseconds);
+
+                        // there will be no new data once the end of file is reach for oculus log
+                        if(device != null)
+                        {
+                            IsRunning = false;
+                            return;
+                        }
                     }
                 }
             });
-        }   
+
+            // Waiting for oculus send score to finish before continuig and thus removing temp folder
+            if (device != null)
+            {
+                RunningTask.Wait();
+            }
+        }
+
         public virtual void Stop()
         {
             IsRunning = false;
