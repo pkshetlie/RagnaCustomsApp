@@ -15,7 +15,7 @@ namespace RagnaCustoms.Models
         {
             // compare searsh term with song name using Levenshtein distance
             // return the best match
-            return Results.OrderBy(x => searsh.LevenshteinDistance(x.Name)).First();
+            return Results.OrderBy(x => searsh.ToLower().LevenshteinDistance(x.Name.ToLower())).First();
         }
         public Song FirstResultByName(string searsh)
         {
