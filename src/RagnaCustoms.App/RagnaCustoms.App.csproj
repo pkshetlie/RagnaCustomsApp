@@ -100,6 +100,7 @@
     <Compile Include="Services\SessionParser.cs" />
     <Compile Include="Services\OverlayUploader.cs" />
     <Compile Include="Services\SessionUploader.cs" />
+    <Compile Include="Services\DirProvider.cs" />
     <Compile Include="Services\SongProvider.cs" />
     <Compile Include="Views\AboutForm.cs">
       <SubType>Form</SubType>

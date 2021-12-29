@@ -14,27 +14,13 @@ using RagnaCustoms.App.Extensions;
 namespace RagnaCustoms.Models
 {
     public class SongProvider : ISongProvider
-    {
-        const string RagnarockDirectoryName = "Ragnarock";
-        const string SongDirectoryName = "CustomSongs";
-        const string SongSearchPattern = "*.zip";
+    {      
 
-        static readonly string RagnarockSongDirectoryPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-            RagnarockDirectoryName,
-            SongDirectoryName
-        );
-
-        protected virtual DirectoryInfo RagnarockSongDirectory { get; }
-
-        public SongProvider()
-        {
-            RagnarockSongDirectory = Directory.CreateDirectory(RagnarockSongDirectoryPath);
-        }
+        public SongProvider(){}
 
         public IEnumerable<Song> SearchLocal()
         {
-            return GetLocalSongs().ToList();
+            return new DirProvider().GetLocalSongs().ToList();
         }
 
         public IEnumerable<Song> SearchLocal(string term)
@@ -44,7 +30,7 @@ namespace RagnaCustoms.Models
                 return SearchLocal();
             }
 
-            return GetLocalSongs().Where(song => song.Name.Contains(term)).ToList();
+            return new DirProvider().GetLocalSongs().Where(song => song.Name.Contains(term)).ToList();
         }
 
         public async Task<SongSearchModel> SearchOnlineAsync(int id)
@@ -84,7 +70,7 @@ namespace RagnaCustoms.Models
         public async Task<IEnumerable<SongSearchModel>> CompareSongsWithOnlineAsync()
         {
             var songs = new List<SongSearchModel>();
-            foreach (var songpath in Directory.GetDirectories(RagnarockSongDirectoryPath))
+            foreach (var songpath in Directory.GetDirectories(DirProvider.RagnarockSongDirectoryPath))
             {
                 var idFile = Path.Combine(songpath, ".id");
                 var hashFile = Path.Combine(songpath, ".hash");
@@ -117,7 +103,7 @@ namespace RagnaCustoms.Models
                 return; 
             }
             downloadTitle?.Invoke($"{songInfo.Name} by {songInfo.Mapper}");
-            var songDirectoryPath = Path.Combine(RagnarockSongDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Mapper.Slug()}");
+            var songDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Mapper.Slug()}");
 
             if (File.Exists(Path.Combine(songDirectoryPath, ".hash")) && File.ReadAllText(Path.Combine(songDirectoryPath, ".hash")) == songInfo.Hash)
             {
@@ -136,7 +122,7 @@ namespace RagnaCustoms.Models
                 ZipFile.ExtractToDirectory(tempFilePath, tempDirectoryPath);
 
                 var songDirectory = tempDirectory.EnumerateDirectories().First();
-                var ragnarockSongDirectoryPath = Path.Combine(RagnarockSongDirectoryPath, $"{songDirectory.Name}{songInfo.Mapper.Slug()}");
+                var ragnarockSongDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath, $"{songDirectory.Name}{songInfo.Mapper.Slug()}");
 
                 if (Directory.Exists(ragnarockSongDirectoryPath))
                     Directory.Delete(ragnarockSongDirectoryPath, recursive: true);
@@ -176,8 +162,6 @@ namespace RagnaCustoms.Models
             }
         }
 
-        protected virtual IEnumerable<FileInfo> GetLocalFiles() => RagnarockSongDirectory.EnumerateFiles(SongSearchPattern);
-        protected virtual IEnumerable<Song> GetLocalSongs() => GetLocalFiles().Select(file => new Song { Name = file.Name }).OrderBy(song => song.Name);
 
      
     }
