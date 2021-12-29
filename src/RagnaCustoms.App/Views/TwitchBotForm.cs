@@ -133,7 +133,7 @@ namespace RagnaCustoms.App.Views
                 return;
             }
 
-            var s = GetSongInfo(requestId);
+            var s = GetSongInfo(requestId) ?? SearshSong(requestId); // search song by id, if not found, search by name
             if (s != null)
             {
                 _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}Request Info: {s.Name}, Mapped by : {s.Mapper}, asked by @{e.ChatMessage.Username}");
@@ -184,7 +184,7 @@ namespace RagnaCustoms.App.Views
                     var arg1 = command[1];
                     if (!Commandes.ContainsKey(arg1))
                     {
-                        AddRequest(arg1, e);
+                        AddRequest(string.Join("%20", command.Skip(1).ToArray()), e);
                         return;
                     }
                     var cmd = Commandes[arg1];
@@ -231,6 +231,21 @@ namespace RagnaCustoms.App.Views
                 Song stuff = JsonConvert.DeserializeObject<Song>(json);
                 //debug_console.Items.Add($"Début de la récuperation de {stuff.title}");
                 return stuff;
+            }
+            catch (WebException) 
+            {
+                return null;
+            }
+        }
+        
+        private Song SearshSong(string search) 
+        {
+            try 
+            {
+                using var webClient = new System.Net.WebClient();
+                var json = webClient.DownloadString("https://ragnacustoms.com/api/search/" + search);
+                SearshResult stuffs = JsonConvert.DeserializeObject<SearshResult>(json);
+                return stuffs.FirstResultByName(search) ?? stuffs.BestResultByName(search);
             }
             catch (WebException) 
             {
