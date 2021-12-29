@@ -56,6 +56,13 @@ namespace RagnaCustoms.Services
             get => Get(nameof(AutoCloseDownload)) == bool.TrueString;
             set => Set(nameof(AutoCloseDownload), value ? bool.TrueString : bool.FalseString);
         }
+
+        public bool EasyStreamRequest
+        {
+            get => Get(nameof(EasyStreamRequest)) == bool.TrueString;
+            set => Set(nameof(EasyStreamRequest), value ? bool.TrueString : bool.FalseString);
+        }
+
         public string BotPrefix
         {
             get => Get(nameof(BotPrefix));
