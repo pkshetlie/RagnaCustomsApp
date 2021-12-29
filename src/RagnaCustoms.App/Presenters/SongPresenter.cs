@@ -29,11 +29,19 @@ namespace RagnaCustoms.Presenters
             get => Configuration.Overlay;
             set => Configuration.Overlay = value;
         }
+
         public virtual bool AutoCloseDownload
         {
             get => Configuration.AutoCloseDownload;
             set => Configuration.AutoCloseDownload = value;
         }
+
+        public virtual bool EasyStreamRequest
+        {
+            get => Configuration.EasyStreamRequest;
+            set => Configuration.EasyStreamRequest = value;
+        }            
+
         public string Lang
         {
             get => Configuration.Lang;

@@ -37,6 +37,7 @@ namespace RagnaCustoms.App.Views
             twitchChannel.Text = _configuration.TwitchChannel;
             twitchOAuth.Text = _configuration.AuthTmi;
             autoStart.Checked = _configuration.TwitchBotAutoStart;
+            Checkbox_EasyStreamRequest.Checked = _configuration.EasyStreamRequest;
             bot_enabled.Checked = _configuration.TwitchBotAutoStart;
 
             LoadCommands();
@@ -314,6 +315,11 @@ namespace RagnaCustoms.App.Views
         private void prefix_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
+        {
+            _configuration.EasyStreamRequest = Checkbox_EasyStreamRequest.Checked;
         }
     }
 }
