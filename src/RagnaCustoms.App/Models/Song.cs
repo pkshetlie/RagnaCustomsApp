@@ -11,15 +11,15 @@ namespace RagnaCustoms.Models
         
         public int Count { get; set; } // number of returned songs
 
-        public Song BestResultByName(string searsh)
+        public Song BestResultByName(string search)
         {
             // compare searsh term with song name using Levenshtein distance
             // return the best match
-            return Results.OrderBy(x => searsh.ToLower().LevenshteinDistance(x.Name.ToLower())).First();
+            return Results.OrderBy(x => search.ToLower().LevenshteinDistance(x.Name.ToLower())).FirstOrDefault();
         }
-        public Song FirstResultByName(string searsh)
+        public Song FirstResultByName(string search)
         {
-            return Results.Find(e => e.Name.ToLower().StartsWith(searsh.ToLower()));
+            return Results.Find(e => e.Name.ToLower().StartsWith(search.ToLower()));
         }
         
     }
