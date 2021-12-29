@@ -211,9 +211,9 @@ namespace RagnaCustoms.App.Views
 
         private void AddSongRequestToList(Song song, string viewer) 
         {
-            if (songRequests.Size.IsEmpty)
+            if (songRequests.Size.IsEmpty) // TODO : add check if user use easy stream reques system
             {
-                
+                DirProvider.getCustomDirectory().MoveTo(DirProvider.RagnarockBackupSongDirectoryPath);
                 // rename custom songs directory and create new one
             }
             
@@ -223,13 +223,15 @@ namespace RagnaCustoms.App.Views
         }
         public void RemoveAtSongRequestInList(int i) 
         {
+            // TODO : move song on backup directory
             songRequests.Invoke(new MethodInvoker(delegate {
                 songRequests.Rows.RemoveAt(i);
             } ));
             
-            if (songRequests.Size.IsEmpty)
+            if (songRequests.Size.IsEmpty) // TODO : add check if user use easy stream reques system
             {
-                // remove empty songs directory and rename old
+                DirProvider.getCustomDirectory().Delete(true);
+                DirProvider.getCustomBackupDirectory().MoveTo(DirProvider.RagnarockSongDirectoryPath);
             }
         }
 
