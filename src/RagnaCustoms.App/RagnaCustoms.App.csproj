@@ -93,6 +93,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Services\EasyStreamRequest.cs" />
     <Compile Include="Services\Oculus.cs" />
     <Compile Include="Services\Configuration.cs" />
     <Compile Include="Services\ISongProvider.cs" />

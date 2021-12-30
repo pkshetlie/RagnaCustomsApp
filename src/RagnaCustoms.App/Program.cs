@@ -51,6 +51,9 @@ namespace RagnaCustoms.App
             var downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
             var configuration = new Configuration();
 
+            // force remove backup directory
+            EasyStreamRequest.RemoveBackupDirectory();
+            
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(configuration.Lang??"en", true);
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
             if (args.Contains("--install"))

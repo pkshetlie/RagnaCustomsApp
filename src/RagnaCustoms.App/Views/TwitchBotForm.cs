@@ -214,8 +214,7 @@ namespace RagnaCustoms.App.Views
         {
             if (songRequests.Rows.Count <= 1 && _configuration.EasyStreamRequest)
             {
-                DirProvider.getCustomDirectory().MoveTo(DirProvider.RagnarockBackupSongDirectoryPath);
-                // rename custom songs directory and create new one
+                EasyStreamRequest.CreateBackupDirectory();
             }
             songRequests.Invoke(new MethodInvoker(delegate {
                 songRequests.Rows.Add(song.Name, song.Author, viewer, song.Id);
@@ -229,8 +228,7 @@ namespace RagnaCustoms.App.Views
             
             if (songRequests.Rows.Count <= 1 && _configuration.EasyStreamRequest)
             {
-                DirProvider.getCustomDirectory().Delete(true);
-                DirProvider.getCustomBackupDirectory().MoveTo(DirProvider.RagnarockSongDirectoryPath);
+                EasyStreamRequest.RemoveBackupDirectory();
             }
         }
 
@@ -318,6 +316,8 @@ namespace RagnaCustoms.App.Views
         private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
         {
             _configuration.EasyStreamRequest = Checkbox_EasyStreamRequest.Checked;
+            if (_configuration.EasyStreamRequest) EasyStreamRequest.EnableEasyStreamRequest(_configuration);
+            else EasyStreamRequest.DisableEasyStreamRequest(false, _configuration);
         }
     }
 }
