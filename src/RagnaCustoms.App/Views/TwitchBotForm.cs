@@ -36,6 +36,7 @@ namespace RagnaCustoms.App.Views
             twitchChannel.Text = _configuration.TwitchChannel;
             twitchOAuth.Text = _configuration.AuthTmi;
             autoStart.Checked = _configuration.TwitchBotAutoStart;
+            checkBox_autoLaunchTwitchBot.Checked = _configuration.TwitchBotAutoLaunch;
             Checkbox_EasyStreamRequest.Checked = _configuration.EasyStreamRequest;
             bot_enabled.Checked = _configuration.TwitchBotAutoStart;
 
@@ -306,6 +307,11 @@ namespace RagnaCustoms.App.Views
         private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
         {
             _configuration.EasyStreamRequest = Checkbox_EasyStreamRequest.Checked;
+        }
+
+        private void checkBox_autoStartTwitchBot_CheckedChanged(object sender, EventArgs e)
+        {
+            _configuration.TwitchBotAutoLaunch = checkBox_autoLaunchTwitchBot.Checked;
         }
     }
 }
