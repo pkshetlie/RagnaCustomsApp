@@ -17,14 +17,31 @@ namespace RagnaCustoms.Models
     {
         const string RagnarockDirectoryName = "Ragnarock";
         const string SongDirectoryName = "CustomSongs";
+        const string BackupSongDirectoryName = "bkp-" + SongDirectoryName;
         const string SongSearchPattern = "*.zip";
 
-        public static string RagnarockSongDirectoryPath = Path.Combine(
+        public static readonly string RagnarockSongDirectoryPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
             RagnarockDirectoryName,
             SongDirectoryName
         );
+        
+        public static readonly string RagnarockBackupSongDirectoryPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+            RagnarockDirectoryName,
+            BackupSongDirectoryName
+        );
 
+        public static DirectoryInfo getCustomDirectory()
+        {
+            return new DirectoryInfo(RagnarockSongDirectoryPath);
+        }
+        public static DirectoryInfo getCustomBackupDirectory()
+        {
+            return new DirectoryInfo(RagnarockBackupSongDirectoryPath);
+        }
+        
+        
         protected virtual DirectoryInfo RagnarockSongDirectory => Directory.CreateDirectory(RagnarockSongDirectoryPath);
 
 
