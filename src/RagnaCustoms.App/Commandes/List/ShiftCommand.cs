@@ -37,25 +37,15 @@ namespace RagnaCustoms.App.Commandes
             }
             else
             {
-                try
-                {
-                    me.RemoveAtSongRequestInList(0);
-                    client.SendMessage(joinedChannel, "Song removed");
-
-                    var sog = me.songRequests?.Rows[0]?.Cells["Song"]?.Value?.ToString() ?? null;
-                    if (sog != null)
-                    {
-                        client.SendMessage(joinedChannel, $"Next song : {sog} ");
-                    }
-                    else
-                    {
-                        client.SendMessage(joinedChannel, "End of the queue");
-                    }
-                }
-                catch (Exception)
+                if (me.songRequests.Rows.Count <= 1)
                 {
                     client.SendMessage(joinedChannel, "No More song to remove");
+                    return true;
                 }
+                me.RemoveAtSongRequestInList(0);
+                client.SendMessage(joinedChannel, "Song removed");
+                var sog = me.songRequests?.Rows[0]?.Cells["Song"]?.Value?.ToString() ?? null;
+                client.SendMessage(joinedChannel, sog != null ? $"Next song : {sog} " : "End of the queue");
             }
             return true;
         }

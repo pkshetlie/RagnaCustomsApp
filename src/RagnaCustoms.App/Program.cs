@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using RagnaCustoms.App.Views;
 
 namespace RagnaCustoms.App
 {
@@ -52,7 +53,14 @@ namespace RagnaCustoms.App
             var configuration = new Configuration();
 
             // force remove backup directory
-            EasyStreamRequest.RemoveBackupDirectory();
+            try
+            {
+                EasyStreamRequest.RestoreCustomSongDirectory();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(configuration.Lang??"en", true);
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
@@ -109,6 +117,8 @@ namespace RagnaCustoms.App
                 {
                     MessageBox.Show(songView,Resources.Program_Api_Message1 , Resources.Program_Api_Message1_Title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
+
+                if (configuration.TwitchBotAutoStart) new TwitchBotForm().Show();
                 Application.Run(songView);
             }
         }
