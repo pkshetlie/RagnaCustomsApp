@@ -66,7 +66,7 @@ namespace RagnaCustoms.App
                         var songId = int.Parse(id);
                         downloadingView = new DownloadingForm();
                         downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
-                        downloadingPresenter.Download(songId, songsId.Count()>=2 ? configuration.AutoCloseDownload:true);
+                        downloadingPresenter.Download(songId, songsId.Count() < 2 || configuration.AutoCloseDownload);
                         Application.Run(downloadingView);
 
                     }

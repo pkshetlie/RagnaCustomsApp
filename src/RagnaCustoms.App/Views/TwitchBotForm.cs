@@ -18,6 +18,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RagnaCustoms.App.Properties;
+using RagnaCustoms.Presenters;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
@@ -138,8 +139,8 @@ namespace RagnaCustoms.App.Views
             if (s != null)
             {
                 _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}Request Info: {s.Name}, Mapped by : {s.Mapper}, asked by @{e.ChatMessage.Username}");
-                StartDownload(s.Id.ToString());
                 AddSongRequestToList(s, e.ChatMessage.Username);
+                StartDownload(s.Id.ToString());
                 //TwitchClient.SendMessage(joinedChannel, $"{prefixe}Ready: ");
             }
             else
@@ -211,6 +212,11 @@ namespace RagnaCustoms.App.Views
 
         private void AddSongRequestToList(Song song, string viewer) 
         {
+            if (songRequests.Rows.Count <= 1 && _configuration.EasyStreamRequest)
+            {
+                DirProvider.getCustomDirectory().MoveTo(DirProvider.RagnarockBackupSongDirectoryPath);
+                // rename custom songs directory and create new one
+            }
             songRequests.Invoke(new MethodInvoker(delegate {
                 songRequests.Rows.Add(song.Name, song.Author, viewer, song.Id);
             } ));
@@ -220,6 +226,12 @@ namespace RagnaCustoms.App.Views
             songRequests.Invoke(new MethodInvoker(delegate {
                 songRequests.Rows.RemoveAt(i);
             } ));
+            
+            if (songRequests.Rows.Count <= 1 && _configuration.EasyStreamRequest)
+            {
+                DirProvider.getCustomDirectory().Delete(true);
+                DirProvider.getCustomBackupDirectory().MoveTo(DirProvider.RagnarockSongDirectoryPath);
+            }
         }
 
 
