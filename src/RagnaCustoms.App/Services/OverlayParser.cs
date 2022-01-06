@@ -54,7 +54,11 @@ namespace RagnaCustoms.Services
                     if (line.Contains(songLevelLineHint))
                     {
                         session = new Session();
-                        OnOverlayNewGame?.Invoke(session);
+                        try
+                        {
+                            OnOverlayNewGame?.Invoke(session);
+                        }catch (Exception ex){}
+
                         session.Song.Level = line.Substring(line.IndexOf(songLevelLineHint) + songLevelLineHint.Length).Trim(new[] { ' ', '.' });
                     }
                     else if (line.Contains(songNameLineHint))
@@ -72,14 +76,19 @@ namespace RagnaCustoms.Services
 
                         session.Song.Hash = ComputeMd5(concatenatedHashs);
                         var overlaySession = new SessionModel(hashInfo: session.Song.Hash, score:"0",level:session.Song.Level);
-                        OnOverlayStartGame?.Invoke(session);
-
-                      
+                        try
+                        {
+                            OnOverlayStartGame?.Invoke(session);
+                        }
+                        catch (Exception ex) { }
                     }
                     else if (line.Contains(songScoreLineHint))
                     {
                         session.Song.Hash = "EndOfSong";
-                        OnOverlayEndGame?.Invoke(session);
+                        try
+                        {
+                            OnOverlayEndGame?.Invoke(session);
+                        }catch (Exception ex) { }
 
                     }
 

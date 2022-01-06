@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RagnaCustoms.App.Extensions;
+using System.Security.AccessControl;
 
 namespace RagnaCustoms.Models
 {
@@ -23,7 +24,7 @@ namespace RagnaCustoms.Models
         {
             configuration.EasyStreamRequest = true;
         }
-        
+
         public static void DisableEasyStreamRequest(Configuration configuration)
         {
             configuration.EasyStreamRequest = false;
@@ -36,18 +37,30 @@ namespace RagnaCustoms.Models
             {
                 songsDirectory.Create();
             }
-            songsDirectory.MoveTo(DirProvider.RagnarockBackupSongDirectoryPath);
+            foreach(var subdir in songsDirectory.GetDirectories())
+            {
+                subdir.MoveTo(Path.Combine(DirProvider.RagnarockBackupSongDirectoryPath, subdir.Name));
+            }
         }
         public static void RestoreCustomSongDirectory()
         {
             if (!backupDirectory.Exists) return;
-            CopySongsOnBackup(); 
-            songsDirectory.Delete(true);
-            backupDirectory.MoveTo(DirProvider.RagnarockSongDirectoryPath);
+            CopySongsOnBackup();
+            //songsDirectory.Delete(true);
+            backupDirectory.Refresh();
+            AuthorizationRuleCollection collection = Directory.GetAccessControl(backupDirectory.FullName).GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
+            foreach (var subdir in backupDirectory.GetDirectories())
+            {
+                subdir.MoveTo(Path.Combine(DirProvider.RagnarockSongDirectoryPath, subdir.Name));
+            }
         }
 
         public static void CopySongsOnBackup()
         {
+            if (!songsDirectory.Exists)
+            {
+                songsDirectory.Create();
+            }
             foreach (var fileInfo in DirProvider.getCustomDirectory().GetDirectories())
             {
                 var tempDir = new DirectoryInfo(Path.Combine(backupDirectory.FullName, fileInfo.Name));
@@ -55,7 +68,7 @@ namespace RagnaCustoms.Models
                 fileInfo.MoveTo(Path.Combine(backupDirectory.FullName, fileInfo.Name));
             }
         }
-        
+
         public static void MoveSongOnBackup(DirectoryInfo songDirectory)
         {
             foreach (var fileInfo in DirProvider.getCustomDirectory().GetDirectories())
@@ -67,7 +80,8 @@ namespace RagnaCustoms.Models
                     try
                     {
                         fileInfo.MoveTo(Path.Combine(backupDirectory.FullName, fileInfo.Name));
-                    }catch(Exception e)
+                    }
+                    catch (Exception e)
                     {
                         // TODO : sa marche, il déplace bien... mais sa va quand même passé ici jsp pk
                         /* Ignored */
