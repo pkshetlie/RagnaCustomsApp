@@ -37,8 +37,9 @@ jobs:
       #uses: papeloto/action-zip@v1
       uses: montudor/action-zip@v1.0.0
       with:
-        files: src\RagnaCustoms.App\bin\Release
-        dest:  RagnaCustoms.zip
+        args: zip -qq -r RagnaCustoms.zip src\RagnaCustoms.App\bin\Release
+        #files: src\RagnaCustoms.App\bin\Release
+        #dest:  RagnaCustoms.zip
 
     - name: Upload Zip to release
       if: ${{ github.event_name == 'release' && github.event.action == 'created' }}
