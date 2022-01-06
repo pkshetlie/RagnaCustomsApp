@@ -139,18 +139,18 @@ namespace RagnaCustoms.Models
                     foreach (FileInfo file in files)
                     {
                         string tempPath = Path.Combine(ragnarockSongDirectoryPath, file.Name);
-                        file.CopyTo(tempPath, false);
+                        file.CopyTo(tempPath, false);                       
                     }
                 }
 
                 using (StreamWriter writer = new StreamWriter(Path.Combine(ragnarockSongDirectoryPath, ".hash"), false))
                 {
-                    writer.Write(songInfo.Hash);
+                    writer.Write(songInfo.Hash);             
                 }
 
                 using (StreamWriter writer = new StreamWriter(Path.Combine(ragnarockSongDirectoryPath, ".id"), false))
                 {
-                    writer.Write(songInfo.Id);
+                    writer.Write(songInfo.Id);            
                 }
 
                 File.Delete(tempFilePath);
