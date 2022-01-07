@@ -34,7 +34,7 @@ jobs:
       run: msbuild /nologo src\RagnaCustoms.sln /p:Configuration=Release /p:Platform="Any CPU"
       
     - name: Zip RagnaCustoms.App
-      uses: papeloto/action-zip@v1
+      uses: vimtor/action-zip@v1
       with:
         files: src\RagnaCustoms.App\bin\Release
         dest:  RagnaCustoms.zip
