@@ -105,6 +105,28 @@ namespace RagnaCustoms.Models
             downloadTitle?.Invoke($"{songInfo.Name} by {songInfo.Mapper}");
             var songDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Mapper.Slug()}");
 
+            var songBackupDirectoryPath = Path.Combine(DirProvider.RagnarockBackupSongDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Mapper.Slug()}");
+
+            if (Directory.Exists(Path.Combine(songBackupDirectoryPath)))
+            {
+                // le dossier existe dans backup
+                if (File.Exists(Path.Combine(songBackupDirectoryPath, ".hash")) && File.ReadAllText(Path.Combine(songBackupDirectoryPath, ".hash")) == songInfo.Hash)
+                {
+                    //le hash est OK
+                    Oculus.PushSong(songDirectoryPath);
+                    if (!Directory.Exists(Path.Combine(songDirectoryPath)))
+                    {
+                        new DirectoryInfo(songBackupDirectoryPath).MoveTo(songDirectoryPath);
+                    }
+                    downloadCompleted?.Invoke(autoClose);
+                    return;
+                }
+                else
+                {
+                    //le hash est périmé, on supprime et on laisse le téléchargement se faire.
+                    Directory.Delete(Path.Combine(songBackupDirectoryPath));                  
+                }
+            }
             if (File.Exists(Path.Combine(songDirectoryPath, ".hash")) && File.ReadAllText(Path.Combine(songDirectoryPath, ".hash")) == songInfo.Hash)
             {
                 Oculus.PushSong(songDirectoryPath);
@@ -112,6 +134,7 @@ namespace RagnaCustoms.Models
                 return;
             }
 
+            
 
             client.DownloadProgressChanged += (sender, args) => downloadProgressChanged?.Invoke(args.ProgressPercentage);
             client.DownloadFileCompleted += ClientDownloadFileCompleted;

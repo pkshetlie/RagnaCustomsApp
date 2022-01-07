@@ -65,7 +65,7 @@ namespace RagnaCustoms.Models
             {
                 var tempDir = new DirectoryInfo(Path.Combine(backupDirectory.FullName, fileInfo.Name));
                 if (tempDir.Exists) tempDir.Delete(true);
-                fileInfo.MoveTo(Path.Combine(backupDirectory.FullName, fileInfo.Name));
+                fileInfo.MoveTo(tempDir.FullName);
             }
         }
 
@@ -79,7 +79,7 @@ namespace RagnaCustoms.Models
                     if (tempDir.Exists) tempDir.Delete(true);
                     try
                     {
-                        fileInfo.MoveTo(Path.Combine(backupDirectory.FullName, fileInfo.Name));
+                        fileInfo.MoveTo(tempDir.FullName);
                     }
                     catch (Exception e)
                     {

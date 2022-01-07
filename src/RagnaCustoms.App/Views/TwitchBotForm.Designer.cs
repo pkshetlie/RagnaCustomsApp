@@ -51,7 +51,6 @@ namespace RagnaCustoms.App.Views
             this.autoStart = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.Checkbox_EasyStreamRequest = new System.Windows.Forms.CheckBox();
-            this.checkBox_autoLaunchTwitchBot = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.songRequests)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -205,7 +204,6 @@ namespace RagnaCustoms.App.Views
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.checkBox_autoLaunchTwitchBot);
             this.groupBox3.Controls.Add(this.Checkbox_EasyStreamRequest);
             this.groupBox3.Controls.Add(this.autoStart);
             this.groupBox3.Controls.Add(this.bot_enabled);
@@ -226,18 +224,6 @@ namespace RagnaCustoms.App.Views
             this.Checkbox_EasyStreamRequest.Text = "Easy stream request";
             this.Checkbox_EasyStreamRequest.UseVisualStyleBackColor = true;
             this.Checkbox_EasyStreamRequest.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
-            // 
-            // checkBox_autoLaunchTwitchBot
-            // 
-            this.checkBox_autoLaunchTwitchBot.AutoSize = true;
-            this.checkBox_autoLaunchTwitchBot.Location = new System.Drawing.Point(110, 42);
-            this.checkBox_autoLaunchTwitchBot.Name = "checkBox_autoLaunchTwitchBot";
-            this.checkBox_autoLaunchTwitchBot.Size = new System.Drawing.Size(149, 17);
-            this.checkBox_autoLaunchTwitchBot.TabIndex = 36;
-            this.checkBox_autoLaunchTwitchBot.Text = "Launch twitch bot on start";
-            this.checkBox_autoLaunchTwitchBot.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox_autoLaunchTwitchBot.UseVisualStyleBackColor = true;
-            this.checkBox_autoLaunchTwitchBot.CheckedChanged += new System.EventHandler(this.checkBox_autoStartTwitchBot_CheckedChanged);
             // 
             // TwitchBotForm
             // 
@@ -284,6 +270,5 @@ namespace RagnaCustoms.App.Views
         public CheckBox autoStart;
         private GroupBox groupBox3;
         public CheckBox Checkbox_EasyStreamRequest;
-        public CheckBox checkBox_autoLaunchTwitchBot;
     }
 }
