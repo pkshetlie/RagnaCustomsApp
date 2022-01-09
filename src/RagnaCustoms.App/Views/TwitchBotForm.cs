@@ -25,6 +25,7 @@ using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
 using TwitchLib.Communication.Clients;
 using TwitchLib.Communication.Models;
+using RagnaCustoms.Views;
 
 namespace RagnaCustoms.App.Views
 {
@@ -207,8 +208,12 @@ namespace RagnaCustoms.App.Views
 
         private void StartDownload(string v) 
         {
-            ProcessStartInfo sInfo = new ProcessStartInfo($"ragnac://install/{v}");
-            Process.Start(sInfo);
+            var songId = int.Parse(v);
+            var songProvider = new SongProvider();
+            var downloadingView = new DownloadingForm();
+            var downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
+            downloadingPresenter.Download(songId, true);
+            Application.Run(downloadingView);        
         }
 
         private void AddSongRequestToList(Song song, string viewer) 
@@ -223,6 +228,8 @@ namespace RagnaCustoms.App.Views
         }
         public void RemoveAtSongRequestInList(int i) 
         {
+            if (songRequests.Rows.Count <= i+1) { return; }
+
             var element = songRequests.Rows[i];
 
                 if (_configuration.EasyStreamRequest)
@@ -339,7 +346,16 @@ namespace RagnaCustoms.App.Views
             _configuration.EasyStreamRequest = Checkbox_EasyStreamRequest.Checked;
             if (_configuration.EasyStreamRequest) EasyStreamRequest.EnableEasyStreamRequest(_configuration);
             else EasyStreamRequest.DisableEasyStreamRequest(_configuration);
-        }              
-               
+        }
+
+        private void TwitchBotForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            RemoveAtSongRequestInList(0);
+        }
     }
 }

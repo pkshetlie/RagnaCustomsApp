@@ -64,8 +64,14 @@ namespace RagnaCustoms.App
                 var configuration = new Configuration();
 
                 // force remove backup directory
-             
-
+                try
+                {
+                    EasyStreamRequest.RestoreCustomSongDirectory();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(configuration.Lang ?? "en", true);
                 Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
                 if (args.Contains("--install"))
@@ -96,14 +102,7 @@ namespace RagnaCustoms.App
                 }
                 else
                 {
-                    try
-                    {
-                        EasyStreamRequest.RestoreCustomSongDirectory();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    
                     // Starts background services
                     var sessionUploader = new SessionUploader(configuration, UploadSessionUri);
                     var songResultParser = new SessionParser(RagnarockSongLogsFilePath);

@@ -51,6 +51,7 @@ namespace RagnaCustoms.App.Views
             this.autoStart = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.Checkbox_EasyStreamRequest = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.songRequests)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -204,6 +205,7 @@ namespace RagnaCustoms.App.Views
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Controls.Add(this.Checkbox_EasyStreamRequest);
             this.groupBox3.Controls.Add(this.autoStart);
             this.groupBox3.Controls.Add(this.bot_enabled);
@@ -225,6 +227,16 @@ namespace RagnaCustoms.App.Views
             this.Checkbox_EasyStreamRequest.UseVisualStyleBackColor = true;
             this.Checkbox_EasyStreamRequest.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(110, 37);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(121, 23);
+            this.button1.TabIndex = 36;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // TwitchBotForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -240,6 +252,7 @@ namespace RagnaCustoms.App.Views
             this.Name = "TwitchBotForm";
             this.Text = "Twitch bot requests";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TwitchBotForm_FormClosed);
+            this.Load += new System.EventHandler(this.TwitchBotForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.songRequests)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -270,5 +283,6 @@ namespace RagnaCustoms.App.Views
         public CheckBox autoStart;
         private GroupBox groupBox3;
         public CheckBox Checkbox_EasyStreamRequest;
+        private Button button1;
     }
 }
