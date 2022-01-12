@@ -74,13 +74,20 @@ namespace RagnaCustoms.Models
             {
                 var idFile = Path.Combine(songpath, ".id");
                 var hashFile = Path.Combine(songpath, ".hash");
-                if (File.Exists(idFile)){
-                    var songInfo = await SearchOnlineAsync(int.Parse(File.ReadAllText(idFile)));
-                    if (songInfo.Hash == File.ReadAllText(hashFile))
+                try
+                {
+                    if (File.Exists(idFile))
                     {
-                        songInfo.UpToDate = true;
+                        var songInfo = await SearchOnlineAsync(int.Parse(File.ReadAllText(idFile)));
+                        if (songInfo.Hash == File.ReadAllText(hashFile))
+                        {
+                            songInfo.UpToDate = true;
+                        }
+                        songs.Add(songInfo);
                     }
-                    songs.Add(songInfo);
+                }catch (Exception ex)
+                {                  
+
                 }
             }
             return songs;

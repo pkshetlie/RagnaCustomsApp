@@ -106,21 +106,23 @@ namespace RagnaCustoms.App
                     // Starts background services
                     var sessionUploader = new SessionUploader(configuration, UploadSessionUri);
                     var songResultParser = new SessionParser(RagnarockSongLogsFilePath);
-
-                    songResultParser.OnNewSession += async (session) => await sessionUploader.UploadAsync(configuration.ApiKey, session);
-                    songResultParser.StartAsync();
-
+                    try
+                    {
+                        songResultParser.OnNewSession += async (session) => await sessionUploader.UploadAsync(configuration.ApiKey, session);
+                        songResultParser.StartAsync();
+                    }catch (Exception ex) { }
                     // Send score if Oculus is available
                     Oculus.SendScore();
 
                     var overlayUploader = new OverlayUploader(configuration, UploadOverlayUri);
                     var songOverlayParser = new OverlayParser(RagnarockSongLogsFilePath);
-
-                    songOverlayParser.OnOverlayEndGame += async (session) => await overlayUploader.UploadAsync(configuration.ApiKey, session);
-                    songOverlayParser.OnOverlayNewGame += async (session) => await overlayUploader.UploadAsync(configuration.ApiKey, session);
-                    songOverlayParser.OnOverlayStartGame += async (session) => await overlayUploader.UploadAsync(configuration.ApiKey, session);
-                    songOverlayParser.StartAsync();
-
+                    try
+                    {
+                        songOverlayParser.OnOverlayEndGame += async (session) => await overlayUploader.UploadAsync(configuration.ApiKey, session);
+                        songOverlayParser.OnOverlayNewGame += async (session) => await overlayUploader.UploadAsync(configuration.ApiKey, session);
+                        songOverlayParser.OnOverlayStartGame += async (session) => await overlayUploader.UploadAsync(configuration.ApiKey, session);
+                        songOverlayParser.StartAsync();
+                    }catch (Exception ex) { }
                     // Create first view to display
                     var songView = new SongForm();
                     var songPresenter = new SongPresenter(configuration, songView, downloadingPresenter, songProvider);
