@@ -1,4 +1,5 @@
 ﻿using Octokit;
+using RagnaCustoms.Models;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -42,9 +43,10 @@ namespace RagnaCustoms.Launcher
         {
             var localVersion = GetLocalVersion();
             var onlineVersion = await GetOnlineVersion();
-
+            var creation = new DirProvider().GetLocalFiles();            
+            
             // Case 1 : Local does not exists, online cannot be reached
-            if (localVersion is null && onlineVersion is null)
+            if (localVersion is null && onlineVersion is null && creation.Count() > 0 )
             {
                 MessageBox.Show("No local nor online version found, try again later.", "Something goes wrong", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return NoLocalNorOnlineVersionAvailable;

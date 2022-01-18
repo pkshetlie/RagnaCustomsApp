@@ -92,5 +92,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RagnaCustoms.App\RagnaCustoms.App.csproj">
+      <Project>{C6A7B343-F2DD-4BA6-98FD-92475B1E7109}</Project>
+      <Name>RagnaCustoms.App</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

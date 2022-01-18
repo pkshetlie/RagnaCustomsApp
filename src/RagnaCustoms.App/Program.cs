@@ -57,7 +57,7 @@ namespace RagnaCustoms.App
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-
+                var customDirectory = new DirProvider().RagnarockSongDirectory; //on force la creation du dossier.
                 var songProvider = new SongProvider();
                 var downloadingView = new DownloadingForm();
                 var downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
