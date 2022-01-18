@@ -21,23 +21,30 @@ namespace RagnaCustoms.Services
 
         public virtual async Task UploadAsync(string apiKey, params Session[] sessions)
         {
-            if (!Configuration.Overlay) return;
-            if (string.IsNullOrEmpty(apiKey)) return;
-
-            using var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("x-api-key", apiKey);
-
-            var models = sessions.Select(session => new SessionModel(session.Song.Hash, session.Score, session.Song.Level)).ToArray();
-
-            var result = await client.PostAsJsonAsync(Uri, models);
-            if (result.IsSuccessStatusCode)
+            try
             {
-                Trace.WriteLine($"{DateTime.Now} - Send to overlay success - Hash: {sessions[0].Song.Hash};");
+                if (!Configuration.Overlay) return;
+                if (string.IsNullOrEmpty(apiKey)) return;
+
+                using var client = new HttpClient();
+                client.DefaultRequestHeaders.Add("x-api-key", apiKey);
+
+                var models = sessions.Select(session => new SessionModel(session.Song.Hash, session.Score, session.Song.Level)).ToArray();
+
+                var result = await client.PostAsJsonAsync(Uri, models);
+                if (result.IsSuccessStatusCode)
+                {
+                    Trace.WriteLine($"{DateTime.Now} - Send to overlay success - Hash: {sessions[0].Song.Hash};");
+                }
+                else
+                {
+                    Trace.WriteLine($"{DateTime.Now} -  Send to overlay error ({result.ReasonPhrase}) - Hash: { sessions[0].Song.Hash};");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Trace.WriteLine($"{DateTime.Now} -  Send to overlay error ({result.ReasonPhrase}) - Hash: { sessions[0].Song.Hash};");
+                Trace.WriteLine($"{DateTime.Now} - Upload error (Exception) - exception: { ex.Message }");
             }
         }
-    }   
+    }
 }

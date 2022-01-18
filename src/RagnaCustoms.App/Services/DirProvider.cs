@@ -43,6 +43,7 @@ namespace RagnaCustoms.Models
         
         
         public DirectoryInfo RagnarockSongDirectory => Directory.CreateDirectory(RagnarockSongDirectoryPath);
+        public DirectoryInfo RagnarockSongBkpDirectory => Directory.CreateDirectory(RagnarockBackupSongDirectoryPath);
 
 
         public IEnumerable<FileInfo> GetLocalFiles() => RagnarockSongDirectory.EnumerateFiles(SongSearchPattern);

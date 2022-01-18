@@ -58,6 +58,7 @@ namespace RagnaCustoms.App
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 var customDirectory = new DirProvider().RagnarockSongDirectory; //on force la creation du dossier.
+                var customBkpDirectory = new DirProvider().RagnarockSongBkpDirectory; //on force la creation du dossier.
                 var songProvider = new SongProvider();
                 var downloadingView = new DownloadingForm();
                 var downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
@@ -106,23 +107,21 @@ namespace RagnaCustoms.App
                     // Starts background services
                     var sessionUploader = new SessionUploader(configuration, UploadSessionUri);
                     var songResultParser = new SessionParser(RagnarockSongLogsFilePath);
-                    try
-                    {
-                        songResultParser.OnNewSession += async (session) => await sessionUploader.UploadAsync(configuration.ApiKey, session);
-                        songResultParser.StartAsync();
-                    }catch (Exception ex) { }
+                   
+                    songResultParser.OnNewSession += async (session) => await sessionUploader.UploadAsync(configuration.ApiKey, session);
+                    songResultParser.StartAsync();
+                 
                     // Send score if Oculus is available
                     Oculus.SendScore();
 
                     var overlayUploader = new OverlayUploader(configuration, UploadOverlayUri);
                     var songOverlayParser = new OverlayParser(RagnarockSongLogsFilePath);
-                    try
-                    {
-                        songOverlayParser.OnOverlayEndGame += async (session) => await overlayUploader.UploadAsync(configuration.ApiKey, session);
-                        songOverlayParser.OnOverlayNewGame += async (session) => await overlayUploader.UploadAsync(configuration.ApiKey, session);
-                        songOverlayParser.OnOverlayStartGame += async (session) => await overlayUploader.UploadAsync(configuration.ApiKey, session);
-                        songOverlayParser.StartAsync();
-                    }catch (Exception ex) { }
+                    
+                    songOverlayParser.OnOverlayEndGame += async (session) => await overlayUploader.UploadAsync(configuration.ApiKey, session);
+                    songOverlayParser.OnOverlayNewGame += async (session) => await overlayUploader.UploadAsync(configuration.ApiKey, session);
+                    songOverlayParser.OnOverlayStartGame += async (session) => await overlayUploader.UploadAsync(configuration.ApiKey, session);
+                    songOverlayParser.StartAsync();
+
                     // Create first view to display
                     var songView = new SongForm();
                     var songPresenter = new SongPresenter(configuration, songView, downloadingPresenter, songProvider);

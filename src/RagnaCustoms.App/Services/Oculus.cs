@@ -166,12 +166,9 @@ namespace RagnaCustoms.Services
 
                     songResultParser.OnNewSession += async (session) => await sessionUploader.UploadAsync(configuration.ApiKey, session);
                     songResultParser.StartAsync(device);
-                }
-
-                
+                }                              
 
                 Directory.Delete(tempPath, true);
-
                 return 0;
             }
 

@@ -21,22 +21,29 @@ namespace RagnaCustoms.Services
 
         public virtual async Task UploadAsync(string apiKey, params Session[] sessions)
         {
-            if (!Configuration.SendScoreAutomatically) return;
-            if (string.IsNullOrEmpty(apiKey)) return;
-
-            using var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("x-api-key", apiKey);
-
-            var models = sessions.Select(session => new SessionModel(session)).ToArray();
-
-            var result = await client.PostAsJsonAsync(Uri, models);
-            if (result.IsSuccessStatusCode)
+            try
             {
-                Trace.WriteLine($"{DateTime.Now} - Upload success - Hash: {sessions[0].Song.Hash}; Score: {sessions[0].Score}");
+                if (!Configuration.SendScoreAutomatically) return;
+                if (string.IsNullOrEmpty(apiKey)) return;
+
+                using var client = new HttpClient();
+                client.DefaultRequestHeaders.Add("x-api-key", apiKey);
+
+                var models = sessions.Select(session => new SessionModel(session)).ToArray();
+
+                var result = await client.PostAsJsonAsync(Uri, models);
+                if (result.IsSuccessStatusCode)
+                {
+                    Trace.WriteLine($"{DateTime.Now} - Upload success - Hash: {sessions[0].Song.Hash}; Score: {sessions[0].Score}");
+                }
+                else
+                {
+                    Trace.WriteLine($"{DateTime.Now} - Upload error ({result.ReasonPhrase}) - Hash: { sessions[0].Song.Hash}; Score: {sessions[0].Score}");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Trace.WriteLine($"{DateTime.Now} - Upload error ({result.ReasonPhrase}) - Hash: { sessions[0].Song.Hash}; Score: {sessions[0].Score}");
+                Trace.WriteLine($"{DateTime.Now} - Upload error (Exception) - exception: { ex.Message }");
             }
         }
     }
@@ -81,5 +88,5 @@ namespace RagnaCustoms.Services
             Percentage2 = session.Percentage2;
             Combos = session.Combos;
         }
-    } 
+    }
 }
