@@ -65,10 +65,13 @@ namespace RagnaCustoms.Services
                     }
 
                     syncingView.SyncingLabel.Text = "Creating CustomSongs directory";
-                    if (!device.DirectoryExists(questSongDirectoryPath))
+                    if (device.DirectoryExists(questSongDirectoryPath))
                     {
-                        device.CreateDirectory(questSongDirectoryPath);
+                        device.DeleteDirectory(questSongDirectoryPath, true);
                     }
+                    
+                    device.CreateDirectory(questSongDirectoryPath);
+
 
                     foreach (var song in songs)
                     {

@@ -294,4 +294,7 @@
   <data name="Song.Form.CompareSongversion" xml:space="preserve">
     <value>Comparer les versions des musiques</value>
   </data>
+  <data name="Song.Form.CompatibleDeviceFound" xml:space="preserve">
+    <value>Equipement trouvé : {0} {1}</value>
+  </data>
 </root>

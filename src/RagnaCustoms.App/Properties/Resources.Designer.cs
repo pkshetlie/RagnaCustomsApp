@@ -223,6 +223,15 @@ namespace RagnaCustoms.App.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Device found: {0} {1}.
+        /// </summary>
+        internal static string Song_Form_CompatibleDeviceFound {
+            get {
+                return ResourceManager.GetString("Song.Form.CompatibleDeviceFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Configure API key....
         /// </summary>
         internal static string Song_Form_ConfigureApiKey {

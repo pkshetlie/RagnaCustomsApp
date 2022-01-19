@@ -116,11 +116,10 @@ namespace RagnaCustoms.Views
 
         private void checkAccessToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             var device = Oculus.GetDevice();
             if (device != null)
             {
-                MessageBox.Show(String.Format(Resources.Command_Base_Action_Message, device.Manufacturer, device.Description), "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(String.Format(Resources.Song_Form_CompatibleDeviceFound, device.Manufacturer, device.Description), "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
