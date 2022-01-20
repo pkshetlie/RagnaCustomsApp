@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="AppFolder">
+            <Directory Id="dirBFFF85FC963B74F8D4B0D35881E0DD53" Name="fr" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="RagnaCustomAppGroup">
+            <Component Id="cmp4EA4D85FBE1F0918C32C6CD6DF13E0B1" Directory="AppFolder" Guid="*">
+                <File Id="fil3CCE616843F694F103623E3B95D013CF" KeyPath="yes" Source="$(var.SourcePathApp)\MediaDevices.dll" />
+            </Component>
+            <Component Id="cmpD5376418C9413722121BFEBE531958A8" Directory="AppFolder" Guid="*">
+                <File Id="fil5D647AA41C662D9D35C222928227C0D7" KeyPath="yes" Source="$(var.SourcePathApp)\Microsoft.Bcl.AsyncInterfaces.dll" />
+            </Component>
+            <Component Id="cmp87D428BD1DCC88BEFC5E2418BC85106B" Directory="AppFolder" Guid="*">
+                <File Id="fil86440A5AB784C494F1FB881EC07EEFCF" KeyPath="yes" Source="$(var.SourcePathApp)\Microsoft.Extensions.Logging.Abstractions.dll" />
+            </Component>
+            <Component Id="cmp33DBEDEF7659AECC0000BEA92B21D20E" Directory="AppFolder" Guid="*">
+                <File Id="fil48FB48F9587AA75268DFC045618DB2EB" KeyPath="yes" Source="$(var.SourcePathApp)\Microsoft.Win32.Primitives.dll" />
+            </Component>
+            <Component Id="cmp2D8B18429644648335C03031F38C1F73" Directory="AppFolder" Guid="*">
+                <File Id="fil5A20FB6110E13270AFCB848E3799C568" KeyPath="yes" Source="$(var.SourcePathApp)\netstandard.dll" />
+            </Component>
+            <Component Id="cmpA5E4EEDC05900B867D7A2585A5E60907" Directory="AppFolder" Guid="*">
+                <File Id="filF9712E9E09E971F440ED6667C983A97A" KeyPath="yes" Source="$(var.SourcePathApp)\Newtonsoft.Json.dll" />
+            </Component>
+            <Component Id="cmp1E2EDC31B56192C261DA7674A0833242" Directory="AppFolder" Guid="*">
+                <File Id="filE82F2E6FF01D4E8FD2BE56F4A6C4F68C" KeyPath="yes" Source="$(var.SourcePathApp)\RagnaCustoms.exe" />
+            </Component>
+            <Component Id="cmpF9242AAE050CEBE8CDD6AD7811D2BE8E" Directory="AppFolder" Guid="*">
+                <File Id="filFC30AEFB18C4DB6EE3B12C643B4415EE" KeyPath="yes" Source="$(var.SourcePathApp)\RagnaCustoms.exe.config" />
+            </Component>
+            <Component Id="cmp2691D36C65B59F020B76BA8655F16DC8" Directory="AppFolder" Guid="*">
+                <File Id="filB2CBC9A522C7251DAD74B07A0AD9B7A2" KeyPath="yes" Source="$(var.SourcePathApp)\RagnaCustoms.pdb" />
+            </Component>
+            <Component Id="cmp1F5C7A53821A79D002493C247EB0EB5E" Directory="AppFolder" Guid="*">
+                <File Id="filE265247C3A9487EF4432479A8207C52B" KeyPath="yes" Source="$(var.SourcePathApp)\Sentry.dll" />
+            </Component>
+            <Component Id="cmpA19B5DC79966DFE5BE4538632121B34C" Directory="AppFolder" Guid="*">
+                <File Id="fil4066919D66B3E1999AE717B6F4593938" KeyPath="yes" Source="$(var.SourcePathApp)\System.AppContext.dll" />
+            </Component>
+            <Component Id="cmp2161769AC3C1E98BABAA373AE9B5F930" Directory="AppFolder" Guid="*">
+                <File Id="filD282CB278F2B3A75822D14269B9E4491" KeyPath="yes" Source="$(var.SourcePathApp)\System.Buffers.dll" />
+            </Component>
+            <Component Id="cmpF3CC6387BB87D177E391C1228410FF21" Directory="AppFolder" Guid="*">
+                <File Id="fil16CE7C584743954991300C4FFBBC5760" KeyPath="yes" Source="$(var.SourcePathApp)\System.Collections.Concurrent.dll" />
+            </Component>
+            <Component Id="cmpA1CC5D9BFD1DDF6AA658E9DAB7A4F253" Directory="AppFolder" Guid="*">
+                <File Id="fil16476E7D04F8AD17BAE38DBC2733000C" KeyPath="yes" Source="$(var.SourcePathApp)\System.Collections.dll" />
+            </Component>
+            <Component Id="cmp90F3FADF8E128D0F8B55FC82EFEEBF07" Directory="AppFolder" Guid="*">
+                <File Id="fil27D5773B1F6796FA9003413A1DB966B0" KeyPath="yes" Source="$(var.SourcePathApp)\System.Collections.Immutable.dll" />
+            </Component>
+            <Component Id="cmpD5AF30C96C155B0B3C16BA1CDDDB8BBA" Directory="AppFolder" Guid="*">
+                <File Id="filF00FC248DBFED7142C5CEDA8EB99C19F" KeyPath="yes" Source="$(var.SourcePathApp)\System.Collections.NonGeneric.dll" />
+            </Component>
+            <Component Id="cmpD99C87A55A841567F19BCAAB69828C62" Directory="AppFolder" Guid="*">
+                <File Id="fil74DC5ACE383AB9E47900AD19487897FE" KeyPath="yes" Source="$(var.SourcePathApp)\System.Collections.Specialized.dll" />
+            </Component>
+            <Component Id="cmpF7DCD2A2101ADD0C11A4A910E6501715" Directory="AppFolder" Guid="*">
+                <File Id="fil4016C1169D5AF301FAABF29EE820E7BD" KeyPath="yes" Source="$(var.SourcePathApp)\System.ComponentModel.dll" />
+            </Component>
+            <Component Id="cmpEDE4EC187C82360FFE11D8049DF48744" Directory="AppFolder" Guid="*">
+                <File Id="filD4E152D46C2CE091BA005CA267601AE2" KeyPath="yes" Source="$(var.SourcePathApp)\System.ComponentModel.EventBasedAsync.dll" />
+            </Component>
+            <Component Id="cmpF1D4760F50DBEAE2141BA6A1B3215DF0" Directory="AppFolder" Guid="*">
+                <File Id="fil77CB14163BDEB4C290AFDAC10B32B5A7" KeyPath="yes" Source="$(var.SourcePathApp)\System.ComponentModel.Primitives.dll" />
+            </Component>
+            <Component Id="cmp731318FE219D27E3066913BA6BF0024C" Directory="AppFolder" Guid="*">
+                <File Id="fil2CF39BF324D19225D86C89A6CBB167F5" KeyPath="yes" Source="$(var.SourcePathApp)\System.ComponentModel.TypeConverter.dll" />
+            </Component>
+            <Component Id="cmpADFAD6ED5631B593D9CF86ECCED3051E" Directory="AppFolder" Guid="*">
+                <File Id="fil11E5FA6EB2045266FE950FD74A983657" KeyPath="yes" Source="$(var.SourcePathApp)\System.Console.dll" />
+            </Component>
+            <Component Id="cmp1E19042BD5477BB6C9501DE046D56B43" Directory="AppFolder" Guid="*">
+                <File Id="filBF95850D0098D77D17E37C64A798655B" KeyPath="yes" Source="$(var.SourcePathApp)\System.Data.Common.dll" />
+            </Component>
+            <Component Id="cmp5E276ED9964D933E3972A023AE42320C" Directory="AppFolder" Guid="*">
+                <File Id="fil864240D3691E2D86E1444BCDFDF3DF17" KeyPath="yes" Source="$(var.SourcePathApp)\System.Diagnostics.Contracts.dll" />
+            </Component>
+            <Component Id="cmp3AACF39AF0055849EC5F5D86A36C56EE" Directory="AppFolder" Guid="*">
+                <File Id="fil67EC6028C836FB86CB93C77BD93640C9" KeyPath="yes" Source="$(var.SourcePathApp)\System.Diagnostics.Debug.dll" />
+            </Component>
+            <Component Id="cmp0F30785D51906589351978A8A43ED8CF" Directory="AppFolder" Guid="*">
+                <File Id="fil27E9EA98D0F0DEFEC549E1BC9281070C" KeyPath="yes" Source="$(var.SourcePathApp)\System.Diagnostics.FileVersionInfo.dll" />
+            </Component>
+            <Component Id="cmpCFCB1749132C7DBD0309B7719C330219" Directory="AppFolder" Guid="*">
+                <File Id="fil5449867043D4E6E8BA1B79B19925021D" KeyPath="yes" Source="$(var.SourcePathApp)\System.Diagnostics.Process.dll" />
+            </Component>
+            <Component Id="cmpCACEE1450675E838A1942C5C9E91E8B7" Directory="AppFolder" Guid="*">
+                <File Id="filB47AD494A1315BE01956C1D28D652CC2" KeyPath="yes" Source="$(var.SourcePathApp)\System.Diagnostics.StackTrace.dll" />
+            </Component>
+            <Component Id="cmpDD2FBAAE98FA449B25E10407A6FC47EB" Directory="AppFolder" Guid="*">
+                <File Id="fil6DB3BF568E9C2C9DDE828453BC1C7CA8" KeyPath="yes" Source="$(var.SourcePathApp)\System.Diagnostics.TextWriterTraceListener.dll" />
+            </Component>
+            <Component Id="cmp1C0FA588C1A8A2C7549A5C8EFF3C76BB" Directory="AppFolder" Guid="*">
+                <File Id="filDE853B764DA026A600024E052D61CB85" KeyPath="yes" Source="$(var.SourcePathApp)\System.Diagnostics.Tools.dll" />
+            </Component>
+            <Component Id="cmp161DB9CE0202B772F5D4FE57BE4546C6" Directory="AppFolder" Guid="*">
+                <File Id="filC39CA0281E173FAD53E27C5B21829C05" KeyPath="yes" Source="$(var.SourcePathApp)\System.Diagnostics.TraceSource.dll" />
+            </Component>
+            <Component Id="cmpC798BC1FA46FAA3EBAF3C551F35CFB4D" Directory="AppFolder" Guid="*">
+                <File Id="filDA009E16C9E9DA958952ABDE581F6D73" KeyPath="yes" Source="$(var.SourcePathApp)\System.Diagnostics.Tracing.dll" />
+            </Component>
+            <Component Id="cmpEE8468449AA647D84708BD6EB623B7AD" Directory="AppFolder" Guid="*">
+                <File Id="fil48328D5DEB12CC6F1BE0B3ED9025F95D" KeyPath="yes" Source="$(var.SourcePathApp)\System.Drawing.Primitives.dll" />
+            </Component>
+            <Component Id="cmp25060AF81F3B7860D6944E3FC2CDCCF3" Directory="AppFolder" Guid="*">
+                <File Id="fil4FAAD5BE9F110EFD2B03D57F17628D71" KeyPath="yes" Source="$(var.SourcePathApp)\System.Dynamic.Runtime.dll" />
+            </Component>
+            <Component Id="cmp7E65E1B270F670605FA717927E04BF31" Directory="AppFolder" Guid="*">
+                <File Id="filD9C108D9A108F7C9B21CFC54365465FD" KeyPath="yes" Source="$(var.SourcePathApp)\System.Globalization.Calendars.dll" />
+            </Component>
+            <Component Id="cmp9594B10007530ACD3D8EBDC2360623A1" Directory="AppFolder" Guid="*">
+                <File Id="fil34F46EBE159E0189EBB443F84D840F00" KeyPath="yes" Source="$(var.SourcePathApp)\System.Globalization.dll" />
+            </Component>
+            <Component Id="cmp25154AD37A8E518A8ADC230D6A5EE593" Directory="AppFolder" Guid="*">
+                <File Id="filEDF461A4ED828D6ACCDE4EFD52F528E1" KeyPath="yes" Source="$(var.SourcePathApp)\System.Globalization.Extensions.dll" />
+            </Component>
+            <Component Id="cmp609ED201FBD903476C708657678B8991" Directory="AppFolder" Guid="*">
+                <File Id="filD862650A28F5E801E3106B87A9C59C13" KeyPath="yes" Source="$(var.SourcePathApp)\System.IO.Compression.dll" />
+            </Component>
+            <Component Id="cmpDCEEF7D3ABBDF99D5035017EE0541E84" Directory="AppFolder" Guid="*">
+                <File Id="filC9EE844C2C51F7E727BC7458EF596C53" KeyPath="yes" Source="$(var.SourcePathApp)\System.IO.Compression.ZipFile.dll" />
+            </Component>
+            <Component Id="cmp05AEF170A8AABC3717FAC3A657D045D0" Directory="AppFolder" Guid="*">
+                <File Id="fil092F2263735FA543AD235A2591C18271" KeyPath="yes" Source="$(var.SourcePathApp)\System.IO.dll" />
+            </Component>
+            <Component Id="cmp65970746749129F518683384E3DD24E5" Directory="AppFolder" Guid="*">
+                <File Id="filAB16422829C2B46E045FD4BAFCEC8C7C" KeyPath="yes" Source="$(var.SourcePathApp)\System.IO.FileSystem.dll" />
+            </Component>
+            <Component Id="cmpE9F0E1A2869EFBA97FC429A152AFAEE4" Directory="AppFolder" Guid="*">
+                <File Id="filFD4201A1BC476F1363EE1F6B301ECB1B" KeyPath="yes" Source="$(var.SourcePathApp)\System.IO.FileSystem.DriveInfo.dll" />
+            </Component>
+            <Component Id="cmpA632369DB728CF192ADD5CFEA1D18C61" Directory="AppFolder" Guid="*">
+                <File Id="filEAF1607F935431C538EE0766AD01597E" KeyPath="yes" Source="$(var.SourcePathApp)\System.IO.FileSystem.Primitives.dll" />
+            </Component>
+            <Component Id="cmp849F65D6C4D48FD36DE19AFCF9A1A925" Directory="AppFolder" Guid="*">
+                <File Id="fil46CF8F2BD6166EFD91A7E87E3D869AE3" KeyPath="yes" Source="$(var.SourcePathApp)\System.IO.FileSystem.Watcher.dll" />
+            </Component>
+            <Component Id="cmp16C1D7FCD02A37F646E6E90AEF1D541C" Directory="AppFolder" Guid="*">
+                <File Id="fil1583A56A374C23B0051B0369672F9848" KeyPath="yes" Source="$(var.SourcePathApp)\System.IO.IsolatedStorage.dll" />
+            </Component>
+            <Component Id="cmp786CA010323DD851514F2BB046CD7695" Directory="AppFolder" Guid="*">
+                <File Id="fil852F0076541116F3451AB927B8924600" KeyPath="yes" Source="$(var.SourcePathApp)\System.IO.MemoryMappedFiles.dll" />
+            </Component>
+            <Component Id="cmp608F5B5F46CA01ED30863B28662EF9D5" Directory="AppFolder" Guid="*">
+                <File Id="filCA68D16DF7708F387991FE72027FE8D3" KeyPath="yes" Source="$(var.SourcePathApp)\System.IO.Pipes.dll" />
+            </Component>
+            <Component Id="cmpB172EE821BA17772939587DD852E8A7D" Directory="AppFolder" Guid="*">
+                <File Id="fil1D65A050895EA49F57DFE1283CAE1569" KeyPath="yes" Source="$(var.SourcePathApp)\System.IO.UnmanagedMemoryStream.dll" />
+            </Component>
+            <Component Id="cmp8E47CF74DADF78EA3BDB6DC9DE5D5718" Directory="AppFolder" Guid="*">
+                <File Id="fil94EDE93EFD343794013DE218A744A0B1" KeyPath="yes" Source="$(var.SourcePathApp)\System.Linq.dll" />
+            </Component>
+            <Component Id="cmp16E1D0C8AF7BCC4739BF4F645F0E609C" Directory="AppFolder" Guid="*">
+                <File Id="filF8F612A788F166A3BECC7F0C6501D8C3" KeyPath="yes" Source="$(var.SourcePathApp)\System.Linq.Expressions.dll" />
+            </Component>
+            <Component Id="cmpF6E8AF9FCBEED78D9F2B7CE9EA9FC7A7" Directory="AppFolder" Guid="*">
+                <File Id="fil60083E38266686A6937D17D2F17DDF22" KeyPath="yes" Source="$(var.SourcePathApp)\System.Linq.Parallel.dll" />
+            </Component>
+            <Component Id="cmp2B192074EC070EFDB38AD1AB3739BB0D" Directory="AppFolder" Guid="*">
+                <File Id="fil0C3C4BEFE2A228644B9979478FDCA170" KeyPath="yes" Source="$(var.SourcePathApp)\System.Linq.Queryable.dll" />
+            </Component>
+            <Component Id="cmpC773FE7D2E5FC821662A27AAD6A82C1B" Directory="AppFolder" Guid="*">
+                <File Id="fil7F96BC0322758FCD7DD59CAC2309D654" KeyPath="yes" Source="$(var.SourcePathApp)\System.Memory.dll" />
+            </Component>
+            <Component Id="cmp34FAC100C86B9D9EFD9E9951EC2EF809" Directory="AppFolder" Guid="*">
+                <File Id="filFE476E2AFF455FF642B91FE7ECD0B6D6" KeyPath="yes" Source="$(var.SourcePathApp)\System.Net.Http.dll" />
+            </Component>
+            <Component Id="cmp78F3FDD7F2EA690DF19527B1C2503E1F" Directory="AppFolder" Guid="*">
+                <File Id="fil6ED54787C6D1548F572A27460EDFB933" KeyPath="yes" Source="$(var.SourcePathApp)\System.Net.Http.Formatting.dll" />
+            </Component>
+            <Component Id="cmp3EF3D8382EF04BF1BA629BABDA6508B7" Directory="AppFolder" Guid="*">
+                <File Id="fil775738F021B9C993F403417C9DB4D859" KeyPath="yes" Source="$(var.SourcePathApp)\System.Net.NameResolution.dll" />
+            </Component>
+            <Component Id="cmp12DB305C2EEC41CE7D3D53A69F2517E9" Directory="AppFolder" Guid="*">
+                <File Id="fil6AA6897E121DB2DA5605DA4C795CBE16" KeyPath="yes" Source="$(var.SourcePathApp)\System.Net.NetworkInformation.dll" />
+            </Component>
+            <Component Id="cmp5437A0EF4610BCD9C042E251E9EF55BC" Directory="AppFolder" Guid="*">
+                <File Id="filB8810D13A55B6666D09847A626A3A74D" KeyPath="yes" Source="$(var.SourcePathApp)\System.Net.Ping.dll" />
+            </Component>
+            <Component Id="cmp5D4A16A51FE6A990980EB7E8F381D9D9" Directory="AppFolder" Guid="*">
+                <File Id="fil9C0BC73B18E76568835C7FB0A9180A2C" KeyPath="yes" Source="$(var.SourcePathApp)\System.Net.Primitives.dll" />
+            </Component>
+            <Component Id="cmpACCDC31E4B8C977EB0E1BD388004BA2F" Directory="AppFolder" Guid="*">
+                <File Id="filD4A8CD408410E52D1E04A97AE7D4E9CD" KeyPath="yes" Source="$(var.SourcePathApp)\System.Net.Requests.dll" />
+            </Component>
+            <Component Id="cmp8EB035D60B77144E5DE1E914ABE9FFF0" Directory="AppFolder" Guid="*">
+                <File Id="filD57AA02A7AB173035D4A81CC8BFFEC75" KeyPath="yes" Source="$(var.SourcePathApp)\System.Net.Security.dll" />
+            </Component>
+            <Component Id="cmp88E36D8417B12BB9B06B6D834CE45563" Directory="AppFolder" Guid="*">
+                <File Id="filAFD38DB9CB9FC2413C807C0BF58DE127" KeyPath="yes" Source="$(var.SourcePathApp)\System.Net.Sockets.dll" />
+            </Component>
+            <Component Id="cmp0880AE0048B436881EA11BA228F2219F" Directory="AppFolder" Guid="*">
+                <File Id="fil8F70FF2B0A9DBF9702C2F3D1087CCAA6" KeyPath="yes" Source="$(var.SourcePathApp)\System.Net.WebHeaderCollection.dll" />
+            </Component>
+            <Component Id="cmp2A869EDFDF04DC7CD9BC6EE7DD1E1543" Directory="AppFolder" Guid="*">
+                <File Id="fil7245668F299F2F7A89589E8DCFC11293" KeyPath="yes" Source="$(var.SourcePathApp)\System.Net.WebSockets.Client.dll" />
+            </Component>
+            <Component Id="cmp55014F7C19F08E2B4B009FE4675B0876" Directory="AppFolder" Guid="*">
+                <File Id="fil6359A6A78D0E380AAF4DCF8BBB36984E" KeyPath="yes" Source="$(var.SourcePathApp)\System.Net.WebSockets.dll" />
+            </Component>
+            <Component Id="cmp99A4A6C5180503834A6F8D22291F4E3F" Directory="AppFolder" Guid="*">
+                <File Id="fil8422803EF9360DDF23319AB6E1511855" KeyPath="yes" Source="$(var.SourcePathApp)\System.Numerics.Vectors.dll" />
+            </Component>
+            <Component Id="cmp77C1919C4FD7C3F41C02B6B11924F84C" Directory="AppFolder" Guid="*">
+                <File Id="fil981506F9523B5FE784B1C4EE42D8F871" KeyPath="yes" Source="$(var.SourcePathApp)\System.ObjectModel.dll" />
+            </Component>
+            <Component Id="cmp050A2A4197FEAFB058536FA6C31B0193" Directory="AppFolder" Guid="*">
+                <File Id="fil77A956ACB28CAC7FFF6AD2DA73BA90B2" KeyPath="yes" Source="$(var.SourcePathApp)\System.Reflection.dll" />
+            </Component>
+            <Component Id="cmp7A208415090B138AD21001FD21E61471" Directory="AppFolder" Guid="*">
+                <File Id="fil25F48096EFE7D345A4DB19E945ED6106" KeyPath="yes" Source="$(var.SourcePathApp)\System.Reflection.Extensions.dll" />
+            </Component>
+            <Component Id="cmp3A679F9EFE1EA934A6A910BBB5ABC4AD" Directory="AppFolder" Guid="*">
+                <File Id="fil642CCF2C061B92501DCE4ACBEB096F3F" KeyPath="yes" Source="$(var.SourcePathApp)\System.Reflection.Metadata.dll" />
+            </Component>
+            <Component Id="cmpCF7AB82958A2C7D24089FE8562A5E053" Directory="AppFolder" Guid="*">
+                <File Id="fil18D943EA4EC3E70C6D384149BCCC264E" KeyPath="yes" Source="$(var.SourcePathApp)\System.Reflection.Primitives.dll" />
+            </Component>
+            <Component Id="cmp01239F8DBA35B1985A6809D6B00976AA" Directory="AppFolder" Guid="*">
+                <File Id="filE63A5A5F9F426D104B906F346843BF15" KeyPath="yes" Source="$(var.SourcePathApp)\System.Resources.Reader.dll" />
+            </Component>
+            <Component Id="cmp918F25D953746C32CFBEA830546B75C7" Directory="AppFolder" Guid="*">
+                <File Id="fil65BD42C3BB40A40D54750283D8B61C7C" KeyPath="yes" Source="$(var.SourcePathApp)\System.Resources.ResourceManager.dll" />
+            </Component>
+            <Component Id="cmp3B7669F316786CEB033197CDA7B6CB2C" Directory="AppFolder" Guid="*">
+                <File Id="fil484F01E27B7F49D378B18157FE775142" KeyPath="yes" Source="$(var.SourcePathApp)\System.Resources.Writer.dll" />
+            </Component>
+            <Component Id="cmp07EF08670C325B6BA22189DA6CCFD15B" Directory="AppFolder" Guid="*">
+                <File Id="fil62B0AF241460BD84328B5A6DA5878147" KeyPath="yes" Source="$(var.SourcePathApp)\System.Runtime.CompilerServices.Unsafe.dll" />
+            </Component>
+            <Component Id="cmpAF697FE0B848E6EB08E442AD1E36CEEB" Directory="AppFolder" Guid="*">
+                <File Id="filDFB0F6F6B9A56D1C42DA4DE751816D7E" KeyPath="yes" Source="$(var.SourcePathApp)\System.Runtime.CompilerServices.VisualC.dll" />
+            </Component>
+            <Component Id="cmp66393361471CE34F3DB7FC21C8F15A60" Directory="AppFolder" Guid="*">
+                <File Id="fil1C197976A6BA1F3D8B315028FF4CF101" KeyPath="yes" Source="$(var.SourcePathApp)\System.Runtime.dll" />
+            </Component>
+            <Component Id="cmpEBE85F5913F7752D62869C48A0D6A511" Directory="AppFolder" Guid="*">
+                <File Id="filFBAC7C1F8F41EE3B5FF8DF0B0952AF2F" KeyPath="yes" Source="$(var.SourcePathApp)\System.Runtime.Extensions.dll" />
+            </Component>
+            <Component Id="cmp6BF423140ECD9956275C838AF0F3629E" Directory="AppFolder" Guid="*">
+                <File Id="fil7E9DE27B0F45B7785518932EEE916720" KeyPath="yes" Source="$(var.SourcePathApp)\System.Runtime.Handles.dll" />
+            </Component>
+            <Component Id="cmpBC4B279EB6D8AA358D60B4071BE39069" Directory="AppFolder" Guid="*">
+                <File Id="filB64AAB6BC63DA5D1CA54BE7DB07A4C67" KeyPath="yes" Source="$(var.SourcePathApp)\System.Runtime.InteropServices.dll" />
+            </Component>
+            <Component Id="cmp95076AA416E0CF4C7958796E100EBF7A" Directory="AppFolder" Guid="*">
+                <File Id="fil2E91301999B3F381E80DE5905F07C707" KeyPath="yes" Source="$(var.SourcePathApp)\System.Runtime.InteropServices.RuntimeInformation.dll" />
+            </Component>
+            <Component Id="cmp8894D2BB62BB96DE109BF727CE0CC9BE" Directory="AppFolder" Guid="*">
+                <File Id="fil47F42C1B786E281BE74B35F94DA1D415" KeyPath="yes" Source="$(var.SourcePathApp)\System.Runtime.Numerics.dll" />
+            </Component>
+            <Component Id="cmp1B43C16FE4821E6C79CBE63268D5C3D4" Directory="AppFolder" Guid="*">
+                <File Id="fil7B0E6AAE1E018D3EAFA06E02FF080DCF" KeyPath="yes" Source="$(var.SourcePathApp)\System.Runtime.Serialization.Formatters.dll" />
+            </Component>
+            <Component Id="cmp00EA41A1D30E328A2432B3AF1870A220" Directory="AppFolder" Guid="*">
+                <File Id="filB2010707B4C7A9498A43ADFCD9FB262E" KeyPath="yes" Source="$(var.SourcePathApp)\System.Runtime.Serialization.Json.dll" />
+            </Component>
+            <Component Id="cmp544F184E0E2A9045CAE3A49E2E977469" Directory="AppFolder" Guid="*">
+                <File Id="fil4F69E764D4C39D917BF307DAA5B0FB12" KeyPath="yes" Source="$(var.SourcePathApp)\System.Runtime.Serialization.Primitives.dll" />
+            </Component>
+            <Component Id="cmpBAE109C220768F8D8B97F018F10EA76C" Directory="AppFolder" Guid="*">
+                <File Id="fil304BA50CC8A1181B180CACD3AEFC11DF" KeyPath="yes" Source="$(var.SourcePathApp)\System.Runtime.Serialization.Xml.dll" />
+            </Component>
+            <Component Id="cmp408F45F0827B2F4975D6F14A2ACA27DE" Directory="AppFolder" Guid="*">
+                <File Id="fil122414DC34CEA1E2D502D81F179847F9" KeyPath="yes" Source="$(var.SourcePathApp)\System.Security.Claims.dll" />
+            </Component>
+            <Component Id="cmp896CBDE72BA2A938FEEEC8FDBA121041" Directory="AppFolder" Guid="*">
+                <File Id="fil0FDB51ECFB9CC8DF546E52C5B101FCF3" KeyPath="yes" Source="$(var.SourcePathApp)\System.Security.Cryptography.Algorithms.dll" />
+            </Component>
+            <Component Id="cmp74E3EF3FD402C4A4E817630EC8B7E7A9" Directory="AppFolder" Guid="*">
+                <File Id="fil5227BB2A486B517632E7FA6B2FFB58B2" KeyPath="yes" Source="$(var.SourcePathApp)\System.Security.Cryptography.Csp.dll" />
+            </Component>
+            <Component Id="cmp30A513ABFD5530AD0C4821467863CC98" Directory="AppFolder" Guid="*">
+                <File Id="fil68D758BB699B866CF7DAE61ECFA00C74" KeyPath="yes" Source="$(var.SourcePathApp)\System.Security.Cryptography.Encoding.dll" />
+            </Component>
+            <Component Id="cmpEECDF65E152FAA1132A34E702ECC1054" Directory="AppFolder" Guid="*">
+                <File Id="fil0D9D06E4CCF5E3E86333BAFF771C96F3" KeyPath="yes" Source="$(var.SourcePathApp)\System.Security.Cryptography.Primitives.dll" />
+            </Component>
+            <Component Id="cmp28E2F54BAA98D387AE36748690CA4F91" Directory="AppFolder" Guid="*">
+                <File Id="fil84D344F312A47BC8FBCD44AA7297F4A2" KeyPath="yes" Source="$(var.SourcePathApp)\System.Security.Cryptography.X509Certificates.dll" />
+            </Component>
+            <Component Id="cmpF20843FFA4FF00B0386E3E31AAEB1B41" Directory="AppFolder" Guid="*">
+                <File Id="filD82B30C2E23A386E9B35D8DE8B1A0B10" KeyPath="yes" Source="$(var.SourcePathApp)\System.Security.Principal.dll" />
+            </Component>
+            <Component Id="cmpDFD3C5FCFB3697F7C8444FF396F342F4" Directory="AppFolder" Guid="*">
+                <File Id="fil6A5F152F3BBD9198BE4F22D2D42AA906" KeyPath="yes" Source="$(var.SourcePathApp)\System.Security.SecureString.dll" />
+            </Component>
+            <Component Id="cmp85A2461323C5990E55FAB4619AC829F8" Directory="AppFolder" Guid="*">
+                <File Id="fil2F983470B4A6FC135DC8E2682D1129C3" KeyPath="yes" Source="$(var.SourcePathApp)\System.Text.Encoding.dll" />
+            </Component>
+            <Component Id="cmp6D2ACEC2A05D6FD3404235520550EBD5" Directory="AppFolder" Guid="*">
+                <File Id="filADA35364DFEE9CA4B2F7F65E4D3A2D83" KeyPath="yes" Source="$(var.SourcePathApp)\System.Text.Encoding.Extensions.dll" />
+            </Component>
+            <Component Id="cmpF8054144FBA0460C2E6ECFE54197F32C" Directory="AppFolder" Guid="*">
+                <File Id="filAF83DAAE641422B9B19593E9043321DF" KeyPath="yes" Source="$(var.SourcePathApp)\System.Text.Encodings.Web.dll" />
+            </Component>
+            <Component Id="cmp79DF083ECFFE31D1CB74334ADE92D01A" Directory="AppFolder" Guid="*">
+                <File Id="fil2041CD3AFA35A4675307740F55B85737" KeyPath="yes" Source="$(var.SourcePathApp)\System.Text.Json.dll" />
+            </Component>
+            <Component Id="cmp6CD67275685047ABDC6645E409C60693" Directory="AppFolder" Guid="*">
+                <File Id="filD7E8CB71D7BDB95099D8DD66DFE5F423" KeyPath="yes" Source="$(var.SourcePathApp)\System.Text.RegularExpressions.dll" />
+            </Component>
+            <Component Id="cmp866D1AC31F4106819FB2DB664D95126C" Directory="AppFolder" Guid="*">
+                <File Id="filC5E065562BCAEEF6D89F7B17348F15B1" KeyPath="yes" Source="$(var.SourcePathApp)\System.Threading.dll" />
+            </Component>
+            <Component Id="cmpE9F4C0F9BE6E59F4E69DA1CEC4AAC774" Directory="AppFolder" Guid="*">
+                <File Id="fil56EF7CDCBB22AF42A2A4FA209E9B0C2D" KeyPath="yes" Source="$(var.SourcePathApp)\System.Threading.Overlapped.dll" />
+            </Component>
+            <Component Id="cmpF108339B151F62BB0AF60DF47DD0FAAF" Directory="AppFolder" Guid="*">
+                <File Id="fil15A8679DB87E2677E734D919CB087106" KeyPath="yes" Source="$(var.SourcePathApp)\System.Threading.Tasks.dll" />
+            </Component>
+            <Component Id="cmp8285DF733BCFB909931902422E87D4DC" Directory="AppFolder" Guid="*">
+                <File Id="fil945E2DFCF3647EB272AA6F00E9021B18" KeyPath="yes" Source="$(var.SourcePathApp)\System.Threading.Tasks.Extensions.dll" />
+            </Component>
+            <Component Id="cmp76D9D72D537279E190C44AD1AD68A0F2" Directory="AppFolder" Guid="*">
+                <File Id="fil5A8C80117D867ED97B7414FBFDA6841E" KeyPath="yes" Source="$(var.SourcePathApp)\System.Threading.Tasks.Parallel.dll" />
+            </Component>
+            <Component Id="cmp8333F62E66D7066DBB825AE829AF5A45" Directory="AppFolder" Guid="*">
+                <File Id="fil35021DF7E633197422D34FC39ABAF186" KeyPath="yes" Source="$(var.SourcePathApp)\System.Threading.Thread.dll" />
+            </Component>
+            <Component Id="cmpA49EC8C59EB7657B4A5529038025B4EA" Directory="AppFolder" Guid="*">
+                <File Id="fil3DFA33C6F846E66CB834D8B16806ACC3" KeyPath="yes" Source="$(var.SourcePathApp)\System.Threading.ThreadPool.dll" />
+            </Component>
+            <Component Id="cmp5D9E4D6B94B6544AD2974F566CF66A8D" Directory="AppFolder" Guid="*">
+                <File Id="fil3067A7AAB1A5D9A9D21036362C1E1726" KeyPath="yes" Source="$(var.SourcePathApp)\System.Threading.Timer.dll" />
+            </Component>
+            <Component Id="cmpA29011D4F58D95AAE2A44037B93B596A" Directory="AppFolder" Guid="*">
+                <File Id="fil3A6CC63754C41237BD4ABA3AC365A0B3" KeyPath="yes" Source="$(var.SourcePathApp)\System.ValueTuple.dll" />
+            </Component>
+            <Component Id="cmp12301F163DE379AAC3717BF35B357C17" Directory="AppFolder" Guid="*">
+                <File Id="fil8F13291732190271D9F479D2AE817AB3" KeyPath="yes" Source="$(var.SourcePathApp)\System.Xml.ReaderWriter.dll" />
+            </Component>
+            <Component Id="cmpAB4856E0D4D22D4C141A995B6FFD649B" Directory="AppFolder" Guid="*">
+                <File Id="fil2C2AE27625FDB70BCA237A53A8D97AF7" KeyPath="yes" Source="$(var.SourcePathApp)\System.Xml.XDocument.dll" />
+            </Component>
+            <Component Id="cmp04A190B69EF3099141046B91C9787F27" Directory="AppFolder" Guid="*">
+                <File Id="filB5DB7EB9A3BBEB9C9770A761051A28FE" KeyPath="yes" Source="$(var.SourcePathApp)\System.Xml.XmlDocument.dll" />
+            </Component>
+            <Component Id="cmpF2FE1BE0E305DADDA6BD79B32022DA21" Directory="AppFolder" Guid="*">
+                <File Id="filC0D641A5A77B7A552A41E7DFC1A0E825" KeyPath="yes" Source="$(var.SourcePathApp)\System.Xml.XmlSerializer.dll" />
+            </Component>
+            <Component Id="cmpFD267729CB0D9F018A3613F44DC2986B" Directory="AppFolder" Guid="*">
+                <File Id="fil2FF1DCAEAFCE4325D65DDBAED019B1E7" KeyPath="yes" Source="$(var.SourcePathApp)\System.Xml.XPath.dll" />
+            </Component>
+            <Component Id="cmpE9E7AB3275EC6452DA06F99597EB2722" Directory="AppFolder" Guid="*">
+                <File Id="fil12B24BBE8E4AD951BA0A6B5F1C2AF632" KeyPath="yes" Source="$(var.SourcePathApp)\System.Xml.XPath.XDocument.dll" />
+            </Component>
+            <Component Id="cmp1ED837D422B29ADB4257A2B1C0E17926" Directory="AppFolder" Guid="*">
+                <File Id="filC002A12D3458B61BD7948013633DC061" KeyPath="yes" Source="$(var.SourcePathApp)\TwitchLib.Client.dll" />
+            </Component>
+            <Component Id="cmp30EC51C9D11B01E4DAD7468BAF4274AC" Directory="AppFolder" Guid="*">
+                <File Id="fil5D3FB1854314A24D3606CBE927F6DC39" KeyPath="yes" Source="$(var.SourcePathApp)\TwitchLib.Client.Enums.dll" />
+            </Component>
+            <Component Id="cmpD2B5C194385F979BFABC3291647DC191" Directory="AppFolder" Guid="*">
+                <File Id="fil5A974EC9415F126FB80D849BB77163D9" KeyPath="yes" Source="$(var.SourcePathApp)\TwitchLib.Client.Models.dll" />
+            </Component>
+            <Component Id="cmpD321409F26B80D25AB652A731E093403" Directory="AppFolder" Guid="*">
+                <File Id="fil44348250803F73D781708E1ACF29A5C1" KeyPath="yes" Source="$(var.SourcePathApp)\TwitchLib.Communication.dll" />
+            </Component>
+            <Component Id="cmpDC56469200F7CC39168A85CE7141F45E" Directory="dirBFFF85FC963B74F8D4B0D35881E0DD53" Guid="*">
+                <File Id="fil4EB561E1BBA608316636BDFBB8601712" KeyPath="yes" Source="$(var.SourcePathApp)\fr\RagnaCustoms.resources.dll" />
+            </Component>
+        </ComponentGroup>
+    </Fragment>
+</Wix>
