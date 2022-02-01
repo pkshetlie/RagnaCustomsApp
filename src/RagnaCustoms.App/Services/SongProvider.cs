@@ -1,6 +1,4 @@
-﻿using RagnaCustoms.Services;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -9,15 +7,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using RagnaCustoms.App.Extensions;
+using RagnaCustoms.Services;
 
 namespace RagnaCustoms.Models
 {
     public class SongProvider : ISongProvider
-    {      
-
-        public SongProvider(){}
-
+    {
         public IEnumerable<Song> SearchLocal()
         {
             return new DirProvider().GetLocalSongs().ToList();
@@ -25,10 +22,7 @@ namespace RagnaCustoms.Models
 
         public IEnumerable<Song> SearchLocal(string term)
         {
-            if (string.IsNullOrWhiteSpace(term))
-            {
-                return SearchLocal();
-            }
+            if (string.IsNullOrWhiteSpace(term)) return SearchLocal();
 
             return new DirProvider().GetLocalSongs().Where(song => song.Name.Contains(term)).ToList();
         }
@@ -79,21 +73,20 @@ namespace RagnaCustoms.Models
                     if (File.Exists(idFile))
                     {
                         var songInfo = await SearchOnlineAsync(int.Parse(File.ReadAllText(idFile)));
-                        if (songInfo.Hash == File.ReadAllText(hashFile))
-                        {
-                            songInfo.UpToDate = true;
-                        }
+                        if (songInfo.Hash == File.ReadAllText(hashFile)) songInfo.UpToDate = true;
                         songs.Add(songInfo);
                     }
-                }catch (Exception ex)
-                {                  
-
+                }
+                catch (Exception ex)
+                {
                 }
             }
+
             return songs;
         }
 
-        public virtual async Task DownloadAsync(int songId, Action<int> downloadProgressChanged, Action<bool> downloadCompleted, Action<string> downloadTitle, bool autoClose = false)
+        public virtual async Task DownloadAsync(int songId, Action<int> downloadProgressChanged,
+            Action<bool> downloadCompleted, Action<string> downloadTitle, bool autoClose = false)
         {
             using var client = new WebClient();
 
@@ -104,46 +97,48 @@ namespace RagnaCustoms.Models
             var tempFilePath = Path.GetTempFileName();
 
             var songInfo = await SearchOnlineAsync(songId);
-            if(songInfo == null)
+            if (songInfo == null)
             {
                 downloadCompleted?.Invoke(autoClose);
-                return; 
+                return;
             }
-            downloadTitle?.Invoke($"{songInfo.Name} by {songInfo.Mapper}");
-            var songDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Mapper.Slug()}");
 
-            var songBackupDirectoryPath = Path.Combine(DirProvider.RagnarockBackupSongDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Mapper.Slug()}");
+            downloadTitle?.Invoke($"{songInfo.Name} by {songInfo.Mapper}");
+            var songDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath,
+                $"{songInfo.Name.Slug()}{songInfo.Mapper.Slug()}");
+
+            var songBackupDirectoryPath = Path.Combine(DirProvider.RagnarockBackupSongDirectoryPath,
+                $"{songInfo.Name.Slug()}{songInfo.Mapper.Slug()}");
 
             if (Directory.Exists(Path.Combine(songBackupDirectoryPath)))
             {
                 // le dossier existe dans backup
-                if (File.Exists(Path.Combine(songBackupDirectoryPath, ".hash")) && File.ReadAllText(Path.Combine(songBackupDirectoryPath, ".hash")) == songInfo.Hash)
+                if (File.Exists(Path.Combine(songBackupDirectoryPath, ".hash")) &&
+                    File.ReadAllText(Path.Combine(songBackupDirectoryPath, ".hash")) == songInfo.Hash)
                 {
                     //le hash est OK
                     Oculus.PushSong(songDirectoryPath);
                     if (!Directory.Exists(Path.Combine(songDirectoryPath)))
-                    {
                         new DirectoryInfo(songBackupDirectoryPath).MoveTo(songDirectoryPath);
-                    }
                     downloadCompleted?.Invoke(autoClose);
                     return;
                 }
-                else
-                {
-                    //le hash est périmé, on supprime et on laisse le téléchargement se faire.
-                    Directory.Delete(Path.Combine(songBackupDirectoryPath));                  
-                }
+
+                //le hash est périmé, on supprime et on laisse le téléchargement se faire.
+                Directory.Delete(Path.Combine(songBackupDirectoryPath));
             }
-            if (File.Exists(Path.Combine(songDirectoryPath, ".hash")) && File.ReadAllText(Path.Combine(songDirectoryPath, ".hash")) == songInfo.Hash)
+
+            if (File.Exists(Path.Combine(songDirectoryPath, ".hash")) &&
+                File.ReadAllText(Path.Combine(songDirectoryPath, ".hash")) == songInfo.Hash)
             {
                 Oculus.PushSong(songDirectoryPath);
                 downloadCompleted?.Invoke(autoClose);
                 return;
             }
 
-            
 
-            client.DownloadProgressChanged += (sender, args) => downloadProgressChanged?.Invoke(args.ProgressPercentage);
+            client.DownloadProgressChanged +=
+                (sender, args) => downloadProgressChanged?.Invoke(args.ProgressPercentage);
             client.DownloadFileCompleted += ClientDownloadFileCompleted;
             client.DownloadFileAsync(uri, tempFilePath);
 
@@ -152,10 +147,11 @@ namespace RagnaCustoms.Models
                 ZipFile.ExtractToDirectory(tempFilePath, tempDirectoryPath);
 
                 var songDirectory = tempDirectory.EnumerateDirectories().First();
-                var ragnarockSongDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath, $"{songDirectory.Name}{songInfo.Mapper.Slug()}");
+                var ragnarockSongDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath,
+                    $"{songDirectory.Name}{songInfo.Mapper.Slug()}");
 
                 if (Directory.Exists(ragnarockSongDirectoryPath))
-                    Directory.Delete(ragnarockSongDirectoryPath, recursive: true);
+                    Directory.Delete(ragnarockSongDirectoryPath, true);
 
                 if (Path.GetPathRoot(ragnarockSongDirectoryPath) == songDirectory.Root.FullName)
                 {
@@ -165,34 +161,31 @@ namespace RagnaCustoms.Models
                 {
                     Directory.CreateDirectory(ragnarockSongDirectoryPath);
 
-                    FileInfo[] files = songDirectory.GetFiles();
-                    foreach (FileInfo file in files)
+                    var files = songDirectory.GetFiles();
+                    foreach (var file in files)
                     {
-                        string tempPath = Path.Combine(ragnarockSongDirectoryPath, file.Name);
-                        file.CopyTo(tempPath, false);                       
+                        var tempPath = Path.Combine(ragnarockSongDirectoryPath, file.Name);
+                        file.CopyTo(tempPath, false);
                     }
                 }
 
-                using (StreamWriter writer = new StreamWriter(Path.Combine(ragnarockSongDirectoryPath, ".hash"), false))
+                using (var writer = new StreamWriter(Path.Combine(ragnarockSongDirectoryPath, ".hash"), false))
                 {
-                    writer.Write(songInfo.Hash);             
+                    writer.Write(songInfo.Hash);
                 }
 
-                using (StreamWriter writer = new StreamWriter(Path.Combine(ragnarockSongDirectoryPath, ".id"), false))
+                using (var writer = new StreamWriter(Path.Combine(ragnarockSongDirectoryPath, ".id"), false))
                 {
-                    writer.Write(songInfo.Id);            
+                    writer.Write(songInfo.Id);
                 }
 
                 File.Delete(tempFilePath);
-                Directory.Delete(tempDirectoryPath, recursive: true);
+                Directory.Delete(tempDirectoryPath, true);
 
                 Oculus.PushSong(ragnarockSongDirectoryPath);
 
                 downloadCompleted?.Invoke(autoClose);
             }
         }
-
-
-     
     }
 }

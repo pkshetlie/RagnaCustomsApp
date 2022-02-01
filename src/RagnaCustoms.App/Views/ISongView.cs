@@ -1,6 +1,6 @@
-﻿using RagnaCustoms.Models;
+﻿using System.Collections.Generic;
+using RagnaCustoms.Models;
 using RagnaCustoms.Presenters;
-using System.Collections.Generic;
 
 namespace RagnaCustoms.Views
 {

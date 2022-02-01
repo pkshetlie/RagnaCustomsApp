@@ -1,40 +1,48 @@
-﻿using Newtonsoft.Json;
-using RagnaCustoms.Models;
-using RagnaCustoms.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Reflection;
-using System.Resources;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using RagnaCustoms.App.Properties;
+using Newtonsoft.Json;
+using RagnaCustoms.Models;
 using RagnaCustoms.Presenters;
+using RagnaCustoms.Services;
+using RagnaCustoms.Views;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
 using TwitchLib.Communication.Clients;
 using TwitchLib.Communication.Models;
-using RagnaCustoms.Views;
 
 namespace RagnaCustoms.App.Views
 {
     public partial class TwitchBotForm : Form
     {
+        private readonly List<string> _allowedPrefixes = new()
+        {
+            "!rc", "!rcs", "!rcr"
+        };
+
         public Configuration _configuration;
-        public TwitchBotForm() {
+        private JoinedChannel _joinedChannel;
+
+
+        private readonly List<Song> _songList = new();
+        private bool _twitchBotEnabled;
+
+        private TwitchClient _twitchClient;
+
+        public Dictionary<string, ICommandes> Commandes = new();
+
+        public bool QueueIsOpen = true;
+
+        public TwitchBotForm()
+        {
             InitializeComponent();
-            
+
             _configuration = new Configuration();
             twitchChannel.Text = _configuration.TwitchChannel;
             twitchOAuth.Text = _configuration.AuthTmi;
@@ -43,59 +51,62 @@ namespace RagnaCustoms.App.Views
             bot_enabled.Checked = _configuration.TwitchBotAutoStart;
 
             LoadCommands();
-            
         }
 
-        private void linkLabel2_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e) {
-            ProcessStartInfo sInfo = new ProcessStartInfo("https://twitchapps.com/tmi/");
+        public Process RagnarockApp { get; set; }
+
+        public string Prefixe { get; set; }
+
+        private void linkLabel2_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var sInfo = new ProcessStartInfo("https://twitchapps.com/tmi/");
             Process.Start(sInfo);
         }
-
-        private TwitchClient _twitchClient;
-        private JoinedChannel _joinedChannel;
-        private bool _twitchBotEnabled = false;
-        public Process RagnarockApp { get; set; }
 
         private void bot_enabled_CheckedChanged_1(object sender, EventArgs e)
         {
             checkEnabled();
         }
-        public void checkEnabled() { 
-            if (bot_enabled.Checked && (String.IsNullOrEmpty(twitchOAuth.Text.ToString()) || String.IsNullOrEmpty(twitchChannel.Text))) {
-                MessageBox.Show("You need to configure before enable", "RagnaCustoms.com", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+        public void checkEnabled()
+        {
+            if (bot_enabled.Checked &&
+                (string.IsNullOrEmpty(twitchOAuth.Text) || string.IsNullOrEmpty(twitchChannel.Text)))
+            {
+                MessageBox.Show("You need to configure before enable", "RagnaCustoms.com", MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
                 //MessageBox.Show(Resources.app.strings.Error_2, "RagnaCustoms.com", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 bot_enabled.Checked = false;
                 return;
             }
-            if (bot_enabled.Checked) {
+
+            if (bot_enabled.Checked)
+            {
                 var credentials = new ConnectionCredentials(twitchChannel.Text, twitchOAuth.Text);
-                var clientOptions = new ClientOptions {
+                var clientOptions = new ClientOptions
+                {
                     MessagesAllowedInPeriod = 750,
                     ThrottlingPeriod = TimeSpan.FromSeconds(30)
-                };               
+                };
 
                 _twitchClient = new TwitchClient(new WebSocketClient(clientOptions));
 
-                _twitchClient.Initialize(credentials, channel: twitchChannel.Text);
+                _twitchClient.Initialize(credentials, twitchChannel.Text);
                 _twitchClient.OnMessageReceived += OnMessageReceived;
 
                 _twitchClient.OnConnected += OnConnected;
                 _twitchClient.Connect();
-
             }
+
             _twitchBotEnabled = bot_enabled.Checked;
         }
-        
-        public string Prefixe { get; set; }
-        private void OnConnected(object sender, OnConnectedArgs e) {
+
+        private void OnConnected(object sender, OnConnectedArgs e)
+        {
             _joinedChannel = _twitchClient.GetJoinedChannel(twitchChannel.Text);
             _twitchClient.SendMessage(_joinedChannel, $"{Prefixe} Ragnacustoms.com's bot connected");
             //TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.app.strings.WelcomeBot}");
         }
-        
-        public bool QueueIsOpen = true;
-
-        public Dictionary<string, ICommandes> Commandes = new Dictionary<string, ICommandes>();
 
         private void LoadCommands()
         {
@@ -104,72 +115,53 @@ namespace RagnaCustoms.App.Views
                 .SelectMany(s => s.GetTypes())
                 .Where(p => type.IsAssignableFrom(p));
 
-            foreach (Type command in types)
-            {
+            foreach (var command in types)
                 try
                 {
                     var cmd = Activator.CreateInstance(command) as ICommandes;
                     if (cmd != null)
-                    {
                         foreach (var name in cmd.Names())
-                        {
                             Commandes.Add(name, cmd);
-                        }
-                    }
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
                 }
-            }
         }
 
-        private readonly List<string> _allowedPrefixes = new List<string>
-        {
-            "!rc","!rcs", "!rcr"
-        };
-
-        private void StartDownload(string v) 
+        private void StartDownload(string v)
         {
             var songId = int.Parse(v);
             var songProvider = new SongProvider();
             var downloadingView = new DownloadingForm();
             var downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
             downloadingPresenter.Download(songId, true);
-            Application.Run(downloadingView);        
+            Application.Run(downloadingView);
         }
 
         private void OnMessageReceived(object sender, OnMessageReceivedArgs e)
         {
-            if (!_twitchBotEnabled) { return; }
+            if (!_twitchBotEnabled) return;
 
-            string[] command = e.ChatMessage.Message.Split(' ');
+            var command = e.ChatMessage.Message.Split(' ');
 
-            if (!_allowedPrefixes.Contains(command[0]))
-            {
-                return;
-            }
-            new Thread((() =>
+            if (!_allowedPrefixes.Contains(command[0])) return;
+            new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
                 if (_configuration.ViewerLang != null && _configuration.ViewerLang.ContainsKey(e.ChatMessage.UserId))
                 {
-                    Thread.CurrentThread.CurrentUICulture = new CultureInfo(_configuration.ViewerLang[e.ChatMessage.UserId], true);
+                    Thread.CurrentThread.CurrentUICulture =
+                        new CultureInfo(_configuration.ViewerLang[e.ChatMessage.UserId], true);
                     Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
                 }
-                
+
                 if (command.Length < 2)
                 {
-                    if (!Commandes.ContainsKey(""))
-                    {
-                        return;
-                    }
+                    if (!Commandes.ContainsKey("")) return;
                     var cmd = Commandes[""];
-                    var success = cmd.Action(_joinedChannel, prefix, _twitchClient,this,  e);
-                    if (!success)
-                    {
-                        _twitchClient.SendMessage(_joinedChannel,$"{Prefixe}An error has occurred !");
-                    }
+                    var success = cmd.Action(_joinedChannel, prefix, _twitchClient, this, e);
+                    if (!success) _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}An error has occurred !");
                 }
                 else
                 {
@@ -179,20 +171,21 @@ namespace RagnaCustoms.App.Views
                         AddRequest(string.Join("%20", command.Skip(1).ToArray()), e);
                         return;
                     }
+
                     var cmd = Commandes[arg1];
                     if (cmd.IllegalUsers().Contains(e.ChatMessage.UserType))
                     {
-                        _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}Vous n'avez pas l'autorisation d'éxécuter cette commande !");
+                        _twitchClient.SendMessage(_joinedChannel,
+                            $"{Prefixe}Vous n'avez pas l'autorisation d'éxécuter cette commande !");
                         return;
                     }
+
                     var success = cmd.Action(_joinedChannel, prefix, _twitchClient, this, e);
-                    if (!success)
-                    {
-                        _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}An error has occurred !");
-                    }
+                    if (!success) _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}An error has occurred !");
                 }
-            })).Start();
+            }).Start();
         }
+
         private void AddRequest(string requestId, OnMessageReceivedArgs e)
         {
             if (!QueueIsOpen)
@@ -204,7 +197,8 @@ namespace RagnaCustoms.App.Views
             var s = GetSongInfo(requestId) ?? SearshSong(requestId); // search song by id, if not found, search by name
             if (s != null)
             {
-                _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}Request Info: {s.Name}, Mapped by : {s.Mapper}, asked by @{e.ChatMessage.Username}");
+                _twitchClient.SendMessage(_joinedChannel,
+                    $"{Prefixe}Request Info: {s.Name}, Mapped by : {s.Mapper}, asked by @{e.ChatMessage.Username}");
                 AddSongRequestToList(s, e.ChatMessage.Username);
                 StartDownload(s.Id.ToString());
                 //TwitchClient.SendMessage(joinedChannel, $"{prefixe}Ready: ");
@@ -214,20 +208,15 @@ namespace RagnaCustoms.App.Views
                 _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}@{e.ChatMessage.Username} Song not found");
             }
         }
-        
-        
-        private List<Song> _songList = new List<Song>();
-        private void AddSongRequestToList(Song song, string viewer) 
+
+        private void AddSongRequestToList(Song song, string viewer)
         {
-            if (_songList.Count == 0 && _configuration.EasyStreamRequest)
-            {
-                EasyStreamRequest.CreateBackupDirectory();
-            }
+            if (_songList.Count == 0 && _configuration.EasyStreamRequest) EasyStreamRequest.CreateBackupDirectory();
             song.Requester = viewer;
             _songList.Add(song);
             UpdateFormRows();
         }
-        
+
         public void RemoveSongByRequester(string viewer)
         {
             var songs = _songList.FindAll(x => x.Requester == viewer);
@@ -237,10 +226,11 @@ namespace RagnaCustoms.App.Views
                 UpdateFormRows();
             }
         }
-        public void RemoveAtSongRequestInList(string hash) 
+
+        public void RemoveAtSongRequestInList(string hash)
         {
             var song = _songList.Find(s => s.Hash.Equals(hash));
-            if (song == null) { return; }
+            if (song == null) return;
 
             if (_configuration.EasyStreamRequest)
             {
@@ -249,7 +239,7 @@ namespace RagnaCustoms.App.Views
                     .GetDirectories()
                     .FirstOrDefault(x =>
                     {
-                        return Enumerable.Any<FileInfo>(x.GetFiles(), z =>
+                        return x.GetFiles().Any(z =>
                         {
                             var content = z.OpenText();
                             var toReturn = z.Name == ".id" && content.ReadToEnd() == songId.ToString();
@@ -259,97 +249,100 @@ namespace RagnaCustoms.App.Views
                     });
                 EasyStreamRequest.MoveSongOnBackup(songFolder);
             }
+
             _songList.Remove(song);
             UpdateFormRows();
 
             if (_songList.Count == 0 && _configuration.EasyStreamRequest)
-            {
                 EasyStreamRequest.RestoreCustomSongDirectory();
-            }
         }
 
         // set songRequest rows values to _songList values
         private void UpdateFormRows()
         {
-            songRequests.Invoke(new MethodInvoker(delegate {
-                songRequests.Rows.Clear();
-                foreach (var song in _songList)
-                {
-                    songRequests.Rows.Add(song.Name, song.Author, song.Requester, song.Id);
-                }
-                songRequests.Refresh();
-            } ));
-        }
-        
-        
-        private Song GetSongInfo(string songId) 
-        {
-            try 
+            songRequests.Invoke(new MethodInvoker(delegate
             {
-                using var webClient = new System.Net.WebClient();
+                songRequests.Rows.Clear();
+                foreach (var song in _songList) songRequests.Rows.Add(song.Name, song.Author, song.Requester, song.Id);
+                songRequests.Refresh();
+            }));
+        }
+
+
+        private Song GetSongInfo(string songId)
+        {
+            try
+            {
+                using var webClient = new WebClient();
                 var json = webClient.DownloadString("https://ragnacustoms.com/api/song/" + songId);
-                Song stuff = JsonConvert.DeserializeObject<Song>(json);
+                var stuff = JsonConvert.DeserializeObject<Song>(json);
                 //debug_console.Items.Add($"Début de la récuperation de {stuff.title}");
                 return stuff;
             }
-            catch (WebException) 
+            catch (WebException)
             {
                 return null;
             }
         }
-        
-        private Song SearshSong(string search) 
+
+        private Song SearshSong(string search)
         {
-            try 
+            try
             {
-                using var webClient = new System.Net.WebClient();
+                using var webClient = new WebClient();
                 var json = webClient.DownloadString("https://ragnacustoms.com/api/search/" + search);
-                SearshResult stuffs = JsonConvert.DeserializeObject<SearshResult>(json);
+                var stuffs = JsonConvert.DeserializeObject<SearshResult>(json);
                 return stuffs.FirstResultByName(search) ?? stuffs.BestResultByName(search);
             }
-            catch (WebException) 
+            catch (WebException)
             {
                 return null;
             }
         }
-        
-        private void twitchOAuth_TextChanged_1(object sender, EventArgs e) 
+
+        private void twitchOAuth_TextChanged_1(object sender, EventArgs e)
         {
             bot_enabled.Checked = false;
             _configuration.AuthTmi = twitchOAuth.Text;
         }
 
-        private void twitchChannel_TextChanged(object sender, EventArgs e) {
+        private void twitchChannel_TextChanged(object sender, EventArgs e)
+        {
             bot_enabled.Checked = false;
             _configuration.TwitchChannel = twitchChannel.Text;
         }
 
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e) { }
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        }
 
-        private void helptwitchtmi_Click(object sender, EventArgs e) { }
+        private void helptwitchtmi_Click(object sender, EventArgs e)
+        {
+        }
 
-        private void botMessagePrefixLabel_Click(object sender, EventArgs e) { }
+        private void botMessagePrefixLabel_Click(object sender, EventArgs e)
+        {
+        }
 
-        private void TwitchBotForm_FormClosed(object sender, FormClosedEventArgs e) 
+        private void TwitchBotForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (bot_enabled.Checked)
             {
                 bot_enabled.Checked = false;
                 _twitchBotEnabled = false;
-                if (_twitchClient.IsConnected) 
+                if (_twitchClient.IsConnected)
                     _twitchClient.Disconnect();
             }
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) 
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            ProcessStartInfo sInfo = new ProcessStartInfo("https://www.twitch.tv/ragnacustoms_com");
+            var sInfo = new ProcessStartInfo("https://www.twitch.tv/ragnacustoms_com");
             Process.Start(sInfo);
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -359,7 +352,6 @@ namespace RagnaCustoms.App.Views
 
         private void prefix_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
@@ -371,7 +363,6 @@ namespace RagnaCustoms.App.Views
 
         private void TwitchBotForm_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

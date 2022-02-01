@@ -1,24 +1,14 @@
-﻿using RagnaCustoms.Services;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System;
 using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using RagnaCustoms.App.Extensions;
-using System.Security.AccessControl;
+using System.Security.Principal;
+using RagnaCustoms.Services;
 
 namespace RagnaCustoms.Models
 {
     public class EasyStreamRequest
     {
-        private static DirectoryInfo backupDirectory = DirProvider.getCustomBackupDirectory();
-        private static DirectoryInfo songsDirectory = DirProvider.getCustomDirectory();
+        private static readonly DirectoryInfo backupDirectory = DirProvider.getCustomBackupDirectory();
+        private static readonly DirectoryInfo songsDirectory = DirProvider.getCustomDirectory();
 
         public static void EnableEasyStreamRequest(Configuration configuration)
         {
@@ -33,34 +23,26 @@ namespace RagnaCustoms.Models
 
         public static void CreateBackupDirectory()
         {
-            if (!songsDirectory.Exists)
-            {
-                songsDirectory.Create();
-            }
-            foreach(var subdir in songsDirectory.GetDirectories())
-            {
+            if (!songsDirectory.Exists) songsDirectory.Create();
+            foreach (var subdir in songsDirectory.GetDirectories())
                 subdir.MoveTo(Path.Combine(DirProvider.RagnarockBackupSongDirectoryPath, subdir.Name));
-            }
         }
+
         public static void RestoreCustomSongDirectory()
         {
             if (!backupDirectory.Exists) return;
             CopySongsOnBackup();
             //songsDirectory.Delete(true);
             backupDirectory.Refresh();
-            AuthorizationRuleCollection collection = Directory.GetAccessControl(backupDirectory.FullName).GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
+            var collection = Directory.GetAccessControl(backupDirectory.FullName)
+                .GetAccessRules(true, true, typeof(NTAccount));
             foreach (var subdir in backupDirectory.GetDirectories())
-            {
                 subdir.MoveTo(Path.Combine(DirProvider.RagnarockSongDirectoryPath, subdir.Name));
-            }
         }
 
         public static void CopySongsOnBackup()
         {
-            if (!songsDirectory.Exists)
-            {
-                songsDirectory.Create();
-            }
+            if (!songsDirectory.Exists) songsDirectory.Create();
             foreach (var fileInfo in DirProvider.getCustomDirectory().GetDirectories())
             {
                 var tempDir = new DirectoryInfo(Path.Combine(backupDirectory.FullName, fileInfo.Name));
@@ -72,7 +54,6 @@ namespace RagnaCustoms.Models
         public static void MoveSongOnBackup(DirectoryInfo songDirectory)
         {
             foreach (var fileInfo in DirProvider.getCustomDirectory().GetDirectories())
-            {
                 if (fileInfo.Name == songDirectory.Name)
                 {
                     var tempDir = new DirectoryInfo(Path.Combine(backupDirectory.FullName, fileInfo.Name));
@@ -87,7 +68,6 @@ namespace RagnaCustoms.Models
                         /* Ignored */
                     }
                 }
-            }
         }
     }
 }

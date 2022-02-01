@@ -1,6 +1,6 @@
-﻿using RagnaCustoms.App.Views;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
+using RagnaCustoms.App.Views;
 using TwitchLib.Client;
 using TwitchLib.Client.Enums;
 using TwitchLib.Client.Events;
@@ -13,12 +13,13 @@ namespace RagnaCustoms.App
         List<string> Names();
         string Help();
         List<UserType> IllegalUsers();
+
         bool Action(
-            JoinedChannel joinedChannel, 
-            TextBox prefixe, 
-            TwitchClient client, 
-            TwitchBotForm me, 
+            JoinedChannel joinedChannel,
+            TextBox prefixe,
+            TwitchClient client,
+            TwitchBotForm me,
             OnMessageReceivedArgs e
-            );
+        );
     }
 }

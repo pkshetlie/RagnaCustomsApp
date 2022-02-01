@@ -5,22 +5,34 @@ namespace RagnaCustoms.Presenters
 {
     public class DownloadingPresenter : IDownloadingPresenter
     {
-        protected virtual IDownloadingView View { get; }
-        protected virtual ISongProvider SongProvider { get; }
-
         public DownloadingPresenter(ISongProvider songProvider)
         {
             SongProvider = songProvider;
         }
+
         public DownloadingPresenter(IDownloadingView view, ISongProvider songProvider) : this(songProvider)
         {
             View = view;
             View.Presenter = this;
         }
 
-        public virtual void Show() => View.Show();
-        public virtual void ShowAsPopup() => View.ShowAsPopup();
-        public virtual void Close() => View.Close();
+        protected virtual IDownloadingView View { get; }
+        protected virtual ISongProvider SongProvider { get; }
+
+        public virtual void Show()
+        {
+            View.Show();
+        }
+
+        public virtual void ShowAsPopup()
+        {
+            View.ShowAsPopup();
+        }
+
+        public virtual void Close()
+        {
+            View.Close();
+        }
 
         public virtual void Download(int songId, bool autoClose = false)
         {
@@ -28,6 +40,7 @@ namespace RagnaCustoms.Presenters
 
             SongProvider.DownloadAsync(songId, DownloadProgressChanged, DownloadCompleted, DownloadTitle, autoClose);
         }
+
         public virtual void DownloadTitle(string downloadTitle)
         {
             View.Title = downloadTitle;
@@ -40,10 +53,7 @@ namespace RagnaCustoms.Presenters
 
         public virtual void DownloadCompleted(bool autoClose = false)
         {
-            if (!autoClose)
-            {
-                View.ShowSuccessMessage("Download completed successfuly.", "Information");
-            }
+            if (!autoClose) View.ShowSuccessMessage("Download completed successfuly.", "Information");
             View.Close();
         }
     }

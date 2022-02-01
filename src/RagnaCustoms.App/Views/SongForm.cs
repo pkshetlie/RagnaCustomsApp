@@ -1,46 +1,22 @@
-﻿using RagnaCustoms.App.Views;
-using RagnaCustoms.Models;
-using RagnaCustoms.Presenters;
-using RagnaCustoms.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
-using System.Resources;
-using System.Windows.Forms;
-using System.Windows.Forms.PropertyGridInternal;
-using RagnaCustoms.App.Properties;
 using System.Threading;
-using System.Globalization;
+using System.Windows.Forms;
+using RagnaCustoms.App.Properties;
+using RagnaCustoms.App.Views;
+using RagnaCustoms.Models;
+using RagnaCustoms.Presenters;
+using RagnaCustoms.Services;
 
 namespace RagnaCustoms.Views
 {
     public partial class SongForm : Form, ISongView
     {
-        public SongPresenter Presenter { private get; set; }
-        public IEnumerable<SongSearchModel> Songs
-        {
-            get => (IEnumerable<SongSearchModel>)SearchResultGridView.DataSource;
-            set => SearchResultGridView.DataSource = value;
-        }
-        public bool SendScoreAutomatically
-        {
-            get => SendScoreAutomaticallyMenuItem.Checked;
-            set => SendScoreAutomaticallyMenuItem.Checked = value;
-        }
-        public bool AutoCloseDownload
-        {
-            get => autoCloseDownloadToolStripMenuItem.Checked;
-            set => autoCloseDownloadToolStripMenuItem.Checked = value;
-        }
-        public bool Overlay
-        {
-            get => overlayToolStripMenuItem.Checked;
-            set => overlayToolStripMenuItem.Checked = value;
-        }
-
         public SongForm()
         {
             InitializeComponent();
@@ -49,6 +25,32 @@ namespace RagnaCustoms.Views
             englishToolStripMenuItem.Checked = conf.Lang == "en";
             frenchToolStripMenuItem.Checked = conf.Lang == "fr";
             Text += $" {Assembly.GetExecutingAssembly().GetName().Version.ToString(3)}";
+        }
+
+        public SongPresenter Presenter { private get; set; }
+
+        public IEnumerable<SongSearchModel> Songs
+        {
+            get => (IEnumerable<SongSearchModel>)SearchResultGridView.DataSource;
+            set => SearchResultGridView.DataSource = value;
+        }
+
+        public bool SendScoreAutomatically
+        {
+            get => SendScoreAutomaticallyMenuItem.Checked;
+            set => SendScoreAutomaticallyMenuItem.Checked = value;
+        }
+
+        public bool AutoCloseDownload
+        {
+            get => autoCloseDownloadToolStripMenuItem.Checked;
+            set => autoCloseDownloadToolStripMenuItem.Checked = value;
+        }
+
+        public bool Overlay
+        {
+            get => overlayToolStripMenuItem.Checked;
+            set => overlayToolStripMenuItem.Checked = value;
         }
 
         public virtual void ShowAsPopup()
@@ -70,7 +72,6 @@ namespace RagnaCustoms.Views
                 senderGrid.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Aquamarine;
                 Presenter.DownloadAsync(song.Id);
             }
-
         }
 
         private void ExitMenuItem_Click(object sender, EventArgs e)
@@ -96,9 +97,10 @@ namespace RagnaCustoms.Views
 
         private void logScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            App.Views.LogsForm logsForm = new App.Views.LogsForm();
+            var logsForm = new LogsForm();
             logsForm.Show();
         }
+
         private void autoCloseDownloadToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             Presenter.AutoCloseDownload = autoCloseDownloadToolStripMenuItem.Checked;
@@ -106,39 +108,34 @@ namespace RagnaCustoms.Views
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            (new AboutForm()).ShowDialog();
+            new AboutForm().ShowDialog();
         }
 
         private void SendScoreAutomaticallyMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void checkAccessToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var device = Oculus.GetDevice();
             if (device != null)
-            {
-                MessageBox.Show(String.Format(Resources.Song_Form_CompatibleDeviceFound, device.Manufacturer, device.Description), "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+                MessageBox.Show(
+                    string.Format(Resources.Song_Form_CompatibleDeviceFound, device.Manufacturer, device.Description),
+                    "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
-            {
-                MessageBox.Show(Resources.Song_Form_NoCompatibleDeviceFound, "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
+                MessageBox.Show(Resources.Song_Form_NoCompatibleDeviceFound, "RagnaCustoms", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
         }
 
         private void syncSongsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var result = Oculus.SyncSongs();
             if (result == 0)
-            {
-                MessageBox.Show(Resources.Song_Form_SyncComplete, "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+                MessageBox.Show(Resources.Song_Form_SyncComplete, "RagnaCustoms", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             else if (result == 1)
-            {
-                MessageBox.Show(Resources.Song_Form_NoCompatibleDeviceFound, "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                MessageBox.Show(Resources.Song_Form_NoCompatibleDeviceFound, "RagnaCustoms", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
         }
 
         private void compareSongsVersionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -148,27 +145,26 @@ namespace RagnaCustoms.Views
 
         private void twitchBotToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            (new TwitchBotForm()).Show();
+            new TwitchBotForm().Show();
         }
 
         private void gotoOverlayUrlToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(Presenter.ApiKey))
             {
-                MessageBox.Show(Resources.Song_Form_NeedToSetYourApiKeyFirst,"RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Resources.Song_Form_NeedToSetYourApiKeyFirst, "RagnaCustoms", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
             else
             {
-                ProcessStartInfo sInfo = new ProcessStartInfo($"https://ragnacustoms.com/overlay/display/{Presenter.ApiKey}");
+                var sInfo = new ProcessStartInfo($"https://ragnacustoms.com/overlay/display/{Presenter.ApiKey}");
                 Process.Start(sInfo);
             }
-
         }
 
         private void overlayToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             Presenter.Overlay = overlayToolStripMenuItem.Checked;
-
         }
 
         private void configureApiKeyToolStripMenuItem_Click(object sender, EventArgs e)
@@ -181,8 +177,8 @@ namespace RagnaCustoms.Views
             Presenter.Lang = "en";
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(Presenter.Lang, true);
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
-            MessageBox.Show(this, "Please restart application to apply language", "Restart needed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
+            MessageBox.Show(this, "Please restart application to apply language", "Restart needed",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void frenchToolStripMenuItem_Click(object sender, EventArgs e)
@@ -190,8 +186,8 @@ namespace RagnaCustoms.Views
             Presenter.Lang = "fr";
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(Presenter.Lang, true);
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
-            MessageBox.Show(this, "Veuillez redemarrer l'application pour appliquer la nouvelle langue", "Redemarrage nécessaire", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
+            MessageBox.Show(this, "Veuillez redemarrer l'application pour appliquer la nouvelle langue",
+                "Redemarrage nécessaire", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void SearchResultGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
@@ -210,13 +206,11 @@ namespace RagnaCustoms.Views
         {
             var result = Oculus.SendScore();
             if (result == 0)
-            {
-                MessageBox.Show(Resources.Song_Form_SyncComplete, "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+                MessageBox.Show(Resources.Song_Form_SyncComplete, "RagnaCustoms", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             else if (result == 1)
-            {
-                MessageBox.Show(Resources.Song_Form_NoCompatibleDeviceFound, "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                MessageBox.Show(Resources.Song_Form_NoCompatibleDeviceFound, "RagnaCustoms", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)

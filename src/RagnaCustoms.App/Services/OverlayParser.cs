@@ -1,33 +1,31 @@
-﻿using Newtonsoft.Json;
-using RagnaCustoms.Models;
-using System;
-using System.Diagnostics;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using RagnaCustoms.Models;
 
 namespace RagnaCustoms.Services
 {
     public class OverlayParser
     {
-        const int WaitForNewContentMilliseconds = 1000;
-
-        public event Action<Session> OnOverlayNewGame;
-        public event Action<Session> OnOverlayStartGame;
-        public event Action<Session> OnOverlayEndGame;
-
-        protected virtual bool IsRunning { get; set; }
-        protected virtual string SongLogFilePath { get; }
-        protected virtual Task RunningTask { get; set; }
+        private const int WaitForNewContentMilliseconds = 1000;
 
         public OverlayParser(string songLogFilePath)
         {
             IsRunning = false;
             SongLogFilePath = songLogFilePath;
         }
+
+        protected virtual bool IsRunning { get; set; }
+        protected virtual string SongLogFilePath { get; }
+        protected virtual Task RunningTask { get; set; }
+
+        public event Action<Session> OnOverlayNewGame;
+        public event Action<Session> OnOverlayStartGame;
+        public event Action<Session> OnOverlayEndGame;
 
         public void StartAsync()
         {
@@ -57,13 +55,18 @@ namespace RagnaCustoms.Services
                         try
                         {
                             OnOverlayNewGame?.Invoke(session);
-                        }catch (Exception ex){}
+                        }
+                        catch (Exception ex)
+                        {
+                        }
 
-                        session.Song.Level = line.Substring(line.IndexOf(songLevelLineHint) + songLevelLineHint.Length).Trim(new[] { ' ', '.' });
+                        session.Song.Level = line.Substring(line.IndexOf(songLevelLineHint) + songLevelLineHint.Length)
+                            .Trim(' ', '.');
                     }
                     else if (line.Contains(songNameLineHint))
                     {
-                        var songOggPath = line.Substring(line.IndexOf(songNameLineHint) + songNameLineHint.Length).Trim(new[] { ' ', '.' });
+                        var songOggPath = line.Substring(line.IndexOf(songNameLineHint) + songNameLineHint.Length)
+                            .Trim(' ', '.');
 
                         var songDirectoryPath = Path.GetDirectoryName(songOggPath);
                         var songDirectory = new DirectoryInfo(songDirectoryPath);
@@ -75,12 +78,14 @@ namespace RagnaCustoms.Services
                         var concatenatedHashs = string.Concat(filesHashs);
 
                         session.Song.Hash = ComputeMd5(concatenatedHashs);
-                        var overlaySession = new SessionModel(hashInfo: session.Song.Hash, score:"0",level:session.Song.Level);
+                        var overlaySession = new SessionModel(session.Song.Hash, "0", session.Song.Level);
                         try
                         {
                             OnOverlayStartGame?.Invoke(session);
                         }
-                        catch (Exception ex) { }
+                        catch (Exception ex)
+                        {
+                        }
                     }
                     else if (line.Contains(songScoreLineHint))
                     {
@@ -88,8 +93,10 @@ namespace RagnaCustoms.Services
                         try
                         {
                             OnOverlayEndGame?.Invoke(session);
-                        }catch (Exception ex) { }
-
+                        }
+                        catch (Exception ex)
+                        {
+                        }
                     }
 
                     while (reader.EndOfStream)
@@ -109,7 +116,7 @@ namespace RagnaCustoms.Services
                 }
             });
         }
- 
+
         public virtual void Stop()
         {
             IsRunning = false;
