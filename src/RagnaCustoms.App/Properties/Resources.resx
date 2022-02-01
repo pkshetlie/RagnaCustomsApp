@@ -142,7 +142,7 @@
     <value>Remove your last request</value>
   </data>
   <data name="Command.Cancel.Action.Canceled" xml:space="preserve">
-    <value>Song Cancelled :</value>
+    <value>Song Cancelled</value>
   </data>
   <data name="Command.Cancel.Action.NoSongToCancel" xml:space="preserve">
     <value>No More song to remove</value>

@@ -32,21 +32,14 @@ namespace RagnaCustoms.App.Commandes
             OnMessageReceivedArgs e
         )
         {
-            for (var i = me.songRequests.Rows.Count - 2; 0 <= i; i--)
+            try
             {
-                if (me.songRequests.Rows[i].Cells["Viewer"].Value.ToString() == e.ChatMessage.Username)
-                {
-                    var sng = me.songRequests.Rows[i].Cells["Song"].Value.ToString();
-                    try
-                    {
-                        me.RemoveAtSongRequestInList(i);
-                        client.SendMessage(joinedChannel, $"{Resources.Command_Cancel_Action_Canceled} {sng} ");
-                    }
-                    catch (Exception)
-                    {
-                        client.SendMessage(joinedChannel, Resources.Command_Cancel_Action_NoSongToCancel);
-                    }
-                }
+                me.RemoveSongByRequester(e.ChatMessage.Username);
+                client.SendMessage(joinedChannel, $"{Resources.Command_Cancel_Action_Canceled}");
+            }
+            catch (Exception)
+            {
+                client.SendMessage(joinedChannel, Resources.Command_Cancel_Action_NoSongToCancel);
             }
             return true;
         }
