@@ -216,11 +216,6 @@ namespace RagnaCustoms.App.Views
         }
         
         
-        
-        
-        
-        
-        
         private List<Song> _songList = new List<Song>();
         private void AddSongRequestToList(Song song, string viewer) 
         {
@@ -228,8 +223,19 @@ namespace RagnaCustoms.App.Views
             {
                 EasyStreamRequest.CreateBackupDirectory();
             }
+            song.Requester = viewer;
             _songList.Add(song);
             UpdateFormRows();
+        }
+        
+        public void RemoveSongByRequester(string viewer)
+        {
+            var songs = _songList.FindAll(x => x.Requester == viewer);
+            if (songs.Count != 0)
+            {
+                songs.ForEach(x => _songList.Remove(x));
+                UpdateFormRows();
+            }
         }
         public void RemoveAtSongRequestInList(string hash) 
         {
@@ -261,10 +267,7 @@ namespace RagnaCustoms.App.Views
                 EasyStreamRequest.RestoreCustomSongDirectory();
             }
         }
-        
-        
-        
-        
+
         // set songRequest rows values to _songList values
         private void UpdateFormRows()
         {
@@ -279,11 +282,6 @@ namespace RagnaCustoms.App.Views
         }
         
         
-        
-        
-        
-        
-
         private Song GetSongInfo(string songId) 
         {
             try 
