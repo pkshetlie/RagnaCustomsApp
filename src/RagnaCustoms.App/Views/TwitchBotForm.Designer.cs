@@ -227,16 +227,6 @@ namespace RagnaCustoms.App.Views
             this.Checkbox_EasyStreamRequest.UseVisualStyleBackColor = true;
             this.Checkbox_EasyStreamRequest.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(110, 37);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(121, 23);
-            this.button1.TabIndex = 36;
-            this.button1.Text = "!rc shift";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // TwitchBotForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
