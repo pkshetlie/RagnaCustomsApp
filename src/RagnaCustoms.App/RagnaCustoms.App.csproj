@@ -76,7 +76,6 @@
     <Compile Include="Commandes\List\NextCommand.cs" />
     <Compile Include="Commandes\List\OpenQueue.cs" />
     <Compile Include="Commandes\List\QueueCommand.cs" />
-    <Compile Include="Commandes\List\ShiftCommand.cs" />
     <Compile Include="Commandes\List\VersionCommand.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Models\Result.cs" />
