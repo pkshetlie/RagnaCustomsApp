@@ -219,5 +219,11 @@ namespace RagnaCustoms.Views
                 MessageBox.Show(Resources.Song_Form_NoCompatibleDeviceFound, "RagnaCustoms", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var dir = DirProvider.getCustomDirectory().FullName;
+            Process.Start("explorer.exe", dir);
+        }
     }
 }
