@@ -116,6 +116,7 @@ namespace RagnaCustoms.Services
                             var tempDir = Path.GetDirectoryName(SongLogFilePath);
                             var tempSongFolder = tempDir + "\\" +songName;
                             var oculusSongFolder = questSongDirectoryPath + "\\" +  songName;
+                            if (!device.DirectoryExists(oculusSongFolder)) continue;
                             device.DownloadFolder(oculusSongFolder, tempSongFolder);
                             songDirectoryPath = tempSongFolder;
                         }

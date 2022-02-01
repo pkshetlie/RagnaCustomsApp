@@ -16,12 +16,16 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug</DefineConstants>
+    <SuppressIces>ICE91;ICE69;ICE38;ICE64</SuppressIces>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <SuppressIces>ICE91;ICE69;ICE38;ICE64</SuppressIces>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GeneratedApp.wxs" />
+    <Compile Include="GeneratedLauncher.wxs" />
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +63,13 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
   <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
     <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
+  </Target>
+  <Target Name="BeforeBuild">
+    <PropertyGroup>
+      <DefineConstants>SourcePathApp=..\RagnaCustoms.App\bin\$(Configuration);SourcePathLauncher=..\RagnaCustoms.Launcher\bin\$(Configuration)</DefineConstants>
+    </PropertyGroup>
+    <HeatDirectory DirectoryRefId="AppFolder" VerboseOutput="true" AutogenerateGuids="true" GenerateGuidsNow="true" SuppressRootDirectory="true" OutputFile="GeneratedApp.wxs" RunAsSeparateProcess="true" PreprocessorVariable="var.SourcePathApp" Directory="..\RagnaCustoms.App\bin\$(Configuration)" ComponentGroupName="RagnaCustomAppGroup" ToolPath="$(WixToolPath)" SuppressRegistry="true" />
+    <HeatDirectory DirectoryRefId="InstallFolder" VerboseOutput="true" AutogenerateGuids="true" GenerateGuidsNow="true" SuppressRootDirectory="true" OutputFile="GeneratedLauncher.wxs" RunAsSeparateProcess="true" PreprocessorVariable="var.SourcePathLauncher" Directory="..\RagnaCustoms.Launcher\bin\$(Configuration)" ComponentGroupName="RagnaCustomLauncherGroup" ToolPath="$(WixToolPath)" SuppressRegistry="true" />
   </Target>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.

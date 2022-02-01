@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="InstallFolder" />
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="RagnaCustomLauncherGroup">
+            <Component Id="cmpDD74D4C6C96521D9E3D06A64AE6137EE" Directory="InstallFolder" Guid="*">
+                <File Id="fil4F83D26EB474BC911EE5D964D86FD4F9" KeyPath="yes" Source="$(var.SourcePathLauncher)\Octokit.dll" />
+            </Component>
+            <Component Id="cmp2BBBE02DD3D75B8B8ECC2428A5798929" Directory="InstallFolder" Guid="*">
+                <File Id="fil6EBC5CA102EBC876F53A3C5AD13F429B" KeyPath="yes" Source="$(var.SourcePathLauncher)\RagnaCustoms.Launcher.exe" />
+            </Component>
+            <Component Id="cmp86122DE4FC66178A230C37B65656DDCC" Directory="InstallFolder" Guid="*">
+                <File Id="fil9E7ACD2C58D9622C5A045FBF90DFF0B0" KeyPath="yes" Source="$(var.SourcePathLauncher)\RagnaCustoms.Launcher.pdb" />
+            </Component>
+        </ComponentGroup>
+    </Fragment>
+</Wix>
