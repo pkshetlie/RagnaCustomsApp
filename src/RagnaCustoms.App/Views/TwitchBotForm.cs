@@ -129,28 +129,16 @@ namespace RagnaCustoms.App.Views
             "!rc","!rcs", "!rcr"
         };
 
-        private void AddRequest(string requestId, OnMessageReceivedArgs e)
+        private void StartDownload(string v) 
         {
-            if (!QueueIsOpen)
-            {
-                _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}Queue is closed");
-                return;
-            }
-
-            var s = GetSongInfo(requestId) ?? SearshSong(requestId); // search song by id, if not found, search by name
-            if (s != null)
-            {
-                _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}Request Info: {s.Name}, Mapped by : {s.Mapper}, asked by @{e.ChatMessage.Username}");
-                AddSongRequestToList(s, e.ChatMessage.Username);
-                StartDownload(s.Id.ToString());
-                //TwitchClient.SendMessage(joinedChannel, $"{prefixe}Ready: ");
-            }
-            else
-            {
-                _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}@{e.ChatMessage.Username} Song not found");
-            }
+            var songId = int.Parse(v);
+            var songProvider = new SongProvider();
+            var downloadingView = new DownloadingForm();
+            var downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
+            downloadingPresenter.Download(songId, true);
+            Application.Run(downloadingView);        
         }
-        
+
         private void OnMessageReceived(object sender, OnMessageReceivedArgs e)
         {
             if (!_twitchBotEnabled) { return; }
@@ -205,61 +193,96 @@ namespace RagnaCustoms.App.Views
                 }
             })).Start();
         }
-
-        private void StartDownload(string v) 
+        private void AddRequest(string requestId, OnMessageReceivedArgs e)
         {
-            var songId = int.Parse(v);
-            var songProvider = new SongProvider();
-            var downloadingView = new DownloadingForm();
-            var downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
-            downloadingPresenter.Download(songId, true);
-            Application.Run(downloadingView);        
-        }
+            if (!QueueIsOpen)
+            {
+                _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}Queue is closed");
+                return;
+            }
 
+            var s = GetSongInfo(requestId) ?? SearshSong(requestId); // search song by id, if not found, search by name
+            if (s != null)
+            {
+                _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}Request Info: {s.Name}, Mapped by : {s.Mapper}, asked by @{e.ChatMessage.Username}");
+                AddSongRequestToList(s, e.ChatMessage.Username);
+                StartDownload(s.Id.ToString());
+                //TwitchClient.SendMessage(joinedChannel, $"{prefixe}Ready: ");
+            }
+            else
+            {
+                _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}@{e.ChatMessage.Username} Song not found");
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+        private List<Song> _songList = new List<Song>();
         private void AddSongRequestToList(Song song, string viewer) 
         {
-            if (songRequests.Rows.Count <= 1 && _configuration.EasyStreamRequest)
+            if (_songList.Count == 0 && _configuration.EasyStreamRequest)
             {
                 EasyStreamRequest.CreateBackupDirectory();
             }
-            songRequests.Invoke(new MethodInvoker(delegate {
-                songRequests.Rows.Add(song.Name, song.Author, viewer, song.Id);
-            } ));
+            _songList.Add(song);
+            UpdateFormRows();
         }
-        public void RemoveAtSongRequestInList(int i) 
+        public void RemoveAtSongRequestInList(string hash) 
         {
-            if (songRequests.Rows.Count <= i+1) { return; }
+            var song = _songList.Find(s => s.Hash.Equals(hash));
+            if (song == null) { return; }
 
-            var element = songRequests.Rows[i];
-
-                if (_configuration.EasyStreamRequest)
-                {
-                    var songId = element.Cells["Id"].Value;
-                    var songFolder = DirProvider.getCustomDirectory()
-                        .GetDirectories()
-                        .FirstOrDefault(x =>
+            if (_configuration.EasyStreamRequest)
+            {
+                var songId = song.Id;
+                var songFolder = DirProvider.getCustomDirectory()
+                    .GetDirectories()
+                    .FirstOrDefault(x =>
+                    {
+                        return Enumerable.Any<FileInfo>(x.GetFiles(), z =>
                         {
-                            return Enumerable.Any<FileInfo>(x.GetFiles(), z =>
-                            {
-                                var content = z.OpenText();
-                                var toReturn = z.Name == ".id" && content.ReadToEnd() == songId.ToString();
-                                content.Close();
-                                return toReturn;
-                            });
+                            var content = z.OpenText();
+                            var toReturn = z.Name == ".id" && content.ReadToEnd() == songId.ToString();
+                            content.Close();
+                            return toReturn;
                         });
-                    EasyStreamRequest.MoveSongOnBackup(songFolder);
-                }
+                    });
+                EasyStreamRequest.MoveSongOnBackup(songFolder);
+            }
+            _songList.Remove(song);
+            UpdateFormRows();
 
-            songRequests.Invoke(new MethodInvoker(delegate {
-                songRequests.Rows.Remove(element);
-            } ));
-
-            if (songRequests.Rows.Count <= 1 && _configuration.EasyStreamRequest)
+            if (_songList.Count == 0 && _configuration.EasyStreamRequest)
             {
                 EasyStreamRequest.RestoreCustomSongDirectory();
             }
         }
-
+        
+        
+        
+        
+        // set songRequest rows values to _songList values
+        private void UpdateFormRows()
+        {
+            songRequests.Invoke(new MethodInvoker(delegate {
+                songRequests.Rows.Clear();
+                foreach (var song in _songList)
+                {
+                    songRequests.Rows.Add(song.Name, song.Author, song.Requester, song.Id);
+                }
+                songRequests.Refresh();
+            } ));
+        }
+        
+        
+        
+        
+        
+        
 
         private Song GetSongInfo(string songId) 
         {

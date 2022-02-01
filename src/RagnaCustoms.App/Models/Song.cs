@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using RagnaCustoms.App.Extensions;
 
@@ -32,7 +33,8 @@ namespace RagnaCustoms.Models
         public string Author { get; set; }
         public string Mapper { get; set; }
         public string Hash { get; set; }
-
+        public string Requester { get; set; } = null;
+        
         public override string ToString()
         {
             return $"{Name} {Level} by {Author}";
