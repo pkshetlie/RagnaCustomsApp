@@ -31,7 +31,7 @@ namespace RagnaCustoms.App
         private const string UploadOverlayUri = "https://ragnacustoms.com/api/overlay/";
 //#endif
 
-        private static readonly string RagnarockSongLogsFilePath = Path.Combine(
+        public static readonly string RagnarockSongLogsFilePath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "Ragnarock",
             "Saved",

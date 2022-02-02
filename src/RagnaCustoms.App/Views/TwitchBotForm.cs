@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using RagnaCustoms.App.Services;
 using RagnaCustoms.Models;
 using RagnaCustoms.Presenters;
 using RagnaCustoms.Services;
@@ -28,8 +32,7 @@ namespace RagnaCustoms.App.Views
 
         public Configuration _configuration;
         private JoinedChannel _joinedChannel;
-
-
+        
         private readonly List<Song> _songList = new();
         private bool _twitchBotEnabled;
 
@@ -39,6 +42,30 @@ namespace RagnaCustoms.App.Views
 
         public bool QueueIsOpen = true;
 
+        private FileChangeEvent watcher = new FileChangeEvent(Program.RagnarockSongLogsFilePath, "Ragnarock.log");
+
+        protected virtual string ComputeMd5(FileInfo file)
+        {
+            using var md5 = MD5.Create();
+            using var stream = file.OpenRead();
+
+            var hash = md5.ComputeHash(stream);
+            var hashStr = BitConverter.ToString(hash).Replace("-", string.Empty).ToLowerInvariant();
+
+            return hashStr;
+        }
+
+        protected virtual string ComputeMd5(string str)
+        {
+            using var md5 = MD5.Create();
+
+            var strBytes = Encoding.Default.GetBytes(str);
+            var hash = md5.ComputeHash(strBytes);
+            var hashStr = BitConverter.ToString(hash).Replace("-", string.Empty).ToLowerInvariant();
+
+            return hashStr;
+        }
+        
         public TwitchBotForm()
         {
             InitializeComponent();
@@ -49,7 +76,54 @@ namespace RagnaCustoms.App.Views
             autoStart.Checked = _configuration.TwitchBotAutoStart;
             Checkbox_EasyStreamRequest.Checked = _configuration.EasyStreamRequest;
             bot_enabled.Checked = _configuration.TwitchBotAutoStart;
+            
+            watcher.SetTwitchBotForm(this);
+            watcher.SetLambda(
+                (sender, eventArgs, fileWatcher) =>
+                {
+                    if (!File.Exists(eventArgs.FullPath)) return;
+                    var lines = File.ReadAllLines(eventArgs.FullPath);
+                    Thread.Sleep(2000);
+                    
+                    var songLevelLineHint = "LogTemp: Warning: Song level str";
+                    var songNameLineHint = "LogTemp: Loading song";
+                    var songScoreDetailLineHint = "LogTemp: Warning: Notes missed :";
+                    var songScoreLineHint = "raw distance =";
 
+                    var session = new Session();
+                    foreach (var line in lines)
+                    {
+                        if (line.Contains(songLevelLineHint))
+                        {
+                            session = new Session();
+                            session.Song.Level = line.Substring(line.IndexOf(songLevelLineHint) + songLevelLineHint.Length).Trim(' ', '.');
+                        }
+                        else if (line.Contains(songNameLineHint))
+                        {
+                            var songOggPath = line.Substring(line.IndexOf(songNameLineHint) + songNameLineHint.Length)
+                                .Trim(' ', '.');
+                            var songDirectoryPath = Path.GetDirectoryName(songOggPath);
+                            var songDirectory = new DirectoryInfo(songDirectoryPath);
+                            if (!songDirectory.Exists) continue;
+                            var songDatFiles = songDirectory.EnumerateFiles("*.dat");
+                            var filesHashs = songDatFiles.Select(ComputeMd5).OrderBy(hash => hash);
+                            var concatenatedHashs = string.Concat(filesHashs);
+                            session.Song.Hash = ComputeMd5(concatenatedHashs);
+                        }
+                        else if (line.Contains(songScoreLineHint))
+                        {
+                            var startIndex = line.IndexOf(songScoreLineHint) + songScoreLineHint.Length;
+                            var endIndex = line.IndexOf("and adjusted distance =");
+                            session.Score = line.Substring(startIndex, endIndex - startIndex).Trim(' ', '.'); 
+                            if (session.Song.Hash is null) continue; 
+                        }
+                    }
+                    if (session.Score is null) return;
+                    if (session.Song.Hash is null) return;
+                    if (_songList.All(song => song.Hash != session.Song.Hash)) return;
+                    Thread.Sleep(2000);
+                    RemoveAtSongRequestInList(session.Song.Hash);
+                });
             LoadCommands();
         }
 
@@ -93,12 +167,18 @@ namespace RagnaCustoms.App.Views
 
                 _twitchClient.Initialize(credentials, twitchChannel.Text);
                 _twitchClient.OnMessageReceived += OnMessageReceived;
+                _twitchClient.OnUserBanned += OnUserBanned;
 
                 _twitchClient.OnConnected += OnConnected;
                 _twitchClient.Connect();
             }
 
             _twitchBotEnabled = bot_enabled.Checked;
+        }
+
+        private void OnUserBanned(object sender, OnUserBannedArgs e)
+        {
+            RemoveSongByRequester(e.UserBan.Username);
         }
 
         private void OnConnected(object sender, OnConnectedArgs e)
