@@ -299,12 +299,32 @@ namespace RagnaCustoms.App.Views
             UpdateFormRows();
         }
 
+        public void removeSongEasyStream(int songId)
+        {
+            var songFolder = DirProvider.getCustomDirectory()
+                .GetDirectories()
+                .FirstOrDefault(x =>
+                {
+                    return x.GetFiles().Any(z =>
+                    {
+                        var content = z.OpenText();
+                        var toReturn = z.Name == ".id" && content.ReadToEnd() == songId.ToString();
+                        content.Close();
+                        return toReturn;
+                    });
+                });
+            EasyStreamRequest.MoveSongOnBackup(songFolder);
+        }
         public void RemoveSongByRequester(string viewer)
         {
             var songs = _songList.FindAll(x => x.Requester == viewer);
             if (songs.Count != 0)
             {
-                songs.ForEach(x => _songList.Remove(x));
+                songs.ForEach(x =>
+                {
+                    if (_configuration.EasyStreamRequest) removeSongEasyStream(x.Id);
+                    _songList.Remove(x);
+                });
                 UpdateFormRows();
             }
         }
@@ -313,25 +333,7 @@ namespace RagnaCustoms.App.Views
         {
             var song = _songList.Find(s => s.Hash.Equals(hash));
             if (song == null) return;
-
-            if (_configuration.EasyStreamRequest)
-            {
-                var songId = song.Id;
-                var songFolder = DirProvider.getCustomDirectory()
-                    .GetDirectories()
-                    .FirstOrDefault(x =>
-                    {
-                        return x.GetFiles().Any(z =>
-                        {
-                            var content = z.OpenText();
-                            var toReturn = z.Name == ".id" && content.ReadToEnd() == songId.ToString();
-                            content.Close();
-                            return toReturn;
-                        });
-                    });
-                EasyStreamRequest.MoveSongOnBackup(songFolder);
-            }
-
+            if (_configuration.EasyStreamRequest) removeSongEasyStream(song.Id);
             _songList.Remove(song);
             UpdateFormRows();
 
@@ -349,8 +351,7 @@ namespace RagnaCustoms.App.Views
                 songRequests.Refresh();
             }));
         }
-
-
+        
         private Song GetSongInfo(string songId)
         {
             try
