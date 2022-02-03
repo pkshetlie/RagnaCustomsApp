@@ -51,7 +51,6 @@ namespace RagnaCustoms.App.Views
             this.autoStart = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.Checkbox_EasyStreamRequest = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.songRequests)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -205,7 +204,6 @@ namespace RagnaCustoms.App.Views
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Controls.Add(this.Checkbox_EasyStreamRequest);
             this.groupBox3.Controls.Add(this.autoStart);
             this.groupBox3.Controls.Add(this.bot_enabled);
@@ -273,6 +271,5 @@ namespace RagnaCustoms.App.Views
         public CheckBox autoStart;
         private GroupBox groupBox3;
         public CheckBox Checkbox_EasyStreamRequest;
-        private Button button1;
     }
 }
