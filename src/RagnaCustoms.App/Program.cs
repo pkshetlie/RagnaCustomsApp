@@ -38,6 +38,12 @@ namespace RagnaCustoms.App
             "Logs",
             "Ragnarock.log"
         );
+        public static readonly string RagnarockSongLogsDirectoryPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "Ragnarock",
+            "Saved",
+            "Logs"
+        );
 
         /// <summary>
         ///     The main entry point for the application.
