@@ -41,9 +41,56 @@ namespace RagnaCustoms.App.Views
         public Dictionary<string, ICommandes> Commandes = new();
 
         public bool QueueIsOpen = true;
+        
+        private void OnFileChange(object sender, FileSystemEventArgs e)
+        {
 
-        private FileChangeEvent watcher = new FileChangeEvent(Program.RagnarockSongLogsFilePath, "Ragnarock.log");
+            var songLevelLineHint = "LogTemp: Warning: Song level str";
+            var songNameLineHint = "LogTemp: Loading song";
+            var songScoreDetailLineHint = "LogTemp: Warning: Notes missed :";
+            var songScoreLineHint = "raw distance =";
 
+            var session = new Session();
+            
+            if (!File.Exists(e.FullPath)) return;
+            using var stream = File.Open(e.FullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            using var reader = new StreamReader(stream);
+            List<string> lines = new List<string>();
+            while (!reader.EndOfStream) lines.Add(reader.ReadLine());
+            foreach (var line in lines)
+            {
+                if (line.Contains(songLevelLineHint))
+                {
+                    session = new Session();
+                    session.Song.Level = line.Substring(line.IndexOf(songLevelLineHint) + songLevelLineHint.Length).Trim(' ', '.');
+                }
+                else if (line.Contains(songNameLineHint))
+                {
+                    var songOggPath = line.Substring(line.IndexOf(songNameLineHint) + songNameLineHint.Length)
+                        .Trim(' ', '.');
+                    var songDirectoryPath = Path.GetDirectoryName(songOggPath);
+                    var songDirectory = new DirectoryInfo(songDirectoryPath);
+                    if (!songDirectory.Exists) continue;
+                    var songDatFiles = songDirectory.EnumerateFiles("*.dat");
+                    var filesHashs = songDatFiles.Select(ComputeMd5).OrderBy(hash => hash);
+                    var concatenatedHashs = string.Concat(filesHashs);
+                    session.Song.Hash = ComputeMd5(concatenatedHashs);
+                }
+                else if (line.Contains(songScoreLineHint))
+                {
+                    var startIndex = line.IndexOf(songScoreLineHint) + songScoreLineHint.Length;
+                    var endIndex = line.IndexOf("and adjusted distance =");
+                    session.Score = line.Substring(startIndex, endIndex - startIndex).Trim(' ', '.'); 
+                    if (session.Song.Hash is null) continue; 
+                }
+            }
+            if (session.Score is null) return;
+            if (session.Song.Hash is null) return;
+            if (_songList.All(song => song.Hash != session.Song.Hash)) return;
+            Thread.Sleep(2000);
+            RemoveAtSongRequestInList(session.Song.Hash);
+        }
+        
         protected virtual string ComputeMd5(FileInfo file)
         {
             using var md5 = MD5.Create();
@@ -54,7 +101,6 @@ namespace RagnaCustoms.App.Views
 
             return hashStr;
         }
-
         protected virtual string ComputeMd5(string str)
         {
             using var md5 = MD5.Create();
@@ -76,54 +122,10 @@ namespace RagnaCustoms.App.Views
             autoStart.Checked = _configuration.TwitchBotAutoStart;
             Checkbox_EasyStreamRequest.Checked = _configuration.EasyStreamRequest;
             bot_enabled.Checked = _configuration.TwitchBotAutoStart;
-            
-            watcher.SetTwitchBotForm(this);
-            watcher.SetLambda(
-                (sender, eventArgs, fileWatcher) =>
-                {
-                    if (!File.Exists(eventArgs.FullPath)) return;
-                    var lines = File.ReadAllLines(eventArgs.FullPath);
-                    Thread.Sleep(2000);
-                    
-                    var songLevelLineHint = "LogTemp: Warning: Song level str";
-                    var songNameLineHint = "LogTemp: Loading song";
-                    var songScoreDetailLineHint = "LogTemp: Warning: Notes missed :";
-                    var songScoreLineHint = "raw distance =";
 
-                    var session = new Session();
-                    foreach (var line in lines)
-                    {
-                        if (line.Contains(songLevelLineHint))
-                        {
-                            session = new Session();
-                            session.Song.Level = line.Substring(line.IndexOf(songLevelLineHint) + songLevelLineHint.Length).Trim(' ', '.');
-                        }
-                        else if (line.Contains(songNameLineHint))
-                        {
-                            var songOggPath = line.Substring(line.IndexOf(songNameLineHint) + songNameLineHint.Length)
-                                .Trim(' ', '.');
-                            var songDirectoryPath = Path.GetDirectoryName(songOggPath);
-                            var songDirectory = new DirectoryInfo(songDirectoryPath);
-                            if (!songDirectory.Exists) continue;
-                            var songDatFiles = songDirectory.EnumerateFiles("*.dat");
-                            var filesHashs = songDatFiles.Select(ComputeMd5).OrderBy(hash => hash);
-                            var concatenatedHashs = string.Concat(filesHashs);
-                            session.Song.Hash = ComputeMd5(concatenatedHashs);
-                        }
-                        else if (line.Contains(songScoreLineHint))
-                        {
-                            var startIndex = line.IndexOf(songScoreLineHint) + songScoreLineHint.Length;
-                            var endIndex = line.IndexOf("and adjusted distance =");
-                            session.Score = line.Substring(startIndex, endIndex - startIndex).Trim(' ', '.'); 
-                            if (session.Song.Hash is null) continue; 
-                        }
-                    }
-                    if (session.Score is null) return;
-                    if (session.Song.Hash is null) return;
-                    if (_songList.All(song => song.Hash != session.Song.Hash)) return;
-                    Thread.Sleep(2000);
-                    RemoveAtSongRequestInList(session.Song.Hash);
-                });
+            new FileChangeEvent(Program.RagnarockSongLogsDirectoryPath, "Ragnarock.log").SetLambda(OnFileChange);
+            
+            
             LoadCommands();
         }
 
