@@ -41,6 +41,7 @@ namespace RagnaCustoms.App.Views
         public Dictionary<string, ICommandes> Commandes = new();
 
         public bool QueueIsOpen = true;
+        private string _lastPlayedHash = string.Empty;
         
         private void OnFileChange(object sender, FileSystemEventArgs e)
         {
@@ -75,6 +76,7 @@ namespace RagnaCustoms.App.Views
                     var filesHashs = songDatFiles.Select(ComputeMd5).OrderBy(hash => hash);
                     var concatenatedHashs = string.Concat(filesHashs);
                     session.Song.Hash = ComputeMd5(concatenatedHashs);
+                    _lastPlayedHash = session.Song.Hash;
                 }
                 else if (line.Contains(songScoreLineHint))
                 {
@@ -329,6 +331,10 @@ namespace RagnaCustoms.App.Views
             }
         }
 
+        public void RemoveLastPlayerSong()
+        {
+            RemoveAtSongRequestInList(_lastPlayedHash);
+        }
         public void RemoveAtSongRequestInList(string hash)
         {
             var song = _songList.Find(s => s.Hash.Equals(hash));
