@@ -1,13 +1,25 @@
-﻿using RagnaCustoms.Models;
+﻿using System.Threading.Tasks;
+using RagnaCustoms.Models;
 using RagnaCustoms.Services;
 using RagnaCustoms.Views;
-using System;
-using System.Threading.Tasks;
 
 namespace RagnaCustoms.Presenters
 {
     public class SongPresenter
     {
+        public SongPresenter(Configuration configuration, ISongView view, IDownloadingPresenter downloadingPresenter,
+            ISongProvider songProvider)
+        {
+            Configuration = configuration;
+            View = view;
+            View.Presenter = this;
+            View.SendScoreAutomatically = SendScoreAutomatically;
+            View.AutoCloseDownload = AutoCloseDownload;
+            View.Overlay = Overlay;
+            DownloadingPresenter = downloadingPresenter;
+            SongProvider = songProvider;
+        }
+
         protected virtual Configuration Configuration { get; }
         protected virtual ISongView View { get; }
         protected virtual IDownloadingPresenter DownloadingPresenter { get; }
@@ -24,12 +36,13 @@ namespace RagnaCustoms.Presenters
             get => Configuration.SendScoreAutomatically;
             set => Configuration.SendScoreAutomatically = value;
         }
+
         public virtual bool Overlay
         {
             get => Configuration.Overlay;
             set => Configuration.Overlay = value;
         }
-            
+
 
         public virtual bool AutoCloseDownload
         {
@@ -41,24 +54,12 @@ namespace RagnaCustoms.Presenters
         {
             get => Configuration.EasyStreamRequest;
             set => Configuration.EasyStreamRequest = value;
-        }            
+        }
 
         public string Lang
         {
             get => Configuration.Lang;
             set => Configuration.Lang = value;
-        }
-
-        public SongPresenter(Configuration configuration, ISongView view, IDownloadingPresenter downloadingPresenter, ISongProvider songProvider)
-        {
-            Configuration = configuration;
-            View = view;
-            View.Presenter = this;
-            View.SendScoreAutomatically = SendScoreAutomatically;
-            View.AutoCloseDownload = AutoCloseDownload;
-            View.Overlay = Overlay;
-            DownloadingPresenter = downloadingPresenter;
-            SongProvider = songProvider;
         }
 
         public void SearchLocal(string term)
@@ -80,6 +81,7 @@ namespace RagnaCustoms.Presenters
         {
             Configuration.SendScoreAutomatically = true;
         }
+
         public virtual void DisableSendScoreAutomatically()
         {
             Configuration.SendScoreAutomatically = true;
@@ -89,6 +91,7 @@ namespace RagnaCustoms.Presenters
         {
             return Configuration.ApiKey;
         }
+
         public virtual void SetApiKey(string apiKey)
         {
             Configuration.ApiKey = apiKey;

@@ -51,7 +51,6 @@ namespace RagnaCustoms.App.Views
             this.autoStart = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.Checkbox_EasyStreamRequest = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.songRequests)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -205,7 +204,6 @@ namespace RagnaCustoms.App.Views
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Controls.Add(this.Checkbox_EasyStreamRequest);
             this.groupBox3.Controls.Add(this.autoStart);
             this.groupBox3.Controls.Add(this.bot_enabled);
@@ -226,16 +224,6 @@ namespace RagnaCustoms.App.Views
             this.Checkbox_EasyStreamRequest.Text = "Easy stream request";
             this.Checkbox_EasyStreamRequest.UseVisualStyleBackColor = true;
             this.Checkbox_EasyStreamRequest.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(110, 37);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(121, 23);
-            this.button1.TabIndex = 36;
-            this.button1.Text = "!rc shift";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // TwitchBotForm
             // 
@@ -283,6 +271,5 @@ namespace RagnaCustoms.App.Views
         public CheckBox autoStart;
         private GroupBox groupBox3;
         public CheckBox Checkbox_EasyStreamRequest;
-        private Button button1;
     }
 }

@@ -42,7 +42,7 @@ namespace RagnaCustoms.App.Commandes
                     client.SendMessage(joinedChannel, "No More song to remove");
                     return true;
                 }
-                me.RemoveAtSongRequestInList(0);
+                me.RemoveLastPlayerSong();
                 client.SendMessage(joinedChannel, "Song removed");
                 var sog = me.songRequests?.Rows[0]?.Cells["Song"]?.Value?.ToString() ?? null;
                 client.SendMessage(joinedChannel, sog != null ? $"Next song : {sog} " : "End of the queue");

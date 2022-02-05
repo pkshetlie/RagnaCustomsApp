@@ -2,6 +2,11 @@
 {
     public class Session
     {
+        public Session()
+        {
+            Song = new Song();
+        }
+
         public Song Song { get; set; }
         public string Score { get; set; }
         public int NotesMissed { get; set; }
@@ -12,11 +17,6 @@
         public string HitSpeed { get; set; }
         public string Percentage2 { get; set; }
         public int Combos { get; set; }
-
-        public Session()
-        {
-            Song = new Song();
-        }
 
         public override string ToString()
         {

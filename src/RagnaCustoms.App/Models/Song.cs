@@ -4,11 +4,10 @@ using RagnaCustoms.App.Extensions;
 
 namespace RagnaCustoms.Models
 {
-    
     public class SearshResult
     {
         public List<Song> Results { get; set; } // list of returned songs
-        
+
         public int Count { get; set; } // number of returned songs
 
         public Song BestResultByName(string search)
@@ -17,13 +16,13 @@ namespace RagnaCustoms.Models
             // return the best match
             return Results.OrderBy(x => search.ToLower().LevenshteinDistance(x.Name.ToLower())).FirstOrDefault();
         }
+
         public Song FirstResultByName(string search)
         {
             return Results.Find(e => e.Name.ToLower().StartsWith(search.ToLower()));
         }
-        
     }
-    
+
     public class Song
     {
         public int Id { get; set; }
@@ -32,13 +31,14 @@ namespace RagnaCustoms.Models
         public string Author { get; set; }
         public string Mapper { get; set; }
         public string Hash { get; set; }
+        public string Requester { get; set; } = null;
 
         public override string ToString()
         {
             return $"{Name} {Level} by {Author}";
         }
     }
-    
+
     public class SongSearchModel
     {
         public int Id { get; set; }
