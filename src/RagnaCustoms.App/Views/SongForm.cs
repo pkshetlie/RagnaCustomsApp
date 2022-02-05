@@ -7,6 +7,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using RagnaCustoms.App.Extensions;
 using RagnaCustoms.App.Properties;
 using RagnaCustoms.App.Views;
 using RagnaCustoms.Models;
@@ -65,13 +66,46 @@ namespace RagnaCustoms.Views
 
         private void SearchResultGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            var senderGrid = (DataGridView)sender;
+            var senderGrid = (DataGridView)sender;         
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
                 var song = (SongSearchModel)senderGrid.Rows[e.RowIndex].DataBoundItem;
-                senderGrid.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Aquamarine;
-                Presenter.DownloadAsync(song.Id);
+
+                if (senderGrid.Columns[e.ColumnIndex].DataPropertyName == "Download")
+                {
+                    senderGrid.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Aquamarine;
+                    Presenter.DownloadAsync(song.Id);
+                }
+                else if (senderGrid.Columns[e.ColumnIndex].DataPropertyName == "Delete")
+                {
+                    try
+                    {
+                        var songDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath, $"{song.Name.Slug()}{song.Mapper.Slug()}");
+                        Directory.Delete(songDirectoryPath, true);
+                        //var songs = new List<SongSearchModel>();                        
+                        //for(var i = 0; i<senderGrid.Rows.Count ; i++)
+                        //{
+                        //    var thisSong = (SongSearchModel)senderGrid.Rows[i].DataBoundItem;
+                        //    if (song.Id != thisSong.Id)
+                        //    {
+                        //        songs.Add(song);
+                        //    }
+                        //}
+                        //senderGrid.Rows.Clear();
+                        //senderGrid.Rows.Add(songs);
+                        
+                        senderGrid.Rows.Remove(senderGrid.Rows[e.RowIndex]);
+
+
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show("We can't delete this one for you please go to the customs songs directory and delete it manually");
+                    }
+                }
+
             }
+
         }
 
         private void ExitMenuItem_Click(object sender, EventArgs e)

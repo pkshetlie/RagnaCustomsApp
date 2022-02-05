@@ -44,6 +44,23 @@ namespace RagnaCustoms.Models
             return null;
         }
 
+        public async Task<List<SongSearchModel>> CheckUpdateAsync()
+        {
+            using var client = new HttpClient();
+
+            var uri = new Uri($"https://ragnacustoms.com/api/song/check-updates");
+            var result = await client.GetAsync(uri);
+            if (result.IsSuccessStatusCode)
+            {
+                var content = await result.Content.ReadAsStringAsync();
+                var searchResult = JsonConvert.DeserializeObject<List<SongSearchModel>>(content);
+
+                return searchResult;
+            }
+
+            return new List<SongSearchModel>();
+        }
+
         public async Task<IEnumerable<SongSearchModel>> SearchOnlineAsync(string term)
         {
             using var client = new HttpClient();
@@ -63,23 +80,31 @@ namespace RagnaCustoms.Models
 
         public async Task<IEnumerable<SongSearchModel>> CompareSongsWithOnlineAsync()
         {
-            var songs = new List<SongSearchModel>();
-            foreach (var songpath in Directory.GetDirectories(DirProvider.RagnarockSongDirectoryPath))
+            var songs = new BindingList<SongSearchModel>();
+            try
             {
-                var idFile = Path.Combine(songpath, ".id");
-                var hashFile = Path.Combine(songpath, ".hash");
-                try
+                var songsInfo = await CheckUpdateAsync();
+
+
+                foreach (var songpath in Directory.GetDirectories(DirProvider.RagnarockSongDirectoryPath))
                 {
+                    var idFile = Path.Combine(songpath, ".id");
                     if (File.Exists(idFile))
                     {
-                        var songInfo = await SearchOnlineAsync(int.Parse(File.ReadAllText(idFile)));
-                        if (songInfo.Hash == File.ReadAllText(hashFile)) songInfo.UpToDate = true;
-                        songs.Add(songInfo);
+                        var hashFile = Path.Combine(songpath, ".hash");
+                        var songInfo = songsInfo.FirstOrDefault(x => x.Id == int.Parse(File.ReadAllText(idFile)));
+                        if (songInfo != null)
+                        {
+                            if (songInfo.Hash == File.ReadAllText(hashFile)) songInfo.UpToDate = true;
+                            songs.Add(songInfo);
+                        }
                     }
                 }
-                catch (Exception ex)
-                {
-                }
+
+            }
+            catch (Exception ex)
+            {
+
             }
 
             return songs;
@@ -89,8 +114,13 @@ namespace RagnaCustoms.Models
             Action<bool> downloadCompleted, Action<string> downloadTitle, bool autoClose = false)
         {
             using var client = new WebClient();
-
+            var configuration = new Configuration();
             var uri = new Uri($"https://ragnacustoms.com/songs/download/{songId}");
+
+            if (!string.IsNullOrWhiteSpace(configuration.ApiKey))
+            {
+                uri = new Uri($"https://ragnacustoms.com/songs/download/{songId}/{configuration.ApiKey}");
+            }
 
             var tempDirectoryPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             var tempDirectory = Directory.CreateDirectory(tempDirectoryPath);

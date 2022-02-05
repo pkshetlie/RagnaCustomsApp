@@ -446,7 +446,11 @@ namespace RagnaCustoms.App.Views
         private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
         {
             _configuration.EasyStreamRequest = Checkbox_EasyStreamRequest.Checked;
-            if (_configuration.EasyStreamRequest) EasyStreamRequest.EnableEasyStreamRequest(_configuration);
+            if (_configuration.EasyStreamRequest)
+            {
+                EasyStreamRequest.EnableEasyStreamRequest(_configuration);
+                var customBkpDirectory = new DirProvider().RagnarockSongBkpDirectory; //on force la creation du dossier.
+            }
             else EasyStreamRequest.DisableEasyStreamRequest(_configuration);
         }
 
