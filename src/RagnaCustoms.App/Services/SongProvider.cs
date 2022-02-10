@@ -135,10 +135,10 @@ namespace RagnaCustoms.Models
 
             downloadTitle?.Invoke($"{songInfo.Name} by {songInfo.Mapper}");
             var songDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath,
-                $"{songInfo.Name.Slug()}{songInfo.Mapper.Slug()}");
+                $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
 
             var songBackupDirectoryPath = Path.Combine(DirProvider.RagnarockBackupSongDirectoryPath,
-                $"{songInfo.Name.Slug()}{songInfo.Mapper.Slug()}");
+                $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
 
             if (Directory.Exists(Path.Combine(songBackupDirectoryPath)))
             {
@@ -178,7 +178,7 @@ namespace RagnaCustoms.Models
 
                 var songDirectory = tempDirectory.EnumerateDirectories().First();
                 var ragnarockSongDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath,
-                    $"{songDirectory.Name}{songInfo.Mapper.Slug()}");
+                    $"{songDirectory.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
 
                 if (Directory.Exists(ragnarockSongDirectoryPath))
                     Directory.Delete(ragnarockSongDirectoryPath, true);

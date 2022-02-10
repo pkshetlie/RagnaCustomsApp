@@ -80,7 +80,7 @@ namespace RagnaCustoms.Views
                 {
                     try
                     {
-                        var songDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath, $"{song.Name.Slug()}{song.Mapper.Slug()}");
+                        var songDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath, $"{song.Name.Slug()}{song.Author.Slug()}{song.Mapper.Slug()}");
                         Directory.Delete(songDirectoryPath, true);
                         //var songs = new List<SongSearchModel>();                        
                         //for(var i = 0; i<senderGrid.Rows.Count ; i++)
