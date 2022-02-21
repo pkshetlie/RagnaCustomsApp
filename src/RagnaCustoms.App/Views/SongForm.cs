@@ -7,6 +7,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using RagnaCustoms.App;
 using RagnaCustoms.App.Extensions;
 using RagnaCustoms.App.Properties;
 using RagnaCustoms.App.Views;

@@ -32,10 +32,11 @@ namespace RagnaCustoms.Models
         public string Mapper { get; set; }
         public string Hash { get; set; }
         public string Requester { get; set; } = null;
+        public string Folder { get; set; }
 
         public override string ToString()
         {
-            return $"{Name} {Level} by {Author}";
+            return $"{Name} {Level} by {Author} at {Folder}";
         }
     }
 

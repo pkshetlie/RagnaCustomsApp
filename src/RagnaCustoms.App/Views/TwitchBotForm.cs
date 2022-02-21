@@ -43,6 +43,7 @@ namespace RagnaCustoms.App.Views
         public bool QueueIsOpen = true;
         private string _lastPlayedHash = string.Empty;
         
+      
         private void OnFileChange(object sender, FileSystemEventArgs e)
         {
 
@@ -55,6 +56,7 @@ namespace RagnaCustoms.App.Views
             
             if (!File.Exists(e.FullPath)) return;
             using var stream = File.Open(e.FullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            stream.Position = 0;
             using var reader = new StreamReader(stream);
             List<string> lines = new List<string>();
             while (!reader.EndOfStream) lines.Add(reader.ReadLine());
@@ -125,16 +127,37 @@ namespace RagnaCustoms.App.Views
             Checkbox_EasyStreamRequest.Checked = _configuration.EasyStreamRequest;
             bot_enabled.Checked = _configuration.TwitchBotAutoStart;
 
-            new FileChangeEvent(Program.RagnarockSongLogsDirectoryPath, "Ragnarock.log").SetLambda(OnFileChange);
-            
-            
+            Program.LogFileParser.OnSongLoad += OnSongLoad;
+            Program.LogFileParser.OnLevelLoad += OnLevelLoad;
+            Program.LogFileParser.OnSongEnds += OnSongEnds;
+            //new FileChangeEvent(Program.RagnarockSongLogsDirectoryPath, "Ragnarock.log").SetLambda(OnFileChange);
+
+
             LoadCommands();
+        }
+
+        private void OnSongEnds(string line,Session session)
+        {
+            _lastPlayedHash = session.Song.Hash;
+        }
+
+        private void OnLevelLoad(string line, Session session)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void OnSongLoad(string line, Session session)
+        {
+            if(String.IsNullOrEmpty(_lastPlayedHash))
+            {
+                RemoveLastPlayerSong();
+            }
+
         }
 
         public Process RagnarockApp { get; set; }
 
         public string Prefixe { get; set; }
-
         private void linkLabel2_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var sInfo = new ProcessStartInfo("https://twitchapps.com/tmi/");
