@@ -13,31 +13,31 @@ namespace RagnaCustoms.App.Services
     class LogFileParser
     {
 
-        public event Action<string, Session> OnSongLoad;
-        public event Action<string, Session> OnLevelLoad;
-        public event Action<string, Session> OnSongEnds;
-        public event Action<string, Session> OnScore;
-        public event Action<string, Session> OnScoreDetail;
+        public event Action<Session> OnSongLoad;
+        public event Action<Session> OnLevelLoad;
+        public event Action<Session> OnSongEnds;
+        public event Action<Session> OnScore;
+        public event Action<Session> OnScoreDetail;
 
-        private int pointer = 0;
         private long lastLength;
-        private string lastPlayedHash;
 
         public Song Song { get; private set; }
         public Session Session { get; private set; }
         public long Position { get; private set; }
 
-
-
-        public LogFileParser()
-        {
+        public void ResetSession(){
             Song = new Song();
             Session = new Session();
             Session.Song = Song;
+        }
+
+        public LogFileParser()
+        {
+            ResetSession();
 
             new Thread(() =>
             {
-                using var watcher = new FileSystemWatcher(Program.RagnarockSongLogsDirectoryPath,"Ragnarock.log");
+                using var watcher = new FileSystemWatcher(Program.RagnarockSongLogsDirectoryPath, "Ragnarock.log");
                 watcher.NotifyFilter = NotifyFilters.LastWrite;
                 watcher.Changed += new FileSystemEventHandler(OnChange);
                 watcher.Error += new ErrorEventHandler(OnError);
@@ -50,9 +50,9 @@ namespace RagnaCustoms.App.Services
         }
 
         private void OnChange(object sender, FileSystemEventArgs e)
-        {        
-            ReadFile();          
-            OnSongLoad?.Invoke("",Session);
+        {
+            ReadFile();
+            OnSongLoad?.Invoke(Session);
 
             if (e.ChangeType != WatcherChangeTypes.Changed) return;
             //new Thread(() => { _onChangeEvent(sender, e); }).Start();
@@ -78,17 +78,70 @@ namespace RagnaCustoms.App.Services
 
             using var reader = new StreamReader(stream);
             List<string> lines = new List<string>();
-            while (!reader.EndOfStream) lines.Add(reader.ReadLine());
+            while (!reader.EndOfStream)
+            {
+                string line = reader.ReadLine();
+                if (
+                    line.Contains(songLevelLineHint) ||
+                    line.Contains(songNameLineHint) ||
+                    line.Contains(songScoreDetailLineHint) ||
+                    line.Contains(songScoreLineHint)
+                    )
+                {
+                    lines.Add(line);
+                }
+            }
+
             foreach (var line in lines)
             {
                 if (line.Contains(songLevelLineHint))
                 {
+                    ResetSession();
                     Song.Level = line.Substring(line.IndexOf(songLevelLineHint) + songLevelLineHint.Length).Trim(' ', '.');
-                    OnLevelLoad?.Invoke(line, Session);
+                    OnLevelLoad?.Invoke(Session);
                 }
                 else if (line.Contains(songScoreDetailLineHint))
                 {
-                    OnScoreDetail?.Invoke(line,Session);
+                    var startIndex = line.IndexOf(songScoreDetailLineHint) + songScoreDetailLineHint.Length;
+                    var endIndex = line.IndexOf(" / Notes hit  : ");
+                    Session.NotesMissed =
+                        int.Parse(line.Substring(startIndex, endIndex - startIndex).Trim(' ', '.'));
+
+                    startIndex = line.IndexOf(" / Notes hit  : ") + " / Notes hit  : ".Length;
+                    endIndex = line.IndexOf(" / Notes not processed : ");
+                    Session.NotesHit = int.Parse(line.Substring(startIndex, endIndex - startIndex).Trim(' ', '.'));
+
+                    startIndex = line.IndexOf(" / Notes not processed : ") + " / Notes not processed : ".Length;
+                    endIndex = line.IndexOf(" / hit accuracy : ");
+                    Session.NotesNotProcessed =
+                        int.Parse(line.Substring(startIndex, endIndex - startIndex).Trim(' ', '.'));
+
+                    startIndex = line.IndexOf(" / hit accuracy : ") + " / hit accuracy : ".Length;
+                    endIndex = line.IndexOf(" / percentage : ");
+                    Session.HitAccuracy = line.Substring(startIndex, endIndex - startIndex).Trim(' ', '.');
+
+                    startIndex = line.IndexOf(" / hit accuracy : ") + " / hit accuracy : ".Length;
+                    endIndex = startIndex + 9;
+                    Session.HitAccuracy = line.Substring(startIndex, endIndex - startIndex).Trim(' ', '.');
+
+                    startIndex = endIndex + 14;
+                    endIndex = startIndex + 9;
+                    Session.Percentage = line.Substring(startIndex, endIndex - startIndex).Trim(' ', '.');
+
+                    startIndex = endIndex + 14;
+                    endIndex = startIndex + 12;
+                    Session.HitSpeed = line.Substring(startIndex, endIndex - startIndex).Trim(' ', '.');
+
+                    startIndex = endIndex + 15;
+                    endIndex = startIndex + 8;
+                    Session.Percentage2 = line.Substring(startIndex, endIndex - startIndex).Trim(' ', '.');
+
+                    startIndex = endIndex + 12;
+                    endIndex = line.Length;
+                    var content = line.Substring(startIndex, endIndex - startIndex).Trim(' ', '.');
+                    Session.Combos = int.Parse(content);
+
+                    OnScoreDetail?.Invoke(Session);
                 }
                 else if (line.Contains(songNameLineHint))
                 {
@@ -117,8 +170,10 @@ namespace RagnaCustoms.App.Services
                         .OrderBy(hash => hash);
                     var concatenatedHashs = string.Concat(filesHashs);
 
-                    Session.Song.Hash = ComputeMd5(concatenatedHashs);
-                    
+                    Song.Hash = ComputeMd5(concatenatedHashs);
+                    Song.Folder = songOggPath;
+                    OnSongLoad?.Invoke(Session);
+
                 }
                 else if (line.Contains(songScoreLineHint))
                 {
@@ -128,24 +183,10 @@ namespace RagnaCustoms.App.Services
                     if (String.IsNullOrEmpty(Session.Score))
                     {
                         Session.Score = line.Substring(startIndex, endIndex - startIndex).Trim(' ', '.');
-                        OnScore?.Invoke(line, Session);
-                        OnSongEnds?.Invoke(line, Session);
+                        OnScore?.Invoke(Session);
+                        OnSongEnds?.Invoke(Session);
                         Thread.Sleep(1000);
                     }
-                }
-                else if (line.Contains(songNameLineHint))
-                {
-                    var songOggPath = line.Substring(line.IndexOf(songNameLineHint) + songNameLineHint.Length)
-                        .Trim(' ', '.');
-                    var songDirectoryPath = Path.GetDirectoryName(songOggPath);
-                    var songDirectory = new DirectoryInfo(songDirectoryPath);
-                    if (!songDirectory.Exists) continue;
-                    var songDatFiles = songDirectory.EnumerateFiles("*.dat");
-                    var filesHashs = songDatFiles.Select(ComputeMd5).OrderBy(hash => hash);
-                    var concatenatedHashs = string.Concat(filesHashs);
-                    Song.Hash = ComputeMd5(concatenatedHashs);
-                    Song.Folder = songOggPath;
-                    OnSongLoad?.Invoke(line, Session);
                 }               
             }
             Position = stream.Position;

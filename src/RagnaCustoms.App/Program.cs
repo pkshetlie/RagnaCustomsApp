@@ -118,7 +118,7 @@ namespace RagnaCustoms.App
                     var sessionUploader = new SessionUploader(configuration, UploadSessionUri);
                     //var songResultParser = new SessionParser(RagnarockSongLogsFilePath);
 
-                    LogFileParser.OnScore += async (line,session) =>
+                    LogFileParser.OnScore += async (session) =>
                         await sessionUploader.UploadAsync(configuration.ApiKey, session);
                     //songResultParser.StartAsync();
 
@@ -128,9 +128,9 @@ namespace RagnaCustoms.App
                     var overlayUploader = new OverlayUploader(configuration, UploadOverlayUri, CleanOverlayUri);
                     //var songOverlayParser = new OverlayParser(RagnarockSongLogsFilePath);
 
-                    LogFileParser.OnLevelLoad += async (line, session) =>
+                    LogFileParser.OnLevelLoad += async (session) =>
                         await overlayUploader.UploadAsync(configuration.ApiKey, session);
-                    LogFileParser.OnSongEnds += async (line, session) =>
+                    LogFileParser.OnSongEnds += async (session) =>
                        await overlayUploader.CleanAsync(configuration.ApiKey, session);
 
                     LogFileParser.FirstInit();

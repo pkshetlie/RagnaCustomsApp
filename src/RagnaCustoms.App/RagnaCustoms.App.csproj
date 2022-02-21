@@ -94,14 +94,12 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Services\EasyStreamRequest.cs" />
-    <Compile Include="Services\FileChangeEvent.cs" />
     <Compile Include="Services\LogFileParser.cs" />
     <Compile Include="Services\Oculus.cs" />
     <Compile Include="Services\Configuration.cs" />
     <Compile Include="Services\ISongProvider.cs" />
-    <Compile Include="Services\OverlayParser.cs" />
-    <Compile Include="Services\SessionParser.cs" />
     <Compile Include="Services\OverlayUploader.cs" />
+    <Compile Include="Services\SessionParser.cs" />
     <Compile Include="Services\SessionUploader.cs" />
     <Compile Include="Services\DirProvider.cs" />
     <Compile Include="Services\SongProvider.cs" />

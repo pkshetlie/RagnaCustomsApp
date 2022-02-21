@@ -136,17 +136,17 @@ namespace RagnaCustoms.App.Views
             LoadCommands();
         }
 
-        private void OnSongEnds(string line,Session session)
+        private void OnSongEnds(Session session)
         {
             _lastPlayedHash = session.Song.Hash;
         }
 
-        private void OnLevelLoad(string line, Session session)
+        private void OnLevelLoad(Session session)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        private void OnSongLoad(string line, Session session)
+        private void OnSongLoad(Session session)
         {
             if(String.IsNullOrEmpty(_lastPlayedHash))
             {
