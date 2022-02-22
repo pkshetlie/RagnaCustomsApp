@@ -21,7 +21,7 @@ namespace RagnaCustoms.App
         private const string RagnacApiCommand = "ragnac://api/";
 
 #if DEBUG 
-        public const string UploadSessionUri = "https://127.0.0.1:8000/api/score/v2?XDEBUG_SESSION_START=PHPSTORM";
+        public const string UploadSessionUri = "https://127.0.0.1:8000/api/score/?XDEBUG_SESSION_START=PHPSTORM";
         const string UploadOverlayUri = "https://127.0.0.1:8000/api/overlay/?XDEBUG_SESSION_START=PHPSTORM";
         const string CleanOverlayUri = "https://127.0.0.1:8000/api/overlay/clean/?XDEBUG_SESSION_START=PHPSTORM";
 

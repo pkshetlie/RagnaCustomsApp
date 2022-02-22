@@ -30,12 +30,12 @@ namespace RagnaCustoms.App.Services
             Session = new Session();
             Session.Song = Song;
         }
-
+        private Thread Thread;
         public LogFileParser()
         {
             ResetSession();
 
-            new Thread(() =>
+            Thread = new Thread(() =>
             {
                 using var watcher = new FileSystemWatcher(Program.RagnarockSongLogsDirectoryPath, "Ragnarock.log");
                 watcher.NotifyFilter = NotifyFilters.LastWrite;
@@ -46,7 +46,8 @@ namespace RagnaCustoms.App.Services
 
 
                 while (true) ;
-            }).Start();
+            });
+            Thread.Start();
         }
 
         private void OnChange(object sender, FileSystemEventArgs e)
@@ -68,6 +69,7 @@ namespace RagnaCustoms.App.Services
             using var stream = File.Open(Program.RagnarockSongLogsFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             if (stream.Length < lastLength)
             {
+                ResetSession();
                 stream.Position = 0;
             }
             else
@@ -75,7 +77,6 @@ namespace RagnaCustoms.App.Services
                 stream.Position = Position;
             }
             lastLength = stream.Length;
-
             using var reader = new StreamReader(stream);
             List<string> lines = new List<string>();
             while (!reader.EndOfStream)
@@ -191,7 +192,10 @@ namespace RagnaCustoms.App.Services
             }
             Position = stream.Position;
         }
-
+        internal void Exit()
+        {
+            Thread.Abort();
+        }
         internal void FirstInit()
         {
             ReadFile();

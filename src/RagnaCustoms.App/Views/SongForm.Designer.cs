@@ -1,5 +1,6 @@
 ﻿
 using System.Windows.Forms;
+using RagnaCustoms.App;
 using RagnaCustoms.App.Properties;
 
 namespace RagnaCustoms.Views
@@ -22,6 +23,7 @@ namespace RagnaCustoms.Views
                 components.Dispose();
             }
             base.Dispose(disposing);
+            Program.LogFileParser.Exit();
         }
 
         #region Windows Form Designer generated code
