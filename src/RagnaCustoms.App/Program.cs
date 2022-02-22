@@ -119,7 +119,7 @@ namespace RagnaCustoms.App
                     //var songResultParser = new SessionParser(RagnarockSongLogsFilePath);
 
                     LogFileParser.OnScore += async (session) =>
-                        await sessionUploader.UploadAsync(configuration.ApiKey, session);
+                        await sessionUploader.UploadAsync(session);
                     //songResultParser.StartAsync();
 
                     // Send score if Oculus is available

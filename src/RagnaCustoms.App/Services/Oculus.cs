@@ -143,7 +143,7 @@ namespace RagnaCustoms.Services
                     var songResultParser = new SessionParser(logFile);
 
                     songResultParser.OnNewSession += async session =>
-                        await sessionUploader.UploadAsync(configuration.ApiKey, session);
+                        await sessionUploader.UploadAsync(session);
                     songResultParser.StartAsync(device);
                 }
 

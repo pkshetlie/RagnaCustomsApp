@@ -19,25 +19,25 @@ namespace RagnaCustoms.Services
         protected virtual Configuration Configuration { get; }
         protected virtual Uri Uri { get; }
 
-        public virtual async Task UploadAsync(string apiKey, params Session[] sessions)
+        public virtual async Task UploadAsync(Session session)
         {
             try
             {
                 if (!Configuration.SendScoreAutomatically) return;
-                if (string.IsNullOrEmpty(apiKey)) return;
+                if (string.IsNullOrEmpty(Configuration.ApiKey)) return;
 
                 using var client = new HttpClient();
-                client.DefaultRequestHeaders.Add("x-api-key", apiKey);
+                client.DefaultRequestHeaders.Add("x-api-key", Configuration.ApiKey);
 
-                var models = sessions.Select(session => new SessionModel(session)).ToArray();
+                var models = new SessionModel(session);
 
                 var result = await client.PostAsJsonAsync(Uri, models);
                 if (result.IsSuccessStatusCode)
                     Trace.WriteLine(
-                        $"{DateTime.Now} - Upload success - Hash: {sessions[0].Song.Hash}; Score: {sessions[0].Score}");
+                        $"{DateTime.Now} - Upload success - Hash: {session.Song.Hash}; Score: {session.Score}");
                 else
                     Trace.WriteLine(
-                        $"{DateTime.Now} - Upload error ({result.ReasonPhrase}) - Hash: {sessions[0].Song.Hash}; Score: {sessions[0].Score}");
+                        $"{DateTime.Now} - Upload error ({result.ReasonPhrase}) - Hash: {session.Song.Hash}; Score: {session.Score}");
             }
             catch (Exception ex)
             {
