@@ -19,17 +19,17 @@ namespace RagnaCustoms.App
         private const string RagnacInstallCommand = "ragnac://install/";
         private const string RagnacApiCommand = "ragnac://api/";
 
-//#if DEBUG 
-//        public const string UploadSessionUri = "https://127.0.0.1:8000/api/score/v2?XDEBUG_SESSION_START=PHPSTORM";
-//#else
-        public const string UploadSessionUri = "https://ragnacustoms.com/api/score/v2";
+#if DEBUG 
+        public const string UploadSessionUri = "https://127.0.0.1:8000/api/score/v2?XDEBUG_SESSION_START=PHPSTORM";
+#else
+        public const string UploadSessionUri = "https://v2.ragnacustoms.com/api/score/v2";
 
-//#endif
-//#if DEBUG
-//        const string UploadOverlayUri = "https://127.0.0.1:8000/api/overlay/?XDEBUG_SESSION_START=PHPSTORM";
-//#else
-        private const string UploadOverlayUri = "https://ragnacustoms.com/api/overlay/";
-//#endif
+#endif
+#if DEBUG
+        const string UploadOverlayUri = "https://127.0.0.1:8000/api/overlay/?XDEBUG_SESSION_START=PHPSTORM";
+#else
+        private const string UploadOverlayUri = "https://v2.ragnacustoms.com/api/overlay/";
+#endif
 
         public static readonly string RagnarockSongLogsFilePath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -44,6 +44,7 @@ namespace RagnaCustoms.App
             "Saved",
             "Logs"
         );
+
 
         /// <summary>
         ///     The main entry point for the application.

@@ -9,7 +9,7 @@ namespace RagnaCustoms.Views
         SongPresenter Presenter { set; }
         IEnumerable<SongSearchModel> Songs { get; set; }
 
-        bool SendScoreAutomatically { get; set; }
+        bool SendScoreAutomatically { get; }
         bool AutoCloseDownload { get; set; }
         bool Overlay { get; set; }
     }

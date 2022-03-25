@@ -40,9 +40,10 @@ namespace RagnaCustoms.Services
             set => Set(nameof(TwitchBotAutoStart), value ? bool.TrueString : bool.FalseString);
         }
 
+        // disabled
         public bool SendScoreAutomatically
         {
-            get => Get(nameof(SendScoreAutomatically)) == bool.TrueString;
+            get => false;
             set => Set(nameof(SendScoreAutomatically), value ? bool.TrueString : bool.FalseString);
         }
 

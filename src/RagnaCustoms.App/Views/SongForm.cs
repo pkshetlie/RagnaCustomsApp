@@ -38,8 +38,7 @@ namespace RagnaCustoms.Views
 
         public bool SendScoreAutomatically
         {
-            get => SendScoreAutomaticallyMenuItem.Checked;
-            set => SendScoreAutomaticallyMenuItem.Checked = value;
+            get => false;
         }
 
         public bool AutoCloseDownload
@@ -118,10 +117,6 @@ namespace RagnaCustoms.Views
             Presenter.ApiKey = Prompt.ShowDialog(Resources.Song_Form_EnterYourApiKey, "RagnaCustoms", Presenter.ApiKey);
         }
 
-        private void SendScoreMenuItem_CheckedChanged(object sender, EventArgs e)
-        {
-            Presenter.SendScoreAutomatically = SendScoreAutomaticallyMenuItem.Checked;
-        }
 
         private void logFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -251,6 +246,11 @@ namespace RagnaCustoms.Views
         {
             var dir = DirProvider.getCustomDirectory().FullName;
             Process.Start("explorer.exe", dir);
+        }
+
+        private void SongForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
