@@ -217,5 +217,150 @@ namespace RagnaCustoms.Models
                 downloadCompleted?.Invoke(autoClose);
             }
         }
+
+        public virtual async Task DownloadListAsync(int listId, Action<int> downloadProgressChanged,
+           Action<bool> downloadCompleted, Action<string> downloadTitle, bool autoClose = false)
+        {
+
+            using var webClient = new WebClient();
+            var json = webClient.DownloadString("https://ragnacustoms.com/api/song-list/" + listId);
+            var stuff = JsonConvert.DeserializeObject<List<Song>>(json);
+            var i = 0;
+
+            foreach (var song in stuff)
+            {
+                var songId = song.Id;
+                using var client = new WebClient();
+                var configuration = new Configuration();
+                var uri = new Uri($"https://ragnacustoms.com/songs/download/{songId}");
+
+                if (!string.IsNullOrWhiteSpace(configuration.ApiKey))
+                {
+                    uri = new Uri($"https://ragnacustoms.com/songs/download/{songId}/{configuration.ApiKey}");
+                }
+
+                var tempDirectoryPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+                var tempDirectory = Directory.CreateDirectory(tempDirectoryPath);
+                var tempFilePath = Path.GetTempFileName();
+
+                var songInfo = song;               
+
+                var songDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath,
+                    $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
+
+                var songBackupDirectoryPath = Path.Combine(DirProvider.RagnarockBackupSongDirectoryPath,
+                    $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
+
+                if (Directory.Exists(Path.Combine(songBackupDirectoryPath)))
+                {
+                    // le dossier existe dans backup
+                    if (File.Exists(Path.Combine(songBackupDirectoryPath, ".hash")) &&
+                        File.ReadAllText(Path.Combine(songBackupDirectoryPath, ".hash")) == songInfo.Hash)
+                    {
+                        //le hash est OK
+                        Oculus.PushSong(songDirectoryPath);
+                        if (!Directory.Exists(Path.Combine(songDirectoryPath)))
+                            new DirectoryInfo(songBackupDirectoryPath).MoveTo(songDirectoryPath);
+                        i = i + 1;
+                        var percentage = (int)Math.Round((double)i / (double)stuff.Count() * 100);
+                        downloadProgressChanged?.Invoke(percentage);
+
+                        if (i >= stuff.Count())
+                        {
+                            downloadTitle?.Invoke($"Finish");
+                        }
+                        else
+                        {
+                            downloadTitle?.Invoke($"{percentage}% {songInfo.Name} by {songInfo.Mapper}");
+                        }
+                        continue;
+                    }
+
+                    //le hash est périmé, on supprime et on laisse le téléchargement se faire.
+                    Directory.Delete(Path.Combine(songBackupDirectoryPath));
+                }
+
+                if (File.Exists(Path.Combine(songDirectoryPath, ".hash")) &&
+                    File.ReadAllText(Path.Combine(songDirectoryPath, ".hash")) == songInfo.Hash)
+                {
+                    Oculus.PushSong(songDirectoryPath);
+                    i = i + 1;
+                    var percentage = (int)Math.Round((double)i / (double)stuff.Count() * 100);
+
+                    downloadProgressChanged?.Invoke(percentage);
+                    if (i >= stuff.Count())
+                    {
+                        downloadTitle?.Invoke($"Finish");
+                    }
+                    else
+                    {
+                        downloadTitle?.Invoke($"{percentage}% {songInfo.Name} by {songInfo.Mapper}");
+                    }
+                    continue;
+                }
+                
+                client.DownloadFileCompleted += ClientDownloadFileCompleted;
+                client.DownloadFileAsync(uri, tempFilePath);
+
+                void ClientDownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+                {
+                    i = i + 1;
+                    var percentage = (int)Math.Round((double)i / (double)stuff.Count() * 100);
+                    
+                    downloadTitle?.Invoke($"{percentage}% {songInfo.Name} by {songInfo.Mapper}");
+
+                    ZipFile.ExtractToDirectory(tempFilePath, tempDirectoryPath);
+
+                    var songDirectory = tempDirectory.EnumerateDirectories().First();
+                    var ragnarockSongDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath,
+                        $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
+
+                    if (Directory.Exists(ragnarockSongDirectoryPath))
+                        Directory.Delete(ragnarockSongDirectoryPath, true);
+
+                    if (Path.GetPathRoot(ragnarockSongDirectoryPath) == songDirectory.Root.FullName)
+                    {
+                        songDirectory.MoveTo(ragnarockSongDirectoryPath);
+                    }
+                    else
+                    {
+                        Directory.CreateDirectory(ragnarockSongDirectoryPath);
+
+                        var files = songDirectory.GetFiles();
+                        foreach (var file in files)
+                        {
+                            var tempPath = Path.Combine(ragnarockSongDirectoryPath, file.Name);
+                            file.CopyTo(tempPath, false);
+                        }
+                    }
+                    
+                    downloadProgressChanged?.Invoke(percentage);
+                    if (i >= stuff.Count())
+                    {
+                        downloadTitle?.Invoke($"Finish");
+                    }
+                    else
+                    {
+                        downloadTitle?.Invoke($"{percentage}% {songInfo.Name} by {songInfo.Mapper}");
+                    }
+
+                    using (var writer = new StreamWriter(Path.Combine(ragnarockSongDirectoryPath, ".hash"), false))
+                    {
+                        writer.Write(songInfo.Hash);
+                    }
+
+                    using (var writer = new StreamWriter(Path.Combine(ragnarockSongDirectoryPath, ".id"), false))
+                    {
+                        writer.Write(songInfo.Id);
+                    }                   
+
+                    File.Delete(tempFilePath);
+                    Directory.Delete(tempDirectoryPath, true);
+
+                    Oculus.PushSong(ragnarockSongDirectoryPath);
+                }
+
+            }
+        }
     }
 }

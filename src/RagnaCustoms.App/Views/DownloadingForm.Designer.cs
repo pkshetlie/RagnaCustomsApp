@@ -31,9 +31,6 @@ namespace RagnaCustoms.Views
         /// </summary>
         private void InitializeComponent()
         {
-            this.MaximizeBox = false;
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DownloadingForm));
             this.DownloadingProgressBar = new System.Windows.Forms.ProgressBar();
             this.DownloadingLabel = new System.Windows.Forms.Label();
@@ -63,6 +60,7 @@ namespace RagnaCustoms.Views
             this.ClientSize = new System.Drawing.Size(261, 59);
             this.Controls.Add(this.DownloadingLabel);
             this.Controls.Add(this.DownloadingProgressBar);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "DownloadingForm";

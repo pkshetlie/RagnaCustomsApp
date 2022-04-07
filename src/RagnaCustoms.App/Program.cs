@@ -17,6 +17,7 @@ namespace RagnaCustoms.App
     internal static class Program
     {
         private const string RagnacInstallCommand = "ragnac://install/";
+        private const string RagnacListCommand = "ragnac://list/";
         private const string RagnacApiCommand = "ragnac://api/";
 
 #if DEBUG 
@@ -101,6 +102,18 @@ namespace RagnaCustoms.App
                             Application.Run(downloadingView);
                         }
                     }
+                    else if (uri.StartsWith(RagnacListCommand))
+                    {
+                        var songIdStr = uri.Replace(RagnacListCommand, string.Empty);
+
+
+                        var songListId = int.Parse(songIdStr);
+                        downloadingView = new DownloadingForm();
+                        downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
+                        downloadingPresenter.DownloadList(songListId, configuration.AutoCloseDownload);
+                        Application.Run(downloadingView);
+
+                    }
                     else if (uri.StartsWith(RagnacApiCommand))
                     {
                         var api = uri.Replace(RagnacApiCommand, string.Empty);
@@ -112,15 +125,15 @@ namespace RagnaCustoms.App
                 else
                 {
                     // Starts background services
-                    var sessionUploader = new SessionUploader(configuration, UploadSessionUri);
-                    var songResultParser = new SessionParser(RagnarockSongLogsFilePath);
+                    //var sessionUploader = new SessionUploader(configuration, UploadSessionUri);
+                    //var songResultParser = new SessionParser(RagnarockSongLogsFilePath);
 
-                    songResultParser.OnNewSession += async session =>
-                        await sessionUploader.UploadAsync(configuration.ApiKey, session);
-                    songResultParser.StartAsync();
+                    //songResultParser.OnNewSession += async session =>
+                    //    await sessionUploader.UploadAsync(configuration.ApiKey, session);
+                    //songResultParser.StartAsync();
 
                     // Send score if Oculus is available
-                    Oculus.SendScore();
+                    //Oculus.SendScore();
 
                     var overlayUploader = new OverlayUploader(configuration, UploadOverlayUri);
                     var songOverlayParser = new OverlayParser(RagnarockSongLogsFilePath);
