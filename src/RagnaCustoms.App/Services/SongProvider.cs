@@ -272,24 +272,23 @@ namespace RagnaCustoms.Models
                     ZipFile.ExtractToDirectory(tempFilePath, tempDirectoryPath);
 
                     var songDirectory = tempDirectory.EnumerateDirectories().First();
-                    var ragnarockSongDirectoryPath = Path.Combine(songDirectoryPath,
-                        $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
+                  
 
                     if (Directory.Exists(songDirectoryPath))
                         Directory.Delete(songDirectoryPath, true);
 
-                    if (Path.GetPathRoot(ragnarockSongDirectoryPath) == songDirectory.Root.FullName)
+                    if (Path.GetPathRoot(songDirectoryPath) == songDirectory.Root.FullName)
                     {
-                        songDirectory.MoveTo(ragnarockSongDirectoryPath);
+                        songDirectory.MoveTo(songDirectoryPath);
                     }
                     else
                     {
-                        Directory.CreateDirectory(ragnarockSongDirectoryPath);
+                        Directory.CreateDirectory(songDirectoryPath);
 
                         var files = songDirectory.GetFiles();
                         foreach (var file in files)
                         {
-                            var tempPath = Path.Combine(ragnarockSongDirectoryPath, file.Name);
+                            var tempPath = Path.Combine(songDirectoryPath, file.Name);
                             file.CopyTo(tempPath, false);
                         }
                     }
@@ -304,12 +303,12 @@ namespace RagnaCustoms.Models
                         downloadTitle?.Invoke($"{percentage}% {songInfo.Name} by {songInfo.Mapper}");
                     }
 
-                    using (var writer = new StreamWriter(Path.Combine(ragnarockSongDirectoryPath, ".hash"), false))
+                    using (var writer = new StreamWriter(Path.Combine(songDirectoryPath, ".hash"), false))
                     {
                         writer.Write(songInfo.Hash);
                     }
 
-                    using (var writer = new StreamWriter(Path.Combine(ragnarockSongDirectoryPath, ".id"), false))
+                    using (var writer = new StreamWriter(Path.Combine(songDirectoryPath, ".id"), false))
                     {
                         writer.Write(songInfo.Id);
                     }
@@ -317,7 +316,7 @@ namespace RagnaCustoms.Models
                     File.Delete(tempFilePath);
                     Directory.Delete(tempDirectoryPath, true);
 
-                    Oculus.PushSong(ragnarockSongDirectoryPath);
+                    Oculus.PushSong(songDirectoryPath);
                 }
 
             }
