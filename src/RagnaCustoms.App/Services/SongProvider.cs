@@ -78,40 +78,51 @@ namespace RagnaCustoms.Models
             return Enumerable.Empty<SongSearchModel>();
         }
 
-        public async Task<IEnumerable<SongSearchModel>> CompareSongsWithOnlineAsync()
+        public IEnumerable<SongSearchModel> exploreRecurs(string dir, List<SongSearchModel> songsInfo)
         {
+
             var songs = new BindingList<SongSearchModel>();
-            try
+            foreach (var songpath in Directory.GetDirectories(dir))
             {
-                var songsInfo = await CheckUpdateAsync();
-
-
-                foreach (var songpath in Directory.GetDirectories(DirProvider.RagnarockSongDirectoryPath))
+                var idFile = Path.Combine(songpath, ".id");
+                if (File.Exists(idFile))
                 {
-                    var idFile = Path.Combine(songpath, ".id");
-                    if (File.Exists(idFile))
+                    var hashFile = Path.Combine(songpath, ".hash");
+                    var songInfo = songsInfo.FirstOrDefault(x => x.Id == int.Parse(File.ReadAllText(idFile)));
+                    if (songInfo != null)
                     {
-                        var hashFile = Path.Combine(songpath, ".hash");
-                        var songInfo = songsInfo.FirstOrDefault(x => x.Id == int.Parse(File.ReadAllText(idFile)));
-                        if (songInfo != null)
-                        {
-                            if (songInfo.Hash == File.ReadAllText(hashFile)) songInfo.UpToDate = true;
-                            songs.Add(songInfo);
-                        }
+                        songInfo.CurrentFolder = songpath;
+                        if (songInfo.Hash == File.ReadAllText(hashFile)) songInfo.UpToDate = true;
+                        songs.Add(songInfo);
                     }
                 }
-
+                else
+                {
+                    foreach (var song in exploreRecurs(Path.Combine(dir, songpath), songsInfo))
+                    {
+                        songs.Add(song);
+                    }
+                }
             }
-            catch (Exception ex)
-            {
-
-            }
-
             return songs;
+
+        }
+
+
+        public async Task<IEnumerable<SongSearchModel>> CompareSongsWithOnlineAsync(string dir = null)
+        {
+            var songsInfo = await CheckUpdateAsync();
+
+            if (dir == null)
+            {
+                dir = DirProvider.getCustomDirectory().ToString();
+            }
+
+            return exploreRecurs(dir, songsInfo);
         }
 
         public virtual async Task DownloadAsync(int songId, Action<int> downloadProgressChanged,
-            Action<bool> downloadCompleted, Action<string> downloadTitle, bool autoClose = false)
+            Action<bool> downloadCompleted, Action<string> downloadTitle, bool autoClose = false, string songFolder = null)
         {
             using var client = new WebClient();
             var configuration = new Configuration();
@@ -134,28 +145,11 @@ namespace RagnaCustoms.Models
             }
 
             downloadTitle?.Invoke($"{songInfo.Name} by {songInfo.Mapper}");
-            var songDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath,
+            var songDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(),
                 $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
-
-            var songBackupDirectoryPath = Path.Combine(DirProvider.RagnarockBackupSongDirectoryPath,
-                $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
-
-            if (Directory.Exists(Path.Combine(songBackupDirectoryPath)))
+            if(songFolder != null)
             {
-                // le dossier existe dans backup
-                if (File.Exists(Path.Combine(songBackupDirectoryPath, ".hash")) &&
-                    File.ReadAllText(Path.Combine(songBackupDirectoryPath, ".hash")) == songInfo.Hash)
-                {
-                    //le hash est OK
-                    Oculus.PushSong(songDirectoryPath);
-                    if (!Directory.Exists(Path.Combine(songDirectoryPath)))
-                        new DirectoryInfo(songBackupDirectoryPath).MoveTo(songDirectoryPath);
-                    downloadCompleted?.Invoke(autoClose);
-                    return;
-                }
-
-                //le hash est périmé, on supprime et on laisse le téléchargement se faire.
-                Directory.Delete(Path.Combine(songBackupDirectoryPath));
+                songDirectoryPath = songFolder;
             }
 
             if (File.Exists(Path.Combine(songDirectoryPath, ".hash")) &&
@@ -177,34 +171,32 @@ namespace RagnaCustoms.Models
                 ZipFile.ExtractToDirectory(tempFilePath, tempDirectoryPath);
 
                 var songDirectory = tempDirectory.EnumerateDirectories().First();
-                var ragnarockSongDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath,
-                    $"{songDirectory.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
 
-                if (Directory.Exists(ragnarockSongDirectoryPath))
-                    Directory.Delete(ragnarockSongDirectoryPath, true);
+                if (Directory.Exists(songDirectoryPath))
+                    Directory.Delete(songDirectoryPath, true);
 
-                if (Path.GetPathRoot(ragnarockSongDirectoryPath) == songDirectory.Root.FullName)
+                if (Path.GetPathRoot(songDirectoryPath) == songDirectory.Root.FullName)
                 {
-                    songDirectory.MoveTo(ragnarockSongDirectoryPath);
+                    songDirectory.MoveTo(songDirectoryPath);
                 }
                 else
                 {
-                    Directory.CreateDirectory(ragnarockSongDirectoryPath);
+                    Directory.CreateDirectory(songDirectoryPath);
 
                     var files = songDirectory.GetFiles();
                     foreach (var file in files)
                     {
-                        var tempPath = Path.Combine(ragnarockSongDirectoryPath, file.Name);
+                        var tempPath = Path.Combine(songDirectoryPath, file.Name);
                         file.CopyTo(tempPath, false);
                     }
                 }
 
-                using (var writer = new StreamWriter(Path.Combine(ragnarockSongDirectoryPath, ".hash"), false))
+                using (var writer = new StreamWriter(Path.Combine(songDirectoryPath, ".hash"), false))
                 {
                     writer.Write(songInfo.Hash);
                 }
 
-                using (var writer = new StreamWriter(Path.Combine(ragnarockSongDirectoryPath, ".id"), false))
+                using (var writer = new StreamWriter(Path.Combine(songDirectoryPath, ".id"), false))
                 {
                     writer.Write(songInfo.Id);
                 }
@@ -212,7 +204,7 @@ namespace RagnaCustoms.Models
                 File.Delete(tempFilePath);
                 Directory.Delete(tempDirectoryPath, true);
 
-                Oculus.PushSong(ragnarockSongDirectoryPath);
+                Oculus.PushSong(songDirectoryPath);
 
                 downloadCompleted?.Invoke(autoClose);
             }
@@ -243,42 +235,10 @@ namespace RagnaCustoms.Models
                 var tempDirectory = Directory.CreateDirectory(tempDirectoryPath);
                 var tempFilePath = Path.GetTempFileName();
 
-                var songInfo = song;               
+                var songInfo = song;
 
-                var songDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath,
-                    $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
-
-                var songBackupDirectoryPath = Path.Combine(DirProvider.RagnarockBackupSongDirectoryPath,
-                    $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
-
-                if (Directory.Exists(Path.Combine(songBackupDirectoryPath)))
-                {
-                    // le dossier existe dans backup
-                    if (File.Exists(Path.Combine(songBackupDirectoryPath, ".hash")) &&
-                        File.ReadAllText(Path.Combine(songBackupDirectoryPath, ".hash")) == songInfo.Hash)
-                    {
-                        //le hash est OK
-                        Oculus.PushSong(songDirectoryPath);
-                        if (!Directory.Exists(Path.Combine(songDirectoryPath)))
-                            new DirectoryInfo(songBackupDirectoryPath).MoveTo(songDirectoryPath);
-                        i = i + 1;
-                        var percentage = (int)Math.Round((double)i / (double)stuff.Count() * 100);
-                        downloadProgressChanged?.Invoke(percentage);
-
-                        if (i >= stuff.Count())
-                        {
-                            downloadTitle?.Invoke($"Finish");
-                        }
-                        else
-                        {
-                            downloadTitle?.Invoke($"{percentage}% {songInfo.Name} by {songInfo.Mapper}");
-                        }
-                        continue;
-                    }
-
-                    //le hash est périmé, on supprime et on laisse le téléchargement se faire.
-                    Directory.Delete(Path.Combine(songBackupDirectoryPath));
-                }
+                var songDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(),
+                    $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");        
 
                 if (File.Exists(Path.Combine(songDirectoryPath, ".hash")) &&
                     File.ReadAllText(Path.Combine(songDirectoryPath, ".hash")) == songInfo.Hash)
@@ -298,7 +258,7 @@ namespace RagnaCustoms.Models
                     }
                     continue;
                 }
-                
+
                 client.DownloadFileCompleted += ClientDownloadFileCompleted;
                 client.DownloadFileAsync(uri, tempFilePath);
 
@@ -306,17 +266,17 @@ namespace RagnaCustoms.Models
                 {
                     i = i + 1;
                     var percentage = (int)Math.Round((double)i / (double)stuff.Count() * 100);
-                    
+
                     downloadTitle?.Invoke($"{percentage}% {songInfo.Name} by {songInfo.Mapper}");
 
                     ZipFile.ExtractToDirectory(tempFilePath, tempDirectoryPath);
 
                     var songDirectory = tempDirectory.EnumerateDirectories().First();
-                    var ragnarockSongDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath,
+                    var ragnarockSongDirectoryPath = Path.Combine(songDirectoryPath,
                         $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
 
-                    if (Directory.Exists(ragnarockSongDirectoryPath))
-                        Directory.Delete(ragnarockSongDirectoryPath, true);
+                    if (Directory.Exists(songDirectoryPath))
+                        Directory.Delete(songDirectoryPath, true);
 
                     if (Path.GetPathRoot(ragnarockSongDirectoryPath) == songDirectory.Root.FullName)
                     {
@@ -333,7 +293,7 @@ namespace RagnaCustoms.Models
                             file.CopyTo(tempPath, false);
                         }
                     }
-                    
+
                     downloadProgressChanged?.Invoke(percentage);
                     if (i >= stuff.Count())
                     {
@@ -352,7 +312,7 @@ namespace RagnaCustoms.Models
                     using (var writer = new StreamWriter(Path.Combine(ragnarockSongDirectoryPath, ".id"), false))
                     {
                         writer.Write(songInfo.Id);
-                    }                   
+                    }
 
                     File.Delete(tempFilePath);
                     Directory.Delete(tempDirectoryPath, true);

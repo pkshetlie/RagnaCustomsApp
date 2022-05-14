@@ -20,25 +20,12 @@ namespace RagnaCustoms.App
         private const string RagnacListCommand = "ragnac://list/";
         private const string RagnacApiCommand = "ragnac://api/";
 
-#if DEBUG 
-        public const string UploadSessionUri = "https://127.0.0.1:8000/api/score/v2?XDEBUG_SESSION_START=PHPSTORM";
-#else
-        public const string UploadSessionUri = "https://v2.ragnacustoms.com/api/score/v2";
-
-#endif
 #if DEBUG
         const string UploadOverlayUri = "https://127.0.0.1:8000/api/overlay/?XDEBUG_SESSION_START=PHPSTORM";
 #else
         private const string UploadOverlayUri = "https://v2.ragnacustoms.com/api/overlay/";
 #endif
 
-        public static readonly string RagnarockSongLogsFilePath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "Ragnarock",
-            "Saved",
-            "Logs",
-            "Ragnarock.log"
-        );
         public static readonly string RagnarockSongLogsDirectoryPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "Ragnarock",
@@ -46,6 +33,7 @@ namespace RagnaCustoms.App
             "Logs"
         );
 
+        public static readonly string RagnarockSongLogsFilePath = Path.Combine(RagnarockSongLogsDirectoryPath, "Ragnarock.log");
 
         /// <summary>
         ///     The main entry point for the application.
@@ -65,22 +53,12 @@ namespace RagnaCustoms.App
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                var customDirectory = new DirProvider().RagnarockSongDirectory; //on force la creation du dossier.
-                var customBkpDirectory = new DirProvider().RagnarockSongBkpDirectory; //on force la creation du dossier.
+                var customDirectory = DirProvider.getCustomDirectory(); //on force la creation du dossier.
+                //var customBkpDirectory = new DirProvider().RagnarockSongBkpDirectory; //on force la creation du dossier.
                 var songProvider = new SongProvider();
                 var downloadingView = new DownloadingForm();
                 var downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
-                var configuration = new Configuration();
-
-                // force remove backup directory
-                try
-                {
-                    EasyStreamRequest.RestoreCustomSongDirectory();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                var configuration = new Configuration();              
 
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(configuration.Lang ?? "en", true);
                 Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;

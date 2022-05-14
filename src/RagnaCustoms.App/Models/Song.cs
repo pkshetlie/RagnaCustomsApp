@@ -48,6 +48,7 @@ namespace RagnaCustoms.Models
         public string IsRanked { get; set; }
         public string Author { get; set; }
         public string Mapper { get; set; }
+        public string CurrentFolder { get; set; }
         public string Difficulties { get; set; }
     }
 }

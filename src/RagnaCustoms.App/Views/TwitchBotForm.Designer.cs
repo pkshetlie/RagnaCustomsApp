@@ -223,6 +223,7 @@ namespace RagnaCustoms.App.Views
             this.Checkbox_EasyStreamRequest.TabIndex = 35;
             this.Checkbox_EasyStreamRequest.Text = "Easy stream request";
             this.Checkbox_EasyStreamRequest.UseVisualStyleBackColor = true;
+            this.Checkbox_EasyStreamRequest.Visible = false;
             this.Checkbox_EasyStreamRequest.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
             // 
             // TwitchBotForm

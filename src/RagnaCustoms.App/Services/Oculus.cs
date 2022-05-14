@@ -118,40 +118,6 @@ namespace RagnaCustoms.Services
             return 1;
         }
 
-        public static int SendScore()
-        {
-            var device = GetDevice();
-            if (device != null)
-            {
-                var configuration = new Configuration();
-                var sessionUploader = new SessionUploader(configuration, Program.UploadSessionUri);
-
-                device.Connect();
-                var base_folder = device.GetDirectories(@"\")[0];
-
-                var QuestLogDirectoryName = $"{base_folder}{Oculus.QuestLogDirectoryName}";
-                var tempPath = Path.GetTempPath() + Guid.NewGuid();
-
-                if (!device.IsConnected) throw new NotConnectedException("Not connected");
-
-                if (device.DirectoryExists(QuestLogDirectoryName))
-                    device.DownloadFolder(QuestLogDirectoryName, tempPath);
-
-                var logFiles = Directory.GetFiles(tempPath);
-                foreach (var logFile in logFiles)
-                {
-                    var songResultParser = new SessionParser(logFile);
-
-                    songResultParser.OnNewSession += async session =>
-                        await sessionUploader.UploadAsync(configuration.ApiKey, session);
-                    songResultParser.StartAsync(device);
-                }
-
-                Directory.Delete(tempPath, true);
-                return 0;
-            }
-
-            return 1;
-        }
+    
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RagnaCustoms.Services;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,41 +13,36 @@ namespace RagnaCustoms.Models
         private const string BackupSongDirectoryName = "bkp-" + SongDirectoryName;
         private const string SongSearchPattern = "*.zip";
 
-        public static readonly string RagnarockSongDirectoryPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-            RagnarockDirectoryName,
-            SongDirectoryName
-        );
-
-        public static readonly string RagnarockBackupSongDirectoryPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-            RagnarockDirectoryName,
-            BackupSongDirectoryName
-        );
 
 
-        public DirectoryInfo RagnarockSongDirectory => Directory.CreateDirectory(RagnarockSongDirectoryPath);
-        public DirectoryInfo RagnarockSongBkpDirectory => Directory.CreateDirectory(RagnarockBackupSongDirectoryPath);
 
         public static DirectoryInfo getCustomDirectory()
         {
-            return new DirectoryInfo(RagnarockSongDirectoryPath);
-        }
-
-        public static DirectoryInfo getCustomBackupDirectory()
-        {
-            return new DirectoryInfo(RagnarockBackupSongDirectoryPath);
+            var conf = new Configuration();
+            if (String.IsNullOrEmpty(conf.BaseFolder)){
+                conf.BaseFolder = getDefaultDirectory();
+            }
+            return new DirectoryInfo(conf.BaseFolder);
         }
 
 
         public IEnumerable<FileInfo> GetLocalFiles()
         {
-            return RagnarockSongDirectory.EnumerateFiles(SongSearchPattern);
+            return getCustomDirectory().EnumerateFiles(SongSearchPattern);
         }
 
         public IEnumerable<Song> GetLocalSongs()
         {
             return GetLocalFiles().Select(file => new Song { Name = file.Name }).OrderBy(song => song.Name);
+        }
+        public static string getDefaultDirectory()
+        {
+            string str = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+            RagnarockDirectoryName,
+            SongDirectoryName
+        ).ToString();
+            return str;
         }
     }
 }

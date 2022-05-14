@@ -31,7 +31,8 @@ namespace RagnaCustoms.App.Properties {
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-        
+
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -266,6 +267,7 @@ namespace RagnaCustoms.App.Properties {
                 return ResourceManager.GetString("Song.Form.EnterYourApiKey", resourceCulture);
             }
         }
+  
         
         /// <summary>
         ///   Looks up a localized string similar to Exit.

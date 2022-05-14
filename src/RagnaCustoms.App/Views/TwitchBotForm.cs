@@ -295,7 +295,6 @@ namespace RagnaCustoms.App.Views
 
         private void AddSongRequestToList(Song song, string viewer)
         {
-            if (_songList.Count == 0 && _configuration.EasyStreamRequest) EasyStreamRequest.CreateBackupDirectory();
             song.Requester = viewer;
             _songList.Add(song);
             UpdateFormRows();
@@ -315,7 +314,6 @@ namespace RagnaCustoms.App.Views
                         return toReturn;
                     });
                 });
-            EasyStreamRequest.MoveSongOnBackup(songFolder);
         }
         public void RemoveSongByRequester(string viewer)
         {
@@ -342,9 +340,6 @@ namespace RagnaCustoms.App.Views
             if (_configuration.EasyStreamRequest) removeSongEasyStream(song.Id);
             _songList.Remove(song);
             UpdateFormRows();
-
-            if (_songList.Count == 0 && _configuration.EasyStreamRequest)
-                EasyStreamRequest.RestoreCustomSongDirectory();
         }
 
         // set songRequest rows values to _songList values
@@ -445,13 +440,7 @@ namespace RagnaCustoms.App.Views
 
         private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
         {
-            _configuration.EasyStreamRequest = Checkbox_EasyStreamRequest.Checked;
-            if (_configuration.EasyStreamRequest)
-            {
-                EasyStreamRequest.EnableEasyStreamRequest(_configuration);
-                var customBkpDirectory = new DirProvider().RagnarockSongBkpDirectory; //on force la creation du dossier.
-            }
-            else EasyStreamRequest.DisableEasyStreamRequest(_configuration);
+            
         }
 
         private void TwitchBotForm_Load(object sender, EventArgs e)

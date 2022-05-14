@@ -69,6 +69,8 @@ namespace RagnaCustoms.Views
             this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.englishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.frenchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.SearchResultGridView)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -276,7 +278,9 @@ namespace RagnaCustoms.Views
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.autoCloseDownloadToolStripMenuItem});
+            this.autoCloseDownloadToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.downloadFolderToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.settingsToolStripMenuItem.Text = global::RagnaCustoms.App.Properties.Resources.Song_Form_Settings;
@@ -301,14 +305,14 @@ namespace RagnaCustoms.Views
             // checkAccessToolStripMenuItem
             // 
             this.checkAccessToolStripMenuItem.Name = "checkAccessToolStripMenuItem";
-            this.checkAccessToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.checkAccessToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.checkAccessToolStripMenuItem.Text = global::RagnaCustoms.App.Properties.Resources.Song_Form_CheckAccess;
             this.checkAccessToolStripMenuItem.Click += new System.EventHandler(this.checkAccessToolStripMenuItem_Click);
             // 
             // syncSongsToolStripMenuItem
             // 
             this.syncSongsToolStripMenuItem.Name = "syncSongsToolStripMenuItem";
-            this.syncSongsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.syncSongsToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.syncSongsToolStripMenuItem.Text = global::RagnaCustoms.App.Properties.Resources.Song_Form_SyncSong;
             this.syncSongsToolStripMenuItem.Click += new System.EventHandler(this.syncSongsToolStripMenuItem_Click);
             // 
@@ -325,14 +329,14 @@ namespace RagnaCustoms.Views
             // logFileToolStripMenuItem
             // 
             this.logFileToolStripMenuItem.Name = "logFileToolStripMenuItem";
-            this.logFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.logFileToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.logFileToolStripMenuItem.Text = global::RagnaCustoms.App.Properties.Resources.Song_Form_LogFile;
             this.logFileToolStripMenuItem.Click += new System.EventHandler(this.logFileToolStripMenuItem_Click);
             // 
             // logsScreenToolStripMenuItem
             // 
             this.logsScreenToolStripMenuItem.Name = "logsScreenToolStripMenuItem";
-            this.logsScreenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.logsScreenToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.logsScreenToolStripMenuItem.Text = global::RagnaCustoms.App.Properties.Resources.Song_Form_LogScreen;
             this.logsScreenToolStripMenuItem.Visible = false;
             this.logsScreenToolStripMenuItem.Click += new System.EventHandler(this.logScreenToolStripMenuItem_Click);
@@ -340,7 +344,7 @@ namespace RagnaCustoms.Views
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.aboutToolStripMenuItem.Text = global::RagnaCustoms.App.Properties.Resources.Song_Form_About;
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -357,7 +361,7 @@ namespace RagnaCustoms.Views
             // 
             this.englishToolStripMenuItem.CheckOnClick = true;
             this.englishToolStripMenuItem.Name = "englishToolStripMenuItem";
-            this.englishToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.englishToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.englishToolStripMenuItem.Text = "English";
             this.englishToolStripMenuItem.Click += new System.EventHandler(this.englishToolStripMenuItem_Click);
             // 
@@ -365,9 +369,23 @@ namespace RagnaCustoms.Views
             // 
             this.frenchToolStripMenuItem.CheckOnClick = true;
             this.frenchToolStripMenuItem.Name = "frenchToolStripMenuItem";
-            this.frenchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.frenchToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.frenchToolStripMenuItem.Text = "Français";
             this.frenchToolStripMenuItem.Click += new System.EventHandler(this.frenchToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(187, 22);
+            this.toolStripMenuItem2.Text = global::RagnaCustoms.App.Properties.Resources.Song_Form_ConfigureApiKey;
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            // 
+            // downloadFolderToolStripMenuItem
+            // 
+            this.downloadFolderToolStripMenuItem.Name = "downloadFolderToolStripMenuItem";
+            this.downloadFolderToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.downloadFolderToolStripMenuItem.Text = "Download folder ...";
+            this.downloadFolderToolStripMenuItem.Click += new System.EventHandler(this.downloadFolderToolStripMenuItem_Click);
             // 
             // SongForm
             // 
@@ -430,5 +448,7 @@ namespace RagnaCustoms.Views
         private DataGridViewTextBoxColumn SongMapper;
         private DataGridViewButtonColumn SongDownload;
         private DataGridViewButtonColumn Delete;
+        private ToolStripMenuItem toolStripMenuItem2;
+        private ToolStripMenuItem downloadFolderToolStripMenuItem;
     }
 }

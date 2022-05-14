@@ -7,6 +7,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using RagnaCustoms.App.Extensions;
 using RagnaCustoms.App.Properties;
 using RagnaCustoms.App.Views;
@@ -73,29 +74,14 @@ namespace RagnaCustoms.Views
                 if (senderGrid.Columns[e.ColumnIndex].DataPropertyName == "Download")
                 {
                     senderGrid.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Aquamarine;
-                    Presenter.DownloadAsync(song.Id);
+                    Presenter.DownloadAsync(song.Id,song.CurrentFolder);
                 }
                 else if (senderGrid.Columns[e.ColumnIndex].DataPropertyName == "Delete")
                 {
                     try
                     {
-                        var songDirectoryPath = Path.Combine(DirProvider.RagnarockSongDirectoryPath, $"{song.Name.Slug()}{song.Author.Slug()}{song.Mapper.Slug()}");
-                        Directory.Delete(songDirectoryPath, true);
-                        //var songs = new List<SongSearchModel>();                        
-                        //for(var i = 0; i<senderGrid.Rows.Count ; i++)
-                        //{
-                        //    var thisSong = (SongSearchModel)senderGrid.Rows[i].DataBoundItem;
-                        //    if (song.Id != thisSong.Id)
-                        //    {
-                        //        songs.Add(song);
-                        //    }
-                        //}
-                        //senderGrid.Rows.Clear();
-                        //senderGrid.Rows.Add(songs);
-                        
+                        Directory.Delete(song.CurrentFolder, true);                            
                         senderGrid.Rows.Remove(senderGrid.Rows[e.RowIndex]);
-
-
                     }
                     catch(Exception ex)
                     {
@@ -231,17 +217,6 @@ namespace RagnaCustoms.Views
             }
         }
 
-        private void sendScoreToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var result = Oculus.SendScore();
-            if (result == 0)
-                MessageBox.Show(Resources.Song_Form_SyncComplete, "RagnaCustoms", MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-            else if (result == 1)
-                MessageBox.Show(Resources.Song_Form_NoCompatibleDeviceFound, "RagnaCustoms", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-        }
-
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             var dir = DirProvider.getCustomDirectory().FullName;
@@ -250,6 +225,25 @@ namespace RagnaCustoms.Views
 
         private void SongForm_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private void downloadFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.InitialDirectory = Presenter.BaseFolder;
+            dialog.IsFolderPicker = true;
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                Presenter.BaseFolder = dialog.FileName;
+                MessageBox.Show("You selected: " + dialog.FileName);
+            }
+        
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            Presenter.ApiKey = Prompt.ShowDialog(Resources.Song_Form_EnterYourApiKey, "RagnaCustoms", Presenter.ApiKey);
 
         }
     }

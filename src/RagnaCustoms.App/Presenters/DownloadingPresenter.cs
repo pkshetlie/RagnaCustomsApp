@@ -34,10 +34,10 @@ namespace RagnaCustoms.Presenters
             View.Close();
         }
 
-        public virtual void Download(int songId, bool autoClose = false)
+        public virtual void Download(int songId, bool autoClose = false, string songFolder = null)
         {
             View.DownloadPercent = default;
-            SongProvider.DownloadAsync(songId, DownloadProgressChanged, DownloadCompleted, DownloadTitle, autoClose);
+            SongProvider.DownloadAsync(songId, DownloadProgressChanged, DownloadCompleted, DownloadTitle, autoClose, songFolder);
         }
         public virtual void DownloadList(int listId, bool autoClose = false)
         {

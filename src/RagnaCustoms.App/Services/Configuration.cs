@@ -46,6 +46,11 @@ namespace RagnaCustoms.Services
             get => false;
             set => Set(nameof(SendScoreAutomatically), value ? bool.TrueString : bool.FalseString);
         }
+        public string BaseFolder
+        {
+            get => Get(nameof(BaseFolder));
+            set => Set(nameof(BaseFolder), value);
+        }
 
         public bool Overlay
         {

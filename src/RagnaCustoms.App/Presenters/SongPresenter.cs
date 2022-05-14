@@ -17,6 +17,7 @@ namespace RagnaCustoms.Presenters
             View.Overlay = Overlay;
             DownloadingPresenter = downloadingPresenter;
             SongProvider = songProvider;
+
         }
 
         protected virtual Configuration Configuration { get; }
@@ -40,6 +41,11 @@ namespace RagnaCustoms.Presenters
         {
             get => Configuration.Overlay;
             set => Configuration.Overlay = value;
+        } 
+        public virtual string BaseFolder
+        {
+            get => Configuration.BaseFolder;
+            set => Configuration.BaseFolder = value;
         }
 
 
@@ -70,9 +76,9 @@ namespace RagnaCustoms.Presenters
             View.Songs = await SongProvider.SearchOnlineAsync(term);
         }
 
-        public virtual void DownloadAsync(int songId)
+        public virtual void DownloadAsync(int songId, string songFolder= null)
         {
-            DownloadingPresenter.Download(songId, Configuration.AutoCloseDownload);
+            DownloadingPresenter.Download(songId, Configuration.AutoCloseDownload, songFolder);
             DownloadingPresenter.ShowAsPopup();
         }
 
