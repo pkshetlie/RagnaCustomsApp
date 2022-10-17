@@ -14,6 +14,8 @@ namespace RagnaCustoms.Presenters
             View = view;
             View.Presenter = this;
             View.AutoCloseDownload = AutoCloseDownload;
+            View.CopyRanked = CopyRanked;
+            View.OrderAlphabeticaly = OrderAlphabeticaly;
             View.Overlay = Overlay;
             DownloadingPresenter = downloadingPresenter;
             SongProvider = songProvider;
@@ -53,6 +55,17 @@ namespace RagnaCustoms.Presenters
         {
             get => Configuration.AutoCloseDownload;
             set => Configuration.AutoCloseDownload = value;
+        }
+
+        public virtual bool CopyRanked
+        {
+            get => Configuration.CopyRanked;
+            set => Configuration.CopyRanked = value;
+        }
+         public virtual bool OrderAlphabeticaly
+        {
+            get => Configuration.OrderAlphabetically;
+            set => Configuration.OrderAlphabetically = value;
         }
 
         public virtual bool EasyStreamRequest

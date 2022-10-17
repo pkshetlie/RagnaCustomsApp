@@ -52,6 +52,17 @@ namespace RagnaCustoms.Services
             set => Set(nameof(BaseFolder), value);
         }
 
+        public bool CopyRanked
+        {
+            get => Get(nameof(CopyRanked)) == bool.TrueString;
+            set => Set(nameof(CopyRanked), value ? bool.TrueString : bool.FalseString);
+        }
+
+        public bool OrderAlphabetically
+        {
+            get => Get(nameof(OrderAlphabetically)) == bool.TrueString;
+            set => Set(nameof(OrderAlphabetically), value ? bool.TrueString : bool.FalseString);
+        }
         public bool Overlay
         {
             get => Get(nameof(Overlay)) == bool.TrueString;
@@ -90,9 +101,7 @@ namespace RagnaCustoms.Services
 
         private string Get(string key)
         {
-            return (string)Registry.GetValue(KeyName,
-                key,
-                "");
+            return (string)Registry.GetValue(KeyName,key,"");
         }
 
         private void Set(string key, string value)

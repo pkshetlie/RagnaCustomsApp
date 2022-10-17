@@ -46,6 +46,17 @@ namespace RagnaCustoms.Views
         {
             get => autoCloseDownloadToolStripMenuItem.Checked;
             set => autoCloseDownloadToolStripMenuItem.Checked = value;
+        } 
+
+        public bool CopyRanked
+        {
+            get => copyRankedSongItem.Checked;
+            set => copyRankedSongItem.Checked = value;
+        }
+        public bool OrderAlphabeticaly
+        {
+            get => orderAlphabeticalyToolStripMenuItem.Checked;
+            set => orderAlphabeticalyToolStripMenuItem.Checked = value;
         }
 
         public bool Overlay
@@ -245,6 +256,22 @@ namespace RagnaCustoms.Views
         {
             Presenter.ApiKey = Prompt.ShowDialog(Resources.Song_Form_EnterYourApiKey, "RagnaCustoms", Presenter.ApiKey);
 
+        }
+
+        private void copyRankedSongItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void copyRankedSongItem_CheckedChanged(object sender, EventArgs e)
+        {
+            Presenter.CopyRanked = copyRankedSongItem.Checked;
+
+        }
+
+        private void orderAlphabeticalyToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            Presenter.OrderAlphabeticaly = orderAlphabeticalyToolStripMenuItem.Checked;
         }
     }
 }

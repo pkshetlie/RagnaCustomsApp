@@ -147,18 +147,45 @@ namespace RagnaCustoms.Models
             downloadTitle?.Invoke($"{songInfo.Name} by {songInfo.Mapper}");
             var songDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(),
                 $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
-            if(songFolder != null)
+            if (configuration.OrderAlphabetically)
+            {
+                songDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(), "Alphabet");
+                if (!Directory.Exists(songDirectoryPath))
+                {
+                    Directory.CreateDirectory(songDirectoryPath);
+                }
+                songDirectoryPath = Path.Combine(songDirectoryPath, songInfo.Name.Slug().Substring(0, 1).ToLower());
+                if (!Directory.Exists(songDirectoryPath))
+                {
+                    Directory.CreateDirectory(songDirectoryPath);
+                }
+                songDirectoryPath = Path.Combine(songDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
+            }
+
+            var rankedDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(),"Ranked",
+                            $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
+
+            if (configuration.CopyRanked)
+            {
+                var RankedDir = Path.Combine(DirProvider.getCustomDirectory().ToString(), "Ranked");
+                if (!Directory.Exists(RankedDir))
+                {
+                    Directory.CreateDirectory(RankedDir);
+                }
+            }
+            if (songFolder != null)
             {
                 songDirectoryPath = songFolder;
             }
+           
+            //if (File.Exists(Path.Combine(songDirectoryPath, ".hash")) &&
+            //    File.ReadAllText(Path.Combine(songDirectoryPath, ".hash")) == songInfo.Hash && (configuration.CopyRanked && ))
+            //{
 
-            if (File.Exists(Path.Combine(songDirectoryPath, ".hash")) &&
-                File.ReadAllText(Path.Combine(songDirectoryPath, ".hash")) == songInfo.Hash)
-            {
-                Oculus.PushSong(songDirectoryPath);
-                downloadCompleted?.Invoke(autoClose);
-                return;
-            }
+            //    Oculus.PushSong(songDirectoryPath);
+            //    downloadCompleted?.Invoke(autoClose);
+            //    return;
+            //}
 
 
             client.DownloadProgressChanged +=
@@ -190,6 +217,21 @@ namespace RagnaCustoms.Models
                         file.CopyTo(tempPath, false);
                     }
                 }
+                if (configuration.CopyRanked)
+                {
+                    if (Directory.Exists(rankedDirectoryPath))
+                    {
+                        Directory.Delete(rankedDirectoryPath, true);
+                    }
+                    Directory.CreateDirectory(rankedDirectoryPath);
+
+                    var files = songDirectory.GetFiles();
+                    foreach (var file in files)
+                    {
+                        var tempPath = Path.Combine(rankedDirectoryPath, file.Name);
+                        file.CopyTo(tempPath, false);
+                    }
+                }
 
                 using (var writer = new StreamWriter(Path.Combine(songDirectoryPath, ".hash"), false))
                 {
@@ -209,6 +251,12 @@ namespace RagnaCustoms.Models
                 downloadCompleted?.Invoke(autoClose);
             }
         }
+
+        public void CopyRankedSong()
+        {
+
+        }
+
 
         public virtual async Task DownloadListAsync(int listId, Action<int> downloadProgressChanged,
            Action<bool> downloadCompleted, Action<string> downloadTitle, bool autoClose = false)
