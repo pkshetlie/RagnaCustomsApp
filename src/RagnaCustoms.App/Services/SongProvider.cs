@@ -15,6 +15,12 @@ namespace RagnaCustoms.Models
 {
     public class SongProvider : ISongProvider
     {
+        private Configuration configuration;
+
+        public SongProvider()
+        {
+            configuration = new Configuration();
+        }
         public IEnumerable<Song> SearchLocal()
         {
             return new DirProvider().GetLocalSongs().ToList();
@@ -31,7 +37,7 @@ namespace RagnaCustoms.Models
         {
             using var client = new HttpClient();
 
-            var uri = new Uri($"https://ragnacustoms.com/api/song/{id}");
+            var uri = new Uri($"https://api.ragnacustoms.com/api/song/{id}");
             var result = await client.GetAsync(uri);
             if (result.IsSuccessStatusCode)
             {
@@ -48,7 +54,7 @@ namespace RagnaCustoms.Models
         {
             using var client = new HttpClient();
 
-            var uri = new Uri($"https://ragnacustoms.com/api/song/check-updates");
+            var uri = new Uri($"https://api.ragnacustoms.com/api/song/check-updates");
             var result = await client.GetAsync(uri);
             if (result.IsSuccessStatusCode)
             {
@@ -65,7 +71,7 @@ namespace RagnaCustoms.Models
         {
             using var client = new HttpClient();
 
-            var uri = new Uri($"https://ragnacustoms.com/api/search/{term}");
+            var uri = new Uri($"https://api.ragnacustoms.com/api/search/{term}");
             var result = await client.GetAsync(uri);
             if (result.IsSuccessStatusCode)
             {
@@ -126,11 +132,11 @@ namespace RagnaCustoms.Models
         {
             using var client = new WebClient();
             var configuration = new Configuration();
-            var uri = new Uri($"https://ragnacustoms.com/songs/download/{songId}");
+            var uri = new Uri($"https://api.ragnacustoms.com/songs/download/{songId}");
 
             if (!string.IsNullOrWhiteSpace(configuration.ApiKey))
             {
-                uri = new Uri($"https://ragnacustoms.com/songs/download/{songId}/{configuration.ApiKey}");
+                uri = new Uri($"https://api.ragnacustoms.com/songs/download/{songId}/{configuration.ApiKey}");
             }
 
             var tempDirectoryPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
@@ -217,7 +223,7 @@ namespace RagnaCustoms.Models
                         file.CopyTo(tempPath, false);
                     }
                 }
-                if (configuration.CopyRanked)
+                if (configuration.CopyRanked && songInfo.IsRanked == "True")
                 {
                     if (Directory.Exists(rankedDirectoryPath))
                     {
@@ -252,60 +258,71 @@ namespace RagnaCustoms.Models
             }
         }
 
-        public void CopyRankedSong()
-        {
-
-        }
-
 
         public virtual async Task DownloadListAsync(int listId, Action<int> downloadProgressChanged,
            Action<bool> downloadCompleted, Action<string> downloadTitle, bool autoClose = false)
         {
 
             using var webClient = new WebClient();
-            var json = webClient.DownloadString("https://ragnacustoms.com/api/song-list/" + listId);
-            var stuff = JsonConvert.DeserializeObject<List<Song>>(json);
+            var json = webClient.DownloadString("https://api.ragnacustoms.com/api/song-list/" + listId);
+            var stuff = JsonConvert.DeserializeObject<List<SongSearchModel>>(json);
             var i = 0;
 
-            foreach (var song in stuff)
+            foreach (var songInfo in stuff)
             {
-                var songId = song.Id;
+                var songId = songInfo.Id;
                 using var client = new WebClient();
-                var configuration = new Configuration();
-                var uri = new Uri($"https://ragnacustoms.com/songs/download/{songId}");
+                var uri = new Uri($"https://api.ragnacustoms.com/songs/download/{songId}");
 
                 if (!string.IsNullOrWhiteSpace(configuration.ApiKey))
                 {
-                    uri = new Uri($"https://ragnacustoms.com/songs/download/{songId}/{configuration.ApiKey}");
+                    uri = new Uri($"https://api.ragnacustoms.com/songs/download/{songId}/{configuration.ApiKey}");
                 }
 
                 var tempDirectoryPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
                 var tempDirectory = Directory.CreateDirectory(tempDirectoryPath);
                 var tempFilePath = Path.GetTempFileName();
 
-                var songInfo = song;
 
                 var songDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(),
-                    $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");        
-
-                if (File.Exists(Path.Combine(songDirectoryPath, ".hash")) &&
-                    File.ReadAllText(Path.Combine(songDirectoryPath, ".hash")) == songInfo.Hash)
+                 $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
+                
+                if (configuration.OrderAlphabetically)
                 {
-                    Oculus.PushSong(songDirectoryPath);
-                    i = i + 1;
-                    var percentage = (int)Math.Round((double)i / (double)stuff.Count() * 100);
-
-                    downloadProgressChanged?.Invoke(percentage);
-                    if (i >= stuff.Count())
+                    songDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(), "Alphabet");
+                    if (!Directory.Exists(songDirectoryPath))
                     {
-                        downloadTitle?.Invoke($"Finish");
+                        Directory.CreateDirectory(songDirectoryPath);
                     }
-                    else
+                    songDirectoryPath = Path.Combine(songDirectoryPath, songInfo.Name.Slug().Substring(0, 1).ToLower());
+                    if (!Directory.Exists(songDirectoryPath))
                     {
-                        downloadTitle?.Invoke($"{percentage}% {songInfo.Name} by {songInfo.Mapper}");
+                        Directory.CreateDirectory(songDirectoryPath);
                     }
-                    continue;
+                    songDirectoryPath = Path.Combine(songDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
                 }
+
+                var rankedDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(), "Ranked",
+                                $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
+
+                //if (File.Exists(Path.Combine(songDirectoryPath, ".hash")) &&
+                //    File.ReadAllText(Path.Combine(songDirectoryPath, ".hash")) == songInfo.Hash)
+                //{
+                //    Oculus.PushSong(songDirectoryPath);
+                //    i = i + 1;
+                //    var percentage = (int)Math.Round((double)i / (double)stuff.Count() * 100);
+
+                //    downloadProgressChanged?.Invoke(percentage);
+                //    if (i >= stuff.Count())
+                //    {
+                //        downloadTitle?.Invoke($"Finish");
+                //    }
+                //    else
+                //    {
+                //        downloadTitle?.Invoke($"{percentage}% {songInfo.Name} by {songInfo.Mapper}");
+                //    }
+                //    continue;
+                //}
 
                 client.DownloadFileCompleted += ClientDownloadFileCompleted;
                 client.DownloadFileAsync(uri, tempFilePath);
@@ -337,6 +354,21 @@ namespace RagnaCustoms.Models
                         foreach (var file in files)
                         {
                             var tempPath = Path.Combine(songDirectoryPath, file.Name);
+                            file.CopyTo(tempPath, false);
+                        }
+                    }
+                    if (configuration.CopyRanked && songInfo.IsRanked == "True")
+                    {
+                        if (Directory.Exists(rankedDirectoryPath))
+                        {
+                            Directory.Delete(rankedDirectoryPath, true);
+                        }
+                        Directory.CreateDirectory(rankedDirectoryPath);
+
+                        var files = songDirectory.GetFiles();
+                        foreach (var file in files)
+                        {
+                            var tempPath = Path.Combine(rankedDirectoryPath, file.Name);
                             file.CopyTo(tempPath, false);
                         }
                     }
