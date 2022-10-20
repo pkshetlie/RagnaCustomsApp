@@ -30,6 +30,8 @@ namespace RagnaCustoms.App.Views
             "!rc", "!rcs", "!rcr"
         };
 
+        public bool botEnabled = false;
+
         public Configuration _configuration;
         private JoinedChannel _joinedChannel;
         
@@ -119,11 +121,9 @@ namespace RagnaCustoms.App.Views
             InitializeComponent();
 
             _configuration = new Configuration();
-            twitchChannel.Text = _configuration.TwitchChannel;
-            twitchOAuth.Text = _configuration.AuthTmi;
-            autoStart.Checked = _configuration.TwitchBotAutoStart;
-            Checkbox_EasyStreamRequest.Checked = _configuration.EasyStreamRequest;
-            bot_enabled.Checked = _configuration.TwitchBotAutoStart;
+           
+            botEnabled = _configuration.TwitchBotAutoStart;
+            EnableButton.Text = botEnabled ? "Stop" : "Start";
 
             new FileChangeEvent(Program.RagnarockSongLogsDirectoryPath, "Ragnarock.log").SetLambda(OnFileChange);
             
@@ -148,19 +148,23 @@ namespace RagnaCustoms.App.Views
 
         public void checkEnabled()
         {
-            if (bot_enabled.Checked &&
-                (string.IsNullOrEmpty(twitchOAuth.Text) || string.IsNullOrEmpty(twitchChannel.Text)))
+            if(EnableButton.Text == "Start")
             {
-                MessageBox.Show("You need to configure before enable", "RagnaCustoms.com", MessageBoxButtons.OK,
+                botEnabled = true;
+            }
+            if (botEnabled &&
+                (string.IsNullOrEmpty(_configuration.AuthTmi) || string.IsNullOrEmpty(_configuration.TwitchChannel)))
+            {
+                MessageBox.Show("You need to configure in preference before enable", "RagnaCustoms.com", MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
                 //MessageBox.Show(Resources.app.strings.Error_2, "RagnaCustoms.com", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                bot_enabled.Checked = false;
+                botEnabled = false;
                 return;
             }
 
-            if (bot_enabled.Checked)
+            if (botEnabled)
             {
-                var credentials = new ConnectionCredentials(twitchChannel.Text, twitchOAuth.Text);
+                var credentials = new ConnectionCredentials(_configuration.TwitchChannel, _configuration.AuthTmi);
                 var clientOptions = new ClientOptions
                 {
                     MessagesAllowedInPeriod = 750,
@@ -169,7 +173,7 @@ namespace RagnaCustoms.App.Views
 
                 _twitchClient = new TwitchClient(new WebSocketClient(clientOptions));
 
-                _twitchClient.Initialize(credentials, twitchChannel.Text);
+                _twitchClient.Initialize(credentials, _configuration.TwitchChannel);
                 _twitchClient.OnMessageReceived += OnMessageReceived;
                 _twitchClient.OnUserBanned += OnUserBanned;
 
@@ -187,7 +191,7 @@ namespace RagnaCustoms.App.Views
 
         private void OnConnected(object sender, OnConnectedArgs e)
         {
-            _joinedChannel = _twitchClient.GetJoinedChannel(twitchChannel.Text);
+            _joinedChannel = _twitchClient.GetJoinedChannel(_configuration.TwitchChannel);
             _twitchClient.SendMessage(_joinedChannel, $"{Prefixe} Ragnacustoms.com's bot connected");
             //TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.app.strings.WelcomeBot}");
         }
@@ -219,7 +223,7 @@ namespace RagnaCustoms.App.Views
             var songProvider = new SongProvider();
             var downloadingView = new DownloadingForm();
             var downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
-            downloadingPresenter.Download(songId, true);
+            downloadingPresenter.Download(songId, true, null, _configuration.RequestFolder);
             Application.Run(downloadingView);
         }
 
@@ -244,7 +248,7 @@ namespace RagnaCustoms.App.Views
                 {
                     if (!Commandes.ContainsKey("")) return;
                     var cmd = Commandes[""];
-                    var success = cmd.Action(_joinedChannel, prefix, _twitchClient, this, e);
+                    var success = cmd.Action(_joinedChannel, _twitchClient, this, e);
                     if (!success) _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}An error has occurred !");
                 }
                 else
@@ -264,7 +268,7 @@ namespace RagnaCustoms.App.Views
                         return;
                     }
 
-                    var success = cmd.Action(_joinedChannel, prefix, _twitchClient, this, e);
+                    var success = cmd.Action(_joinedChannel, _twitchClient, this, e);
                     if (!success) _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}An error has occurred !");
                 }
             }).Start();
@@ -384,29 +388,8 @@ namespace RagnaCustoms.App.Views
             }
         }
 
-        private void twitchOAuth_TextChanged_1(object sender, EventArgs e)
-        {
-            bot_enabled.Checked = false;
-            _configuration.AuthTmi = twitchOAuth.Text;
-        }
+        
 
-        private void twitchChannel_TextChanged(object sender, EventArgs e)
-        {
-            bot_enabled.Checked = false;
-            _configuration.TwitchChannel = twitchChannel.Text;
-        }
-
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void helptwitchtmi_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void botMessagePrefixLabel_Click(object sender, EventArgs e)
-        {
-        }
 
         private void TwitchBotForm_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -419,32 +402,10 @@ namespace RagnaCustoms.App.Views
             }
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void EnableButton_Click(object sender, EventArgs e)
         {
-            var sInfo = new ProcessStartInfo("https://www.twitch.tv/ragnacustoms_com");
-            Process.Start(sInfo);
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            _configuration.TwitchBotAutoStart = autoStart.Checked;
-        }
-
-        private void prefix_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void TwitchBotForm_Load(object sender, EventArgs e)
-        {
+            checkEnabled();
+            EnableButton.Text = botEnabled ? "Stop" : "Start";
         }
     }
 }

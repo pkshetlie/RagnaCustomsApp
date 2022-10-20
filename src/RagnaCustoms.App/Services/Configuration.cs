@@ -34,6 +34,12 @@ namespace RagnaCustoms.Services
             set => Set(nameof(AuthTmi), value);
         }
 
+        public string RequestFolder
+        {
+            get => Get(nameof(RequestFolder));
+            set => Set(nameof(RequestFolder), value);
+        }
+
         public bool TwitchBotAutoStart
         {
             get => Get(nameof(TwitchBotAutoStart)) == bool.TrueString;
@@ -98,6 +104,7 @@ namespace RagnaCustoms.Services
             }
             set => Set(nameof(ViewerLang), JsonConvert.SerializeObject(value));
         }
+
 
         private string Get(string key)
         {

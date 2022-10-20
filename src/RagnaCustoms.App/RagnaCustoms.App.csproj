@@ -84,6 +84,12 @@
     <Compile Include="Models\Logs.cs" />
     <Compile Include="Models\InfoDat.cs" />
     <Compile Include="Models\Song.cs" />
+    <Compile Include="Preferences.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Preferences.Designer.cs">
+      <DependentUpon>Preferences.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presenters\DownloadingPresenter.cs" />
     <Compile Include="Presenters\IDownloadingPresenter.cs" />
     <Compile Include="Presenters\IPresenter.cs" />
@@ -144,6 +150,9 @@
     <Compile Include="Views\TwitchBotForm.Designer.cs">
       <DependentUpon>TwitchBotForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Preferences.resx">
+      <DependentUpon>Preferences.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.fr.resx">
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>

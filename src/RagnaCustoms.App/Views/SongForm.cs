@@ -1,31 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using RagnaCustoms.App;
 using RagnaCustoms.App.Extensions;
 using RagnaCustoms.App.Properties;
 using RagnaCustoms.App.Views;
 using RagnaCustoms.Models;
 using RagnaCustoms.Presenters;
 using RagnaCustoms.Services;
+using Configuration = RagnaCustoms.Services.Configuration;
 
 namespace RagnaCustoms.Views
 {
     public partial class SongForm : Form, ISongView
     {
+        private Configuration _configuration;
+
         public SongForm()
         {
             InitializeComponent();
             SearchResultGridView.AutoGenerateColumns = false;
-            var conf = new Configuration();
-            englishToolStripMenuItem.Checked = conf.Lang == "en";
-            frenchToolStripMenuItem.Checked = conf.Lang == "fr";
+            _configuration= new Configuration();
+            englishToolStripMenuItem.Checked = _configuration.Lang == "en";
+            frenchToolStripMenuItem.Checked = _configuration.Lang == "fr";
             Text += $" {Assembly.GetExecutingAssembly().GetName().Version.ToString(3)}";
         }
 
@@ -35,35 +41,9 @@ namespace RagnaCustoms.Views
         {
             get => (IEnumerable<SongSearchModel>)SearchResultGridView.DataSource;
             set => SearchResultGridView.DataSource = value;
-        }
-
-        public bool SendScoreAutomatically
-        {
-            get => false;
-        }
-
-        public bool AutoCloseDownload
-        {
-            get => autoCloseDownloadToolStripMenuItem.Checked;
-            set => autoCloseDownloadToolStripMenuItem.Checked = value;
         } 
 
-        public bool CopyRanked
-        {
-            get => copyRankedSongItem.Checked;
-            set => copyRankedSongItem.Checked = value;
-        }
-        public bool OrderAlphabeticaly
-        {
-            get => orderAlphabeticalyToolStripMenuItem.Checked;
-            set => orderAlphabeticalyToolStripMenuItem.Checked = value;
-        }
-
-        public bool Overlay
-        {
-            get => overlayToolStripMenuItem.Checked;
-            set => overlayToolStripMenuItem.Checked = value;
-        }
+   
 
         public virtual void ShowAsPopup()
         {
@@ -127,10 +107,6 @@ namespace RagnaCustoms.Views
             logsForm.Show();
         }
 
-        private void autoCloseDownloadToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
-        {
-            Presenter.AutoCloseDownload = autoCloseDownloadToolStripMenuItem.Checked;
-        }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -188,10 +164,6 @@ namespace RagnaCustoms.Views
             }
         }
 
-        private void overlayToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
-        {
-            Presenter.Overlay = overlayToolStripMenuItem.Checked;
-        }
 
         private void configureApiKeyToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -230,7 +202,7 @@ namespace RagnaCustoms.Views
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            var dir = DirProvider.getCustomDirectory().FullName;
+            var dir = _configuration.BaseFolder ?? DirProvider.getCustomDirectory().FullName;
             Process.Start("explorer.exe", dir);
         }
 
@@ -240,16 +212,7 @@ namespace RagnaCustoms.Views
         }
 
         private void downloadFolderToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.InitialDirectory = Presenter.BaseFolder;
-            dialog.IsFolderPicker = true;
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                Presenter.BaseFolder = dialog.FileName;
-                MessageBox.Show("You selected: " + dialog.FileName);
-            }
-        
+        {        
         }
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
@@ -258,20 +221,15 @@ namespace RagnaCustoms.Views
 
         }
 
-        private void copyRankedSongItem_Click(object sender, EventArgs e)
+        private void preferencesToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-
+            var pref = new Preferences();
+            pref.ShowDialog();
         }
 
-        private void copyRankedSongItem_CheckedChanged(object sender, EventArgs e)
+        private void twitchBotToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.CopyRanked = copyRankedSongItem.Checked;
-
-        }
-
-        private void orderAlphabeticalyToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
-        {
-            Presenter.OrderAlphabeticaly = orderAlphabeticalyToolStripMenuItem.Checked;
+            new TwitchBotForm().Show();
         }
     }
 }

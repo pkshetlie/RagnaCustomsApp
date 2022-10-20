@@ -16,7 +16,6 @@ namespace RagnaCustoms.App
 
         bool Action(
             JoinedChannel joinedChannel,
-            TextBox prefixe,
             TwitchClient client,
             TwitchBotForm me,
             OnMessageReceivedArgs e

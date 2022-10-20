@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ using RagnaCustoms.Presenters;
 using RagnaCustoms.Services;
 using RagnaCustoms.Views;
 using Sentry;
+using Configuration = RagnaCustoms.Services.Configuration;
 
 namespace RagnaCustoms.App
 {
@@ -35,6 +37,8 @@ namespace RagnaCustoms.App
 
         public static readonly string RagnarockSongLogsFilePath = Path.Combine(RagnarockSongLogsDirectoryPath, "Ragnarock.log");
 
+        //--install "ragnac://list/2209"
+
         /// <summary>
         ///     The main entry point for the application.
         /// </summary>
@@ -51,6 +55,8 @@ namespace RagnaCustoms.App
                        o.TracesSampleRate = 1.0;
                    }))
             {
+                var configuration = new Configuration();
+               
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 var customDirectory = DirProvider.getCustomDirectory(); //on force la creation du dossier.
@@ -58,8 +64,8 @@ namespace RagnaCustoms.App
                 var songProvider = new SongProvider();
                 var downloadingView = new DownloadingForm();
                 var downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
-                var configuration = new Configuration();              
-
+               
+                
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(configuration.Lang ?? "en", true);
                 Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
                 if (args.Contains("--install"))
@@ -126,7 +132,7 @@ namespace RagnaCustoms.App
 
                     // Create first view to display
                     var songView = new SongForm();
-                    var songPresenter = new SongPresenter(configuration, songView, downloadingPresenter, songProvider);
+                    var songPresenter = new SongPresenter(songView, downloadingPresenter, songProvider);
                     if (string.IsNullOrEmpty(configuration.ApiKey))
                         MessageBox.Show(songView, Resources.Program_Api_Message1, Resources.Program_Api_Message1_Title,
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);

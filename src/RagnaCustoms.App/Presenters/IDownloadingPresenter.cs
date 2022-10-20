@@ -2,6 +2,6 @@
 {
     public interface IDownloadingPresenter : IPresenter
     {
-        void Download(int songId, bool autoClose,string songFolder=null);
+        void Download(int songId, bool autoClose,string songFolder=null, string subFolder = null);
     }
 }

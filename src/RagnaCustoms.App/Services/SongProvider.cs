@@ -128,7 +128,7 @@ namespace RagnaCustoms.Models
         }
 
         public virtual async Task DownloadAsync(int songId, Action<int> downloadProgressChanged,
-            Action<bool> downloadCompleted, Action<string> downloadTitle, bool autoClose = false, string songFolder = null)
+            Action<bool> downloadCompleted, Action<string> downloadTitle, bool autoClose = false, string songFolder = null, string subfolder = null)
         {
             using var client = new WebClient();
             var configuration = new Configuration();
@@ -149,10 +149,11 @@ namespace RagnaCustoms.Models
                 downloadCompleted?.Invoke(autoClose);
                 return;
             }
+            var songDir = $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}";
 
             downloadTitle?.Invoke($"{songInfo.Name} by {songInfo.Mapper}");
             var songDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(),
-                $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
+                songDir);
             if (configuration.OrderAlphabetically)
             {
                 songDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(), "Alphabet");
@@ -169,7 +170,7 @@ namespace RagnaCustoms.Models
             }
 
             var rankedDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(),"Ranked",
-                            $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
+                            songDir);
 
             if (configuration.CopyRanked)
             {
@@ -183,7 +184,15 @@ namespace RagnaCustoms.Models
             {
                 songDirectoryPath = songFolder;
             }
-           
+            if(subfolder != null)
+            {
+                songDirectoryPath = Path.Combine(configuration.BaseFolder, subfolder);//, songDir);
+                if (!Directory.Exists(songDirectoryPath))
+                {
+                    Directory.CreateDirectory(songDirectoryPath);
+                }
+                songDirectoryPath = Path.Combine(songDirectoryPath, songDir);
+            }
             //if (File.Exists(Path.Combine(songDirectoryPath, ".hash")) &&
             //    File.ReadAllText(Path.Combine(songDirectoryPath, ".hash")) == songInfo.Hash && (configuration.CopyRanked && ))
             //{
