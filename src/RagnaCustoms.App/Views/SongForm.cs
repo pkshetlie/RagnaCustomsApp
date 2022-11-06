@@ -119,7 +119,7 @@ namespace RagnaCustoms.Views
 
         private void checkAccessToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var device = Oculus.GetDevice();
+            var device = AndroidDevice.GetFirstFoundDevice();
             if (device != null)
                 MessageBox.Show(
                     string.Format(Resources.Song_Form_CompatibleDeviceFound, device.Manufacturer, device.Description),
@@ -131,7 +131,7 @@ namespace RagnaCustoms.Views
 
         private void syncSongsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var result = Oculus.SyncSongs();
+            var result = AndroidDevice.SyncSongs();
             if (result == 0)
                 MessageBox.Show(Resources.Song_Form_SyncComplete, "RagnaCustoms", MessageBoxButtons.OK,
                     MessageBoxIcon.Information);

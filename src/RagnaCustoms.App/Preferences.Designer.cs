@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Preferences));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.defaultDirButton = new System.Windows.Forms.Button();
@@ -52,6 +53,7 @@
             this.helptwitchtmi = new System.Windows.Forms.Label();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.twitchOAuth = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -60,6 +62,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.defaultDirButton);
@@ -72,10 +76,20 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "General";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(10, 53);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(184, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "Configure Game.ini";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 28);
+            this.label2.Location = new System.Drawing.Point(7, 16);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 13);
             this.label2.TabIndex = 4;
@@ -83,7 +97,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(10, 44);
+            this.textBox1.Location = new System.Drawing.Point(10, 32);
             this.textBox1.Name = "textBox1";
             this.textBox1.PasswordChar = '*';
             this.textBox1.Size = new System.Drawing.Size(184, 20);
@@ -92,7 +106,7 @@
             // 
             // defaultDirButton
             // 
-            this.defaultDirButton.Location = new System.Drawing.Point(146, 97);
+            this.defaultDirButton.Location = new System.Drawing.Point(146, 103);
             this.defaultDirButton.Name = "defaultDirButton";
             this.defaultDirButton.Size = new System.Drawing.Size(54, 23);
             this.defaultDirButton.TabIndex = 2;
@@ -102,15 +116,15 @@
             // 
             // DefaultDirTxt
             // 
-            this.DefaultDirTxt.Location = new System.Drawing.Point(10, 98);
+            this.DefaultDirTxt.Location = new System.Drawing.Point(10, 104);
             this.DefaultDirTxt.Name = "DefaultDirTxt";
-            this.DefaultDirTxt.Size = new System.Drawing.Size(184, 20);
+            this.DefaultDirTxt.Size = new System.Drawing.Size(140, 20);
             this.DefaultDirTxt.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 81);
+            this.label1.Location = new System.Drawing.Point(7, 90);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 13);
             this.label1.TabIndex = 0;
@@ -293,6 +307,17 @@
             this.twitchOAuth.TabIndex = 22;
             this.twitchOAuth.TextChanged += new System.EventHandler(this.twitchOAuth_TextChanged);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(23, 76);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(157, 9);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "Works for windows and quest, pico if plugged";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
+            // 
             // Preferences
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -345,5 +370,7 @@
         public System.Windows.Forms.CheckBox autoStart;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox RequestFolderText;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label6;
     }
 }

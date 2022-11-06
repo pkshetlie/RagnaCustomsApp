@@ -14,12 +14,20 @@ namespace RagnaCustoms.Models
         private const string SongSearchPattern = "*.zip";
 
 
-
+        public static DirectoryInfo getGameIniFile()
+        {
+            string str = Path.Combine(
+           Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+           RagnarockDirectoryName,
+           "Saved", "Config", "WindowsNoEditor", "Game.ini").ToString();
+            return new DirectoryInfo(str);
+        }
 
         public static DirectoryInfo getCustomDirectory()
         {
             var conf = new Configuration();
-            if (String.IsNullOrEmpty(conf.BaseFolder)){
+            if (String.IsNullOrEmpty(conf.BaseFolder))
+            {
                 conf.BaseFolder = getDefaultDirectory();
             }
             return new DirectoryInfo(conf.BaseFolder);

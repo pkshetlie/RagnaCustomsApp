@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace RagnaCustoms.App.Views
 {
-    partial class OculusSyncForm
+    partial class AndroidDeviceSyncForm
     {
         /// <summary>
         /// Required designer variable.
@@ -34,7 +34,7 @@ namespace RagnaCustoms.App.Views
             this.MaximizeBox = false;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OculusSyncForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AndroidDeviceSyncForm));
             this.SyncingProgressBar = new System.Windows.Forms.ProgressBar();
             this.SyncingLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();

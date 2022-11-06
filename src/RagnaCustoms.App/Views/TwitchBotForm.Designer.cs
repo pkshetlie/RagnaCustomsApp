@@ -39,7 +39,6 @@ namespace RagnaCustoms.App.Views
             this.Author = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Viewer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bot_enabled = new System.Windows.Forms.CheckBox();
             this.EnableButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.songRequests)).BeginInit();
             this.SuspendLayout();
@@ -84,20 +83,9 @@ namespace RagnaCustoms.App.Views
             this.Id.Name = "Id";
             this.Id.ReadOnly = true;
             // 
-            // bot_enabled
-            // 
-            this.bot_enabled.AutoSize = true;
-            this.bot_enabled.Location = new System.Drawing.Point(12, 12);
-            this.bot_enabled.Name = "bot_enabled";
-            this.bot_enabled.Size = new System.Drawing.Size(71, 17);
-            this.bot_enabled.TabIndex = 25;
-            this.bot_enabled.Text = global::RagnaCustoms.App.Properties.Resources.TwitchBot_Form_Enabled;
-            this.bot_enabled.UseVisualStyleBackColor = true;
-            this.bot_enabled.CheckedChanged += new System.EventHandler(this.bot_enabled_CheckedChanged_1);
-            // 
             // EnableButton
             // 
-            this.EnableButton.Location = new System.Drawing.Point(90, 12);
+            this.EnableButton.Location = new System.Drawing.Point(12, 6);
             this.EnableButton.Name = "EnableButton";
             this.EnableButton.Size = new System.Drawing.Size(75, 23);
             this.EnableButton.TabIndex = 30;
@@ -112,7 +100,6 @@ namespace RagnaCustoms.App.Views
             this.ClientSize = new System.Drawing.Size(669, 530);
             this.Controls.Add(this.EnableButton);
             this.Controls.Add(this.songRequests);
-            this.Controls.Add(this.bot_enabled);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -121,7 +108,6 @@ namespace RagnaCustoms.App.Views
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TwitchBotForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.songRequests)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -131,7 +117,6 @@ namespace RagnaCustoms.App.Views
         public System.Windows.Forms.DataGridViewTextBoxColumn Author;
         public System.Windows.Forms.DataGridViewTextBoxColumn Viewer;
         public System.Windows.Forms.DataGridViewTextBoxColumn Id;
-        public System.Windows.Forms.CheckBox bot_enabled;
         private Button EnableButton;
     }
 }

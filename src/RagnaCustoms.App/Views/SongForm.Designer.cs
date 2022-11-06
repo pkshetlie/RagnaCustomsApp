@@ -51,18 +51,18 @@ namespace RagnaCustoms.Views
             this.compareSongsVersionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.preferencesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.twitchBotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.questToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkAccessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.syncSongsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.englishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.frenchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logsScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.englishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.frenchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.preferencesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.twitchBotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.SearchResultGridView)).BeginInit();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -205,6 +205,18 @@ namespace RagnaCustoms.Views
             this.ExitMenuItem.Text = global::RagnaCustoms.App.Properties.Resources.Song_Form_Exit;
             this.ExitMenuItem.Click += new System.EventHandler(this.ExitMenuItem_Click);
             // 
+            // preferencesToolStripMenuItem1
+            // 
+            this.preferencesToolStripMenuItem1.Name = "preferencesToolStripMenuItem1";
+            resources.ApplyResources(this.preferencesToolStripMenuItem1, "preferencesToolStripMenuItem1");
+            this.preferencesToolStripMenuItem1.Click += new System.EventHandler(this.preferencesToolStripMenuItem1_Click);
+            // 
+            // twitchBotToolStripMenuItem
+            // 
+            this.twitchBotToolStripMenuItem.Name = "twitchBotToolStripMenuItem";
+            resources.ApplyResources(this.twitchBotToolStripMenuItem, "twitchBotToolStripMenuItem");
+            this.twitchBotToolStripMenuItem.Click += new System.EventHandler(this.twitchBotToolStripMenuItem_Click);
+            // 
             // questToolStripMenuItem
             // 
             this.questToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -212,7 +224,6 @@ namespace RagnaCustoms.Views
             this.syncSongsToolStripMenuItem});
             this.questToolStripMenuItem.Name = "questToolStripMenuItem";
             resources.ApplyResources(this.questToolStripMenuItem, "questToolStripMenuItem");
-            this.questToolStripMenuItem.Text = global::RagnaCustoms.App.Properties.Resources.Song_Form_Quest;
             // 
             // checkAccessToolStripMenuItem
             // 
@@ -227,6 +238,29 @@ namespace RagnaCustoms.Views
             resources.ApplyResources(this.syncSongsToolStripMenuItem, "syncSongsToolStripMenuItem");
             this.syncSongsToolStripMenuItem.Text = global::RagnaCustoms.App.Properties.Resources.Song_Form_SyncSong;
             this.syncSongsToolStripMenuItem.Click += new System.EventHandler(this.syncSongsToolStripMenuItem_Click);
+            // 
+            // languageToolStripMenuItem
+            // 
+            this.languageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.englishToolStripMenuItem,
+            this.frenchToolStripMenuItem});
+            this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
+            resources.ApplyResources(this.languageToolStripMenuItem, "languageToolStripMenuItem");
+            this.languageToolStripMenuItem.Text = global::RagnaCustoms.App.Properties.Resources.Song_Form_Language;
+            // 
+            // englishToolStripMenuItem
+            // 
+            this.englishToolStripMenuItem.CheckOnClick = true;
+            this.englishToolStripMenuItem.Name = "englishToolStripMenuItem";
+            resources.ApplyResources(this.englishToolStripMenuItem, "englishToolStripMenuItem");
+            this.englishToolStripMenuItem.Click += new System.EventHandler(this.englishToolStripMenuItem_Click);
+            // 
+            // frenchToolStripMenuItem
+            // 
+            this.frenchToolStripMenuItem.CheckOnClick = true;
+            this.frenchToolStripMenuItem.Name = "frenchToolStripMenuItem";
+            resources.ApplyResources(this.frenchToolStripMenuItem, "frenchToolStripMenuItem");
+            this.frenchToolStripMenuItem.Click += new System.EventHandler(this.frenchToolStripMenuItem_Click);
             // 
             // HelpMenuItem
             // 
@@ -258,41 +292,6 @@ namespace RagnaCustoms.Views
             resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
             this.aboutToolStripMenuItem.Text = global::RagnaCustoms.App.Properties.Resources.Song_Form_About;
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
-            // languageToolStripMenuItem
-            // 
-            this.languageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.englishToolStripMenuItem,
-            this.frenchToolStripMenuItem});
-            this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
-            resources.ApplyResources(this.languageToolStripMenuItem, "languageToolStripMenuItem");
-            this.languageToolStripMenuItem.Text = global::RagnaCustoms.App.Properties.Resources.Song_Form_Language;
-            // 
-            // englishToolStripMenuItem
-            // 
-            this.englishToolStripMenuItem.CheckOnClick = true;
-            this.englishToolStripMenuItem.Name = "englishToolStripMenuItem";
-            resources.ApplyResources(this.englishToolStripMenuItem, "englishToolStripMenuItem");
-            this.englishToolStripMenuItem.Click += new System.EventHandler(this.englishToolStripMenuItem_Click);
-            // 
-            // frenchToolStripMenuItem
-            // 
-            this.frenchToolStripMenuItem.CheckOnClick = true;
-            this.frenchToolStripMenuItem.Name = "frenchToolStripMenuItem";
-            resources.ApplyResources(this.frenchToolStripMenuItem, "frenchToolStripMenuItem");
-            this.frenchToolStripMenuItem.Click += new System.EventHandler(this.frenchToolStripMenuItem_Click);
-            // 
-            // preferencesToolStripMenuItem1
-            // 
-            this.preferencesToolStripMenuItem1.Name = "preferencesToolStripMenuItem1";
-            resources.ApplyResources(this.preferencesToolStripMenuItem1, "preferencesToolStripMenuItem1");
-            this.preferencesToolStripMenuItem1.Click += new System.EventHandler(this.preferencesToolStripMenuItem1_Click);
-            // 
-            // twitchBotToolStripMenuItem
-            // 
-            this.twitchBotToolStripMenuItem.Name = "twitchBotToolStripMenuItem";
-            resources.ApplyResources(this.twitchBotToolStripMenuItem, "twitchBotToolStripMenuItem");
-            this.twitchBotToolStripMenuItem.Click += new System.EventHandler(this.twitchBotToolStripMenuItem_Click);
             // 
             // SongForm
             // 

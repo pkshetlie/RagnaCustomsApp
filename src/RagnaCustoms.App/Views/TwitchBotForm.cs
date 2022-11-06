@@ -34,7 +34,7 @@ namespace RagnaCustoms.App.Views
 
         public Configuration _configuration;
         private JoinedChannel _joinedChannel;
-        
+
         private readonly List<Song> _songList = new();
         private bool _twitchBotEnabled;
 
@@ -44,7 +44,7 @@ namespace RagnaCustoms.App.Views
 
         public bool QueueIsOpen = true;
         private string _lastPlayedHash = string.Empty;
-        
+
         private void OnFileChange(object sender, FileSystemEventArgs e)
         {
 
@@ -54,7 +54,7 @@ namespace RagnaCustoms.App.Views
             var songScoreLineHint = "raw distance =";
 
             var session = new Session();
-            
+
             if (!File.Exists(e.FullPath)) return;
             using var stream = File.Open(e.FullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             using var reader = new StreamReader(stream);
@@ -84,8 +84,8 @@ namespace RagnaCustoms.App.Views
                 {
                     var startIndex = line.IndexOf(songScoreLineHint) + songScoreLineHint.Length;
                     var endIndex = line.IndexOf("and adjusted distance =");
-                    session.Score = line.Substring(startIndex, endIndex - startIndex).Trim(' ', '.'); 
-                    if (session.Song.Hash is null) continue; 
+                    session.Score = line.Substring(startIndex, endIndex - startIndex).Trim(' ', '.');
+                    if (session.Song.Hash is null) continue;
                 }
             }
             if (session.Score is null) return;
@@ -94,7 +94,7 @@ namespace RagnaCustoms.App.Views
             Thread.Sleep(2000);
             RemoveAtSongRequestInList(session.Song.Hash);
         }
-        
+
         protected virtual string ComputeMd5(FileInfo file)
         {
             using var md5 = MD5.Create();
@@ -115,25 +115,24 @@ namespace RagnaCustoms.App.Views
 
             return hashStr;
         }
-        
+
         public TwitchBotForm()
         {
             InitializeComponent();
 
             _configuration = new Configuration();
-           
-            botEnabled = _configuration.TwitchBotAutoStart;
-            EnableButton.Text = botEnabled ? "Stop" : "Start";
 
+            botEnabled = _configuration.TwitchBotAutoStart;
+            _twitchBotEnabled = _configuration.TwitchBotAutoStart;
+            EnableButton.Text = botEnabled ? "Stop" : "Start";
             new FileChangeEvent(Program.RagnarockSongLogsDirectoryPath, "Ragnarock.log").SetLambda(OnFileChange);
-            
-            
+
             LoadCommands();
+            checkEnabled();
         }
 
         public Process RagnarockApp { get; set; }
 
-        public string Prefixe { get; set; }
 
         private void linkLabel2_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -141,17 +140,9 @@ namespace RagnaCustoms.App.Views
             Process.Start(sInfo);
         }
 
-        private void bot_enabled_CheckedChanged_1(object sender, EventArgs e)
-        {
-            checkEnabled();
-        }
-
         public void checkEnabled()
         {
-            if(EnableButton.Text == "Start")
-            {
-                botEnabled = true;
-            }
+           
             if (botEnabled &&
                 (string.IsNullOrEmpty(_configuration.AuthTmi) || string.IsNullOrEmpty(_configuration.TwitchChannel)))
             {
@@ -181,7 +172,7 @@ namespace RagnaCustoms.App.Views
                 _twitchClient.Connect();
             }
 
-            _twitchBotEnabled = bot_enabled.Checked;
+            _twitchBotEnabled = botEnabled;
         }
 
         private void OnUserBanned(object sender, OnUserBannedArgs e)
@@ -192,7 +183,7 @@ namespace RagnaCustoms.App.Views
         private void OnConnected(object sender, OnConnectedArgs e)
         {
             _joinedChannel = _twitchClient.GetJoinedChannel(_configuration.TwitchChannel);
-            _twitchClient.SendMessage(_joinedChannel, $"{Prefixe} Ragnacustoms.com's bot connected");
+            _twitchClient.SendMessage(_joinedChannel, $"{_configuration.BotPrefix} Ragnacustoms.com's bot connected");
             //TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.app.strings.WelcomeBot}");
         }
 
@@ -249,7 +240,7 @@ namespace RagnaCustoms.App.Views
                     if (!Commandes.ContainsKey("")) return;
                     var cmd = Commandes[""];
                     var success = cmd.Action(_joinedChannel, _twitchClient, this, e);
-                    if (!success) _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}An error has occurred !");
+                    if (!success) _twitchClient.SendMessage(_joinedChannel, $"{_configuration.BotPrefix}An error has occurred !");
                 }
                 else
                 {
@@ -264,12 +255,12 @@ namespace RagnaCustoms.App.Views
                     if (cmd.IllegalUsers().Contains(e.ChatMessage.UserType))
                     {
                         _twitchClient.SendMessage(_joinedChannel,
-                            $"{Prefixe}Vous n'avez pas l'autorisation d'éxécuter cette commande !");
+                            $"{_configuration.BotPrefix}Vous n'avez pas l'autorisation d'éxécuter cette commande !");
                         return;
                     }
 
                     var success = cmd.Action(_joinedChannel, _twitchClient, this, e);
-                    if (!success) _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}An error has occurred !");
+                    if (!success) _twitchClient.SendMessage(_joinedChannel, $"{_configuration.BotPrefix}An error has occurred !");
                 }
             }).Start();
         }
@@ -278,7 +269,7 @@ namespace RagnaCustoms.App.Views
         {
             if (!QueueIsOpen)
             {
-                _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}Queue is closed");
+                _twitchClient.SendMessage(_joinedChannel, $"{_configuration.BotPrefix}Queue is closed");
                 return;
             }
 
@@ -286,14 +277,14 @@ namespace RagnaCustoms.App.Views
             if (s != null)
             {
                 _twitchClient.SendMessage(_joinedChannel,
-                    $"{Prefixe}Request Info: {s.Name}, Mapped by : {s.Mapper}, asked by @{e.ChatMessage.Username}");
+                    $"{_configuration.BotPrefix}Request Info: {s.Name}, Mapped by : {s.Mapper}, asked by @{e.ChatMessage.Username}");
                 AddSongRequestToList(s, e.ChatMessage.Username);
                 StartDownload(s.Id.ToString());
                 //TwitchClient.SendMessage(joinedChannel, $"{prefixe}Ready: ");
             }
             else
             {
-                _twitchClient.SendMessage(_joinedChannel, $"{Prefixe}@{e.ChatMessage.Username} Song not found");
+                _twitchClient.SendMessage(_joinedChannel, $"{_configuration.BotPrefix}@{e.ChatMessage.Username} Song not found");
             }
         }
 
@@ -356,7 +347,7 @@ namespace RagnaCustoms.App.Views
                 songRequests.Refresh();
             }));
         }
-        
+
         private Song GetSongInfo(string songId)
         {
             try
@@ -388,14 +379,14 @@ namespace RagnaCustoms.App.Views
             }
         }
 
-        
+
 
 
         private void TwitchBotForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (bot_enabled.Checked)
+            if (botEnabled)
             {
-                bot_enabled.Checked = false;
+                botEnabled = false;
                 _twitchBotEnabled = false;
                 if (_twitchClient.IsConnected)
                     _twitchClient.Disconnect();
@@ -404,6 +395,7 @@ namespace RagnaCustoms.App.Views
 
         private void EnableButton_Click(object sender, EventArgs e)
         {
+            botEnabled = !botEnabled;            
             checkEnabled();
             EnableButton.Text = botEnabled ? "Stop" : "Start";
         }

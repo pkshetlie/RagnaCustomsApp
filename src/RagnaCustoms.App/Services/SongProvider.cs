@@ -197,7 +197,6 @@ namespace RagnaCustoms.Models
             //    File.ReadAllText(Path.Combine(songDirectoryPath, ".hash")) == songInfo.Hash && (configuration.CopyRanked && ))
             //{
 
-            //    Oculus.PushSong(songDirectoryPath);
             //    downloadCompleted?.Invoke(autoClose);
             //    return;
             //}
@@ -261,7 +260,7 @@ namespace RagnaCustoms.Models
                 File.Delete(tempFilePath);
                 Directory.Delete(tempDirectoryPath, true);
 
-                Oculus.PushSong(songDirectoryPath);
+                AndroidDevice.PushSong(songDirectoryPath);
 
                 downloadCompleted?.Invoke(autoClose);
             }
@@ -405,7 +404,7 @@ namespace RagnaCustoms.Models
                     File.Delete(tempFilePath);
                     Directory.Delete(tempDirectoryPath, true);
 
-                    Oculus.PushSong(songDirectoryPath);
+                    AndroidDevice.PushSong(songDirectoryPath);
                 }
 
             }

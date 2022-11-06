@@ -1,4 +1,5 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using RagnaCustoms.Models;
 using RagnaCustoms.Presenters;
 using RagnaCustoms.Services;
 using System;
@@ -8,6 +9,7 @@ using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -105,8 +107,37 @@ namespace RagnaCustoms.App
 
         private void linkLabel2_Click(object sender, EventArgs e)
         {
-            var sInfo = new ProcessStartInfo("https://www.twitch.tv/ragnacustoms_com");
+            var sInfo = new ProcessStartInfo("https://twitchapps.com/tmi/");
             Process.Start(sInfo);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var gameini = DirProvider.getGameIniFile().ToString();
+            if (!File.Exists(gameini)){
+                MessageBox.Show("File not found ! Only works for Steam version", "RagnaCustoms.com", MessageBoxButtons.OK,
+                   MessageBoxIcon.Exclamation);
+                return;
+            }
+            using (StreamWriter writer = new StreamWriter(gameini))
+            {
+                writer.WriteLine("[/Script/Ragnarock.RagnarockSettings]");
+                writer.WriteLine($"CustomApiURLs=\"https://api.ragnacustoms.com/wanapi/score/{_configuration.ApiKey}\"");
+            }
+
+
+            if (AndroidDevice.GetFirstFoundDevice() != null)
+            {
+                AndroidDevice.GenerateGameIni();
+            }
+
+            MessageBox.Show("File updated with this API Key", "RagnaCustoms.com", MessageBoxButtons.OK,
+                      MessageBoxIcon.Information);
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

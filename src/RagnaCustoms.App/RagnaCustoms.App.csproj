@@ -100,7 +100,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Services\FileChangeEvent.cs" />
-    <Compile Include="Services\Oculus.cs" />
+    <Compile Include="Services\AndroidDevice.cs" />
     <Compile Include="Services\Configuration.cs" />
     <Compile Include="Services\ISongProvider.cs" />
     <Compile Include="Services\OverlayParser.cs" />
@@ -128,11 +128,11 @@
     <Compile Include="Views\LogsForm.Designer.cs">
       <DependentUpon>LogsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\OculusSyncForm.cs">
+    <Compile Include="Views\AndroidDeviceSyncForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\OculusSyncForm.Designer.cs">
-      <DependentUpon>OculusSyncForm.cs</DependentUpon>
+    <Compile Include="Views\AndroidDeviceSyncForm.Designer.cs">
+      <DependentUpon>AndroidDeviceSyncForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\IDownloadingView.cs" />
     <Compile Include="Views\ISongView.cs" />
@@ -184,11 +184,11 @@
     <EmbeddedResource Include="Views\LogsForm.resx">
       <DependentUpon>LogsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\OculusSyncForm.fr.resx">
-      <DependentUpon>OculusSyncForm.cs</DependentUpon>
+    <EmbeddedResource Include="Views\AndroidDeviceSyncForm.fr.resx">
+      <DependentUpon>AndroidDeviceSyncForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\OculusSyncForm.resx">
-      <DependentUpon>OculusSyncForm.cs</DependentUpon>
+    <EmbeddedResource Include="Views\AndroidDeviceSyncForm.resx">
+      <DependentUpon>AndroidDeviceSyncForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SongForm.fr.resx">
       <DependentUpon>SongForm.cs</DependentUpon>

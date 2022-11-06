@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -8,44 +9,63 @@ using RagnaCustoms.App.Views;
 
 namespace RagnaCustoms.Services
 {
-    internal class Oculus
+    internal class AndroidDevice
     {
-        public const string QuestSongDirectoryName =
-            @"\Android\data\com.wanadev.ragnarockquest\files\UE4Game\Ragnarock\Ragnarock\Saved\CustomSongs";
+        public static string deviceSufix = "quest";
 
-        private const string QuestLogDirectoryName =
-            @"\Android\data\com.wanadev.ragnarockquest\files\UE4Game\Ragnarock\Ragnarock\Saved\Logs";
+        public static string DeviceSongDirectoryName
+        {
+            get; set;
+        }
+        public static string DeviceConfigDirectoryName
+        {
+            get; set;
+        }
 
         private const string RagnarockDirectoryName = "Ragnarock";
         private const string SongDirectoryName = "CustomSongs";
 
-        private static readonly string LocalRagnarockSongDirectoryPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-            RagnarockDirectoryName,
-            SongDirectoryName
-        );
+        private static string LocalRagnarockSongDirectoryPath
+        {
+            get { return new Configuration().BaseFolder; }
+        }
 
 
-        public static MediaDevice GetDevice()
+        public static MediaDevice GetFirstFoundDevice()
         {
             var devices = MediaDevice.GetDevices();
             foreach (var d in devices)
-                if (d.Description == "Quest 2")
+                if (d.Description.ToLower() == "quest 2")
+                {
+                    DeviceSongDirectoryName = $@"\Android\data\com.wanadev.ragnarockquest\files\UE4Game\Ragnarock\Ragnarock\Saved\CustomSongs"; ;
+                    DeviceConfigDirectoryName = $@"\Android\data\com.wanadev.ragnarockquest\files\UE4Game\Ragnarock\Ragnarock\Saved\Config"; ;
                     return d;
-                else if (d.Description == "Quest") return d;
+                }
+                else if (d.Description.ToLower() == "quest")
+                {
+                    DeviceSongDirectoryName = $@"\Android\data\com.wanadev.ragnarockquest\files\UE4Game\Ragnarock\Ragnarock\Saved\CustomSongs"; ;
+                    DeviceConfigDirectoryName = $@"\Android\data\com.wanadev.ragnarockquest\files\UE4Game\Ragnarock\Ragnarock\Saved\Config"; ;
+                    return d;
+                }
+                else if (d.Description.ToLower() == "pico 4")
+                {
+                    DeviceSongDirectoryName = $@"\Android\data\com.wanadev.ragnarockpico\files\UE4Game\RagnarockPico\RagnarockPico\Saved\CustomSongs"; ;
+                    DeviceConfigDirectoryName = $@"\Android\data\com.wanadev.ragnarockpico\files\UE4Game\RagnarockPico\RagnarockPico\Saved\Config"; ;
+                    return d;
+                }
             return null;
         }
 
         public static int SyncSongs()
         {
-            var syncingView = new OculusSyncForm();
-            var device = GetDevice();
+            var syncingView = new AndroidDeviceSyncForm();
+            var device = GetFirstFoundDevice();
             if (device != null)
                 try
                 {
                     device.Connect();
                     var baseFolder = device.GetDirectories(@"\")[0];
-                    var questSongDirectoryPath = $"{baseFolder}{QuestSongDirectoryName}";
+                    var questSongDirectoryPath = $"{baseFolder}{DeviceSongDirectoryName}";
 
                     var songs = Directory.GetDirectories(LocalRagnarockSongDirectoryPath);
                     syncingView.SyncingProgressBar.Minimum = 0;
@@ -94,13 +114,13 @@ namespace RagnaCustoms.Services
 
         public static int PushSong(string path)
         {
-            var device = GetDevice();
+            var device = GetFirstFoundDevice();
             if (device != null)
             {
                 var song = path.Split(Path.DirectorySeparatorChar).Last();
                 device.Connect();
                 var baseFolder = device.GetDirectories(@"\")[0];
-                var questSongDirectoryPath = $"{baseFolder}{QuestSongDirectoryName}\\{song}";
+                var questSongDirectoryPath = $"{baseFolder}{DeviceSongDirectoryName}\\{song}";
 
                 if (!device.IsConnected) throw new NotConnectedException("Not connected");
 
@@ -118,6 +138,31 @@ namespace RagnaCustoms.Services
             return 1;
         }
 
-    
+        internal static void GenerateGameIni()
+        {
+            var device = AndroidDevice.GetFirstFoundDevice();
+            var _configuration = new Configuration();
+            if (device != null)
+            {
+                device.Connect();
+                var localgameIni = $"{_configuration.BaseFolder}\\Ragnarock.ini";
+                using (StreamWriter writer = new StreamWriter(localgameIni))
+                {
+                    writer.WriteLine($"{{\"CustomApiURLs\":[\"https://api.ragnacustoms.com/wanapi/score/{_configuration.ApiKey}\"]}}");
+                }
+
+                var baseFolder = device.GetDirectories(@"\")[0];
+
+                var gameIni = $"{baseFolder}{DeviceConfigDirectoryName}\\Ragnarock.ini";
+                device.DeleteFile(gameIni);
+                device.UploadFile(localgameIni, gameIni);
+
+                File.Delete(localgameIni);
+
+                device.Disconnect();
+            }
+
+
+        }
     }
 }

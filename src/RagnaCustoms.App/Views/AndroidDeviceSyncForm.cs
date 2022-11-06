@@ -3,9 +3,9 @@ using System.Windows.Forms;
 
 namespace RagnaCustoms.App.Views
 {
-    public partial class OculusSyncForm : Form
+    public partial class AndroidDeviceSyncForm : Form
     {
-        public OculusSyncForm()
+        public AndroidDeviceSyncForm()
         {
             InitializeComponent();
         }
