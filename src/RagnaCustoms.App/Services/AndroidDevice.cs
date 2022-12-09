@@ -47,10 +47,10 @@ namespace RagnaCustoms.Services
                     DeviceConfigDirectoryName = $@"\Android\data\com.wanadev.ragnarockquest\files\UE4Game\Ragnarock\Ragnarock\Saved\Config"; ;
                     return d;
                 }
-                else if (d.Description.ToLower() == "pico 4")
+                else if (d.Description.ToLower().Contains("pico"))
                 {
-                    DeviceSongDirectoryName = $@"\Android\data\com.wanadev.ragnarockpico\files\UE4Game\RagnarockPico\RagnarockPico\Saved\CustomSongs"; ;
-                    DeviceConfigDirectoryName = $@"\Android\data\com.wanadev.ragnarockpico\files\UE4Game\RagnarockPico\RagnarockPico\Saved\Config"; ;
+                    DeviceSongDirectoryName = $@"\Android\data\com.wanadev.ragnarockpico\files\UE4Game\Ragnarock\Ragnarock\Saved\CustomSongs"; ;
+                    DeviceConfigDirectoryName = $@"\Android\data\com.wanadev.ragnarockpico\files\UE4Game\Ragnarock\Ragnarock\Saved\Config"; ;
                     return d;
                 }
             return null;
@@ -154,7 +154,14 @@ namespace RagnaCustoms.Services
                 var baseFolder = device.GetDirectories(@"\")[0];
 
                 var gameIni = $"{baseFolder}{DeviceConfigDirectoryName}\\Ragnarock.ini";
-                device.DeleteFile(gameIni);
+                if (device.FileExists(gameIni))
+                {
+                    device.DeleteFile(gameIni);
+                }
+                if (!device.DirectoryExists($"{baseFolder}{DeviceConfigDirectoryName}"))
+                {
+                    device.CreateDirectory($"{baseFolder}{DeviceConfigDirectoryName}");
+                }
                 device.UploadFile(localgameIni, gameIni);
 
                 File.Delete(localgameIni);
