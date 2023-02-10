@@ -52,6 +52,10 @@ namespace RagnaCustoms.Services
                     device.Connect();
                     var baseFolder = device.GetDirectories(@"\")[0];
                     var questSongDirectoryPath = $"{baseFolder}{DeviceSongDirectoryName}";
+                    if (!Directory.Exists(LocalRagnarockSongDirectoryPath))
+                    {
+                        Directory.CreateDirectory(LocalRagnarockSongDirectoryPath);
+                    }
 
                     var songs = Directory.GetDirectories(LocalRagnarockSongDirectoryPath);
                     syncingView.SyncingProgressBar.Minimum = 0;
