@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using MediaDevices;
-using RagnaCustoms.App;
 using RagnaCustoms.App.Views;
 
 namespace RagnaCustoms.Services
@@ -35,22 +33,10 @@ namespace RagnaCustoms.Services
         {
             var devices = MediaDevice.GetDevices();
             foreach (var d in devices)
-                if (d.Description.ToLower() == "quest 2")
+                if (d.Description.ToLower().Contains("quest") || d.Description.ToLower().Contains("pico"))
                 {
-                    DeviceSongDirectoryName = $@"\Android\data\com.wanadev.ragnarockquest\files\UE4Game\Ragnarock\Ragnarock\Saved\CustomSongs"; ;
-                    DeviceConfigDirectoryName = $@"\Android\data\com.wanadev.ragnarockquest\files\UE4Game\Ragnarock\Ragnarock\Saved\Config"; ;
-                    return d;
-                }
-                else if (d.Description.ToLower() == "quest")
-                {
-                    DeviceSongDirectoryName = $@"\Android\data\com.wanadev.ragnarockquest\files\UE4Game\Ragnarock\Ragnarock\Saved\CustomSongs"; ;
-                    DeviceConfigDirectoryName = $@"\Android\data\com.wanadev.ragnarockquest\files\UE4Game\Ragnarock\Ragnarock\Saved\Config"; ;
-                    return d;
-                }
-                else if (d.Description.ToLower().Contains("pico"))
-                {
-                    DeviceSongDirectoryName = $@"\Android\data\com.wanadev.ragnarockpico\files\UE4Game\Ragnarock\Ragnarock\Saved\CustomSongs"; ;
-                    DeviceConfigDirectoryName = $@"\Android\data\com.wanadev.ragnarockpico\files\UE4Game\Ragnarock\Ragnarock\Saved\Config"; ;
+                    DeviceSongDirectoryName = $@"\Android\data\com.wanadev.ragnarockquest\files\UE4Game\Ragnarock\Ragnarock\Saved\CustomSongs";
+                    DeviceConfigDirectoryName = $@"\Android\data\com.wanadev.ragnarockquest\files\UE4Game\Ragnarock\Ragnarock\Saved\Config";
                     return d;
                 }
             return null;
