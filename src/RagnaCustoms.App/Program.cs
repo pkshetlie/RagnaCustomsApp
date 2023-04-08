@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Windows.Forms;
 using RagnaCustoms.App.Properties;
@@ -22,11 +23,9 @@ namespace RagnaCustoms.App
         private const string RagnacListCommand = "ragnac://list/";
         private const string RagnacApiCommand = "ragnac://api/";
 
-#if DEBUG
-        const string UploadOverlayUri = "https://127.0.0.1:8000/api/overlay/?XDEBUG_SESSION_START=PHPSTORM";
-#else
-        private const string UploadOverlayUri = "https://v2.ragnacustoms.com/api/overlay/";
-#endif
+
+        private const string UploadOverlayUri = "https://api.ragnacustoms.com/api/overlay/";
+        private const string ApiCheckUri = "https://api.ragnacustoms.com/api/check";
 
         public static readonly string RagnarockSongLogsDirectoryPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -103,7 +102,7 @@ namespace RagnaCustoms.App
                         var api = uri.Replace(RagnacApiCommand, string.Empty);
                         configuration.ApiKey = api;
                         MessageBox.Show(Resources.Program_Api_Set_api_key, "RagnaCustoms", MessageBoxButtons.OK,
-                            MessageBoxIcon.Asterisk);
+                           MessageBoxIcon.Asterisk);
                     }
                 }
                 else
@@ -133,14 +132,27 @@ namespace RagnaCustoms.App
                     // Create first view to display
                     var songView = new SongForm();
                     var songPresenter = new SongPresenter(songView, downloadingPresenter, songProvider);
-                    if (string.IsNullOrEmpty(configuration.ApiKey))
-                        MessageBox.Show(songView, Resources.Program_Api_Message1, Resources.Program_Api_Message1_Title,
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    
+
+                    //MessageBox.Show(songView, Resources.Program_Api_Message1, Resources.Program_Api_Message1_Title,
+                    //        MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                     if (configuration.TwitchBotAutoStart) new TwitchBotForm().Show();
+                    if (string.IsNullOrEmpty(configuration.ApiKey) || !checkApiKey(configuration.ApiKey)) new LoginForm(songView).Show();
                     Application.Run(songView);
+                   
+
                 }
             }
+        }
+
+        public static bool checkApiKey(string apiKey)
+        {
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("x-api-key", apiKey);
+            var result = client.PostAsJsonAsync(ApiCheckUri, new { });
+
+            return result.Result.IsSuccessStatusCode;
         }
     }
 }

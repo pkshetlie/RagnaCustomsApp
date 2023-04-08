@@ -1,7 +1,12 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-    <Profiles>
-        <Profile Name="(Default)"/>
-    </Profiles>
-    <Settings/>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RagnaCustoms.App.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="LoginScope" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Login</Value>
+    </Setting>
+    <Setting Name="login_logout" Type="System.String" Scope="User">
+      <Value Profile="(Default)">loginToolStripMenuItem</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

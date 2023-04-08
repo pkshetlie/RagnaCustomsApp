@@ -122,6 +122,12 @@
       <DependentUpon>DownloadingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Commandes\ICommandes.cs" />
+    <Compile Include="Views\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\LogsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -178,6 +184,9 @@
     <EmbeddedResource Include="Views\DownloadingForm.resx">
       <DependentUpon>DownloadingForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\LogsForm.fr.resx">
       <DependentUpon>LogsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -217,6 +226,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Resources\logocompressed.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediaDevices">

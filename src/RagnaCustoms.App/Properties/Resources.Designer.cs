@@ -151,6 +151,16 @@ namespace RagnaCustoms.App.Properties {
         }
         
         /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap logocompressed {
+            get {
+                object obj = ResourceManager.GetObject("logocompressed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Be careful, the API key is missing.\r\nGo to Preferences.
         /// </summary>
         internal static string Program_Api_Message1 {

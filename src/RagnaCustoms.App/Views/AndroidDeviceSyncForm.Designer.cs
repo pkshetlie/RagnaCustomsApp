@@ -31,9 +31,6 @@ namespace RagnaCustoms.App.Views
         /// </summary>
         private void InitializeComponent()
         {
-            this.MaximizeBox = false;
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AndroidDeviceSyncForm));
             this.SyncingProgressBar = new System.Windows.Forms.ProgressBar();
             this.SyncingLabel = new System.Windows.Forms.Label();
@@ -57,16 +54,17 @@ namespace RagnaCustoms.App.Views
             this.SyncingLabel.TabIndex = 2;
             this.SyncingLabel.UseWaitCursor = true;
             // 
-            // OculusSyncForm
+            // AndroidDeviceSyncForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(261, 59);
             this.Controls.Add(this.SyncingLabel);
             this.Controls.Add(this.SyncingProgressBar);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "OculusSyncForm";
+            this.Name = "AndroidDeviceSyncForm";
             this.Text = "Oculus syncing";
             this.UseWaitCursor = true;
             this.Load += new System.EventHandler(this.Form1_Load);

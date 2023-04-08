@@ -32,6 +32,11 @@ namespace RagnaCustoms.Views
             _configuration= new Configuration();
             englishToolStripMenuItem.Checked = _configuration.Lang == "en";
             frenchToolStripMenuItem.Checked = _configuration.Lang == "fr";
+            if(!String.IsNullOrEmpty(_configuration.ApiKey))
+            {
+                loginToolStripMenuItem.Text = "Logout";
+            }
+
             Text += $" {Assembly.GetExecutingAssembly().GetName().Version.ToString(3)}";
         }
 
@@ -230,6 +235,35 @@ namespace RagnaCustoms.Views
         private void twitchBotToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new TwitchBotForm().Show();
+        }
+
+        private void loginToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loginToolStripMenuItem.Text == "Login")
+            {
+                new LoginForm(this).Show();
+            }
+            else
+            {
+                _configuration.ApiKey = "";
+                loginToolStripMenuItem.Text = "Login";
+            }
+        }
+
+        private void SearchTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        public void changeLoginMenu()
+        { 
+            this.loginToolStripMenuItem.Text = this.loginToolStripMenuItem.Text == "Login"? "Logout":"Login";
+        }
+
+        private void helpPageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var sInfo = new ProcessStartInfo("https://ragnacustoms.com/getting-started?from=app");
+            Process.Start(sInfo);
         }
     }
 }

@@ -1,309 +1,307 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-    <!-- 
-      Microsoft ResX Schema 
-      
-      Version 2.0
-      
-      The primary goals of this format is to allow a simple XML format 
-      that is mostly human readable. The generation and parsing of the 
-      various data types are done through the TypeConverter classes 
-      associated with the data types.
-      
-      Example:
-      
-      ... ado.net/XML headers & schema ...
-      <resheader name="resmimetype">text/microsoft-resx</resheader>
-      <resheader name="version">2.0</resheader>
-      <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-      <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-      <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-      <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-      <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-          <value>[base64 mime encoded serialized .NET Framework object]</value>
-      </data>
-      <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-          <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-          <comment>This is a comment</comment>
-      </data>
-                  
-      There are any number of "resheader" rows that contain simple 
-      name/value pairs.
-      
-      Each data row contains a name, and value. The row also contains a 
-      type or mimetype. Type corresponds to a .NET class that support 
-      text/value conversion through the TypeConverter architecture. 
-      Classes that don't support this are serialized and stored with the 
-      mimetype set.
-      
-      The mimetype is used for serialized objects, and tells the 
-      ResXResourceReader how to depersist the object. This is currently not 
-      extensible. For a given mimetype the value must be set accordingly:
-      
-      Note - application/x-microsoft.net.object.binary.base64 is the format 
-      that the ResXResourceWriter will generate, however the reader can 
-      read any of the formats listed below.
-      
-      mimetype: application/x-microsoft.net.object.binary.base64
-      value   : The object must be serialized with 
-              : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-              : and then encoded with base64 encoding.
-      
-      mimetype: application/x-microsoft.net.object.soap.base64
-      value   : The object must be serialized with 
-              : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-              : and then encoded with base64 encoding.
-  
-      mimetype: application/x-microsoft.net.object.bytearray.base64
-      value   : The object must be serialized into a byte array 
-              : using a System.ComponentModel.TypeConverter
-              : and then encoded with base64 encoding.
-      -->
-    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"
-                id="root"
-                xmlns="">
-        <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
-        <xsd:element name="root" msdata:IsDataSet="true">
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
             <xsd:complexType>
-                <xsd:choice maxOccurs="unbounded">
-                    <xsd:element name="metadata">
-                        <xsd:complexType>
-                            <xsd:sequence>
-                                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
-                            </xsd:sequence>
-                            <xsd:attribute name="name" use="required" type="xsd:string"/>
-                            <xsd:attribute name="type" type="xsd:string"/>
-                            <xsd:attribute name="mimetype" type="xsd:string"/>
-                            <xsd:attribute ref="xml:space"/>
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="assembly">
-                        <xsd:complexType>
-                            <xsd:attribute name="alias" type="xsd:string"/>
-                            <xsd:attribute name="name" type="xsd:string"/>
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="data">
-                        <xsd:complexType>
-                            <xsd:sequence>
-                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
-                            </xsd:sequence>
-                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-                            <xsd:attribute ref="xml:space"/>
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="resheader">
-                        <xsd:complexType>
-                            <xsd:sequence>
-                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                            </xsd:sequence>
-                            <xsd:attribute name="name" type="xsd:string" use="required"/>
-                        </xsd:complexType>
-                    </xsd:element>
-                </xsd:choice>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
-        </xsd:element>
-    </xsd:schema>
-    <resheader name="resmimetype">
-        <value>text/microsoft-resx</value>
-    </resheader>
-    <resheader name="version">
-        <value>2.0</value>
-    </resheader>
-    <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral,
-            PublicKeyToken=b77a5c561934e089
-        </value>
-    </resheader>
-    <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral,
-            PublicKeyToken=b77a5c561934e089
-        </value>
-    </resheader>
-    <data name="Command.Base.Help" xml:space="preserve">
-    <value>Display how to request map to streamer</value>
-  </data>
-    <data name="Command.Base.Action.Message" xml:space="preserve">
-    <value>You can request custom maps to {0} with the command !rc [map_id], to find it go to https://ragnacustoms.com and click on the twitch button (the purple one) to copy !rc [map_id] command and come back here to paste the command.</value>
-  </data>
-    <data name="Command.Help.Help" xml:space="preserve">
-    <value>Display list of commands</value>
-  </data>
-    <data name="Command.Help.Action.Cmd" xml:space="preserve">
-    <value>Command</value>
-  </data>
-    <data name="Command.Help.Action.UnknowCommand" xml:space="preserve">
-    <value>This commande doesn't exists, check the command name.</value>
-  </data>
-    <data name="Command.Help.Action.CommandList" xml:space="preserve">
-    <value>List of commands</value>
-  </data>
-    <data name="Command.Help.Action.OthersCommand" xml:space="preserve">
-    <value>To display the description of a command use "!rc help [name_of_the_command]"</value>
-  </data>
-    <data name="Command.Cancel.Help" xml:space="preserve">
-    <value>Remove your last request</value>
-  </data>
-    <data name="Command.Cancel.Action.Canceled" xml:space="preserve">
-    <value>Song Cancelled</value>
-  </data>
-    <data name="Command.Cancel.Action.NoSongToCancel" xml:space="preserve">
-    <value>No More song to remove</value>
-  </data>
-    <data name="Program.Api.Message1" xml:space="preserve">
-    <value>Be careful, the API key is missing.\r\nGo to Preferences</value>
-  </data>
-    <data name="Program.Api.Message1_Title" xml:space="preserve">
-    <value>API key is missing</value>
-  </data>
-    <data name="Program.Api.Set_api_key" xml:space="preserve">
-    <value>Enter your Api key:</value>
-  </data>
-    <data name="TwitchBot.Form.Title" xml:space="preserve">
-    <value>Twitch bot requests</value>
-  </data>
-    <data name="TwitchBot.Form.Enabled" xml:space="preserve">
-    <value>Enabled?</value>
-  </data>
-    <data name="TwitchBot.Form.TMI" xml:space="preserve">
-    <value>TMI OAuth</value>
-  </data>
-    <data name="TwitchBot.Form.GetToken" xml:space="preserve">
-    <value>Get Token At:</value>
-  </data>
-    <data name="TwitchBot.Form.TwitchChannel" xml:space="preserve">
-    <value>Twitch Channel name</value>
-  </data>
-    <data name="TwitchBot.Form.BotMessagePrefix" xml:space="preserve">
-    <value>Bot message prefix</value>
-  </data>
-    <data name="TwitchBot.Form.AutoStart" xml:space="preserve">
-    <value>Auto-start?</value>
-  </data>
-    <data name="TwitchBot.Form.Commands" xml:space="preserve">
-    <value>Commands</value>
-  </data>
-    <data name="TwitchBot.Form.ManageCustomCommands" xml:space="preserve">
-    <value>Manage base commands</value>
-  </data>
-    <data name="TwitchBot.Form.ManagebaseCommands" xml:space="preserve">
-    <value>Manage custom commands</value>
-  </data>
-    <data name="TwitchBot.Form.Song" xml:space="preserve">
-    <value>Song</value>
-  </data>
-    <data name="TwitchBot.Form.Author" xml:space="preserve">
-    <value>Author</value>
-  </data>
-    <data name="TwitchBot.Form.Viewer" xml:space="preserve">
-    <value>Viewer</value>
-  </data>
-    <data name="TwitchBot.Form.withoutHttp" xml:space="preserve">
-    <value>Without https://twitch.tv</value>
-  </data>
-    <data name="TwitchBot.Form.Configuration" xml:space="preserve">
-    <value>Configuration</value>
-  </data>
-    <data name="Song.Form.NeedToSetYourApiKeyFirst" xml:space="preserve">
-    <value>You need to set your API key first</value>
-  </data>
-    <data name="Song.Form.EnterYourApiKey" xml:space="preserve">
-    <value>Enter your API key:</value>
-  </data>
-    <data name="Song.Form.NoCompatibleDeviceFound" xml:space="preserve">
-    <value>No compatible device found</value>
-  </data>
-    <data name="Song.Form.found" xml:space="preserve">
-    <value>{0} {1} found</value>
-  </data>
-    <data name="Song.Form.SyncComplete" xml:space="preserve">
-    <value>Sync complete</value>
-  </data>
-    <data name="Song.Form.Search" xml:space="preserve">
-    <value>Search</value>
-  </data>
-    <data name="Song.Form.File" xml:space="preserve">
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Song.Form.File" xml:space="preserve">
     <value>File</value>
   </data>
-    <data name="Song.Form.Exit" xml:space="preserve">
-    <value>Exit</value>
+  <data name="Command.Cancel.Action.NoSongToCancel" xml:space="preserve">
+    <value>No More song to remove</value>
   </data>
-    <data name="Song.Form.Tools" xml:space="preserve">
-    <value>Tools</value>
+  <data name="Song.Form.found" xml:space="preserve">
+    <value>{0} {1} found</value>
   </data>
-    <data name="Song.Form.ScoreSystem" xml:space="preserve">
-    <value>Score system</value>
+  <data name="Command.Help.Action.Cmd" xml:space="preserve">
+    <value>Command</value>
   </data>
-    <data name="Song.Form.SendScoreAutomatically" xml:space="preserve">
-    <value>Send score automatically</value>
-  </data>
-    <data name="Song.Form.ConfigureApiKey" xml:space="preserve">
-    <value>Configure API key...</value>
-  </data>
-    <data name="Song.Form.Settings" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-    <data name="Song.Form.AutoCloseDownload" xml:space="preserve">
-    <value>Auto close Download</value>
-  </data>
-    <data name="Song.Form.Streaming" xml:space="preserve">
+  <data name="Song.Form.Streaming" xml:space="preserve">
     <value>Streaming</value>
   </data>
-    <data name="Song.Form.EnableOverlay" xml:space="preserve">
-    <value>Enable overlay</value>
-  </data>
-    <data name="Song.Form.getOverlayurl" xml:space="preserve">
-    <value>Get overlay URL</value>
-  </data>
-    <data name="Song.Form.TwitchBot" xml:space="preserve">
-    <value>Twitch bot</value>
-  </data>
-    <data name="Song.Form.Quest" xml:space="preserve">
-    <value>Quest</value>
-  </data>
-    <data name="Song.Form.CheckAccess" xml:space="preserve">
-    <value>Check access</value>
-  </data>
-    <data name="Song.Form.SyncSong" xml:space="preserve">
-    <value>Sync songs</value>
-  </data>
-    <data name="Song.Form.Help" xml:space="preserve">
-    <value>Help</value>
-  </data>
-    <data name="Song.Form.LogFile" xml:space="preserve">
-    <value>Log file</value>
-  </data>
-    <data name="Song.Form.LogScreen" xml:space="preserve">
-    <value>Log Screen</value>
-  </data>
-    <data name="Song.Form.About" xml:space="preserve">
-    <value>About</value>
-  </data>
-    <data name="Song.Form.Language" xml:space="preserve">
+  <data name="Song.Form.Language" xml:space="preserve">
     <value>Language</value>
   </data>
-    <data name="Song.Form.Name" xml:space="preserve">
-    <value>Name</value>
+  <data name="TwitchBot.Form.GetToken" xml:space="preserve">
+    <value>Get Token At:</value>
   </data>
-    <data name="Song.Form.Difficulties" xml:space="preserve">
-    <value>Difficulties</value>
+  <data name="Command.Help.Action.OthersCommand" xml:space="preserve">
+    <value>To display the description of a command use "!rc help [name_of_the_command]"</value>
   </data>
-    <data name="Song.Form.Author" xml:space="preserve">
+  <data name="Program.Api.Set_api_key" xml:space="preserve">
+    <value>Enter your Api key:</value>
+  </data>
+  <data name="Program.Api.Message1_Title" xml:space="preserve">
+    <value>API key is missing</value>
+  </data>
+  <data name="Command.Base.Help" xml:space="preserve">
+    <value>Display how to request map to streamer</value>
+  </data>
+  <data name="TwitchBot.Form.Enabled" xml:space="preserve">
+    <value>Enabled?</value>
+  </data>
+  <data name="TwitchBot.Form.BotMessagePrefix" xml:space="preserve">
+    <value>Bot message prefix</value>
+  </data>
+  <data name="Song.Form.EnableOverlay" xml:space="preserve">
+    <value>Enable overlay</value>
+  </data>
+  <data name="TwitchBot.Form.TMI" xml:space="preserve">
+    <value>TMI OAuth</value>
+  </data>
+  <data name="Song.Form.EnterYourApiKey" xml:space="preserve">
+    <value>Enter your API key:</value>
+  </data>
+  <data name="Command.Cancel.Action.Canceled" xml:space="preserve">
+    <value>Song Cancelled</value>
+  </data>
+  <data name="Command.Cancel.Help" xml:space="preserve">
+    <value>Remove your last request</value>
+  </data>
+  <data name="Song.Form.Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="TwitchBot.Form.Song" xml:space="preserve">
+    <value>Song</value>
+  </data>
+  <data name="Song.Form.TwitchBot" xml:space="preserve">
+    <value>Twitch bot</value>
+  </data>
+  <data name="TwitchBot.Form.Author" xml:space="preserve">
     <value>Author</value>
   </data>
-    <data name="Song.Form.Mapper" xml:space="preserve">
-    <value>Mapper</value>
+  <data name="String1" xml:space="preserve">
+    <value />
   </data>
-    <data name="Song.Form.CompareSongversion" xml:space="preserve">
-    <value>Compare songs versions</value>
+  <data name="Song.Form.ScoreSystem" xml:space="preserve">
+    <value>Score system</value>
   </data>
-    <data name="Song.Form.CompatibleDeviceFound" xml:space="preserve">
+  <data name="Song.Form.CheckAccess" xml:space="preserve">
+    <value>Check access</value>
+  </data>
+  <data name="TwitchBot.Form.AutoStart" xml:space="preserve">
+    <value>Auto-start?</value>
+  </data>
+  <data name="Command.Help.Action.CommandList" xml:space="preserve">
+    <value>List of commands</value>
+  </data>
+  <data name="TwitchBot.Form.withoutHttp" xml:space="preserve">
+    <value>Without https://twitch.tv</value>
+  </data>
+  <data name="Song.Form.ConfigureApiKey" xml:space="preserve">
+    <value>Configure API key...</value>
+  </data>
+  <data name="Song.Form.SendScoreAutomatically" xml:space="preserve">
+    <value>Send score automatically</value>
+  </data>
+  <data name="TwitchBot.Form.Configuration" xml:space="preserve">
+    <value>Configuration</value>
+  </data>
+  <data name="TwitchBot.Form.Viewer" xml:space="preserve">
+    <value>Viewer</value>
+  </data>
+  <data name="Song.Form.Difficulties" xml:space="preserve">
+    <value>Difficulties</value>
+  </data>
+  <data name="Song.Form.CompatibleDeviceFound" xml:space="preserve">
     <value>Device found: {0} {1}</value>
   </data>
-    <data name="String1" xml:space="preserve">
-    <value/>
+  <data name="TwitchBot.Form.Commands" xml:space="preserve">
+    <value>Commands</value>
+  </data>
+  <data name="Song.Form.Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="TwitchBot.Form.ManageCustomCommands" xml:space="preserve">
+    <value>Manage base commands</value>
+  </data>
+  <data name="Song.Form.Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="Song.Form.NeedToSetYourApiKeyFirst" xml:space="preserve">
+    <value>You need to set your API key first</value>
+  </data>
+  <data name="Song.Form.Quest" xml:space="preserve">
+    <value>Quest</value>
+  </data>
+  <data name="Song.Form.Tools" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="Program.Api.Message1" xml:space="preserve">
+    <value>Be careful, the API key is missing.\r\nGo to Preferences</value>
+  </data>
+  <data name="Song.Form.CompareSongversion" xml:space="preserve">
+    <value>Compare songs versions</value>
+  </data>
+  <data name="Song.Form.NoCompatibleDeviceFound" xml:space="preserve">
+    <value>No compatible device found</value>
+  </data>
+  <data name="TwitchBot.Form.ManagebaseCommands" xml:space="preserve">
+    <value>Manage custom commands</value>
+  </data>
+  <data name="Song.Form.Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Song.Form.Mapper" xml:space="preserve">
+    <value>Mapper</value>
+  </data>
+  <data name="Command.Base.Action.Message" xml:space="preserve">
+    <value>You can request custom maps to {0} with the command !rc [map_id], to find it go to https://ragnacustoms.com and click on the twitch button (the purple one) to copy !rc [map_id] command and come back here to paste the command.</value>
+  </data>
+  <data name="Song.Form.LogFile" xml:space="preserve">
+    <value>Log file</value>
+  </data>
+  <data name="Song.Form.AutoCloseDownload" xml:space="preserve">
+    <value>Auto close Download</value>
+  </data>
+  <data name="Command.Help.Action.UnknowCommand" xml:space="preserve">
+    <value>This commande doesn't exists, check the command name.</value>
+  </data>
+  <data name="Command.Help.Help" xml:space="preserve">
+    <value>Display list of commands</value>
+  </data>
+  <data name="Song.Form.getOverlayurl" xml:space="preserve">
+    <value>Get overlay URL</value>
+  </data>
+  <data name="Song.Form.Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Song.Form.SyncComplete" xml:space="preserve">
+    <value>Sync complete</value>
+  </data>
+  <data name="Song.Form.SyncSong" xml:space="preserve">
+    <value>Sync songs</value>
+  </data>
+  <data name="Song.Form.LogScreen" xml:space="preserve">
+    <value>Log Screen</value>
+  </data>
+  <data name="TwitchBot.Form.Title" xml:space="preserve">
+    <value>Twitch bot requests</value>
+  </data>
+  <data name="Song.Form.Author" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="Song.Form.About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="TwitchBot.Form.TwitchChannel" xml:space="preserve">
+    <value>Twitch Channel name</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="logocompressed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logocompressed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

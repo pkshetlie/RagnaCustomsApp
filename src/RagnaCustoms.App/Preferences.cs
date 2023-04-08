@@ -113,26 +113,35 @@ namespace RagnaCustoms.App
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var gameini = DirProvider.getGameIniFile().ToString();
-            if (!File.Exists(gameini)){
-                MessageBox.Show("File not found ! Only works for Steam version", "RagnaCustoms.com", MessageBoxButtons.OK,
-                   MessageBoxIcon.Exclamation);
-                return;
-            }
-            using (StreamWriter writer = new StreamWriter(gameini))
+            if (Program.checkApiKey(_configuration.ApiKey))
             {
-                writer.WriteLine("[/Script/Ragnarock.RagnarockSettings]");
-                writer.WriteLine($"CustomApiURLs=\"https://api.ragnacustoms.com/wanapi/score/{_configuration.ApiKey}\"");
+
+
+                var gameini = DirProvider.getGameIniFile().ToString();
+                if (File.Exists(gameini))
+                {
+                    using (StreamWriter writer = new StreamWriter(gameini))
+                    {
+                        writer.WriteLine("[/Script/Ragnarock.RagnarockSettings]");
+                        writer.WriteLine($"CustomApiURLs=\"https://api.ragnacustoms.com/wanapi/score/{_configuration.ApiKey}\"");
+                    }
+                }
+
+
+                if (AndroidDevice.GetFirstFoundDevice() != null)
+                {
+                    AndroidDevice.GenerateGameIni();
+                }
+
+                MessageBox.Show("File updated with this API Key", "RagnaCustoms.com", MessageBoxButtons.OK,
+                          MessageBoxIcon.Information);
             }
-
-
-            if (AndroidDevice.GetFirstFoundDevice() != null)
+            else
             {
-                AndroidDevice.GenerateGameIni();
-            }
+                MessageBox.Show("Your API key is not up to date, please login or set it manualy before setting Game.ini", "RagnaCustoms.com", MessageBoxButtons.OK,
+                         MessageBoxIcon.Exclamation);
 
-            MessageBox.Show("File updated with this API Key", "RagnaCustoms.com", MessageBoxButtons.OK,
-                      MessageBoxIcon.Information);
+            }
         }
 
         private void label6_Click(object sender, EventArgs e)
