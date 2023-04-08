@@ -34,6 +34,16 @@ namespace RagnaCustoms.Services
                 IsRunning = true;
 
                 var file = new FileInfo(SongLogFilePath);
+                if (!file.Exists)
+                {
+                    var fullDir = Path.GetDirectoryName(SongLogFilePath);
+                    if (!Directory.Exists(fullDir))
+                    {
+                        Directory.CreateDirectory(fullDir);
+                    }
+                    var tempFile = File.Create(SongLogFilePath);
+                    tempFile.Close();
+                }
                 var length = file.Length;
 
                 using var stream = File.Open(SongLogFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
@@ -44,7 +54,10 @@ namespace RagnaCustoms.Services
                 while (IsRunning)
                 {
                     var line = reader.ReadLine();
-
+                    if (line == null || line.Length == 0) 
+                    {
+                        continue;
+                    }
                     var songLevelLineHint = "LogTemp: Warning: Song level str";
                     var songNameLineHint = "LogTemp: Loading song";
                     var songScoreLineHint = "raw distance =";
