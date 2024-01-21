@@ -149,11 +149,13 @@ namespace RagnaCustoms.Models
                 downloadCompleted?.Invoke(autoClose);
                 return;
             }
+
             var songDir = $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}";
 
             downloadTitle?.Invoke($"{songInfo.Name} by {songInfo.Mapper}");
             var songDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(),
                 songDir);
+           
             if (configuration.OrderAlphabetically)
             {
                 songDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(), "Alphabet");
@@ -168,9 +170,26 @@ namespace RagnaCustoms.Models
                 }
                 songDirectoryPath = Path.Combine(songDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
             }
+            
+            if(configuration.OrderMapper){
+                songDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(), "Mapper");
+               
+                if (!Directory.Exists(songDirectoryPath))
+                {
+                    Directory.CreateDirectory(songDirectoryPath);
+                }
+                
+                songDirectoryPath = Path.Combine(songDirectoryPath, songInfo.Mapper.Slug());
+                
+                if (!Directory.Exists(songDirectoryPath))
+                {
+                    Directory.CreateDirectory(songDirectoryPath);
+                }
 
-            var rankedDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(),"Ranked",
-                            songDir);
+                songDirectoryPath = Path.Combine(songDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
+            }
+
+            var rankedDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(),"Ranked", songDir);
 
             if (configuration.CopyRanked)
             {
@@ -180,10 +199,12 @@ namespace RagnaCustoms.Models
                     Directory.CreateDirectory(RankedDir);
                 }
             }
+
             if (songFolder != null)
             {
                 songDirectoryPath = songFolder;
             }
+
             if(subfolder != null)
             {
                 songDirectoryPath = Path.Combine(configuration.BaseFolder, subfolder);//, songDir);
@@ -202,8 +223,7 @@ namespace RagnaCustoms.Models
             //}
 
 
-            client.DownloadProgressChanged +=
-                (sender, args) => downloadProgressChanged?.Invoke(args.ProgressPercentage);
+            client.DownloadProgressChanged += (sender, args) => downloadProgressChanged?.Invoke(args.ProgressPercentage);
             client.DownloadFileCompleted += ClientDownloadFileCompleted;
             client.DownloadFileAsync(uri, tempFilePath);
 
@@ -310,6 +330,25 @@ namespace RagnaCustoms.Models
                     songDirectoryPath = Path.Combine(songDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
                 }
 
+                if (configuration.OrderMapper)
+                {
+                    songDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(), "Mapper");
+                  
+                    if (!Directory.Exists(songDirectoryPath))
+                    {
+                        Directory.CreateDirectory(songDirectoryPath);
+                    }
+                  
+                    songDirectoryPath = Path.Combine(songDirectoryPath, songInfo.Mapper.Slug());
+                   
+                    if (!Directory.Exists(songDirectoryPath))
+                    {
+                        Directory.CreateDirectory(songDirectoryPath);
+                    }
+
+                    songDirectoryPath = Path.Combine(songDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
+                }
+
                 var rankedDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(), "Ranked",
                                 $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
 
@@ -365,6 +404,7 @@ namespace RagnaCustoms.Models
                             file.CopyTo(tempPath, false);
                         }
                     }
+
                     if (configuration.CopyRanked && songInfo.IsRanked == "True")
                     {
                         if (Directory.Exists(rankedDirectoryPath))

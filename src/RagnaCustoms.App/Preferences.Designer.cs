@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Preferences));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -39,9 +40,14 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.closeOnEndCheckbox = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.OrderAlphabetCheckbox = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.copyRanked = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.RequestFolderText = new System.Windows.Forms.TextBox();
             this.autoStart = new System.Windows.Forms.CheckBox();
@@ -53,7 +59,6 @@
             this.helptwitchtmi = new System.Windows.Forms.Label();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.twitchOAuth = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -76,13 +81,24 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "General";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(23, 76);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(157, 9);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "Works for windows and quest, pico if plugged";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(10, 53);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(184, 23);
             this.button1.TabIndex = 5;
-            this.button1.Text = "Configure Game.ini";
+            this.button1.Text = "Activate score sending";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -153,25 +169,63 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.OrderAlphabetCheckbox);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.radioButton3);
+            this.groupBox3.Controls.Add(this.radioButton2);
+            this.groupBox3.Controls.Add(this.radioButton1);
             this.groupBox3.Controls.Add(this.copyRanked);
             this.groupBox3.Location = new System.Drawing.Point(12, 201);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(200, 79);
+            this.groupBox3.Size = new System.Drawing.Size(200, 134);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Directories";
             // 
-            // OrderAlphabetCheckbox
+            // label7
             // 
-            this.OrderAlphabetCheckbox.AutoSize = true;
-            this.OrderAlphabetCheckbox.Location = new System.Drawing.Point(7, 43);
-            this.OrderAlphabetCheckbox.Name = "OrderAlphabetCheckbox";
-            this.OrderAlphabetCheckbox.Size = new System.Drawing.Size(173, 17);
-            this.OrderAlphabetCheckbox.TabIndex = 2;
-            this.OrderAlphabetCheckbox.Text = "Order downloads alphabetically";
-            this.OrderAlphabetCheckbox.UseVisualStyleBackColor = true;
-            this.OrderAlphabetCheckbox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(4, 50);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(93, 13);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "Maps organization";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Location = new System.Drawing.Point(6, 111);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(75, 17);
+            this.radioButton3.TabIndex = 6;
+            this.radioButton3.TabStop = true;
+            this.radioButton3.Text = "By mapper";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(6, 90);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(90, 17);
+            this.radioButton2.TabIndex = 5;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "Alphabetically";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(6, 67);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(145, 17);
+            this.radioButton1.TabIndex = 4;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "One folder to rule them all";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // copyRanked
             // 
@@ -186,6 +240,8 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.button2);
+            this.groupBox4.Controls.Add(this.checkBox1);
             this.groupBox4.Controls.Add(this.label5);
             this.groupBox4.Controls.Add(this.RequestFolderText);
             this.groupBox4.Controls.Add(this.autoStart);
@@ -199,23 +255,46 @@
             this.groupBox4.Controls.Add(this.twitchOAuth);
             this.groupBox4.Location = new System.Drawing.Point(218, 12);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(222, 268);
+            this.groupBox4.Size = new System.Drawing.Size(222, 323);
             this.groupBox4.TabIndex = 33;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Twitch bot";
             // 
+            // button2
+            // 
+            this.button2.Cursor = System.Windows.Forms.Cursors.Default;
+            this.button2.Location = new System.Drawing.Point(6, 253);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(207, 23);
+            this.button2.TabIndex = 41;
+            this.button2.Text = "Clear requests folder";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(12, 137);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(169, 17);
+            this.checkBox1.TabIndex = 40;
+            this.checkBox1.Text = "Disable bot welcome message";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_2);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 223);
+            this.label5.Location = new System.Drawing.Point(7, 212);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(127, 13);
+            this.label5.Size = new System.Drawing.Size(198, 13);
             this.label5.TabIndex = 39;
-            this.label5.Text = "Download directory name";
+            this.label5.Text = "Requests downloads sub directory name";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // RequestFolderText
             // 
-            this.RequestFolderText.Location = new System.Drawing.Point(10, 239);
+            this.RequestFolderText.Location = new System.Drawing.Point(8, 228);
             this.RequestFolderText.Name = "RequestFolderText";
             this.RequestFolderText.Size = new System.Drawing.Size(205, 20);
             this.RequestFolderText.TabIndex = 38;
@@ -224,11 +303,11 @@
             // autoStart
             // 
             this.autoStart.AutoSize = true;
-            this.autoStart.Location = new System.Drawing.Point(9, 187);
+            this.autoStart.Location = new System.Drawing.Point(12, 189);
             this.autoStart.Name = "autoStart";
-            this.autoStart.Size = new System.Drawing.Size(80, 17);
+            this.autoStart.Size = new System.Drawing.Size(71, 17);
             this.autoStart.TabIndex = 37;
-            this.autoStart.Text = "Auto-start ?";
+            this.autoStart.Text = "Auto-start";
             this.autoStart.UseVisualStyleBackColor = true;
             this.autoStart.CheckedChanged += new System.EventHandler(this.autoStart_CheckedChanged);
             // 
@@ -246,9 +325,10 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(9, 97);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(75, 13);
+            this.label3.Size = new System.Drawing.Size(109, 13);
             this.label3.TabIndex = 35;
-            this.label3.Text = "Channel name";
+            this.label3.Text = "Twitch channel name";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // twitchChannel
             // 
@@ -260,7 +340,7 @@
             // 
             // prefix
             // 
-            this.prefix.Location = new System.Drawing.Point(117, 152);
+            this.prefix.Location = new System.Drawing.Point(117, 158);
             this.prefix.Name = "prefix";
             this.prefix.Size = new System.Drawing.Size(37, 20);
             this.prefix.TabIndex = 33;
@@ -270,11 +350,12 @@
             // botMessagePrefixLabel
             // 
             this.botMessagePrefixLabel.AutoSize = true;
-            this.botMessagePrefixLabel.Location = new System.Drawing.Point(9, 155);
+            this.botMessagePrefixLabel.Location = new System.Drawing.Point(9, 161);
             this.botMessagePrefixLabel.Name = "botMessagePrefixLabel";
             this.botMessagePrefixLabel.Size = new System.Drawing.Size(96, 13);
             this.botMessagePrefixLabel.TabIndex = 34;
             this.botMessagePrefixLabel.Text = "Bot message prefix";
+            this.botMessagePrefixLabel.Click += new System.EventHandler(this.botMessagePrefixLabel_Click);
             // 
             // helptwitchtmi
             // 
@@ -307,22 +388,11 @@
             this.twitchOAuth.TabIndex = 22;
             this.twitchOAuth.TextChanged += new System.EventHandler(this.twitchOAuth_TextChanged);
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(23, 76);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(157, 9);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "Works for windows and quest, pico if plugged";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
-            // 
             // Preferences
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(451, 288);
+            this.ClientSize = new System.Drawing.Size(451, 347);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
@@ -357,7 +427,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.CheckBox closeOnEndCheckbox;
         private System.Windows.Forms.CheckBox copyRanked;
-        private System.Windows.Forms.CheckBox OrderAlphabetCheckbox;
         private System.Windows.Forms.GroupBox groupBox4;
         public System.Windows.Forms.Label helptwitchtmi;
         public System.Windows.Forms.LinkLabel linkLabel2;
@@ -372,5 +441,11 @@
         private System.Windows.Forms.TextBox RequestFolderText;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.RadioButton radioButton2;
+        public System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button button2;
     }
 }

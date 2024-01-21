@@ -75,7 +75,9 @@ namespace RagnaCustoms.App.Views
             }
             else
             {
-                MessageBox.Show("Bad login", "RagnaCustoms.com", MessageBoxButtons.OK,
+                var content = await result.Content.ReadAsStringAsync();
+
+                MessageBox.Show("Bad login : "+ content, "RagnaCustoms.com", MessageBoxButtons.OK,
                       MessageBoxIcon.Warning);
             }
         }

@@ -29,15 +29,23 @@ namespace RagnaCustoms.App
             DefaultDirTxt.Text = _configuration.BaseFolder;
             textBox1.Text = _configuration.ApiKey;
             closeOnEndCheckbox.Checked = _configuration.AutoCloseDownload;
-            OrderAlphabetCheckbox.Checked = _configuration.OrderAlphabetically;
+            RequestFolderText.Text = _configuration.RequestFolder;
+
+
+            // OrderAlphabetCheckbox.Checked = _configuration.OrderAlphabetically;
+            //OrderMapperCheckbox.Checked = _configuration.OrderMapper;
+
             copyRanked.Checked = _configuration.CopyRanked;
             twitchOAuth.Text = _configuration.AuthTmi;
             twitchChannel.Text = _configuration.TwitchChannel;
             autoStart.Checked = _configuration.TwitchBotAutoStart;
-            RequestFolderText.Text = _configuration.RequestFolder;
             prefix.Text = _configuration.BotPrefix;
             autoStart.Checked = _configuration.TwitchBotAutoStart;
+            checkBox1.Checked = _configuration.DisableBotWelcome;
 
+            radioButton1.Checked = !_configuration.OrderAlphabetically && !_configuration.OrderMapper;
+            radioButton2.Checked = _configuration.OrderAlphabetically;
+            radioButton3.Checked = _configuration.OrderMapper;
         }
 
         private void defaultDirButton_Click(object sender, EventArgs e)
@@ -70,7 +78,7 @@ namespace RagnaCustoms.App
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            _configuration.OrderAlphabetically = OrderAlphabetCheckbox.Checked;
+            //_configuration.OrderAlphabetically = OrderAlphabetCheckbox.Checked;
         }
 
         private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
@@ -147,6 +155,101 @@ namespace RagnaCustoms.App
         private void label6_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OrderMapperCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+           // _configuration.OrderMapper = OrderMapperCheckbox.Checked;
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            _configuration.OrderAlphabetically = false;
+            _configuration.OrderMapper = false;
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            _configuration.OrderAlphabetically = true;
+            _configuration.OrderMapper = false;
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            _configuration.OrderAlphabetically = false;
+            _configuration.OrderMapper = true;
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void botMessagePrefixLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DirectoryInfo customDirectory = DirProvider.getCustomDirectory();
+            var songDirectoryPath = Path.Combine(customDirectory.FullName, _configuration.RequestFolder);
+          
+            try
+            {
+                DeleteDirectoryContents(songDirectoryPath);
+
+                MessageBox.Show("Map request folder cleared!", "RagnaCustoms.com", MessageBoxButtons.OK,
+                         MessageBoxIcon.Information);
+            }
+            catch (Exception o_O)
+            {
+                MessageBox.Show(o_O.Message, "RagnaCustoms.com", MessageBoxButtons.OK,
+                                         MessageBoxIcon.Warning);
+            }
+        }
+
+        private void DeleteDirectoryContents(string path)
+        {
+            try
+            {
+                // Delete files in the directory
+                foreach (string filePath in Directory.GetFiles(path))
+                {
+                    File.Delete(filePath);
+                }
+
+                // Recursively delete subdirectories
+                foreach (string subdirectoryPath in Directory.GetDirectories(path))
+                {
+                    DeleteDirectoryContents(subdirectoryPath);
+                    Directory.Delete(subdirectoryPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting directory contents: {ex.Message}");
+            }
+        }
+
+        private void checkBox1_CheckedChanged_2(object sender, EventArgs e)
+        {
+            _configuration.DisableBotWelcome = checkBox1.Checked;
         }
     }
 }

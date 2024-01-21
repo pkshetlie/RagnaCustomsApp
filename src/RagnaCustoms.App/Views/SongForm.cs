@@ -17,6 +17,7 @@ using RagnaCustoms.App.Views;
 using RagnaCustoms.Models;
 using RagnaCustoms.Presenters;
 using RagnaCustoms.Services;
+using TwitchLib.PubSub.Models.Responses.Messages.AutomodCaughtMessage;
 using Configuration = RagnaCustoms.Services.Configuration;
 
 namespace RagnaCustoms.Views
@@ -264,6 +265,46 @@ namespace RagnaCustoms.Views
         {
             var sInfo = new ProcessStartInfo("https://ragnacustoms.com/getting-started?from=app");
             Process.Start(sInfo);
+        }
+
+        private void imSureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DirectoryInfo customDirectory = DirProvider.getCustomDirectory();
+
+            try
+            {
+                DeleteDirectoryContents(customDirectory.FullName);
+
+                MessageBox.Show("Folder cleared!", "RagnaCustoms.com", MessageBoxButtons.OK,
+                         MessageBoxIcon.Information);
+            }catch(Exception o_O)
+            {
+                MessageBox.Show(o_O.Message, "RagnaCustoms.com", MessageBoxButtons.OK,
+                                         MessageBoxIcon.Warning);
+            }
+        }
+
+        private void DeleteDirectoryContents(string path)
+        {
+            try
+            {
+                // Delete files in the directory
+                foreach (string filePath in Directory.GetFiles(path))
+                {
+                    File.Delete(filePath);
+                }
+
+                // Recursively delete subdirectories
+                foreach (string subdirectoryPath in Directory.GetDirectories(path))
+                {
+                    DeleteDirectoryContents(subdirectoryPath);
+                    Directory.Delete(subdirectoryPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting directory contents: {ex.Message}");
+            }
         }
     }
 }

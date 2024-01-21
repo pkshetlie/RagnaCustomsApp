@@ -183,7 +183,11 @@ namespace RagnaCustoms.App.Views
         private void OnConnected(object sender, OnConnectedArgs e)
         {
             _joinedChannel = _twitchClient.GetJoinedChannel(_configuration.TwitchChannel);
-            _twitchClient.SendMessage(_joinedChannel, $"{_configuration.BotPrefix} Ragnacustoms.com's bot connected");
+
+            if (!_configuration.DisableBotWelcome)
+            {
+                _twitchClient.SendMessage(_joinedChannel, $"{_configuration.BotPrefix} Ragnacustoms.com's bot connected");
+            }
             //TwitchClient.SendMessage(joinedChannel, $"{prefixe}{Resources.app.strings.WelcomeBot}");
         }
 

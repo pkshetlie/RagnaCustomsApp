@@ -69,6 +69,11 @@ namespace RagnaCustoms.Services
             get => Get(nameof(OrderAlphabetically)) == bool.TrueString;
             set => Set(nameof(OrderAlphabetically), value ? bool.TrueString : bool.FalseString);
         }
+        public bool OrderMapper
+        {
+            get => Get(nameof(OrderMapper)) == bool.TrueString;
+            set => Set(nameof(OrderMapper), value ? bool.TrueString : bool.FalseString);
+        }
         public bool Overlay
         {
             get => Get(nameof(Overlay)) == bool.TrueString;
@@ -91,6 +96,11 @@ namespace RagnaCustoms.Services
         {
             get => Get(nameof(BotPrefix));
             set => Set(nameof(BotPrefix), value);
+        }
+        public bool DisableBotWelcome
+        {
+            get => Get(nameof(DisableBotWelcome)) == bool.TrueString;
+            set => Set(nameof(DisableBotWelcome), value ? bool.TrueString : bool.FalseString);
         }
 
         public Dictionary<string, string> ViewerLang
