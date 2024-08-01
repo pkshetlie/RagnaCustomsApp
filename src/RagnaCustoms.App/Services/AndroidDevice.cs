@@ -1,9 +1,9 @@
-﻿using System;
+﻿using MediaDevices;
+using RagnaCustoms.App.Views;
+using System;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using MediaDevices;
-using RagnaCustoms.App.Views;
 
 namespace RagnaCustoms.Services
 {
@@ -33,12 +33,20 @@ namespace RagnaCustoms.Services
         {
             var devices = MediaDevice.GetDevices();
             foreach (var d in devices)
-                if (d.Description.ToLower().Contains("quest") || d.Description.ToLower().Contains("pico"))
+            {
+                if (d.Description.ToLower().Contains("quest"))
                 {
                     DeviceSongDirectoryName = $@"\Android\data\com.wanadev.ragnarockquest\files\UE4Game\Ragnarock\Ragnarock\Saved\CustomSongs";
                     DeviceConfigDirectoryName = $@"\Android\data\com.wanadev.ragnarockquest\files\UE4Game\Ragnarock\Ragnarock\Saved\Config";
                     return d;
                 }
+                if (d.Description.ToLower().Contains("pico"))
+                {
+                    DeviceSongDirectoryName = $@"\Android\data\com.wanadev.ragnarockpico\files\UE4Game\Ragnarock\Ragnarock\Saved\CustomSongs";
+                    DeviceConfigDirectoryName = $@"\Android\data\com.wanadev.ragnarockpico\files\UE4Game\Ragnarock\Ragnarock\Saved\Config";
+                    return d;
+                }
+            }
             return null;
         }
 
