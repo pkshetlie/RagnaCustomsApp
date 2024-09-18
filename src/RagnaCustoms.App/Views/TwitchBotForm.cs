@@ -142,7 +142,7 @@ namespace RagnaCustoms.App.Views
 
         public void checkEnabled()
         {
-           
+
             if (botEnabled &&
                 (string.IsNullOrEmpty(_configuration.AuthTmi) || string.IsNullOrEmpty(_configuration.TwitchChannel)))
             {
@@ -214,7 +214,7 @@ namespace RagnaCustoms.App.Views
 
         private void StartDownload(string v)
         {
-            var songId = int.Parse(v);
+            var songId = v;
             var songProvider = new SongProvider();
             var downloadingView = new DownloadingForm();
             var downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
@@ -299,7 +299,7 @@ namespace RagnaCustoms.App.Views
             UpdateFormRows();
         }
 
-        public void removeSongEasyStream(int songId)
+        public void removeSongEasyStream(string songId)
         {
             var songFolder = DirProvider.getCustomDirectory()
                 .GetDirectories()
@@ -332,6 +332,7 @@ namespace RagnaCustoms.App.Views
         {
             RemoveAtSongRequestInList(_lastPlayedHash);
         }
+
         public void RemoveAtSongRequestInList(string hash)
         {
             var song = _songList.Find(s => s.Hash.Equals(hash));
@@ -399,7 +400,7 @@ namespace RagnaCustoms.App.Views
 
         private void EnableButton_Click(object sender, EventArgs e)
         {
-            botEnabled = !botEnabled;            
+            botEnabled = !botEnabled;
             checkEnabled();
             EnableButton.Text = botEnabled ? "Stop" : "Start";
         }

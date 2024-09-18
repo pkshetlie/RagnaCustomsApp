@@ -50,7 +50,7 @@ namespace RagnaCustoms.Presenters
             View.Songs = await SongProvider.SearchOnlineAsync(term);
         }
 
-        public virtual void DownloadAsync(int songId, string songFolder= null, string subFolder = null)
+        public virtual void DownloadAsync(string songId, string songFolder= null, string subFolder = null)
         {
             DownloadingPresenter.Download(songId, _configuration.AutoCloseDownload, songFolder, subFolder);
             DownloadingPresenter.ShowAsPopup();

@@ -34,7 +34,7 @@ namespace RagnaCustoms.Presenters
             View.Close();
         }
 
-        public virtual void Download(int songId, bool autoClose = false, string songFolder = null, string subFolder = null)
+        public virtual void Download(string songId, bool autoClose = false, string songFolder = null, string subFolder = null)
         {
             View.DownloadPercent = default;
             SongProvider.DownloadAsync(songId, DownloadProgressChanged, DownloadCompleted, DownloadTitle, autoClose, songFolder, subFolder);

@@ -77,7 +77,7 @@ namespace RagnaCustoms.App
                         var songsId = songIdStr.Split('-');
                         foreach (var id in songsId)
                         {
-                            var songId = int.Parse(id);
+                            var songId = id;
                             downloadingView = new DownloadingForm();
                             downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
                             downloadingPresenter.Download(songId,
