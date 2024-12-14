@@ -1,4 +1,5 @@
 ﻿using RagnaCustoms.App.Views;
+using RagnaCustoms.Models;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -41,10 +42,17 @@ namespace RagnaCustoms.App.Commandes
                     client.SendMessage(joinedChannel, "No More song to remove");
                     return true;
                 }
-                me.RemoveLastPlayerSong();
-                client.SendMessage(joinedChannel, "Song removed");
-                var sog = me.songRequests?.Rows[0]?.Cells["Song"]?.Value?.ToString() ?? null;
-                client.SendMessage(joinedChannel, sog != null ? $"Next song : {sog} " : "End of the queue");
+                try
+                {
+                    me.RemoveLastPlayerSong();
+                    client.SendMessage(joinedChannel, "Song removed");
+                    var sog = me.songRequests?.Rows[0]?.Cells["Song"]?.Value?.ToString() ?? null;
+                    client.SendMessage(joinedChannel, sog != null ? $"Next song : {sog} " : "End of the queue");
+                }
+                catch(Exception O_o)
+                {
+                    client.SendMessage(joinedChannel, $"I can't!");
+                }
             }
             return true;
         }

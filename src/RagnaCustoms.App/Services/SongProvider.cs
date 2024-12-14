@@ -33,7 +33,7 @@ namespace RagnaCustoms.Models
             return new DirProvider().GetLocalSongs().Where(song => song.Name.Contains(term)).ToList();
         }
 
-        public async Task<SongSearchModel> SearchOnlineAsync(int id)
+        public async Task<SongSearchModel> SearchOneOnlineAsync(string id)
         {
             using var client = new HttpClient();
 
@@ -94,7 +94,7 @@ namespace RagnaCustoms.Models
                 if (File.Exists(idFile))
                 {
                     var hashFile = Path.Combine(songpath, ".hash");
-                    var songInfo = songsInfo.FirstOrDefault(x => x.Id == int.Parse(File.ReadAllText(idFile)));
+                    var songInfo = songsInfo.FirstOrDefault(x => x.Id == File.ReadAllText(idFile));
                     if (songInfo != null)
                     {
                         songInfo.CurrentFolder = songpath;
@@ -127,7 +127,7 @@ namespace RagnaCustoms.Models
             return exploreRecurs(dir, songsInfo);
         }
 
-        public virtual async Task DownloadAsync(int songId, Action<int> downloadProgressChanged,
+        public virtual async Task DownloadAsync(string songId, Action<int> downloadProgressChanged,
             Action<bool> downloadCompleted, Action<string> downloadTitle, bool autoClose = false, string songFolder = null, string subfolder = null)
         {
             using var client = new WebClient();
@@ -143,7 +143,7 @@ namespace RagnaCustoms.Models
             var tempDirectory = Directory.CreateDirectory(tempDirectoryPath);
             var tempFilePath = Path.GetTempFileName();
 
-            var songInfo = await SearchOnlineAsync(songId);
+            var songInfo = await SearchOneOnlineAsync(songId);
             if (songInfo == null)
             {
                 downloadCompleted?.Invoke(autoClose);
