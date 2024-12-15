@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using RagnaCustoms.App.Extensions;
+using System.Collections.Generic;
 using System.Linq;
-using RagnaCustoms.App.Extensions;
 
 namespace RagnaCustoms.Models
 {
@@ -45,7 +45,7 @@ namespace RagnaCustoms.Models
         public bool UpToDate { get; set; }
         public string Name { get; set; }
         public string Hash { get; set; }
-        public string IsRanked { get; set; }
+        public bool IsRanked { get; set; }
         public string Author { get; set; }
         public string Mapper { get; set; }
         public string CurrentFolder { get; set; }
