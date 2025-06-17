@@ -236,6 +236,9 @@
     <None Include="Resources\logocompressed.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Humanizer.Core">
+      <Version>2.14.1</Version>
+    </PackageReference>
     <PackageReference Include="MediaDevices">
       <Version>1.10.0</Version>
     </PackageReference>

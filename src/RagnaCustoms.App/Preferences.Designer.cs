@@ -376,7 +376,7 @@
             this.linkLabel2.Size = new System.Drawing.Size(130, 13);
             this.linkLabel2.TabIndex = 19;
             this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "https://twitchapps.com/tmi/";
+            this.linkLabel2.Text = "https://twitchtokengenerator.com/";
             this.linkLabel2.Click += new System.EventHandler(this.linkLabel2_Click);
             // 
             // twitchOAuth

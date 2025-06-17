@@ -115,7 +115,7 @@ namespace RagnaCustoms.App
 
         private void linkLabel2_Click(object sender, EventArgs e)
         {
-            var sInfo = new ProcessStartInfo("https://twitchapps.com/tmi/");
+            var sInfo = new ProcessStartInfo("https://twitchtokengenerator.com/");
             Process.Start(sInfo);
         }
 

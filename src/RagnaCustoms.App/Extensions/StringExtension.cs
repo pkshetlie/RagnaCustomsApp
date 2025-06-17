@@ -1,28 +1,52 @@
-﻿using System;
+﻿using Humanizer;
+using Humanizer.Localisation.NumberToWords;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace RagnaCustoms.App.Extensions
 {
     public static class StringExtension
     {
-        public static string Slug(this string text)
-        {
-            Dictionary<char, string> cyrToLat = new Dictionary<char, string>
-        {
-            {'а', "a"}, {'б', "b"}, {'в', "v"}, {'г', "g"}, {'д', "d"}, {'е', "e"}, {'ё', "io"}, {'ж', "zh"}, {'з', "z"}, {'и', "i"}, {'й', "y"},
-            {'к', "k"}, {'л', "l"}, {'м', "m"}, {'н', "n"}, {'о', "o"}, {'п', "p"}, {'р', "r"}, {'с', "s"}, {'т', "t"}, {'у', "u"}, {'ф', "f"},
-            {'х', "h"}, {'ц', "ts"}, {'ч', "ch"}, {'ш', "sh"}, {'щ', "sht"}, {'ъ', "a"}, {'ы', "i"}, {'ь', "y"}, {'э', "e"}, {'ю', "yu"}, {'я', "ya"},
-            {'А', "A"}, {'Б', "B"}, {'В', "V"}, {'Г', "G"}, {'Д', "D"}, {'Е', "E"}, {'Ё', "Io"}, {'Ж', "Zh"}, {'З', "Z"}, {'И', "I"}, {'Й', "Y"},
-            {'К', "K"}, {'Л', "L"}, {'М', "M"}, {'Н', "N"}, {'О', "O"}, {'П', "P"}, {'Р', "R"}, {'С', "S"}, {'Т', "T"}, {'У', "U"}, {'Ф', "F"},
-            {'Х', "H"}, {'Ц', "Ts"}, {'Ч', "Ch"}, {'Ш', "Sh"}, {'Щ', "Sht"}, {'Ъ', "A"}, {'Ы', "Y"}, {'Ь', "Y"}, {'Э', "E"}, {'Ю', "Yu"}, {'Я', "Ya"}
-        };
 
-            text = CyrillicToLatin(text, cyrToLat);
-            var rgx = new Regex("[^a-zA-Z]");
-            text = rgx.Replace(text, "");
+        public static string Slug(this string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+                return "unrecognizedcharacters";
 
-            return text.ToLower();
+            // Translitération Unicode basique (ex : кириллица → kirillitsa)
+            string latinized = TransliterateToAscii(input);
+
+            // Supprimer les accents
+            latinized = RemoveAccents(latinized);
+
+            // Garder uniquement les lettres latines et chiffres
+            string clean = Regex.Replace(latinized.ToLowerInvariant(), @"[^a-z0-9]", "");
+
+            // Si tout a été supprimé → valeur par défaut
+            return string.IsNullOrEmpty(clean) ? "unrecognized-characters" : clean;
+        }
+
+        private static string RemoveAccents(string input)
+        {
+            var normalized = input.Normalize(NormalizationForm.FormD);
+            var sb = new StringBuilder();
+
+            foreach (char c in normalized)
+            {
+                if (CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+                    sb.Append(c);
+            }
+
+            return sb.ToString().Normalize(NormalizationForm.FormC);
+        }
+
+        private static string TransliterateToAscii(string input)
+        {
+            // Normalisation Unicode KD = compatibilité max (é → e, ™ → tm, etc.)
+            return input.Normalize(NormalizationForm.FormKD);
         }
     
 

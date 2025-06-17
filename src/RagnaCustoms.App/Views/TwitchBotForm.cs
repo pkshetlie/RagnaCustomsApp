@@ -136,7 +136,7 @@ namespace RagnaCustoms.App.Views
 
         private void linkLabel2_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var sInfo = new ProcessStartInfo("https://twitchapps.com/tmi/");
+            var sInfo = new ProcessStartInfo("https://twitchtokengenerator.com/");
             Process.Start(sInfo);
         }
 

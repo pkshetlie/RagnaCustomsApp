@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30907.101
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36202.13 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagnaCustoms.Launcher", "RagnaCustoms.Launcher\RagnaCustoms.Launcher.csproj", "{A48057D9-ABE3-4B9F-98D1-C4C7F4DD1CC2}"
 EndProject
@@ -39,6 +39,7 @@ Global
 		{C6A7B343-F2DD-4BA6-98FD-92475B1E7109}.Release|x86.ActiveCfg = Release|Any CPU
 		{C6A7B343-F2DD-4BA6-98FD-92475B1E7109}.Release|x86.Build.0 = Release|Any CPU
 		{EC272E76-5B40-4130-874C-E66932BFA30A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{EC272E76-5B40-4130-874C-E66932BFA30A}.Debug|Any CPU.Build.0 = Debug|x86
 		{EC272E76-5B40-4130-874C-E66932BFA30A}.Debug|x86.ActiveCfg = Debug|x86
 		{EC272E76-5B40-4130-874C-E66932BFA30A}.Debug|x86.Build.0 = Debug|x86
 		{EC272E76-5B40-4130-874C-E66932BFA30A}.Release|Any CPU.ActiveCfg = Release|x86
