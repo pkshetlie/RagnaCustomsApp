@@ -102,7 +102,7 @@ namespace RagnaCustoms.Services
                 catch (Exception except)
                 {
                     syncingView.Close();
-                    MessageBox.Show($"Error: {except.Message}", "RagnaCutoms", MessageBoxButtons.OK,
+                    MessageBox.Show($"Error: {except.Message}", "RagnaCustoms", MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return 3;
                 }
@@ -112,25 +112,36 @@ namespace RagnaCustoms.Services
 
         public static int PushSong(string path)
         {
-            var device = GetFirstFoundDevice();
-            if (device != null)
+            try
             {
-                var song = path.Split(Path.DirectorySeparatorChar).Last();
-                device.Connect();
-                var baseFolder = device.GetDirectories(@"\")[0];
-                var questSongDirectoryPath = $"{baseFolder}{DeviceSongDirectoryName}\\{song}";
+                var device = GetFirstFoundDevice();
+                if (device != null)
+                {
+                    var song = path.Split(Path.DirectorySeparatorChar).Last();
+                    device.Connect();
+                    var baseFolder = device.GetDirectories(@"\")[0];
+                    var questSongDirectoryPath = $"{baseFolder}{DeviceSongDirectoryName}\\{song}";
 
-                if (!device.IsConnected) throw new NotConnectedException("Not connected");
+                    if (!device.IsConnected) throw new NotConnectedException("Not connected");
 
-                if (device.DirectoryExists(questSongDirectoryPath))
-                    device.DeleteDirectory(questSongDirectoryPath, true);
+                    if (device.DirectoryExists(questSongDirectoryPath))
+                        device.DeleteDirectory(questSongDirectoryPath, true);
 
-                device.CreateDirectory(questSongDirectoryPath);
+                    device.CreateDirectory(questSongDirectoryPath);
 
-                device.UploadFolder(path, questSongDirectoryPath);
-                device.Disconnect();
+                    device.UploadFolder(path, questSongDirectoryPath);
+                    device.Disconnect();
 
-                return 0;
+                    return 0;
+                }
+            }
+            catch(NotConnectedException nex)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                return 1;
             }
 
             return 1;
