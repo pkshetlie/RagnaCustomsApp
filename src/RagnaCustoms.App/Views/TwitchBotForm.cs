@@ -358,7 +358,7 @@ namespace RagnaCustoms.App.Views
             try
             {
                 using var webClient = new WebClient();
-                var json = webClient.DownloadString("https://ragnacustoms.com/api/song/" + songId);
+                var json = webClient.DownloadString("https://api.ragnacustoms.com/api/song/" + songId);
                 var stuff = JsonConvert.DeserializeObject<Song>(json);
                 //debug_console.Items.Add($"Début de la récuperation de {stuff.title}");
                 return stuff;
@@ -374,7 +374,7 @@ namespace RagnaCustoms.App.Views
             try
             {
                 using var webClient = new WebClient();
-                var json = webClient.DownloadString("https://ragnacustoms.com/api/search/" + search);
+                var json = webClient.DownloadString("https://api.ragnacustoms.com/api/search/" + search);
                 var stuffs = JsonConvert.DeserializeObject<SearshResult>(json);
                 return stuffs.FirstResultByName(search) ?? stuffs.BestResultByName(search);
             }

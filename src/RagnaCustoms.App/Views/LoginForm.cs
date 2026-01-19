@@ -84,7 +84,7 @@ namespace RagnaCustoms.App.Views
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var sInfo = new ProcessStartInfo("https://ragnacustoms.com/register");
+            var sInfo = new ProcessStartInfo("https://api.ragnacustoms.com/register");
             Process.Start(sInfo);
         
         }

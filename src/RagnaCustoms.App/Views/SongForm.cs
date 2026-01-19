@@ -165,7 +165,7 @@ namespace RagnaCustoms.Views
             }
             else
             {
-                var sInfo = new ProcessStartInfo($"https://ragnacustoms.com/overlay/display/{Presenter.ApiKey}");
+                var sInfo = new ProcessStartInfo($"https://api.ragnacustoms.com/overlay/display/{Presenter.ApiKey}");
                 Process.Start(sInfo);
             }
         }
@@ -263,7 +263,7 @@ namespace RagnaCustoms.Views
 
         private void helpPageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var sInfo = new ProcessStartInfo("https://ragnacustoms.com/getting-started?from=app");
+            var sInfo = new ProcessStartInfo("https://api.ragnacustoms.com/getting-started?from=app");
             Process.Start(sInfo);
         }
 
