@@ -28,7 +28,8 @@ jobs:
           
     - name: Install WiX Toolset
       run: |
-        choco install wixtoolset --version=3.14.1.20250415 -y --no-progress
+        choco install wixtoolset --version=3.14.1.20250415 --force -y --no-progress
+        if (!(Test-Path 'C:\Program Files (x86)\MSBuild\Microsoft\WiX\v3.x\Wix.targets')) { throw 'WiX MSBuild targets were not installed.' }
         echo "C:\Program Files (x86)\WiX Toolset v3.14\bin" >> $env:GITHUB_PATH
 
     - name: Setup MSBuild Path
