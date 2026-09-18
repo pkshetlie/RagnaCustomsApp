@@ -33,6 +33,15 @@ jobs:
         echo "WixTargetsPath=C:\Program Files (x86)\MSBuild\Microsoft\WiX\v3.x\Wix.targets" >> $env:GITHUB_ENV
         echo "C:\Program Files (x86)\WiX Toolset v3.14\bin" >> $env:GITHUB_PATH
 
+    - name: Install .NET Framework 4.6.1 Developer Pack
+      shell: pwsh
+      run: |
+        $installer = Join-Path $env:RUNNER_TEMP 'NDP461-DevPack-KB3105179-ENU.exe'
+        Invoke-WebRequest 'https://download.microsoft.com/download/f/1/d/f1deb8db-d277-4ef9-9f48-3a65d4d8f965/NDP461-DevPack-KB3105179-ENU.exe' -OutFile $installer
+        $process = Start-Process -FilePath $installer -ArgumentList '/q', '/norestart' -Wait -PassThru
+        if ($process.ExitCode -notin @(0, 3010)) { throw ".NET Framework 4.6.1 Developer Pack installation failed with exit code $($process.ExitCode)." }
+        if (!(Test-Path 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1')) { throw '.NET Framework 4.6.1 targeting pack was not installed.' }
+
     - name: Setup MSBuild Path
       uses: microsoft/setup-msbuild@v1.0.2
       
