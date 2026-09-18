@@ -60,8 +60,13 @@ namespace RagnaCustoms.App.Views
         
             using var client = new HttpClient();
 
-            var uri = new Uri($"https://api.ragnacustoms.com/api/login?username={username}&password={password}");
-            var result = await client.GetAsync(uri);
+            var uri = new Uri("https://api.ragnacustoms.com/api/login");
+            using var payload = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("username", username),
+                new KeyValuePair<string, string>("password", password)
+            });
+            var result = await client.PostAsync(uri, payload);
             if (result.IsSuccessStatusCode)
             {
                 var content = await result.Content.ReadAsStringAsync();
