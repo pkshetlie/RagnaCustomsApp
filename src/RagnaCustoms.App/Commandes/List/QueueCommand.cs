@@ -18,7 +18,7 @@ namespace RagnaCustoms.App.Commandes
 
         string ICommandes.Help()
         {
-            return "display queue";
+            return TwitchBotForm.GetLocalizedText("Command.Queue.Help", "Display the queue");
         }
 
         public List<UserType> IllegalUsers()
@@ -54,7 +54,7 @@ namespace RagnaCustoms.App.Commandes
 
             songs.Add(concatStr);
 
-            client.SendMessage(joinedChannel, "Next songs are: ");
+            client.SendMessage(joinedChannel, TwitchBotForm.GetLocalizedText("Command.Queue.NextSongs", "Next songs:"));
             Thread.Sleep(400);
             foreach (var songMessage in songs) client.SendMessage(joinedChannel, songMessage);
             return true;

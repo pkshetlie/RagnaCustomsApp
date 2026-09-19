@@ -1,6 +1,8 @@
 ﻿using MediaDevices;
+using RagnaCustoms.App.Properties;
 using RagnaCustoms.App.Views;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -73,7 +75,7 @@ namespace RagnaCustoms.Services
 
                     if (!device.IsConnected) throw new NotConnectedException("Not connected");
 
-                    syncingView.SyncingLabel.Text = "Creating CustomSongs directory";
+                    syncingView.SyncingLabel.Text = Resources.ResourceManager.GetString("Sync.Form.CreatingDirectory", CultureInfo.CurrentUICulture) ?? "Creating CustomSongs directory";
                     if (device.DirectoryExists(questSongDirectoryPath))
                         device.DeleteDirectory(questSongDirectoryPath, true);
 
@@ -86,7 +88,7 @@ namespace RagnaCustoms.Services
                         var songToSync = $"{LocalRagnarockSongDirectoryPath}\\{folderName}";
                         var destinationFolder = $"{questSongDirectoryPath}\\{folderName}";
 
-                        syncingView.SyncingLabel.Text = $"Copying {folderName}";
+                        syncingView.SyncingLabel.Text = string.Format(Resources.ResourceManager.GetString("Sync.Form.Copying", CultureInfo.CurrentUICulture) ?? "Copying {0}", folderName);
                         if (device.DirectoryExists(destinationFolder)) device.DeleteDirectory(destinationFolder, true);
                         device.CreateDirectory(destinationFolder);
 
@@ -102,7 +104,7 @@ namespace RagnaCustoms.Services
                 catch (Exception except)
                 {
                     syncingView.Close();
-                    MessageBox.Show($"Error: {except.Message}", "RagnaCutoms", MessageBoxButtons.OK,
+                    MessageBox.Show(string.Format(Resources.ResourceManager.GetString("Android.Message.Error", CultureInfo.CurrentUICulture) ?? "Error: {0}", except.Message), "RagnaCustoms", MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return 3;
                 }

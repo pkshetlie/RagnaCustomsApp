@@ -174,6 +174,12 @@
   <data name="Song.Form.Search" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="Song.Form.Legend" xml:space="preserve">
+    <value>Legend</value>
+  </data>
+  <data name="Song.Form.AlreadyPresent" xml:space="preserve">
+    <value>Already present locally</value>
+  </data>
   <data name="TwitchBot.Form.Song" xml:space="preserve">
     <value>Song</value>
   </data>
@@ -304,4 +310,104 @@
   <data name="logocompressed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logocompressed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Window.About.Title" xml:space="preserve"><value>RagnaCustoms · About</value></data>
+  <data name="About.Form.Team" xml:space="preserve"><value>DEVELOPMENT TEAM</value></data>
+  <data name="Window.Preferences.Title" xml:space="preserve"><value>RagnaCustoms · Preferences</value></data>
+  <data name="Preferences.Form.General" xml:space="preserve"><value>GENERAL</value></data>
+  <data name="Preferences.Form.Download" xml:space="preserve"><value>DOWNLOAD</value></data>
+  <data name="Preferences.Form.Directories" xml:space="preserve"><value>DIRECTORIES</value></data>
+  <data name="Preferences.Form.TwitchBot" xml:space="preserve"><value>TWITCH BOT</value></data>
+  <data name="Preferences.Form.ScoreHelp" xml:space="preserve"><value>Works on Windows and Quest/Pico when connected</value></data>
+  <data name="Preferences.Form.ActivateScore" xml:space="preserve"><value>ACTIVATE SCORE SENDING</value></data>
+  <data name="Preferences.Form.ApiKey" xml:space="preserve"><value>API KEY</value></data>
+  <data name="Preferences.Form.Change" xml:space="preserve"><value>CHANGE</value></data>
+  <data name="Preferences.Form.BaseDirectory" xml:space="preserve"><value>Base directory:</value></data>
+  <data name="Preferences.Form.CloseOnDownload" xml:space="preserve"><value>Close when download finishes</value></data>
+  <data name="Preferences.Form.MapsOrganization" xml:space="preserve"><value>Song organization</value></data>
+  <data name="Preferences.Form.ByMapper" xml:space="preserve"><value>By mapper</value></data>
+  <data name="Preferences.Form.Alphabetically" xml:space="preserve"><value>Alphabetically</value></data>
+  <data name="Preferences.Form.OneFolder" xml:space="preserve"><value>One folder for all songs</value></data>
+  <data name="Preferences.Form.CopyRanked" xml:space="preserve"><value>Copy ranked songs to a specific folder</value></data>
+  <data name="Preferences.Form.ClearRequests" xml:space="preserve"><value>CLEAR REQUESTS FOLDER</value></data>
+  <data name="Preferences.Form.DisableWelcome" xml:space="preserve"><value>Disable bot welcome message</value></data>
+  <data name="Preferences.Form.RequestFolder" xml:space="preserve"><value>Requests download subdirectory name</value></data>
+  <data name="Preferences.Form.SongFolderPattern" xml:space="preserve"><value>Song folder name pattern</value></data>
+  <data name="Preferences.Form.SongFolderPatternHelp" xml:space="preserve"><value>Variables: $song.id · $song.name · $song.author · $mapper.name · $song.level · $date · $time&#xD;&#xA;$date.year · $date.month · $date.day</value></data>
+  <data name="Preferences.Form.NumericPatternOrganization" xml:space="preserve"><value>Organization forced: one folder</value></data>
+  <data name="Preferences.Form.AutoStart" xml:space="preserve"><value>Auto-start</value></data>
+  <data name="Preferences.Form.TwitchChannel" xml:space="preserve"><value>Twitch channel name</value></data>
+  <data name="Preferences.Form.BotPrefix" xml:space="preserve"><value>Bot message prefix</value></data>
+  <data name="Preferences.Form.GetToken" xml:space="preserve"><value>Get token at:</value></data>
+  <data name="Window.TwitchBot.Title" xml:space="preserve"><value>RagnaCustoms · Twitch bot</value></data>
+  <data name="TwitchBot.Form.Queue" xml:space="preserve"><value>REQUEST QUEUE</value></data>
+  <data name="TwitchBot.Form.Start" xml:space="preserve"><value>START</value></data>
+  <data name="TwitchBot.Form.Stop" xml:space="preserve"><value>STOP</value></data>
+  <data name="TwitchBot.Form.Id" xml:space="preserve"><value>ID</value></data>
+  <data name="Window.Login.Title" xml:space="preserve"><value>RagnaCustoms · Login</value></data>
+  <data name="Login.Form.Title" xml:space="preserve"><value>Login</value></data>
+  <data name="Login.Form.Subtitle" xml:space="preserve"><value>Sign in to manage your songs.</value></data>
+  <data name="Login.Form.Username" xml:space="preserve"><value>Username</value></data>
+  <data name="Login.Form.Password" xml:space="preserve"><value>Password</value></data>
+  <data name="Login.Form.Connect" xml:space="preserve"><value>SIGN IN</value></data>
+  <data name="Login.Form.NoAccount" xml:space="preserve"><value>No account? Create one</value></data>
+  <data name="Login.Message.ApiKeySet" xml:space="preserve"><value>Your API key is now set</value></data>
+  <data name="Login.Message.BadLogin" xml:space="preserve"><value>Login failed: {0}</value></data>
+  <data name="Song.Form.Library" xml:space="preserve"><value>CUSTOM SONG LIBRARY</value></data>
+  <data name="Song.Form.Manager" xml:space="preserve"><value>CUSTOM SONG MANAGER</value></data>
+  <data name="Song.Form.FindSong" xml:space="preserve"><value>Find a song</value></data>
+  <data name="Song.Form.Description" xml:space="preserve"><value>Search, download and manage your custom songs for Ragnarock.</value></data>
+  <data name="Song.Form.SearchPlaceholder" xml:space="preserve"><value>Search a song by name, author or mapper…</value></data>
+  <data name="Song.Form.Results" xml:space="preserve"><value>RESULTS</value></data>
+  <data name="Song.Form.ResultsHint" xml:space="preserve"><value>Available songs will appear here</value></data>
+  <data name="Song.Form.Download" xml:space="preserve"><value>DOWNLOAD</value></data>
+  <data name="Song.Form.Delete" xml:space="preserve"><value>DELETE</value></data>
+  <data name="Song.Form.Login" xml:space="preserve"><value>Login</value></data>
+  <data name="Song.Form.Logout" xml:space="preserve"><value>Logout</value></data>
+  <data name="Song.Form.RestartNeeded" xml:space="preserve"><value>Restart needed</value></data>
+  <data name="Song.Form.RestartMessage" xml:space="preserve"><value>Please restart the application to apply the language change.</value></data>
+  <data name="Song.Form.DeleteError" xml:space="preserve"><value>We couldn't delete this song. Please delete it manually from the custom songs directory.</value></data>
+  <data name="Song.Form.FolderCleared" xml:space="preserve"><value>Folder cleared!</value></data>
+  <data name="Preferences.Message.GameIniUpdated" xml:space="preserve"><value>File updated with this API key</value></data>
+  <data name="Preferences.Message.InvalidApiKey" xml:space="preserve"><value>Your API key is not up to date. Please log in or set it manually before updating Game.ini.</value></data>
+  <data name="Preferences.Message.RequestsCleared" xml:space="preserve"><value>Map request folder cleared!</value></data>
+  <data name="TwitchBot.Message.ConfigureFirst" xml:space="preserve"><value>Configure the Twitch bot in Preferences before enabling it.</value></data>
+  <data name="TwitchBot.Message.Connected" xml:space="preserve"><value>{0} Ragnacustoms.com's bot connected</value></data>
+  <data name="TwitchBot.Message.Error" xml:space="preserve"><value>{0}An error has occurred!</value></data>
+  <data name="TwitchBot.Message.NotAllowed" xml:space="preserve"><value>{0}You are not allowed to execute this command!</value></data>
+  <data name="TwitchBot.Message.QueueClosed" xml:space="preserve"><value>{0}Queue is closed</value></data>
+  <data name="TwitchBot.Message.RequestInfo" xml:space="preserve"><value>{0}Request info: {1}, mapped by {2}, requested by @{3}</value></data>
+  <data name="TwitchBot.Message.SongNotFound" xml:space="preserve"><value>{0}@{1} Song not found</value></data>
+  <data name="Downloading.Form.Message" xml:space="preserve"><value>Downloading, sit back and relax, we've got it.</value></data>
+  <data name="Sync.Form.Title" xml:space="preserve"><value>Oculus syncing</value></data>
+  <data name="Sync.Form.CreatingDirectory" xml:space="preserve"><value>Creating CustomSongs directory</value></data>
+  <data name="Sync.Form.Copying" xml:space="preserve"><value>Copying {0}</value></data>
+  <data name="Logs.Form.Title" xml:space="preserve"><value>Logs</value></data>
+  <data name="Logs.Form.Date" xml:space="preserve"><value>Date</value></data>
+  <data name="Logs.Form.SongName" xml:space="preserve"><value>Song name</value></data>
+  <data name="Logs.Form.Difficulty" xml:space="preserve"><value>Difficulty</value></data>
+  <data name="Logs.Form.Score" xml:space="preserve"><value>Score</value></data>
+  <data name="Logs.Form.Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Logs.Form.Hash" xml:space="preserve"><value>Hash</value></data>
+  <data name="Logs.Form.Refresh" xml:space="preserve"><value>Refresh</value></data>
+  <data name="Logs.Form.NoLogs" xml:space="preserve"><value>No logs to display</value></data>
+  <data name="Prompt.Form.Ok" xml:space="preserve"><value>OK</value></data>
+  <data name="Command.Close.Help" xml:space="preserve"><value>Close the queue (moderator only)</value></data>
+  <data name="Command.Close.Closed" xml:space="preserve"><value>Queue is now closed</value></data>
+  <data name="Command.Close.AlreadyClosed" xml:space="preserve"><value>Queue is already closed</value></data>
+  <data name="Command.Open.Help" xml:space="preserve"><value>Open the queue (moderator only)</value></data>
+  <data name="Command.Open.Opened" xml:space="preserve"><value>Queue is now open</value></data>
+  <data name="Command.Open.AlreadyOpen" xml:space="preserve"><value>Queue is already open</value></data>
+  <data name="Command.Next.Help" xml:space="preserve"><value>Display the next song to play in chat</value></data>
+  <data name="Command.Next.Song" xml:space="preserve"><value>Next song: {0}</value></data>
+  <data name="Command.Next.End" xml:space="preserve"><value>End of the queue</value></data>
+  <data name="Command.Shift.Help" xml:space="preserve"><value>Remove the first song in the queue and display the next one</value></data>
+  <data name="Command.Shift.ModeratorOnly" xml:space="preserve"><value>Sorry, only moderators can do that.</value></data>
+  <data name="Command.Shift.NoMore" xml:space="preserve"><value>No more songs to remove</value></data>
+  <data name="Command.Shift.Removed" xml:space="preserve"><value>Song removed</value></data>
+  <data name="Command.Shift.Error" xml:space="preserve"><value>I couldn't remove the song.</value></data>
+  <data name="Command.Queue.Help" xml:space="preserve"><value>Display the queue</value></data>
+  <data name="Command.Queue.NextSongs" xml:space="preserve"><value>Next songs:</value></data>
+  <data name="Command.Version.Help" xml:space="preserve"><value>Display the application version</value></data>
+  <data name="Command.Version.Message" xml:space="preserve"><value>I'm on version {0}</value></data>
+  <data name="Android.Message.Error" xml:space="preserve"><value>Error: {0}</value></data>
 </root>

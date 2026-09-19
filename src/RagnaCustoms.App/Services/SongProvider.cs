@@ -78,7 +78,9 @@ namespace RagnaCustoms.Models
                 var content = await result.Content.ReadAsStringAsync();
                 var searchResult = JsonConvert.DeserializeObject<Result<SongSearchModel>>(content);
 
-                return searchResult.Results;
+                var songs = searchResult?.Results?.ToList() ?? new List<SongSearchModel>();
+                MarkInstalledSongs(songs, DirProvider.getCustomDirectory().FullName);
+                return songs;
             }
 
             return Enumerable.Empty<SongSearchModel>();
@@ -94,11 +96,20 @@ namespace RagnaCustoms.Models
                 if (File.Exists(idFile))
                 {
                     var hashFile = Path.Combine(songpath, ".hash");
-                    var songInfo = songsInfo.FirstOrDefault(x => x.Id == File.ReadAllText(idFile));
+                    var localId = File.ReadAllText(idFile).Trim();
+                    var songInfo = songsInfo.FirstOrDefault(x =>
+                        string.Equals(x.Id?.Trim(), localId, StringComparison.OrdinalIgnoreCase));
                     if (songInfo != null)
                     {
                         songInfo.CurrentFolder = songpath;
-                        if (songInfo.Hash == File.ReadAllText(hashFile)) songInfo.UpToDate = true;
+                        songInfo.IsInstalled = true;
+                        if (File.Exists(hashFile) && string.Equals(
+                                songInfo.Hash?.Trim(),
+                                File.ReadAllText(hashFile).Trim(),
+                                StringComparison.OrdinalIgnoreCase))
+                        {
+                            songInfo.UpToDate = true;
+                        }
                         songs.Add(songInfo);
                     }
                 }
@@ -112,6 +123,59 @@ namespace RagnaCustoms.Models
             }
             return songs;
 
+        }
+
+        private static void MarkInstalledSongs(List<SongSearchModel> songs, string rootDirectory)
+        {
+            if (songs == null || songs.Count == 0 || !Directory.Exists(rootDirectory)) return;
+
+            foreach (var directory in EnumerateDirectoriesSafe(rootDirectory))
+            {
+                var idFile = Path.Combine(directory, ".id");
+                if (!File.Exists(idFile)) continue;
+
+                var localId = File.ReadAllText(idFile).Trim();
+                var song = songs.FirstOrDefault(item =>
+                    string.Equals(item.Id?.Trim(), localId, StringComparison.OrdinalIgnoreCase));
+                if (song == null) continue;
+
+                song.IsInstalled = true;
+                song.CurrentFolder = directory;
+
+                var hashFile = Path.Combine(directory, ".hash");
+                if (File.Exists(hashFile))
+                {
+                    var localHash = File.ReadAllText(hashFile).Trim();
+                    song.UpToDate = string.Equals(song.Hash?.Trim(), localHash, StringComparison.OrdinalIgnoreCase);
+                }
+            }
+        }
+
+        private static IEnumerable<string> EnumerateDirectoriesSafe(string rootDirectory)
+        {
+            IEnumerable<string> children;
+            try
+            {
+                children = Directory.EnumerateDirectories(rootDirectory).ToList();
+            }
+            catch (IOException)
+            {
+                yield break;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                yield break;
+            }
+
+            foreach (var child in children)
+            {
+                yield return child;
+
+                foreach (var nested in EnumerateDirectoriesSafe(child))
+                {
+                    yield return nested;
+                }
+            }
         }
 
 
@@ -150,45 +214,10 @@ namespace RagnaCustoms.Models
                 return;
             }
 
-            var songDir = $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}";
+            var songDir = SongFolderNameFormatter.Format(songInfo, configuration.SongFolderPattern, DateTime.Now);
 
             downloadTitle?.Invoke($"{songInfo.Name} by {songInfo.Mapper}");
-            var songDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(),
-                songDir);
-
-            if (configuration.OrderAlphabetically)
-            {
-                songDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(), "Alphabet");
-                if (!Directory.Exists(songDirectoryPath))
-                {
-                    Directory.CreateDirectory(songDirectoryPath);
-                }
-                songDirectoryPath = Path.Combine(songDirectoryPath, songInfo.Name.Slug().Substring(0, 1).ToLower());
-                if (!Directory.Exists(songDirectoryPath))
-                {
-                    Directory.CreateDirectory(songDirectoryPath);
-                }
-                songDirectoryPath = Path.Combine(songDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
-            }
-
-            if (configuration.OrderMapper)
-            {
-                songDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(), "Mapper");
-
-                if (!Directory.Exists(songDirectoryPath))
-                {
-                    Directory.CreateDirectory(songDirectoryPath);
-                }
-
-                songDirectoryPath = Path.Combine(songDirectoryPath, songInfo.Mapper.Slug());
-
-                if (!Directory.Exists(songDirectoryPath))
-                {
-                    Directory.CreateDirectory(songDirectoryPath);
-                }
-
-                songDirectoryPath = Path.Combine(songDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
-            }
+            var songDirectoryPath = BuildSongDirectoryPath(songInfo, configuration, songDir);
 
             var rankedDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(), "Ranked", songDir);
 
@@ -287,6 +316,36 @@ namespace RagnaCustoms.Models
             }
         }
 
+        private static string BuildSongDirectoryPath(SongSearchModel songInfo, Configuration configuration, string songFolderName)
+        {
+            var customDirectory = DirProvider.getCustomDirectory().ToString();
+            var songDirectoryPath = Path.Combine(customDirectory, songFolderName);
+            var forceSingleFolder = songFolderName.Length > 0 && char.IsDigit(songFolderName[0]);
+
+            if (!forceSingleFolder && configuration.OrderAlphabetically)
+            {
+                songDirectoryPath = Path.Combine(customDirectory, "Alphabet");
+                Directory.CreateDirectory(songDirectoryPath);
+
+                var firstLetter = songInfo.Name.Slug().Substring(0, 1).ToLowerInvariant();
+                songDirectoryPath = Path.Combine(songDirectoryPath, firstLetter);
+                Directory.CreateDirectory(songDirectoryPath);
+                songDirectoryPath = Path.Combine(songDirectoryPath, songFolderName);
+            }
+
+            if (!forceSingleFolder && configuration.OrderMapper)
+            {
+                songDirectoryPath = Path.Combine(customDirectory, "Mapper");
+                Directory.CreateDirectory(songDirectoryPath);
+
+                songDirectoryPath = Path.Combine(songDirectoryPath, songInfo.Mapper.Slug());
+                Directory.CreateDirectory(songDirectoryPath);
+                songDirectoryPath = Path.Combine(songDirectoryPath, songFolderName);
+            }
+
+            return songDirectoryPath;
+        }
+
 
         public virtual async Task DownloadListAsync(int listId, Action<int> downloadProgressChanged,
            Action<bool> downloadCompleted, Action<string> downloadTitle, bool autoClose = false)
@@ -313,45 +372,10 @@ namespace RagnaCustoms.Models
                 var tempFilePath = Path.GetTempFileName();
 
 
-                var songDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(),
-                 $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
+                var songDir = SongFolderNameFormatter.Format(songInfo, configuration.SongFolderPattern, DateTime.Now);
+                var songDirectoryPath = BuildSongDirectoryPath(songInfo, configuration, songDir);
 
-                if (configuration.OrderAlphabetically)
-                {
-                    songDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(), "Alphabet");
-                    if (!Directory.Exists(songDirectoryPath))
-                    {
-                        Directory.CreateDirectory(songDirectoryPath);
-                    }
-                    songDirectoryPath = Path.Combine(songDirectoryPath, songInfo.Name.Slug().Substring(0, 1).ToLower());
-                    if (!Directory.Exists(songDirectoryPath))
-                    {
-                        Directory.CreateDirectory(songDirectoryPath);
-                    }
-                    songDirectoryPath = Path.Combine(songDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
-                }
-
-                if (configuration.OrderMapper)
-                {
-                    songDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(), "Mapper");
-
-                    if (!Directory.Exists(songDirectoryPath))
-                    {
-                        Directory.CreateDirectory(songDirectoryPath);
-                    }
-
-                    songDirectoryPath = Path.Combine(songDirectoryPath, songInfo.Mapper.Slug());
-
-                    if (!Directory.Exists(songDirectoryPath))
-                    {
-                        Directory.CreateDirectory(songDirectoryPath);
-                    }
-
-                    songDirectoryPath = Path.Combine(songDirectoryPath, $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
-                }
-
-                var rankedDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(), "Ranked",
-                                $"{songInfo.Name.Slug()}{songInfo.Author.Slug()}{songInfo.Mapper.Slug()}");
+                var rankedDirectoryPath = Path.Combine(DirProvider.getCustomDirectory().ToString(), "Ranked", songDir);
 
                 //if (File.Exists(Path.Combine(songDirectoryPath, ".hash")) &&
                 //    File.ReadAllText(Path.Combine(songDirectoryPath, ".hash")) == songInfo.Hash)

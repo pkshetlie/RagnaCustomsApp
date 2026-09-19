@@ -10,6 +10,8 @@ namespace RagnaCustoms.Services
         private const string Subkey = "Software\\RagnaCustoms\\RagnaCustoms";
         private const string KeyName = UserRoot + "\\" + Subkey;
 
+        public const string DefaultSongFolderPattern = "$song.name$song.author$mapper.name";
+
         public string Lang
         {
             get => Get(nameof(Lang));
@@ -56,6 +58,16 @@ namespace RagnaCustoms.Services
         {
             get => Get(nameof(BaseFolder));
             set => Set(nameof(BaseFolder), value);
+        }
+
+        public string SongFolderPattern
+        {
+            get
+            {
+                var value = Get(nameof(SongFolderPattern));
+                return string.IsNullOrWhiteSpace(value) ? DefaultSongFolderPattern : value;
+            }
+            set => Set(nameof(SongFolderPattern), value);
         }
 
         public bool CopyRanked

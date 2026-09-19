@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using RagnaCustoms.App.Properties;
 using RagnaCustoms.App.Views;
@@ -58,6 +59,17 @@ namespace RagnaCustoms.App
                
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+                Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                Application.ThreadException += (sender, exception) =>
+                    TwitchBotLogger.Error("Unhandled Windows Forms exception.", exception.Exception);
+                AppDomain.CurrentDomain.UnhandledException += (sender, exception) =>
+                    TwitchBotLogger.Error("Unhandled application exception. IsTerminating: " + exception.IsTerminating, exception.ExceptionObject as Exception);
+                TaskScheduler.UnobservedTaskException += (sender, exception) =>
+                {
+                    TwitchBotLogger.Error("Unobserved task exception.", exception.Exception);
+                    exception.SetObserved();
+                };
+
                 var customDirectory = DirProvider.getCustomDirectory(); //on force la creation du dossier.
                 //var customBkpDirectory = new DirProvider().RagnarockSongBkpDirectory; //on force la creation du dossier.
                 var songProvider = new SongProvider();
@@ -116,7 +128,7 @@ namespace RagnaCustoms.App
                     //MessageBox.Show(songView, Resources.Program_Api_Message1, Resources.Program_Api_Message1_Title,
                     //        MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                    if (configuration.TwitchBotAutoStart) new TwitchBotForm().Show();
+                    if (configuration.TwitchBotAutoStart) TwitchBotForm.ShowInstance();
                     if (string.IsNullOrEmpty(configuration.ApiKey) || !checkApiKey(configuration.ApiKey)) new LoginForm(songView).Show();
                     Application.Run(songView);
                    

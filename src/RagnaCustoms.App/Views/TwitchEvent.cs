@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -22,6 +23,20 @@ namespace RagnaCustoms.App.Views
 {
     public partial class TwitchEvent : Form
     {
+        private static readonly Color WindowColor = Color.FromArgb(10, 22, 32);
+        private static readonly Color SurfaceColor = Color.FromArgb(18, 33, 46);
+        private static readonly Color TextColor = Color.FromArgb(238, 246, 250);
+        private static readonly Color MutedTextColor = Color.FromArgb(145, 176, 194);
+
+        private const int WmNclButtonDown = 0x00A1;
+        private const int HtCaption = 2;
+
+        [DllImport("user32.dll")]
+        private static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
+
         private Configuration _configuration;
 
         public TwitchEvent()
@@ -29,7 +44,84 @@ namespace RagnaCustoms.App.Views
             InitializeComponent();
             _configuration = new Configuration();
             TwitchConnection();
-           
+            ApplyTheme();
+        }
+
+        private void ApplyTheme()
+        {
+            SuspendLayout();
+            BackColor = WindowColor;
+            FormBorderStyle = FormBorderStyle.None;
+            ClientSize = new Size(620, 360);
+            MinimumSize = ClientSize;
+            MaximumSize = ClientSize;
+            MaximizeBox = false;
+            MinimizeBox = false;
+
+            var titleBar = new Panel { Dock = DockStyle.Top, Height = 46, BackColor = WindowColor, Padding = new Padding(18, 0, 10, 0) };
+            var brand = new Panel
+            {
+                Dock = DockStyle.Left,
+                Width = 58,
+                BackColor = Color.Transparent
+            };
+            var logo = new PictureBox
+            {
+                Size = new Size(36, 28),
+                Location = new Point(7, 9),
+                Image = Properties.Resources.logocompressed,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                BackColor = Color.Transparent
+            };
+            brand.Controls.Add(logo);
+            var title = new Label
+            {
+                AutoSize = false,
+                Dock = DockStyle.Fill,
+                Text = "RagnaCustoms  ·  Twitch events",
+                TextAlign = ContentAlignment.MiddleLeft,
+                ForeColor = TextColor,
+                Font = new Font("Segoe UI", 10f, FontStyle.Bold),
+                Padding = new Padding(8, 0, 0, 0)
+            };
+            var closeButton = new Button
+            {
+                Dock = DockStyle.Right,
+                Width = 42,
+                Text = "×",
+                FlatStyle = FlatStyle.Flat,
+                BackColor = WindowColor,
+                ForeColor = MutedTextColor,
+                Font = new Font("Segoe UI", 15f),
+                TabStop = false,
+                Cursor = Cursors.Hand
+            };
+            closeButton.FlatAppearance.BorderSize = 0;
+            closeButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(151, 53, 64);
+            closeButton.Click += (sender, args) => Close();
+            titleBar.Controls.Add(title);
+            titleBar.Controls.Add(closeButton);
+            titleBar.Controls.Add(brand);
+            AttachWindowDrag(titleBar);
+            AttachWindowDrag(brand);
+            AttachWindowDrag(logo);
+            AttachWindowDrag(title);
+
+            var content = new Panel { Dock = DockStyle.Fill, BackColor = SurfaceColor };
+            Controls.Clear();
+            Controls.Add(content);
+            Controls.Add(titleBar);
+            ResumeLayout(true);
+        }
+
+        private void AttachWindowDrag(Control control)
+        {
+            control.MouseDown += (sender, args) =>
+            {
+                if (args.Button != MouseButtons.Left) return;
+                ReleaseCapture();
+                SendMessage(Handle, WmNclButtonDown, new IntPtr(HtCaption), IntPtr.Zero);
+            };
         }
 
         TwitchClient client;

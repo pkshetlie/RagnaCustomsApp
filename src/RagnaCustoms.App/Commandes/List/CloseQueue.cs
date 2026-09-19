@@ -17,7 +17,7 @@ namespace RagnaCustoms.App.Commandes
 
         string ICommandes.Help()
         {
-            return "Close the queue (moderator only)";
+            return TwitchBotForm.GetLocalizedText("Command.Close.Help", "Close the queue (moderator only)");
         }
 
         public List<UserType> IllegalUsers()
@@ -35,11 +35,11 @@ namespace RagnaCustoms.App.Commandes
             if (me.QueueIsOpen)
             {
                 me.QueueIsOpen = false;
-                client.SendMessage(joinedChannel, "Queue is now closed");
+                client.SendMessage(joinedChannel, TwitchBotForm.GetLocalizedText("Command.Close.Closed", "Queue is now closed"));
             }
             else
             {
-                client.SendMessage(joinedChannel, "Queue is already closes");
+                client.SendMessage(joinedChannel, TwitchBotForm.GetLocalizedText("Command.Close.AlreadyClosed", "Queue is already closed"));
             }
 
             return true;

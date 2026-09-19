@@ -17,7 +17,7 @@ namespace RagnaCustoms.App.Commandes
 
         string ICommandes.Help()
         {
-            return "display in chat the next song to play";
+            return TwitchBotForm.GetLocalizedText("Command.Next.Help", "Display the next song to play in chat");
         }
 
         public List<UserType> IllegalUsers()
@@ -34,9 +34,9 @@ namespace RagnaCustoms.App.Commandes
         {
             var song = me.songRequests?.Rows[0]?.Cells["Song"]?.Value?.ToString() ?? null;
             if (song != null)
-                client.SendMessage(joinedChannel, $"Next song : {song} ");
+                client.SendMessage(joinedChannel, string.Format(TwitchBotForm.GetLocalizedText("Command.Next.Song", "Next song: {0}"), song));
             else
-                client.SendMessage(joinedChannel, "End of the queue");
+                client.SendMessage(joinedChannel, TwitchBotForm.GetLocalizedText("Command.Next.End", "End of the queue"));
             return true;
         }
     }

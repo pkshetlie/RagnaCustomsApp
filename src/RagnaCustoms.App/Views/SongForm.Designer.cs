@@ -36,7 +36,7 @@ namespace RagnaCustoms.Views
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SongForm));
-            this.SearchTextBox = new System.Windows.Forms.TextBox();
+            this.SearchTextBox = new CenteredTextBox();
             this.SearchButton = new System.Windows.Forms.Button();
             this.SearchResultGridView = new System.Windows.Forms.DataGridView();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -157,7 +157,7 @@ namespace RagnaCustoms.Views
             resources.ApplyResources(this.SongDownload, "SongDownload");
             this.SongDownload.Name = "SongDownload";
             this.SongDownload.ReadOnly = true;
-            this.SongDownload.Text = "↓";
+            this.SongDownload.Text = "TÉLÉCHARGER";
             this.SongDownload.UseColumnTextForButtonValue = true;
             // 
             // Delete
@@ -166,7 +166,7 @@ namespace RagnaCustoms.Views
             resources.ApplyResources(this.Delete, "Delete");
             this.Delete.Name = "Delete";
             this.Delete.ReadOnly = true;
-            this.Delete.Text = "X";
+            this.Delete.Text = "SUPPRIMER";
             this.Delete.UseColumnTextForButtonValue = true;
             // 
             // Menu
