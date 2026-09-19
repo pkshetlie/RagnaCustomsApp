@@ -2,18 +2,13 @@ name: .NET
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ dev, master ]
   pull_request:
     branches: [ dev ]
-  release:
-    types:
-      - created
   workflow_dispatch:
-    inputs:
-      release_tag:
-        description: Tag of the release to build
-        required: true
-        type: string
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -23,8 +18,6 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
-      with:
-        ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event.inputs.release_tag || github.ref }}
           
     - name: Install WiX Toolset
       run: |
@@ -63,25 +56,38 @@ jobs:
         files: src\RagnaCustoms.App\bin\Release
         dest:  RagnaCustoms.zip
 
-    - name: Upload Zip to release
-      if: ${{ (github.event_name == 'release' && github.event.action == 'created') || github.event_name == 'workflow_dispatch' }}
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        tag: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event.inputs.release_tag }}
-        file: RagnaCustoms.zip
-    
-    - name: Upload MSI to release
-      if: ${{ (github.event_name == 'release' && github.event.action == 'created') || github.event_name == 'workflow_dispatch' }}
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        tag: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event.inputs.release_tag }}
-        file: src/RagnaCustoms.Installer2/bin/Release/RagnaCustoms.Installer2.msi
-        asset_name: RagnaCustoms.Installer.msi
+    - name: Read application version
+      if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/master') || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master') }}
+      id: version
+      shell: pwsh
+      run: |
+        $versionLine = Select-String -Path 'src/SharedAssemblyInfo.cs' -Pattern 'AssemblyFileVersion\("([^"]+)"\)'
+        if (!$versionLine) { throw 'Unable to determine the application version.' }
+        $version = $versionLine.Matches[0].Groups[1].Value
+        "version=$version" >> $env:GITHUB_OUTPUT
+
+    - name: Publish stable release
+      if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/master') || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master') }}
+      shell: pwsh
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        VERSION: ${{ steps.version.outputs.version }}
+      run: |
+        $tag = "v$env:VERSION"
+        $title = "RagnaCustoms $env:VERSION"
+        $zip = 'RagnaCustoms.zip'
+        $msi = 'src/RagnaCustoms.Installer2/bin/Release/RagnaCustoms.Installer2.msi'
+
+        gh release view $tag *> $null
+        if ($LASTEXITCODE -eq 0) {
+          gh release upload $tag $zip $msi --clobber
+          gh release edit $tag --title $title
+        } else {
+          gh release create $tag $zip $msi --title $title --generate-notes
+        }
 
     - name: Publish pre-release
-      if: ${{ github.event_name == 'push' }}
+      if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/dev') || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/dev') }}
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
