@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -123,6 +124,8 @@ namespace RagnaCustoms.App
                     // Create first view to display
                     var songView = new SongForm();
                     var songPresenter = new SongPresenter(songView, downloadingPresenter, songProvider);
+
+                    ShowWhatsNewIfNeeded(songView);
                     
 
                     //MessageBox.Show(songView, Resources.Program_Api_Message1, Resources.Program_Api_Message1_Title,
@@ -134,6 +137,28 @@ namespace RagnaCustoms.App
                    
 
                 }
+            }
+        }
+
+        private static void ShowWhatsNewIfNeeded(Form owner)
+        {
+            if (!Settings.Default.ShowWhatsNew) return;
+
+            var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString(3);
+            if (string.IsNullOrWhiteSpace(version)) return;
+
+            try
+            {
+                using (var whatsNew = new WhatsNewForm(version))
+                {
+                    whatsNew.ShowDialog(owner);
+                    if (whatsNew.DoNotShowAgain) Settings.Default.ShowWhatsNew = false;
+                    Settings.Default.Save();
+                }
+            }
+            catch (Exception exception)
+            {
+                TwitchBotLogger.Error("Unable to display the What's New dialog.", exception);
             }
         }
 

@@ -40,6 +40,7 @@ namespace RagnaCustoms.App.Views
             this.Viewer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EnableButton = new System.Windows.Forms.Button();
+            this.ClearQueueButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.songRequests)).BeginInit();
             this.SuspendLayout();
             // 
@@ -92,6 +93,14 @@ namespace RagnaCustoms.App.Views
             this.EnableButton.Text = "Start";
             this.EnableButton.UseVisualStyleBackColor = true;
             this.EnableButton.Click += new System.EventHandler(this.EnableButton_Click);
+            //
+            // ClearQueueButton
+            //
+            this.ClearQueueButton.Name = "ClearQueueButton";
+            this.ClearQueueButton.TabIndex = 31;
+            this.ClearQueueButton.Text = "Clear queue";
+            this.ClearQueueButton.UseVisualStyleBackColor = true;
+            this.ClearQueueButton.Click += new System.EventHandler(this.ClearQueueButton_Click);
             // 
             // TwitchBotForm
             // 
@@ -118,5 +127,6 @@ namespace RagnaCustoms.App.Views
         public System.Windows.Forms.DataGridViewTextBoxColumn Viewer;
         public System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private Button EnableButton;
+        private Button ClearQueueButton;
     }
 }

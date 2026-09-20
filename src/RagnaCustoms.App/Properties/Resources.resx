@@ -409,5 +409,21 @@
   <data name="Command.Queue.NextSongs" xml:space="preserve"><value>Next songs:</value></data>
   <data name="Command.Version.Help" xml:space="preserve"><value>Display the application version</value></data>
   <data name="Command.Version.Message" xml:space="preserve"><value>I'm on version {0}</value></data>
+  <data name="TwitchBot.Form.ClearQueue" xml:space="preserve"><value>CLEAR QUEUE</value></data>
+  <data name="TwitchBot.Message.ClearQueueConfirm" xml:space="preserve"><value>Clear all pending song requests?</value></data>
+  <data name="Command.ClearQueue.Help" xml:space="preserve"><value>Clear the request queue (moderator only)</value></data>
+  <data name="Command.ClearQueue.Cleared" xml:space="preserve"><value>The request queue has been cleared.</value></data>
+  <data name="Command.ClearQueue.Empty" xml:space="preserve"><value>The request queue is already empty.</value></data>
   <data name="Android.Message.Error" xml:space="preserve"><value>Error: {0}</value></data>
+  <data name="WhatsNew.Form.Title" xml:space="preserve"><value>RagnaCustoms  ·  What's new</value></data>
+  <data name="WhatsNew.Form.Heading" xml:space="preserve"><value>WHAT'S NEW</value></data>
+  <data name="WhatsNew.Form.Intro" xml:space="preserve"><value>Here’s what changed in this update.</value></data>
+  <data name="WhatsNew.Form.Version" xml:space="preserve"><value>Version {0}</value></data>
+  <data name="WhatsNew.Form.Ok" xml:space="preserve"><value>OK</value></data>
+  <data name="WhatsNew.Form.NeverShowAgain" xml:space="preserve"><value>Don't show again</value></data>
+  <data name="WhatsNew.Form.Thanks" xml:space="preserve"><value>Thanks for your feedback!</value></data>
+  <data name="WhatsNew.Item.Stability" xml:space="preserve"><value>Chat messages are no longer sent twice after a restart.</value></data>
+  <data name="WhatsNew.Item.Queue" xml:space="preserve"><value>Your Twitch request queue is now restored after a restart.</value></data>
+  <data name="WhatsNew.Item.ClearQueue" xml:space="preserve"><value>The queue can be cleared from the application or with the moderator command !clearqueue.</value></data>
+  <data name="WhatsNew.Item.Logs" xml:space="preserve"><value>Diagnostic logs make connection and crash issues easier to investigate.</value></data>
 </root>

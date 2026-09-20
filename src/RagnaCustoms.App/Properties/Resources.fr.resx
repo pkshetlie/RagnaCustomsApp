@@ -408,5 +408,21 @@
   <data name="Command.Queue.NextSongs" xml:space="preserve"><value>Prochains morceaux :</value></data>
   <data name="Command.Version.Help" xml:space="preserve"><value>Affiche la version de l'application</value></data>
   <data name="Command.Version.Message" xml:space="preserve"><value>Je suis en version {0}</value></data>
+  <data name="TwitchBot.Form.ClearQueue" xml:space="preserve"><value>VIDER LA FILE</value></data>
+  <data name="TwitchBot.Message.ClearQueueConfirm" xml:space="preserve"><value>Vider toutes les demandes en attente ?</value></data>
+  <data name="Command.ClearQueue.Help" xml:space="preserve"><value>Vide la file des demandes (réservé aux modérateurs)</value></data>
+  <data name="Command.ClearQueue.Cleared" xml:space="preserve"><value>La file des demandes a été vidée.</value></data>
+  <data name="Command.ClearQueue.Empty" xml:space="preserve"><value>La file des demandes est déjà vide.</value></data>
   <data name="Android.Message.Error" xml:space="preserve"><value>Erreur : {0}</value></data>
+  <data name="WhatsNew.Form.Title" xml:space="preserve"><value>RagnaCustoms  ·  Nouveautés</value></data>
+  <data name="WhatsNew.Form.Heading" xml:space="preserve"><value>NOUVEAUTÉS</value></data>
+  <data name="WhatsNew.Form.Intro" xml:space="preserve"><value>Voici les changements apportés par cette mise à jour.</value></data>
+  <data name="WhatsNew.Form.Version" xml:space="preserve"><value>Version {0}</value></data>
+  <data name="WhatsNew.Form.Ok" xml:space="preserve"><value>OK</value></data>
+  <data name="WhatsNew.Form.NeverShowAgain" xml:space="preserve"><value>Ne plus afficher</value></data>
+  <data name="WhatsNew.Form.Thanks" xml:space="preserve"><value>Merci pour vos retours !</value></data>
+  <data name="WhatsNew.Item.Stability" xml:space="preserve"><value>Les messages du chat ne sont plus envoyés en double après un redémarrage.</value></data>
+  <data name="WhatsNew.Item.Queue" xml:space="preserve"><value>La file des demandes Twitch est maintenant restaurée après un redémarrage.</value></data>
+  <data name="WhatsNew.Item.ClearQueue" xml:space="preserve"><value>La file peut être vidée depuis l’application ou avec la commande modérateur !clearqueue.</value></data>
+  <data name="WhatsNew.Item.Logs" xml:space="preserve"><value>Les journaux de diagnostic facilitent l’analyse des problèmes de connexion et de plantage.</value></data>
 </root>

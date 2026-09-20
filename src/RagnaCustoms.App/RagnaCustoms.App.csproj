@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="Commandes\List\BaseCommand.cs" />
     <Compile Include="Commandes\List\CancelCommand.cs" />
+    <Compile Include="Commandes\List\ClearQueueCommand.cs" />
     <Compile Include="Commandes\List\CloseQueue.cs" />
     <Compile Include="Commandes\List\HelpCommand.cs" />
     <Compile Include="Commandes\List\MyLangCommand.cs" />
@@ -102,6 +103,7 @@
     </Compile>
     <Compile Include="Services\FileChangeEvent.cs" />
     <Compile Include="Services\TwitchBotLogger.cs" />
+    <Compile Include="Services\TwitchQueuePersistence.cs" />
     <Compile Include="Services\AndroidDevice.cs" />
     <Compile Include="Services\Configuration.cs" />
     <Compile Include="Services\ISongProvider.cs" />
@@ -113,6 +115,9 @@
     </Compile>
     <Compile Include="Views\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WhatsNewForm.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\DownloadingForm.cs">
       <SubType>Form</SubType>

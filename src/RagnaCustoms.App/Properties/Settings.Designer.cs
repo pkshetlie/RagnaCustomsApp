@@ -46,5 +46,17 @@ namespace RagnaCustoms.App.Properties {
                 this["login_logout"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowWhatsNew {
+            get {
+                return ((bool)(this["ShowWhatsNew"]));
+            }
+            set {
+                this["ShowWhatsNew"] = value;
+            }
+        }
     }
 }

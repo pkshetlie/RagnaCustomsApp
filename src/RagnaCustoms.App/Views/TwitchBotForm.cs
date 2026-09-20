@@ -61,6 +61,8 @@ namespace RagnaCustoms.App.Views
 
         private readonly List<Song> _songList = new();
         private readonly object _songListSync = new object();
+        private readonly TwitchQueuePersistence _queuePersistence = new TwitchQueuePersistence();
+        private long _queueRevision;
         private bool _twitchBotEnabled;
         private bool _connectionInProgress;
         private FileChangeEvent _fileChangeEvent;
@@ -71,6 +73,17 @@ namespace RagnaCustoms.App.Views
 
         public bool QueueIsOpen = true;
         private string _lastPlayedHash = string.Empty;
+
+        public int QueueCount
+        {
+            get
+            {
+                lock (_songListSync)
+                {
+                    return _songList.Count;
+                }
+            }
+        }
 
         public static void ShowInstance()
         {
@@ -183,6 +196,7 @@ namespace RagnaCustoms.App.Views
             EnableButton.Text = GetLocalizedText(botEnabled ? "TwitchBot.Form.Stop" : "TwitchBot.Form.Start", botEnabled ? "Stop" : "Start");
             _fileChangeEvent = new FileChangeEvent(Program.RagnarockSongLogsDirectoryPath, "Ragnarock.log");
             _fileChangeEvent.SetLambda(OnFileChange);
+            LoadPersistedQueue();
             TwitchBotLogger.Info("Twitch bot form initialized. Auto-start: " + botEnabled);
 
             LoadCommands();
@@ -271,7 +285,7 @@ namespace RagnaCustoms.App.Views
             var queueLabel = new Label
             {
                 AutoSize = true,
-                Location = new Point(164, 28),
+                Location = new Point(300, 28),
                 Text = GetLocalizedText("TwitchBot.Form.Queue", "REQUEST QUEUE"),
                 ForeColor = AccentColor,
                 BackColor = Color.Transparent,
@@ -291,6 +305,18 @@ namespace RagnaCustoms.App.Views
             EnableButton.Font = CreateUiFont(8.5f, FontStyle.Bold);
             EnableButton.Cursor = Cursors.Hand;
             EnableButton.UseVisualStyleBackColor = false;
+
+            ClearQueueButton.Location = new Point(150, 18);
+            ClearQueueButton.Size = new Size(132, 34);
+            ClearQueueButton.Text = GetLocalizedText("TwitchBot.Form.ClearQueue", "CLEAR QUEUE");
+            ClearQueueButton.FlatStyle = FlatStyle.Flat;
+            ClearQueueButton.FlatAppearance.BorderSize = 1;
+            ClearQueueButton.FlatAppearance.BorderColor = BorderColor;
+            ClearQueueButton.BackColor = SurfaceColor;
+            ClearQueueButton.ForeColor = TextColor;
+            ClearQueueButton.Font = CreateUiFont(8.5f, FontStyle.Bold);
+            ClearQueueButton.Cursor = Cursors.Hand;
+            ClearQueueButton.UseVisualStyleBackColor = false;
 
             songRequests.Location = new Point(22, 68);
             songRequests.Size = new Size(856, 510);
@@ -341,9 +367,16 @@ namespace RagnaCustoms.App.Views
 
             content.Controls.Add(queueLabel);
             content.Controls.Add(EnableButton);
+            content.Controls.Add(ClearQueueButton);
             content.Controls.Add(songRequests);
 
             ResumeLayout(true);
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            UpdateFormRows();
         }
 
         private static Font CreateUiFont(float size, FontStyle style)
@@ -595,7 +628,7 @@ namespace RagnaCustoms.App.Views
                     var arg1 = command[1];
                     if (!Commandes.ContainsKey(arg1))
                     {
-                        AddRequest(client, string.Join("%20", command.Skip(1).ToArray()), e);
+                        AddRequest(client, string.Join("%20", command.Skip(1).ToArray()), e, GetQueueRevision());
                         return;
                     }
 
@@ -617,7 +650,15 @@ namespace RagnaCustoms.App.Views
             }
         }
 
-        private void AddRequest(TwitchClient client, string requestId, OnMessageReceivedArgs e)
+        private long GetQueueRevision()
+        {
+            lock (_songListSync)
+            {
+                return _queueRevision;
+            }
+        }
+
+        private void AddRequest(TwitchClient client, string requestId, OnMessageReceivedArgs e, long queueRevision)
         {
             if (!QueueIsOpen)
             {
@@ -628,6 +669,15 @@ namespace RagnaCustoms.App.Views
             var s = GetSongInfo(requestId) ?? SearshSong(requestId); // search song by id, if not found, search by name
             if (s != null)
             {
+                lock (_songListSync)
+                {
+                    if (queueRevision != _queueRevision)
+                    {
+                        TwitchBotLogger.Info("Ignoring a Twitch request completed after the queue was cleared.");
+                        return;
+                    }
+                }
+
                 client.SendMessage(_joinedChannel,
                     string.Format(GetLocalizedText("TwitchBot.Message.RequestInfo", "{0}Request info: {1}, mapped by {2}, requested by @{3}"), _configuration.BotPrefix, s.Name, s.Mapper, e.ChatMessage.Username));
                 AddSongRequestToList(s, e.ChatMessage.Username);
@@ -640,6 +690,49 @@ namespace RagnaCustoms.App.Views
             }
         }
 
+        private void LoadPersistedQueue()
+        {
+            var songs = _queuePersistence.Load();
+            var validSongs = songs.FindAll(song => song != null && !string.IsNullOrWhiteSpace(song.Id));
+
+            lock (_songListSync)
+            {
+                _songList.AddRange(validSongs);
+            }
+
+            if (validSongs.Count != 0)
+                TwitchBotLogger.Info("Restored " + validSongs.Count + " song(s) from the persisted Twitch queue.");
+        }
+
+        private void PersistQueue()
+        {
+            List<Song> songs;
+            lock (_songListSync)
+            {
+                songs = _songList.ToList();
+            }
+
+            _queuePersistence.Save(songs);
+        }
+
+        public bool ClearQueue()
+        {
+            bool hadSongs;
+            lock (_songListSync)
+            {
+                _queueRevision++;
+                hadSongs = _songList.Count != 0;
+                _songList.Clear();
+            }
+
+            if (!hadSongs) return false;
+
+            PersistQueue();
+            UpdateFormRows();
+            TwitchBotLogger.Info("Twitch request queue cleared.");
+            return true;
+        }
+
         private void AddSongRequestToList(Song song, string viewer)
         {
             song.Requester = viewer;
@@ -647,6 +740,7 @@ namespace RagnaCustoms.App.Views
             {
                 _songList.Add(song);
             }
+            PersistQueue();
             UpdateFormRows();
         }
 
@@ -680,6 +774,7 @@ namespace RagnaCustoms.App.Views
                 {
                     if (_configuration.EasyStreamRequest) removeSongEasyStream(x.Id);
                 });
+                PersistQueue();
                 UpdateFormRows();
             }
         }
@@ -700,6 +795,7 @@ namespace RagnaCustoms.App.Views
 
             if (song == null) return;
             if (_configuration.EasyStreamRequest) removeSongEasyStream(song.Id);
+            PersistQueue();
             UpdateFormRows();
         }
 
@@ -786,6 +882,20 @@ namespace RagnaCustoms.App.Views
             botEnabled = !botEnabled;
             checkEnabled();
             EnableButton.Text = GetLocalizedText(botEnabled ? "TwitchBot.Form.Stop" : "TwitchBot.Form.Start", botEnabled ? "Stop" : "Start");
+        }
+
+        private void ClearQueueButton_Click(object sender, EventArgs e)
+        {
+            if (QueueCount == 0) return;
+
+            var result = MessageBox.Show(
+                GetLocalizedText("TwitchBot.Message.ClearQueueConfirm", "Clear all pending song requests?"),
+                GetLocalizedText("TwitchBot.Form.ClearQueue", "Clear queue"),
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+                ClearQueue();
         }
     }
 }
