@@ -917,7 +917,7 @@ namespace RagnaCustoms.Views
 
         private void playlistSearchMenu_Click(object sender, EventArgs e)
         {
-            using (var form = new PremiumSearchForm(PremiumSearchKind.Playlists))
+            using (var form = new PremiumSearchForm(PremiumSearchKind.Playlists, _configuration.ApiKey))
             {
                 form.SetPremiumAccess(_premiumStatus == PremiumStatus.Premium);
                 form.ShowDialog(this);
@@ -926,7 +926,7 @@ namespace RagnaCustoms.Views
 
         private void artistSearchMenu_Click(object sender, EventArgs e)
         {
-            using (var form = new PremiumSearchForm(PremiumSearchKind.Artists))
+            using (var form = new PremiumSearchForm(PremiumSearchKind.Artists, _configuration.ApiKey))
             {
                 form.SetPremiumAccess(_premiumStatus == PremiumStatus.Premium);
                 form.ShowDialog(this);

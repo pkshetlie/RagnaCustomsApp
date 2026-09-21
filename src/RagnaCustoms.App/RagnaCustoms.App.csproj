@@ -107,6 +107,7 @@
     <Compile Include="Services\AndroidDevice.cs" />
     <Compile Include="Services\Configuration.cs" />
     <Compile Include="Services\PremiumStatusService.cs" />
+    <Compile Include="Services\PremiumSearchService.cs" />
     <Compile Include="Services\ISongProvider.cs" />
     <Compile Include="Services\DirProvider.cs" />
     <Compile Include="Services\SongProvider.cs" />

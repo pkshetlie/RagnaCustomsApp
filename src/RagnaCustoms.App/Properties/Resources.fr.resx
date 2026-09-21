@@ -418,6 +418,8 @@
   <data name="WhatsNew.Form.Heading" xml:space="preserve"><value>NOUVEAUTÉS</value></data>
   <data name="WhatsNew.Form.Intro" xml:space="preserve"><value>Voici les changements apportés par cette mise à jour.</value></data>
   <data name="WhatsNew.Form.Version" xml:space="preserve"><value>Version {0}</value></data>
+  <data name="WhatsNew.Form.SelectVersion" xml:space="preserve"><value>Version à consulter</value></data>
+  <data name="WhatsNew.Form.NoNotes" xml:space="preserve"><value>Aucune note de version n’est encore disponible pour cette version.</value></data>
   <data name="WhatsNew.Form.Ok" xml:space="preserve"><value>OK</value></data>
   <data name="WhatsNew.Form.NeverShowAgain" xml:space="preserve"><value>Ne plus afficher</value></data>
   <data name="WhatsNew.Form.Thanks" xml:space="preserve"><value>Merci pour vos retours !</value></data>
@@ -425,6 +427,9 @@
   <data name="WhatsNew.Item.Queue" xml:space="preserve"><value>La file des demandes Twitch est maintenant restaurée après un redémarrage.</value></data>
   <data name="WhatsNew.Item.ClearQueue" xml:space="preserve"><value>La file peut être vidée depuis l’application ou avec la commande modérateur !clearqueue.</value></data>
   <data name="WhatsNew.Item.Logs" xml:space="preserve"><value>Les journaux de diagnostic facilitent l’analyse des problèmes de connexion et de plantage.</value></data>
+  <data name="WhatsNew.Release.2.9.2.Item.Premium" xml:space="preserve"><value>Votre statut Premium est maintenant visible à côté de Login et Logout.</value></data>
+  <data name="WhatsNew.Release.2.9.2.Item.Playlists" xml:space="preserve"><value>Les pages de recherche de playlists et d’artistes Premium sont maintenant disponibles.</value></data>
+  <data name="WhatsNew.Release.2.9.2.Item.Downloads" xml:space="preserve"><value>Les téléchargements de playlists et leur progression sont plus faciles à suivre.</value></data>
   <data name="Premium.Menu.Title" xml:space="preserve"><value>Premium</value></data>
   <data name="Premium.Menu.Playlists" xml:space="preserve"><value>Rechercher des playlists</value></data>
   <data name="Premium.Menu.Artists" xml:space="preserve"><value>Rechercher par artiste</value></data>
@@ -439,6 +444,15 @@
   <data name="Premium.Form.ApiPending" xml:space="preserve"><value>La vérification Premium et la recherche seront disponibles lorsque l’API sera connectée.</value></data>
   <data name="Premium.Form.ApiPendingShort" xml:space="preserve"><value>En attente des endpoints API Premium.</value></data>
   <data name="Premium.Form.Empty" xml:space="preserve"><value>Saisissez une recherche pour afficher les résultats.</value></data>
+  <data name="Premium.Form.Searching" xml:space="preserve"><value>Recherche en cours...</value></data>
+  <data name="Premium.Form.SearchingShort" xml:space="preserve"><value>Requête en cours...</value></data>
+  <data name="Premium.Form.NoResults" xml:space="preserve"><value>Aucun résultat trouvé.</value></data>
+  <data name="Premium.Form.NoResultsShort" xml:space="preserve"><value>Aucun résultat.</value></data>
+  <data name="Premium.Form.ResultCount" xml:space="preserve"><value>{0} résultat(s) trouvé(s).</value></data>
+  <data name="Premium.Form.AuthError" xml:space="preserve"><value>Votre accès Premium n’a pas pu être vérifié. Reconnectez-vous.</value></data>
+  <data name="Premium.Form.ServerError" xml:space="preserve"><value>Le serveur de recherche a renvoyé une erreur (HTTP {0}). Contactez le support RagnaCustoms en indiquant votre recherche.</value></data>
+  <data name="Premium.Form.ApiError" xml:space="preserve"><value>L’API de recherche est inaccessible. Contactez le support RagnaCustoms.</value></data>
+  <data name="Premium.Form.ApiErrorShort" xml:space="preserve"><value>La recherche n’a pas pu aboutir.</value></data>
   <data name="Premium.Grid.Playlist" xml:space="preserve"><value>PLAYLIST</value></data>
   <data name="Premium.Grid.Artist" xml:space="preserve"><value>ARTISTE</value></data>
   <data name="Premium.Grid.Owner" xml:space="preserve"><value>AUTEUR</value></data>

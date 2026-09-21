@@ -1,9 +1,11 @@
 using System;
 using System.Drawing;
 using System.Globalization;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using RagnaCustoms.App.Properties;
+using RagnaCustoms.Services;
 
 namespace RagnaCustoms.App.Views
 {
@@ -27,11 +29,13 @@ namespace RagnaCustoms.App.Views
         private const int HtCaption = 2;
 
         private readonly PremiumSearchKind _kind;
+        private readonly PremiumSearchService _searchService;
         private TextBox _searchTextBox;
         private Button _searchButton;
         private DataGridView _resultsGrid;
         private Panel _premiumNotice;
         private Label _emptyState;
+        private Label _footerLabel;
         private bool _hasPremiumAccess;
 
         [DllImport("user32.dll")]
@@ -40,9 +44,10 @@ namespace RagnaCustoms.App.Views
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
 
-        public PremiumSearchForm(PremiumSearchKind kind)
+        public PremiumSearchForm(PremiumSearchKind kind, string apiKey)
         {
             _kind = kind;
+            _searchService = new PremiumSearchService(apiKey);
             _hasPremiumAccess = false;
             BuildForm();
         }
@@ -182,7 +187,7 @@ namespace RagnaCustoms.App.Views
             };
             resultsPanel.Controls.Add(_emptyState);
 
-            var footer = new Label
+            _footerLabel = new Label
             {
                 Dock = DockStyle.Fill,
                 Text = GetLocalizedText("Premium.Form.ApiPendingShort", "Waiting for the Premium API endpoints."),
@@ -196,7 +201,7 @@ namespace RagnaCustoms.App.Views
             layout.Controls.Add(description, 0, 1);
             layout.Controls.Add(searchLayout, 0, 2);
             layout.Controls.Add(resultsPanel, 0, 3);
-            layout.Controls.Add(footer, 0, 4);
+            layout.Controls.Add(_footerLabel, 0, 4);
 
             content.Controls.Add(layout);
             content.Controls.Add(_premiumNotice);
@@ -385,6 +390,99 @@ namespace RagnaCustoms.App.Views
         private void SearchButton_Click(object sender, EventArgs e)
         {
             if (!_hasPremiumAccess || string.IsNullOrWhiteSpace(_searchTextBox.Text)) return;
+
+            SearchAsync(_searchTextBox.Text.Trim());
+        }
+
+        private async void SearchAsync(string query)
+        {
+            _searchButton.Enabled = false;
+            _emptyState.ForeColor = AccentColor;
+            _emptyState.Text = GetLocalizedText("Premium.Form.Searching", "Searching...");
+            _footerLabel.Text = GetLocalizedText("Premium.Form.SearchingShort", "Request in progress...");
+            _resultsGrid.Rows.Clear();
+
+            try
+            {
+                var page = _kind == PremiumSearchKind.Playlists
+                    ? await _searchService.SearchPlaylistsAsync(query)
+                    : await _searchService.SearchArtistsAsync(query);
+                DisplayResults(page);
+            }
+            catch (PremiumSearchException exception)
+            {
+                TwitchBotLogger.Error(
+                    "Premium search API returned HTTP " + (int)exception.StatusCode + ". Detail: " + exception.Detail,
+                    exception);
+                _emptyState.ForeColor = Color.FromArgb(255, 149, 163);
+                _emptyState.Text = GetErrorMessage(exception.StatusCode);
+                _footerLabel.Text = GetLocalizedText("Premium.Form.ApiErrorShort", "The search could not be completed.");
+            }
+            catch (Exception exception)
+            {
+                TwitchBotLogger.Error("Unable to search the Premium API.", exception);
+                _emptyState.ForeColor = Color.FromArgb(255, 149, 163);
+                _emptyState.Text = GetLocalizedText(
+                    "Premium.Form.ApiError",
+                    "The search API could not be reached. Please contact RagnaCustoms support.");
+                _footerLabel.Text = GetLocalizedText("Premium.Form.ApiErrorShort", "The search could not be completed.");
+            }
+            finally
+            {
+                if (!IsDisposed)
+                {
+                    _searchButton.Enabled = _hasPremiumAccess;
+                }
+            }
+        }
+
+        private void DisplayResults(PremiumSearchPage page)
+        {
+            _resultsGrid.Rows.Clear();
+            if (page == null || page.Results == null || page.Results.Count == 0)
+            {
+                _emptyState.ForeColor = MutedTextColor;
+                _emptyState.Text = GetLocalizedText("Premium.Form.NoResults", "No result found.");
+                _footerLabel.Text = GetLocalizedText("Premium.Form.NoResultsShort", "No result.");
+                return;
+            }
+
+            _emptyState.Text = string.Empty;
+            _footerLabel.Text = string.Format(
+                CultureInfo.CurrentCulture,
+                GetLocalizedText("Premium.Form.ResultCount", "{0} result(s) found."),
+                page.Total > 0 ? page.Total : page.Results.Count);
+            foreach (var result in page.Results)
+            {
+                _resultsGrid.Rows.Add(
+                    result.Name,
+                    _kind == PremiumSearchKind.Playlists ? result.Owner : result.Id,
+                    result.SongCount);
+            }
+        }
+
+        private string GetErrorMessage(HttpStatusCode statusCode)
+        {
+            if (statusCode == HttpStatusCode.Unauthorized || statusCode == HttpStatusCode.Forbidden)
+            {
+                return GetLocalizedText(
+                    "Premium.Form.AuthError",
+                    "Your Premium access could not be verified. Please sign in again.");
+            }
+
+            if ((int)statusCode >= 500)
+            {
+                return string.Format(
+                    CultureInfo.CurrentCulture,
+                    GetLocalizedText(
+                        "Premium.Form.ServerError",
+                        "The search server returned an error (HTTP {0}). Please contact RagnaCustoms support and mention your search."),
+                    (int)statusCode);
+            }
+
+            return GetLocalizedText(
+                "Premium.Form.ApiError",
+                "The search API could not be reached. Please contact RagnaCustoms support.");
         }
 
         private void SearchTextBox_KeyDown(object sender, KeyEventArgs e)

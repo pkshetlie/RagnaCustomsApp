@@ -58,5 +58,17 @@ namespace RagnaCustoms.App.Properties {
                 this["ShowWhatsNew"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WhatsNewLastSeenVersion {
+            get {
+                return ((string)(this["WhatsNewLastSeenVersion"]));
+            }
+            set {
+                this["WhatsNewLastSeenVersion"] = value;
+            }
+        }
     }
 }

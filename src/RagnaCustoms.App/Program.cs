@@ -163,13 +163,15 @@ namespace RagnaCustoms.App
 
             var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString(3);
             if (string.IsNullOrWhiteSpace(version)) return;
+            if (string.Equals(Settings.Default.WhatsNewLastSeenVersion, version, StringComparison.OrdinalIgnoreCase)) return;
 
             try
             {
                 using (var whatsNew = new WhatsNewForm(version))
                 {
-                    whatsNew.ShowDialog(owner);
+                    var result = whatsNew.ShowDialog(owner);
                     if (whatsNew.DoNotShowAgain) Settings.Default.ShowWhatsNew = false;
+                    if (result == DialogResult.OK) Settings.Default.WhatsNewLastSeenVersion = version;
                     Settings.Default.Save();
                 }
             }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Runtime.InteropServices;
@@ -18,6 +19,57 @@ namespace RagnaCustoms.App.Views
 
         private const int WmNclButtonDown = 0x00A1;
         private const int HtCaption = 2;
+
+        private sealed class ReleaseNotes
+        {
+            public ReleaseNotes(string version, string[] featureKeys, string[] featureFallbacks)
+            {
+                Version = version;
+                FeatureKeys = featureKeys;
+                FeatureFallbacks = featureFallbacks;
+            }
+
+            public string Version { get; private set; }
+            public string[] FeatureKeys { get; private set; }
+            public string[] FeatureFallbacks { get; private set; }
+        }
+
+        private static readonly ReleaseNotes[] KnownReleases =
+        {
+            new ReleaseNotes(
+                "2.9.2",
+                new[]
+                {
+                    "WhatsNew.Release.2.9.2.Item.Premium",
+                    "WhatsNew.Release.2.9.2.Item.Playlists",
+                    "WhatsNew.Release.2.9.2.Item.Downloads"
+                },
+                new[]
+                {
+                    "Your Premium status is now visible next to Login and Logout.",
+                    "Premium playlist and artist search pages are now available.",
+                    "Playlist downloads and download progress are easier to follow."
+                }),
+            new ReleaseNotes(
+                "2.9.1",
+                new[]
+                {
+                    "WhatsNew.Item.Stability",
+                    "WhatsNew.Item.Queue",
+                    "WhatsNew.Item.ClearQueue",
+                    "WhatsNew.Item.Logs"
+                },
+                new[]
+                {
+                    "Chat messages are no longer sent twice after a restart.",
+                    "Your Twitch request queue is now restored after a restart.",
+                    "The queue can be cleared from the application or with the moderator command !clearqueue.",
+                    "Diagnostic logs make connection and crash issues easier to investigate."
+                })
+        };
+
+        private ComboBox _versionSelector;
+        private TableLayoutPanel _featureList;
 
         [DllImport("user32.dll")]
         private static extern bool ReleaseCapture();
@@ -148,29 +200,58 @@ namespace RagnaCustoms.App.Views
                 Font = CreateUiFont(12f, FontStyle.Regular),
                 TextAlign = ContentAlignment.MiddleLeft
             };
+            var versionSelectorPanel = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                BackColor = Color.Transparent,
+                ColumnCount = 2,
+                RowCount = 1
+            };
+            versionSelectorPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+            versionSelectorPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 170));
+
             var versionLabel = new Label
             {
                 Dock = DockStyle.Fill,
-                Text = string.Format(CultureInfo.CurrentCulture,
-                    GetLocalizedText("WhatsNew.Form.Version", "Version {0}"), version),
+                Text = GetLocalizedText("WhatsNew.Form.SelectVersion", "Version to view"),
                 ForeColor = MutedTextColor,
                 BackColor = Color.Transparent,
                 Font = CreateUiFont(9f, FontStyle.Regular),
                 TextAlign = ContentAlignment.MiddleLeft
             };
+            _versionSelector = new ComboBox
+            {
+                Dock = DockStyle.Fill,
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                BackColor = FeatureColor,
+                ForeColor = TextColor,
+                FlatStyle = FlatStyle.Flat,
+                Font = CreateUiFont(9f, FontStyle.Regular),
+                Margin = new Padding(0)
+            };
+            foreach (var release in GetReleaseHistory(version))
+            {
+                _versionSelector.Items.Add(release.Version);
+            }
+            _versionSelector.SelectedIndexChanged += (sender, args) =>
+            {
+                if (_versionSelector.SelectedItem != null)
+                {
+                    RefreshFeatureList((string)_versionSelector.SelectedItem);
+                }
+            };
+            versionSelectorPanel.Controls.Add(versionLabel, 0, 0);
+            versionSelectorPanel.Controls.Add(_versionSelector, 1, 0);
 
-            var featureList = new TableLayoutPanel
+            _featureList = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 BackColor = Color.Transparent,
                 ColumnCount = 1,
-                RowCount = 4,
+                RowCount = 1,
                 Padding = new Padding(0, 2, 0, 0)
             };
-            for (var index = 0; index < 4; index++)
-            {
-                featureList.RowStyles.Add(new RowStyle(SizeType.Percent, 25));
-            }
+            var featureList = _featureList;
 
             var featureKeys = new[]
             {
@@ -241,8 +322,8 @@ namespace RagnaCustoms.App.Views
 
             layout.Controls.Add(heading, 0, 0);
             layout.Controls.Add(intro, 0, 1);
-            layout.Controls.Add(versionLabel, 0, 2);
-            layout.Controls.Add(featureList, 0, 3);
+            layout.Controls.Add(versionSelectorPanel, 0, 2);
+            layout.Controls.Add(_featureList, 0, 3);
             layout.Controls.Add(thanks, 0, 4);
             layout.Controls.Add(actions, 0, 5);
 
@@ -251,7 +332,73 @@ namespace RagnaCustoms.App.Views
             Controls.Add(titleBar);
 
             AcceptButton = okButton;
+            var history = GetReleaseHistory(version);
+            var defaultIndex = history.FindIndex(release => release.Version == version);
+            _versionSelector.SelectedIndex = defaultIndex >= 0 ? defaultIndex : 0;
             ResumeLayout(true);
+        }
+
+        private static List<ReleaseNotes> GetReleaseHistory(string currentVersion)
+        {
+            var releases = new List<ReleaseNotes>();
+            foreach (var release in KnownReleases)
+            {
+                releases.Add(release);
+            }
+
+            var currentReleaseExists = releases.Exists(release => release.Version == currentVersion);
+            if (!currentReleaseExists && !string.IsNullOrWhiteSpace(currentVersion))
+            {
+                releases.Insert(0, new ReleaseNotes(
+                    currentVersion,
+                    new[] { "WhatsNew.Form.NoNotes" },
+                    new[] { "No release notes are available for this version yet." }));
+            }
+
+            return releases;
+        }
+
+        private static ReleaseNotes GetRelease(string version)
+        {
+            foreach (var release in KnownReleases)
+            {
+                if (release.Version == version) return release;
+            }
+
+            return new ReleaseNotes(
+                version,
+                new[] { "WhatsNew.Form.NoNotes" },
+                new[] { "No release notes are available for this version yet." });
+        }
+
+        private void RefreshFeatureList(string version)
+        {
+            if (_featureList == null) return;
+
+            var release = GetRelease(version);
+            foreach (Control control in _featureList.Controls)
+            {
+                control.Dispose();
+            }
+            _featureList.Controls.Clear();
+            _featureList.RowStyles.Clear();
+            _featureList.RowCount = Math.Max(1, release.FeatureKeys.Length);
+            for (var index = 0; index < release.FeatureKeys.Length; index++)
+            {
+                _featureList.RowStyles.Add(new RowStyle(SizeType.Percent, 100f / release.FeatureKeys.Length));
+                var feature = new Label
+                {
+                    Dock = DockStyle.Fill,
+                    Margin = new Padding(0, 3, 0, 3),
+                    Padding = new Padding(14, 0, 12, 0),
+                    Text = "\u2022  " + GetLocalizedText(release.FeatureKeys[index], release.FeatureFallbacks[index]),
+                    ForeColor = TextColor,
+                    BackColor = FeatureColor,
+                    Font = CreateUiFont(10f, FontStyle.Regular),
+                    TextAlign = ContentAlignment.MiddleLeft
+                };
+                _featureList.Controls.Add(feature, 0, index);
+            }
         }
 
         private static Button CreateButton(string text)
