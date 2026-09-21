@@ -425,4 +425,29 @@
   <data name="WhatsNew.Item.Queue" xml:space="preserve"><value>La file des demandes Twitch est maintenant restaurée après un redémarrage.</value></data>
   <data name="WhatsNew.Item.ClearQueue" xml:space="preserve"><value>La file peut être vidée depuis l’application ou avec la commande modérateur !clearqueue.</value></data>
   <data name="WhatsNew.Item.Logs" xml:space="preserve"><value>Les journaux de diagnostic facilitent l’analyse des problèmes de connexion et de plantage.</value></data>
+  <data name="Premium.Menu.Title" xml:space="preserve"><value>Premium</value></data>
+  <data name="Premium.Menu.Playlists" xml:space="preserve"><value>Rechercher des playlists</value></data>
+  <data name="Premium.Menu.Artists" xml:space="preserve"><value>Rechercher par artiste</value></data>
+  <data name="Premium.Form.Playlists.Title" xml:space="preserve"><value>RagnaCustoms  ·  Recherche de playlists</value></data>
+  <data name="Premium.Form.Artists.Title" xml:space="preserve"><value>RagnaCustoms  ·  Recherche par artiste</value></data>
+  <data name="Premium.Form.Heading" xml:space="preserve"><value>FONCTIONNALITÉ PREMIUM</value></data>
+  <data name="Premium.Form.Playlists.Description" xml:space="preserve"><value>Trouvez et téléchargez des playlists publiques.</value></data>
+  <data name="Premium.Form.Artists.Description" xml:space="preserve"><value>Trouvez des morceaux par artiste, même lorsque le nom est écrit différemment.</value></data>
+  <data name="Premium.Form.Search" xml:space="preserve"><value>Rechercher</value></data>
+  <data name="Premium.Form.Locked" xml:space="preserve"><value>Cette fonctionnalité est réservée aux membres Premium. Connectez-vous avec un compte Premium pour l’utiliser.</value></data>
+  <data name="Premium.Form.LockedTitle" xml:space="preserve"><value>ACCÈS PREMIUM REQUIS</value></data>
+  <data name="Premium.Form.ApiPending" xml:space="preserve"><value>La vérification Premium et la recherche seront disponibles lorsque l’API sera connectée.</value></data>
+  <data name="Premium.Form.ApiPendingShort" xml:space="preserve"><value>En attente des endpoints API Premium.</value></data>
+  <data name="Premium.Form.Empty" xml:space="preserve"><value>Saisissez une recherche pour afficher les résultats.</value></data>
+  <data name="Premium.Grid.Playlist" xml:space="preserve"><value>PLAYLIST</value></data>
+  <data name="Premium.Grid.Artist" xml:space="preserve"><value>ARTISTE</value></data>
+  <data name="Premium.Grid.Owner" xml:space="preserve"><value>AUTEUR</value></data>
+  <data name="Premium.Grid.Matches" xml:space="preserve"><value>CORRESPONDANCES</value></data>
+  <data name="Premium.Grid.Songs" xml:space="preserve"><value>MORCEAUX</value></data>
+  <data name="Premium.Status.Active" xml:space="preserve"><value>PREMIUM : ACTIF</value></data>
+  <data name="Premium.Status.Inactive" xml:space="preserve"><value>PREMIUM : INACTIF</value></data>
+  <data name="Premium.Status.Checking" xml:space="preserve"><value>PREMIUM : VÉRIFICATION...</value></data>
+  <data name="Premium.Status.Unavailable" xml:space="preserve"><value>PREMIUM : INDISPONIBLE</value></data>
+  <data name="Premium.Status.NotConnected" xml:space="preserve"><value>PREMIUM : CONNECTEZ-VOUS</value></data>
+  <data name="Premium.Status.Unknown" xml:space="preserve"><value>PREMIUM : INCONNU</value></data>
 </root>

@@ -23,6 +23,7 @@ namespace RagnaCustoms.App
     {
         private const string RagnacInstallCommand = "ragnac://install/";
         private const string RagnacListCommand = "ragnac://list/";
+        private const string RagnacPlaylistCommand = "ragnac://playlist/";
         private const string RagnacApiCommand = "ragnac://api/";
 
 
@@ -109,6 +110,22 @@ namespace RagnaCustoms.App
                         downloadingPresenter.DownloadList(songListId, configuration.AutoCloseDownload);
                         Application.Run(downloadingView);
 
+                    }
+                    else if (uri.StartsWith(RagnacPlaylistCommand, StringComparison.OrdinalIgnoreCase))
+                    {
+                        var playlistId = uri.Substring(RagnacPlaylistCommand.Length);
+                        if (!int.TryParse(playlistId, out var parsedPlaylistId) || parsedPlaylistId <= 0)
+                        {
+                            MessageBox.Show("The playlist link is invalid.", "RagnaCustoms", MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                        }
+                        else
+                        {
+                            downloadingView = new DownloadingForm();
+                            downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
+                            downloadingPresenter.DownloadPlaylist(parsedPlaylistId, configuration.AutoCloseDownload);
+                            Application.Run(downloadingView);
+                        }
                     }
                     else if (uri.StartsWith(RagnacApiCommand))
                     {

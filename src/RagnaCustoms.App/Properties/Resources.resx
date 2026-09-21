@@ -426,4 +426,29 @@
   <data name="WhatsNew.Item.Queue" xml:space="preserve"><value>Your Twitch request queue is now restored after a restart.</value></data>
   <data name="WhatsNew.Item.ClearQueue" xml:space="preserve"><value>The queue can be cleared from the application or with the moderator command !clearqueue.</value></data>
   <data name="WhatsNew.Item.Logs" xml:space="preserve"><value>Diagnostic logs make connection and crash issues easier to investigate.</value></data>
+  <data name="Premium.Menu.Title" xml:space="preserve"><value>Premium</value></data>
+  <data name="Premium.Menu.Playlists" xml:space="preserve"><value>Search playlists</value></data>
+  <data name="Premium.Menu.Artists" xml:space="preserve"><value>Search by artist</value></data>
+  <data name="Premium.Form.Playlists.Title" xml:space="preserve"><value>RagnaCustoms  ·  Playlist search</value></data>
+  <data name="Premium.Form.Artists.Title" xml:space="preserve"><value>RagnaCustoms  ·  Artist search</value></data>
+  <data name="Premium.Form.Heading" xml:space="preserve"><value>PREMIUM FEATURE</value></data>
+  <data name="Premium.Form.Playlists.Description" xml:space="preserve"><value>Find and download public playlists.</value></data>
+  <data name="Premium.Form.Artists.Description" xml:space="preserve"><value>Find songs by artist, even when names are written differently.</value></data>
+  <data name="Premium.Form.Search" xml:space="preserve"><value>Search</value></data>
+  <data name="Premium.Form.Locked" xml:space="preserve"><value>This feature is reserved for Premium members. Sign in with a Premium account to use it.</value></data>
+  <data name="Premium.Form.LockedTitle" xml:space="preserve"><value>PREMIUM ACCESS REQUIRED</value></data>
+  <data name="Premium.Form.ApiPending" xml:space="preserve"><value>Premium verification and search will be available when the API is connected.</value></data>
+  <data name="Premium.Form.ApiPendingShort" xml:space="preserve"><value>Waiting for the Premium API endpoints.</value></data>
+  <data name="Premium.Form.Empty" xml:space="preserve"><value>Enter a search to see the results.</value></data>
+  <data name="Premium.Grid.Playlist" xml:space="preserve"><value>PLAYLIST</value></data>
+  <data name="Premium.Grid.Artist" xml:space="preserve"><value>ARTIST</value></data>
+  <data name="Premium.Grid.Owner" xml:space="preserve"><value>OWNER</value></data>
+  <data name="Premium.Grid.Matches" xml:space="preserve"><value>MATCHES</value></data>
+  <data name="Premium.Grid.Songs" xml:space="preserve"><value>SONGS</value></data>
+  <data name="Premium.Status.Active" xml:space="preserve"><value>PREMIUM: ACTIVE</value></data>
+  <data name="Premium.Status.Inactive" xml:space="preserve"><value>PREMIUM: INACTIVE</value></data>
+  <data name="Premium.Status.Checking" xml:space="preserve"><value>PREMIUM: CHECKING...</value></data>
+  <data name="Premium.Status.Unavailable" xml:space="preserve"><value>PREMIUM: UNAVAILABLE</value></data>
+  <data name="Premium.Status.NotConnected" xml:space="preserve"><value>PREMIUM: SIGN IN</value></data>
+  <data name="Premium.Status.Unknown" xml:space="preserve"><value>PREMIUM: UNKNOWN</value></data>
 </root>

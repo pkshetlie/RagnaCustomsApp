@@ -106,6 +106,7 @@
     <Compile Include="Services\TwitchQueuePersistence.cs" />
     <Compile Include="Services\AndroidDevice.cs" />
     <Compile Include="Services\Configuration.cs" />
+    <Compile Include="Services\PremiumStatusService.cs" />
     <Compile Include="Services\ISongProvider.cs" />
     <Compile Include="Services\DirProvider.cs" />
     <Compile Include="Services\SongProvider.cs" />
@@ -117,6 +118,9 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\WhatsNewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\PremiumSearchForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\DownloadingForm.cs">

@@ -10,6 +10,8 @@ namespace RagnaCustoms.Models
             Action<string> downloadTitle, bool autoClose, string songFolder, string subFolder);
         Task DownloadListAsync(int listId, Action<int> downloadProgressChanged, Action<bool> downloadCompleted,
            Action<string> downloadTitle, bool autoClose);
+        Task DownloadPlaylistAsync(int playlistId, Action<int> downloadProgressChanged, Action<bool> downloadCompleted,
+           Action<string> downloadTitle, Action<string> downloadError, bool autoClose);
 
         IEnumerable<Song> SearchLocal();
         IEnumerable<Song> SearchLocal(string term);

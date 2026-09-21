@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RagnaCustoms.App.Extensions;
 using RagnaCustoms.Services;
 using System;
@@ -477,6 +478,86 @@ namespace RagnaCustoms.Models
                 }
 
             }
+        }
+        public virtual async Task DownloadPlaylistAsync(int playlistId, Action<int> downloadProgressChanged,
+            Action<bool> downloadCompleted, Action<string> downloadTitle, Action<string> downloadError,
+            bool autoClose = false)
+        {
+            if (string.IsNullOrWhiteSpace(configuration.ApiKey))
+            {
+                await Task.Yield();
+                downloadError?.Invoke("A valid API key is required to download a playlist.");
+                return;
+            }
+
+            List<SongSearchModel> songs;
+            try
+            {
+                using var webClient = new WebClient();
+                webClient.Headers["X-API-Key"] = configuration.ApiKey;
+                var json = await webClient.DownloadStringTaskAsync(
+                    new Uri("https://api.ragnacustoms.com/api/playlist/" + playlistId));
+                var payload = JToken.Parse(json);
+                songs = payload.Type == JTokenType.Array
+                    ? payload.ToObject<List<SongSearchModel>>()
+                    : payload["songs"]?.ToObject<List<SongSearchModel>>();
+            }
+            catch (WebException exception)
+            {
+                var status = (exception.Response as HttpWebResponse)?.StatusCode;
+                var message = status == HttpStatusCode.NotFound
+                    ? "This playlist could not be found or is not public."
+                    : status == HttpStatusCode.Unauthorized || status == HttpStatusCode.Forbidden
+                        ? "A valid API key is required to download this playlist."
+                        : "The playlist could not be loaded. Please try again later.";
+                downloadError?.Invoke(message);
+                return;
+            }
+            catch (Exception exception)
+            {
+                TwitchBotLogger.Error("Unable to load playlist " + playlistId + ".", exception);
+                downloadError?.Invoke("The playlist could not be loaded. Please try again later.");
+                return;
+            }
+
+            songs = songs ?? new List<SongSearchModel>();
+            if (songs.Count == 0)
+            {
+                downloadTitle?.Invoke("Playlist is empty");
+                downloadProgressChanged?.Invoke(100);
+                downloadCompleted?.Invoke(autoClose);
+                return;
+            }
+
+            for (var index = 0; index < songs.Count; index++)
+            {
+                var songInfo = songs[index];
+                var completed = new TaskCompletionSource<bool>();
+                try
+                {
+                    await DownloadAsync(
+                        songInfo.Id,
+                        progress => downloadProgressChanged?.Invoke(
+                            Math.Min(100, (index * 100 + progress) / songs.Count)),
+                        _ => completed.TrySetResult(true),
+                        title => downloadTitle?.Invoke(
+                            (index + 1) + "/" + songs.Count + " " + title),
+                        false,
+                        null,
+                        null);
+                    await completed.Task;
+                }
+                catch (Exception exception)
+                {
+                    TwitchBotLogger.Error("Unable to download song " + songInfo.Id + " from playlist " + playlistId + ".", exception);
+                    downloadError?.Invoke("A song in this playlist could not be downloaded.");
+                    return;
+                }
+            }
+
+            downloadProgressChanged?.Invoke(100);
+            downloadTitle?.Invoke("Playlist download complete");
+            downloadCompleted?.Invoke(autoClose);
         }
     }
 }

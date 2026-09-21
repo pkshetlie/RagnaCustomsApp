@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using RagnaCustoms.App;
@@ -37,6 +38,9 @@ namespace RagnaCustoms.Views
         private static readonly Color InstalledRowColor = Color.FromArgb(22, 54, 57);
 
         private Configuration _configuration;
+        private readonly PremiumStatusService _premiumStatusService = new PremiumStatusService();
+        private ToolStripLabel _premiumStatusLabel;
+        private PremiumStatus _premiumStatus = PremiumStatus.Unknown;
         private Panel _mainBody;
         private BorderPanel _heroPanel;
         private BorderPanel _resultsPanel;
@@ -74,6 +78,14 @@ namespace RagnaCustoms.Views
 
             Text += $" {Assembly.GetExecutingAssembly().GetName().Version.ToString(3)}";
             ApplyVisualTheme();
+
+            SetPremiumStatus(string.IsNullOrEmpty(_configuration.ApiKey)
+                ? PremiumStatus.NotAuthenticated
+                : PremiumStatus.Checking);
+            if (!string.IsNullOrEmpty(_configuration.ApiKey))
+            {
+                _ = RefreshPremiumStatusAsync();
+            }
         }
 
         public SongPresenter Presenter { private get; set; }
@@ -292,6 +304,7 @@ namespace RagnaCustoms.Views
             {
                 _configuration.ApiKey = "";
                 SetLoginMenuState(false);
+                SetPremiumStatus(PremiumStatus.NotAuthenticated);
             }
         }
 
@@ -318,6 +331,8 @@ namespace RagnaCustoms.Views
         public void changeLoginMenu()
         {
             SetLoginMenuState(!string.IsNullOrEmpty(_configuration.ApiKey));
+            SetPremiumStatus(PremiumStatus.Checking);
+            _ = RefreshPremiumStatusAsync();
         }
 
         private void SetLoginMenuState(bool loggedIn)
@@ -328,6 +343,65 @@ namespace RagnaCustoms.Views
             loginToolStripMenuItem.Image = CreateStatusDot(loggedIn
                 ? Color.FromArgb(74, 207, 137)
                 : Color.FromArgb(219, 76, 91));
+            oldImage?.Dispose();
+        }
+
+        private async Task RefreshPremiumStatusAsync()
+        {
+            var apiKey = _configuration.ApiKey;
+            if (string.IsNullOrEmpty(apiKey))
+            {
+                SetPremiumStatus(PremiumStatus.NotAuthenticated);
+                return;
+            }
+
+            SetPremiumStatus(PremiumStatus.Checking);
+            var status = await _premiumStatusService.GetStatusAsync(apiKey);
+            if (!IsDisposed && !Disposing && string.Equals(apiKey, _configuration.ApiKey, StringComparison.Ordinal))
+            {
+                SetPremiumStatus(status);
+            }
+        }
+
+        private void SetPremiumStatus(PremiumStatus status)
+        {
+            _premiumStatus = status;
+            if (_premiumStatusLabel == null) return;
+
+            string text;
+            Color color;
+            switch (status)
+            {
+                case PremiumStatus.Premium:
+                    text = GetResourceText("Premium.Status.Active", "PREMIUM: ACTIVE");
+                    color = Color.FromArgb(74, 207, 137);
+                    break;
+                case PremiumStatus.NotPremium:
+                    text = GetResourceText("Premium.Status.Inactive", "PREMIUM: INACTIVE");
+                    color = Color.FromArgb(244, 166, 67);
+                    break;
+                case PremiumStatus.Checking:
+                    text = GetResourceText("Premium.Status.Checking", "PREMIUM: CHECKING...");
+                    color = AccentColor;
+                    break;
+                case PremiumStatus.Unavailable:
+                    text = GetResourceText("Premium.Status.Unavailable", "PREMIUM: UNAVAILABLE");
+                    color = MutedTextColor;
+                    break;
+                case PremiumStatus.NotAuthenticated:
+                    text = GetResourceText("Premium.Status.NotConnected", "PREMIUM: SIGN IN");
+                    color = Color.FromArgb(219, 76, 91);
+                    break;
+                default:
+                    text = GetResourceText("Premium.Status.Unknown", "PREMIUM: UNKNOWN");
+                    color = MutedTextColor;
+                    break;
+            }
+
+            var oldImage = _premiumStatusLabel.Image;
+            _premiumStatusLabel.Text = text;
+            _premiumStatusLabel.ForeColor = color;
+            _premiumStatusLabel.Image = CreateStatusDot(color);
             oldImage?.Dispose();
         }
 
@@ -813,7 +887,50 @@ namespace RagnaCustoms.Views
                 item.Padding = new Padding(10, 0, 10, 0);
             }
 
+            var premiumMenu = new ToolStripMenuItem(GetResourceText("Premium.Menu.Title", "Premium"));
+            var playlistSearchMenu = new ToolStripMenuItem(
+                GetResourceText("Premium.Menu.Playlists", "Search playlists"));
+            var artistSearchMenu = new ToolStripMenuItem(
+                GetResourceText("Premium.Menu.Artists", "Search by artist"));
+            playlistSearchMenu.Click += playlistSearchMenu_Click;
+            artistSearchMenu.Click += artistSearchMenu_Click;
+            premiumMenu.DropDownItems.Add(playlistSearchMenu);
+            premiumMenu.DropDownItems.Add(artistSearchMenu);
+            premiumMenu.Font = CreateUiFont(9f, FontStyle.Regular);
+            premiumMenu.ForeColor = TextColor;
+            premiumMenu.Padding = new Padding(10, 0, 10, 0);
+            Menu.Items.Insert(1, premiumMenu);
+
             loginToolStripMenuItem.Alignment = ToolStripItemAlignment.Right;
+            _premiumStatusLabel = new ToolStripLabel
+            {
+                Alignment = ToolStripItemAlignment.Right,
+                DisplayStyle = ToolStripItemDisplayStyle.ImageAndText,
+                ImageScaling = ToolStripItemImageScaling.SizeToFit,
+                Font = CreateUiFont(8f, FontStyle.Bold),
+                ForeColor = MutedTextColor,
+                Padding = new Padding(8, 0, 8, 0),
+                Margin = new Padding(0)
+            };
+            Menu.Items.Insert(Menu.Items.IndexOf(loginToolStripMenuItem), _premiumStatusLabel);
+        }
+
+        private void playlistSearchMenu_Click(object sender, EventArgs e)
+        {
+            using (var form = new PremiumSearchForm(PremiumSearchKind.Playlists))
+            {
+                form.SetPremiumAccess(_premiumStatus == PremiumStatus.Premium);
+                form.ShowDialog(this);
+            }
+        }
+
+        private void artistSearchMenu_Click(object sender, EventArgs e)
+        {
+            using (var form = new PremiumSearchForm(PremiumSearchKind.Artists))
+            {
+                form.SetPremiumAccess(_premiumStatus == PremiumStatus.Premium);
+                form.ShowDialog(this);
+            }
         }
 
         private void SearchResultGridView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
