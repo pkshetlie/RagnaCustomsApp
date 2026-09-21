@@ -16,6 +16,7 @@ namespace RagnaCustoms.App.Views
         private static readonly Color TextColor = Color.FromArgb(238, 246, 250);
         private static readonly Color MutedTextColor = Color.FromArgb(145, 176, 194);
         private static readonly Color AccentColor = Color.FromArgb(47, 171, 218);
+        private static readonly Color PremiumColor = Color.FromArgb(255, 66, 77);
 
         private const int WmNclButtonDown = 0x00A1;
         private const int HtCaption = 2;
@@ -36,6 +37,24 @@ namespace RagnaCustoms.App.Views
 
         private static readonly ReleaseNotes[] KnownReleases =
         {
+            new ReleaseNotes(
+                "2.9.3",
+                new[]
+                {
+                    "WhatsNew.Release.2.9.3.Item.PremiumMarker",
+                    "WhatsNew.Release.2.9.3.Item.Preview",
+                    "WhatsNew.Release.2.9.3.Item.Selection",
+                    "WhatsNew.Release.2.9.3.Item.PlaylistFolders",
+                    "WhatsNew.Release.2.9.3.Item.ArtistOrganization"
+                },
+                new[]
+                {
+                    "Premium playlist and artist searches are now easier to spot.",
+                    "Premium members can now preview songs from playlist and artist results.",
+                    "Premium members can select exactly which songs to download before starting a batch download.",
+                    "Playlist downloads can now be grouped automatically in playlist/<playlist name>.",
+                    "Songs can now be organized by artist, alongside the existing organization options."
+                }),
             new ReleaseNotes(
                 "2.9.2",
                 new[]
@@ -335,6 +354,7 @@ namespace RagnaCustoms.App.Views
             var history = GetReleaseHistory(version);
             var defaultIndex = history.FindIndex(release => release.Version == version);
             _versionSelector.SelectedIndex = defaultIndex >= 0 ? defaultIndex : 0;
+            RefreshFeatureList((string)_versionSelector.SelectedItem);
             ResumeLayout(true);
         }
 
@@ -386,19 +406,44 @@ namespace RagnaCustoms.App.Views
             for (var index = 0; index < release.FeatureKeys.Length; index++)
             {
                 _featureList.RowStyles.Add(new RowStyle(SizeType.Percent, 100f / release.FeatureKeys.Length));
-                var feature = new Label
-                {
-                    Dock = DockStyle.Fill,
-                    Margin = new Padding(0, 3, 0, 3),
-                    Padding = new Padding(14, 0, 12, 0),
-                    Text = "\u2022  " + GetLocalizedText(release.FeatureKeys[index], release.FeatureFallbacks[index]),
-                    ForeColor = TextColor,
-                    BackColor = FeatureColor,
-                    Font = CreateUiFont(10f, FontStyle.Regular),
-                    TextAlign = ContentAlignment.MiddleLeft
-                };
+                var feature = CreateFeatureRow(release.FeatureKeys[index], release.FeatureFallbacks[index]);
                 _featureList.Controls.Add(feature, 0, index);
             }
+        }
+
+        private static Control CreateFeatureRow(string key, string fallback)
+        {
+            var isPremiumFeature = key.IndexOf("Premium", StringComparison.OrdinalIgnoreCase) >= 0
+                || fallback.IndexOf("Premium", StringComparison.OrdinalIgnoreCase) >= 0;
+            var row = new Panel
+            {
+                Dock = DockStyle.Fill,
+                Margin = new Padding(0, 3, 0, 3),
+                BackColor = FeatureColor
+            };
+            var marker = new Label
+            {
+                Dock = DockStyle.Left,
+                Width = 32,
+                Text = isPremiumFeature ? "★" : "•",
+                ForeColor = isPremiumFeature ? Color.White : AccentColor,
+                BackColor = isPremiumFeature ? PremiumColor : FeatureColor,
+                Font = CreateUiFont(isPremiumFeature ? 11f : 10f, FontStyle.Bold),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+            var text = new Label
+            {
+                Dock = DockStyle.Fill,
+                Padding = new Padding(10, 0, 12, 0),
+                Text = GetLocalizedText(key, fallback),
+                ForeColor = TextColor,
+                BackColor = FeatureColor,
+                Font = CreateUiFont(10f, FontStyle.Regular),
+                TextAlign = ContentAlignment.MiddleLeft
+            };
+            row.Controls.Add(text);
+            row.Controls.Add(marker);
+            return row;
         }
 
         private static Button CreateButton(string text)

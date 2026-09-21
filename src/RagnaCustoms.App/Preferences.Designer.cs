@@ -39,8 +39,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.closeOnEndCheckbox = new System.Windows.Forms.CheckBox();
+            this.playlistFolderCheckbox = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -147,7 +149,8 @@
             this.label1.Text = "Base directory:";
             // 
             // groupBox2
-            // 
+            //
+            this.groupBox2.Controls.Add(this.playlistFolderCheckbox);
             this.groupBox2.Controls.Add(this.closeOnEndCheckbox);
             this.groupBox2.Location = new System.Drawing.Point(12, 149);
             this.groupBox2.Name = "groupBox2";
@@ -166,10 +169,22 @@
             this.closeOnEndCheckbox.Text = "Close on download finish";
             this.closeOnEndCheckbox.UseVisualStyleBackColor = true;
             this.closeOnEndCheckbox.CheckStateChanged += new System.EventHandler(this.closeOnEndCheckbox_CheckStateChanged);
-            // 
+            //
+            // playlistFolderCheckbox
+            //
+            this.playlistFolderCheckbox.AutoSize = true;
+            this.playlistFolderCheckbox.Location = new System.Drawing.Point(7, 42);
+            this.playlistFolderCheckbox.Name = "playlistFolderCheckbox";
+            this.playlistFolderCheckbox.Size = new System.Drawing.Size(210, 17);
+            this.playlistFolderCheckbox.TabIndex = 1;
+            this.playlistFolderCheckbox.Text = "Save playlists in playlist/<name>";
+            this.playlistFolderCheckbox.UseVisualStyleBackColor = true;
+            this.playlistFolderCheckbox.CheckedChanged += new System.EventHandler(this.playlistFolderCheckbox_CheckedChanged);
+            //
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.radioButton4);
             this.groupBox3.Controls.Add(this.radioButton3);
             this.groupBox3.Controls.Add(this.radioButton2);
             this.groupBox3.Controls.Add(this.radioButton1);
@@ -203,6 +218,18 @@
             this.radioButton3.UseVisualStyleBackColor = true;
             this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
             // 
+            // radioButton4
+            //
+            this.radioButton4.AutoSize = true;
+            this.radioButton4.Location = new System.Drawing.Point(6, 132);
+            this.radioButton4.Name = "radioButton4";
+            this.radioButton4.Size = new System.Drawing.Size(67, 17);
+            this.radioButton4.TabIndex = 7;
+            this.radioButton4.TabStop = true;
+            this.radioButton4.Text = "By artist";
+            this.radioButton4.UseVisualStyleBackColor = true;
+            this.radioButton4.CheckedChanged += new System.EventHandler(this.radioButton4_CheckedChanged);
+            //
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
@@ -426,7 +453,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.CheckBox closeOnEndCheckbox;
+        private System.Windows.Forms.CheckBox playlistFolderCheckbox;
         private System.Windows.Forms.CheckBox copyRanked;
+        private System.Windows.Forms.RadioButton radioButton4;
         private System.Windows.Forms.GroupBox groupBox4;
         public System.Windows.Forms.Label helptwitchtmi;
         public System.Windows.Forms.LinkLabel linkLabel2;

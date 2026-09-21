@@ -322,8 +322,10 @@
   <data name="Preferences.Form.Change" xml:space="preserve"><value>CHOISIR</value></data>
   <data name="Preferences.Form.BaseDirectory" xml:space="preserve"><value>Dossier de base :</value></data>
   <data name="Preferences.Form.CloseOnDownload" xml:space="preserve"><value>Fermer à la fin du téléchargement</value></data>
+  <data name="Preferences.Form.OrganizePlaylists" xml:space="preserve"><value>Enregistrer les playlists dans playlist/&lt;nom&gt;</value></data>
   <data name="Preferences.Form.MapsOrganization" xml:space="preserve"><value>Organisation des morceaux</value></data>
   <data name="Preferences.Form.ByMapper" xml:space="preserve"><value>Par mapper</value></data>
+  <data name="Preferences.Form.ByArtist" xml:space="preserve"><value>Par artiste</value></data>
   <data name="Preferences.Form.Alphabetically" xml:space="preserve"><value>Par ordre alphabétique</value></data>
   <data name="Preferences.Form.OneFolder" xml:space="preserve"><value>Un seul dossier pour tous les morceaux</value></data>
   <data name="Preferences.Form.CopyRanked" xml:space="preserve"><value>Copier les morceaux classés dans un dossier spécifique</value></data>
@@ -423,6 +425,8 @@
   <data name="WhatsNew.Form.Ok" xml:space="preserve"><value>OK</value></data>
   <data name="WhatsNew.Form.NeverShowAgain" xml:space="preserve"><value>Ne plus afficher</value></data>
   <data name="WhatsNew.Form.Thanks" xml:space="preserve"><value>Merci pour vos retours !</value></data>
+  <data name="WhatsNew.Form.OpenError" xml:space="preserve"><value>La fenêtre des nouveautés n’a pas pu être ouverte.</value></data>
+  <data name="WhatsNew.Menu.Title" xml:space="preserve"><value>Nouveautés</value></data>
   <data name="WhatsNew.Item.Stability" xml:space="preserve"><value>Les messages du chat ne sont plus envoyés en double après un redémarrage.</value></data>
   <data name="WhatsNew.Item.Queue" xml:space="preserve"><value>La file des demandes Twitch est maintenant restaurée après un redémarrage.</value></data>
   <data name="WhatsNew.Item.ClearQueue" xml:space="preserve"><value>La file peut être vidée depuis l’application ou avec la commande modérateur !clearqueue.</value></data>
@@ -430,6 +434,11 @@
   <data name="WhatsNew.Release.2.9.2.Item.Premium" xml:space="preserve"><value>Votre statut Premium est maintenant visible à côté de Login et Logout.</value></data>
   <data name="WhatsNew.Release.2.9.2.Item.Playlists" xml:space="preserve"><value>Les pages de recherche de playlists et d’artistes Premium sont maintenant disponibles.</value></data>
   <data name="WhatsNew.Release.2.9.2.Item.Downloads" xml:space="preserve"><value>Les téléchargements de playlists et leur progression sont plus faciles à suivre.</value></data>
+  <data name="WhatsNew.Release.2.9.3.Item.PremiumMarker" xml:space="preserve"><value>Les recherches Premium de playlists et d’artistes sont maintenant plus faciles à repérer.</value></data>
+  <data name="WhatsNew.Release.2.9.3.Item.Preview" xml:space="preserve"><value>Les membres Premium peuvent maintenant prévisualiser les morceaux des playlists et des artistes trouvés.</value></data>
+  <data name="WhatsNew.Release.2.9.3.Item.Selection" xml:space="preserve"><value>Les membres Premium peuvent choisir précisément les morceaux à télécharger avant de lancer un téléchargement groupé.</value></data>
+  <data name="WhatsNew.Release.2.9.3.Item.PlaylistFolders" xml:space="preserve"><value>Les téléchargements de playlists peuvent maintenant être regroupés automatiquement dans playlist/&lt;nom de la playlist&gt;.</value></data>
+  <data name="WhatsNew.Release.2.9.3.Item.ArtistOrganization" xml:space="preserve"><value>Les morceaux peuvent maintenant être organisés par artiste, en plus des options existantes.</value></data>
   <data name="Premium.Menu.Title" xml:space="preserve"><value>Premium</value></data>
   <data name="Premium.Menu.Playlists" xml:space="preserve"><value>Rechercher des playlists</value></data>
   <data name="Premium.Menu.Artists" xml:space="preserve"><value>Rechercher par artiste</value></data>
@@ -458,10 +467,31 @@
   <data name="Premium.Grid.Owner" xml:space="preserve"><value>AUTEUR</value></data>
   <data name="Premium.Grid.Matches" xml:space="preserve"><value>CORRESPONDANCES</value></data>
   <data name="Premium.Grid.Songs" xml:space="preserve"><value>MORCEAUX</value></data>
+  <data name="Premium.Grid.Preview" xml:space="preserve"><value>APERÇU</value></data>
+  <data name="Premium.Grid.PreviewAction" xml:space="preserve"><value>VOIR</value></data>
+  <data name="Premium.Preview.Title" xml:space="preserve"><value>Aperçu des morceaux - {0}</value></data>
+  <data name="Premium.Preview.Heading" xml:space="preserve"><value>SÉLECTIONNER LES MORCEAUX À TÉLÉCHARGER</value></data>
+  <data name="Premium.Preview.Loading" xml:space="preserve"><value>Chargement des morceaux...</value></data>
+  <data name="Premium.Preview.Count" xml:space="preserve"><value>{0} morceau(x) chargé(s). Sélectionnez ceux à télécharger.</value></data>
+  <data name="Premium.Preview.SelectAll" xml:space="preserve"><value>TOUT SÉLECTIONNER</value></data>
+  <data name="Premium.Preview.Clear" xml:space="preserve"><value>TOUT RETIRER</value></data>
+  <data name="Premium.Preview.Download" xml:space="preserve"><value>TÉLÉCHARGER LA SÉLECTION</value></data>
+  <data name="Premium.Preview.NoneSelected" xml:space="preserve"><value>Sélectionnez au moins un morceau.</value></data>
+  <data name="Premium.Preview.Cover" xml:space="preserve"><value>POCHETTE</value></data>
+  <data name="Premium.Preview.Select" xml:space="preserve"><value>DL</value></data>
+  <data name="Premium.Preview.ViewList" xml:space="preserve"><value>LISTE</value></data>
+  <data name="Premium.Preview.ViewGrid" xml:space="preserve"><value>GRILLE</value></data>
+  <data name="Premium.Preview.Artist" xml:space="preserve"><value>ARTISTE</value></data>
+  <data name="Premium.Preview.Mapper" xml:space="preserve"><value>MAPPER</value></data>
+  <data name="Premium.Preview.ArtistValue" xml:space="preserve"><value>Artiste : {0}</value></data>
+  <data name="Premium.Preview.MapperValue" xml:space="preserve"><value>Mapper : {0}</value></data>
   <data name="Premium.Status.Active" xml:space="preserve"><value>PREMIUM : ACTIF</value></data>
   <data name="Premium.Status.Inactive" xml:space="preserve"><value>PREMIUM : INACTIF</value></data>
   <data name="Premium.Status.Checking" xml:space="preserve"><value>PREMIUM : VÉRIFICATION...</value></data>
   <data name="Premium.Status.Unavailable" xml:space="preserve"><value>PREMIUM : INDISPONIBLE</value></data>
   <data name="Premium.Status.NotConnected" xml:space="preserve"><value>PREMIUM : CONNECTEZ-VOUS</value></data>
   <data name="Premium.Status.Unknown" xml:space="preserve"><value>PREMIUM : INCONNU</value></data>
+  <data name="Premium.Subscribe" xml:space="preserve"><value>SOUSCRIRE</value></data>
+  <data name="Premium.Subscribe.Tooltip" xml:space="preserve"><value>Souscrire au Premium</value></data>
+  <data name="Premium.Subscribe.Error" xml:space="preserve"><value>La page de souscription Premium n’a pas pu être ouverte.</value></data>
 </root>

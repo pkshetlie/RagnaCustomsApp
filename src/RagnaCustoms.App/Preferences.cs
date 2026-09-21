@@ -52,6 +52,7 @@ namespace RagnaCustoms.App
             DefaultDirTxt.Text = _configuration.BaseFolder;
             textBox1.Text = _configuration.ApiKey;
             closeOnEndCheckbox.Checked = _configuration.AutoCloseDownload;
+            playlistFolderCheckbox.Checked = _configuration.OrganizePlaylistsInFolder;
             RequestFolderText.Text = _configuration.RequestFolder;
 
 
@@ -66,9 +67,12 @@ namespace RagnaCustoms.App
             autoStart.Checked = _configuration.TwitchBotAutoStart;
             checkBox1.Checked = _configuration.DisableBotWelcome;
 
-            radioButton1.Checked = !_configuration.OrderAlphabetically && !_configuration.OrderMapper;
+            radioButton1.Checked = !_configuration.OrderAlphabetically
+                && !_configuration.OrderMapper
+                && !_configuration.OrderArtist;
             radioButton2.Checked = _configuration.OrderAlphabetically;
             radioButton3.Checked = _configuration.OrderMapper;
+            radioButton4.Checked = _configuration.OrderArtist;
 
             ApplyTheme();
         }
@@ -159,8 +163,8 @@ namespace RagnaCustoms.App
             Controls.Add(titleBar);
 
             ConfigureGroupBox(groupBox1, GetLocalizedText("Preferences.Form.General", "GENERAL"), new Point(20, 18), new Size(420, 220));
-            ConfigureGroupBox(groupBox2, GetLocalizedText("Preferences.Form.Download", "DOWNLOAD"), new Point(20, 254), new Size(420, 78));
-            ConfigureGroupBox(groupBox3, GetLocalizedText("Preferences.Form.Directories", "DIRECTORIES"), new Point(20, 348), new Size(420, 280));
+            ConfigureGroupBox(groupBox2, GetLocalizedText("Preferences.Form.Download", "DOWNLOAD"), new Point(20, 254), new Size(420, 108));
+            ConfigureGroupBox(groupBox3, GetLocalizedText("Preferences.Form.Directories", "DIRECTORIES"), new Point(20, 370), new Size(420, 280));
             ConfigureGroupBox(groupBox4, GetLocalizedText("Preferences.Form.TwitchBot", "TWITCH BOT"), new Point(460, 18), new Size(420, 604));
 
             content.Controls.Add(groupBox1);
@@ -226,8 +230,13 @@ namespace RagnaCustoms.App
         private void LayoutDownloadGroup()
         {
             closeOnEndCheckbox.Text = GetLocalizedText("Preferences.Form.CloseOnDownload", closeOnEndCheckbox.Text);
+            playlistFolderCheckbox.Text = GetLocalizedText(
+                "Preferences.Form.OrganizePlaylists",
+                "Save playlists in playlist/<name>");
             StyleOption(closeOnEndCheckbox);
             closeOnEndCheckbox.Location = new Point(16, 31);
+            StyleOption(playlistFolderCheckbox);
+            playlistFolderCheckbox.Location = new Point(16, 61);
         }
 
         private void LayoutDirectoriesGroup()
@@ -237,32 +246,35 @@ namespace RagnaCustoms.App
             radioButton1.Text = GetLocalizedText("Preferences.Form.OneFolder", radioButton1.Text);
             radioButton2.Text = GetLocalizedText("Preferences.Form.Alphabetically", radioButton2.Text);
             radioButton3.Text = GetLocalizedText("Preferences.Form.ByMapper", radioButton3.Text);
+            radioButton4.Text = GetLocalizedText("Preferences.Form.ByArtist", "By artist");
 
             StyleOption(copyRanked);
             copyRanked.Location = new Point(16, 31);
 
             StyleLabel(label7, MutedTextColor, 8f, FontStyle.Bold);
-            label7.Location = new Point(16, 66);
+            label7.Location = new Point(16, 62);
 
             StyleOption(radioButton1);
-            radioButton1.Location = new Point(16, 88);
+            radioButton1.Location = new Point(16, 82);
             StyleOption(radioButton2);
-            radioButton2.Location = new Point(16, 118);
+            radioButton2.Location = new Point(16, 104);
             StyleOption(radioButton3);
-            radioButton3.Location = new Point(16, 148);
+            radioButton3.Location = new Point(16, 126);
+            StyleOption(radioButton4);
+            radioButton4.Location = new Point(16, 148);
 
             songFolderPatternLabel.Text = GetLocalizedText("Preferences.Form.SongFolderPattern", "Nom du dossier des morceaux");
             StyleLabel(songFolderPatternLabel, TextColor, 9f, FontStyle.Bold);
-            songFolderPatternLabel.Location = new Point(16, 178);
+            songFolderPatternLabel.Location = new Point(16, 176);
 
             StyleInput(songFolderPatternText);
-            songFolderPatternText.Location = new Point(16, 198);
+            songFolderPatternText.Location = new Point(16, 196);
             songFolderPatternText.Width = 388;
 
             songFolderPatternHelp.Text = GetLocalizedText(
                 "Preferences.Form.SongFolderPatternHelp",
                 "Variables : $song.id · $song.name · $song.author · $mapper.name · $song.level · $date · $time\r\n$date.year · $date.month · $date.day");
-            songFolderPatternHelp.Location = new Point(16, 232);
+            songFolderPatternHelp.Location = new Point(16, 230);
         }
 
         private void CreateSongFolderPatternControls()
@@ -292,11 +304,13 @@ namespace RagnaCustoms.App
             {
                 _configuration.OrderAlphabetically = false;
                 _configuration.OrderMapper = false;
+                _configuration.OrderArtist = false;
                 radioButton1.Checked = true;
             }
 
             radioButton2.Visible = !forceSingleFolder;
             radioButton3.Visible = !forceSingleFolder;
+            radioButton4.Visible = !forceSingleFolder;
             label7.Text = GetLocalizedText(
                 forceSingleFolder ? "Preferences.Form.NumericPatternOrganization" : "Preferences.Form.MapsOrganization",
                 forceSingleFolder ? "Organisation forcée : un seul dossier" : "Organisation des morceaux");
@@ -445,6 +459,11 @@ namespace RagnaCustoms.App
             _configuration.AutoCloseDownload = closeOnEndCheckbox.Checked;
         }
 
+        private void playlistFolderCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            _configuration.OrganizePlaylistsInFolder = playlistFolderCheckbox.Checked;
+        }
+
         private void copyRanked_CheckedChanged(object sender, EventArgs e)
         {
             _configuration.CopyRanked = copyRanked.Checked;
@@ -549,8 +568,10 @@ namespace RagnaCustoms.App
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
+            if (!radioButton1.Checked) return;
             _configuration.OrderAlphabetically = false;
             _configuration.OrderMapper = false;
+            _configuration.OrderArtist = false;
         }
 
         private void label5_Click(object sender, EventArgs e)
@@ -560,14 +581,26 @@ namespace RagnaCustoms.App
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
+            if (!radioButton2.Checked) return;
             _configuration.OrderAlphabetically = true;
             _configuration.OrderMapper = false;
+            _configuration.OrderArtist = false;
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
+            if (!radioButton3.Checked) return;
             _configuration.OrderAlphabetically = false;
             _configuration.OrderMapper = true;
+            _configuration.OrderArtist = false;
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!radioButton4.Checked) return;
+            _configuration.OrderAlphabetically = false;
+            _configuration.OrderMapper = false;
+            _configuration.OrderArtist = true;
         }
 
         private void label7_Click(object sender, EventArgs e)

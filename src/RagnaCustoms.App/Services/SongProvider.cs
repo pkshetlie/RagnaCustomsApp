@@ -317,6 +317,46 @@ namespace RagnaCustoms.Models
             }
         }
 
+        public virtual async Task DownloadSongsAsync(IEnumerable<string> songIds,
+            Action<int> downloadProgressChanged, Action<bool> downloadCompleted,
+            Action<string> downloadTitle, Action<string> downloadError, bool autoClose = false)
+        {
+            var ids = songIds?.Where(id => !string.IsNullOrWhiteSpace(id)).ToList() ?? new List<string>();
+            if (ids.Count == 0)
+            {
+                downloadError?.Invoke("No songs were selected.");
+                return;
+            }
+
+            for (var index = 0; index < ids.Count; index++)
+            {
+                var completion = new TaskCompletionSource<bool>();
+                var currentIndex = index;
+                try
+                {
+                    await DownloadAsync(
+                        ids[index],
+                        progress => downloadProgressChanged?.Invoke(
+                            (currentIndex * 100 + progress) / ids.Count),
+                        ignored => completion.TrySetResult(true),
+                        title => downloadTitle?.Invoke(
+                            string.Format("{0}/{1}  {2}", currentIndex + 1, ids.Count, title)),
+                        false);
+                    await completion.Task;
+                }
+                catch (Exception exception)
+                {
+                    TwitchBotLogger.Error("Unable to download selected song " + ids[index] + ".", exception);
+                    downloadError?.Invoke("A selected song could not be downloaded.");
+                    return;
+                }
+            }
+
+            downloadProgressChanged?.Invoke(100);
+            downloadTitle?.Invoke("Selected songs download complete");
+            downloadCompleted?.Invoke(autoClose);
+        }
+
         private static string BuildSongDirectoryPath(SongSearchModel songInfo, Configuration configuration, string songFolderName)
         {
             var customDirectory = DirProvider.getCustomDirectory().ToString();
@@ -334,12 +374,22 @@ namespace RagnaCustoms.Models
                 songDirectoryPath = Path.Combine(songDirectoryPath, songFolderName);
             }
 
-            if (!forceSingleFolder && configuration.OrderMapper)
+            else if (!forceSingleFolder && configuration.OrderMapper)
             {
                 songDirectoryPath = Path.Combine(customDirectory, "Mapper");
                 Directory.CreateDirectory(songDirectoryPath);
 
                 songDirectoryPath = Path.Combine(songDirectoryPath, songInfo.Mapper.Slug());
+                Directory.CreateDirectory(songDirectoryPath);
+                songDirectoryPath = Path.Combine(songDirectoryPath, songFolderName);
+            }
+
+            else if (!forceSingleFolder && configuration.OrderArtist)
+            {
+                songDirectoryPath = Path.Combine(customDirectory, "Artist");
+                Directory.CreateDirectory(songDirectoryPath);
+
+                songDirectoryPath = Path.Combine(songDirectoryPath, songInfo.Author.Slug());
                 Directory.CreateDirectory(songDirectoryPath);
                 songDirectoryPath = Path.Combine(songDirectoryPath, songFolderName);
             }
@@ -491,6 +541,7 @@ namespace RagnaCustoms.Models
             }
 
             List<SongSearchModel> songs;
+            string playlistName;
             try
             {
                 using var webClient = new WebClient();
@@ -501,6 +552,7 @@ namespace RagnaCustoms.Models
                 songs = payload.Type == JTokenType.Array
                     ? payload.ToObject<List<SongSearchModel>>()
                     : payload["songs"]?.ToObject<List<SongSearchModel>>();
+                playlistName = GetPlaylistName(payload, playlistId);
             }
             catch (WebException exception)
             {
@@ -521,6 +573,11 @@ namespace RagnaCustoms.Models
             }
 
             songs = songs ?? new List<SongSearchModel>();
+            var playlistSubfolder = configuration.OrganizePlaylistsInFolder
+                ? Path.Combine(
+                    "playlist",
+                    SongFolderNameFormatter.FormatFolderName(playlistName, "playlist-" + playlistId))
+                : null;
             if (songs.Count == 0)
             {
                 downloadTitle?.Invoke("Playlist is empty");
@@ -544,7 +601,7 @@ namespace RagnaCustoms.Models
                             (index + 1) + "/" + songs.Count + " " + title),
                         false,
                         null,
-                        null);
+                        playlistSubfolder);
                     await completed.Task;
                 }
                 catch (Exception exception)
@@ -558,6 +615,25 @@ namespace RagnaCustoms.Models
             downloadProgressChanged?.Invoke(100);
             downloadTitle?.Invoke("Playlist download complete");
             downloadCompleted?.Invoke(autoClose);
+        }
+
+        private static string GetPlaylistName(JToken payload, int playlistId)
+        {
+            if (payload == null || payload.Type != JTokenType.Object)
+            {
+                return "playlist-" + playlistId;
+            }
+
+            var playlistName = payload["name"]?.ToString()
+                ?? payload["title"]?.ToString()
+                ?? payload["playlistName"]?.ToString();
+            if (string.IsNullOrWhiteSpace(playlistName) && payload["playlist"]?.Type == JTokenType.Object)
+            {
+                playlistName = payload["playlist"]["name"]?.ToString()
+                    ?? payload["playlist"]["title"]?.ToString();
+            }
+
+            return string.IsNullOrWhiteSpace(playlistName) ? "playlist-" + playlistId : playlistName;
         }
     }
 }

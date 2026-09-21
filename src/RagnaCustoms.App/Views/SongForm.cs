@@ -36,10 +36,14 @@ namespace RagnaCustoms.Views
         private static readonly Color AccentColor = Color.FromArgb(47, 171, 216);
         private static readonly Color AccentDarkColor = Color.FromArgb(14, 105, 139);
         private static readonly Color InstalledRowColor = Color.FromArgb(22, 54, 57);
+        private static readonly Color PatreonColor = Color.FromArgb(255, 66, 77);
+
+        private const string PremiumPageUrl = "https://ragnacustoms.com/premium";
 
         private Configuration _configuration;
         private readonly PremiumStatusService _premiumStatusService = new PremiumStatusService();
         private ToolStripLabel _premiumStatusLabel;
+        private ToolStripButton _premiumSubscribeButton;
         private PremiumStatus _premiumStatus = PremiumStatus.Unknown;
         private Panel _mainBody;
         private BorderPanel _heroPanel;
@@ -285,8 +289,12 @@ namespace RagnaCustoms.Views
 
         private void preferencesToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            var pref = new Preferences();
-            pref.ShowDialog();
+            using (var pref = new Preferences())
+            {
+                pref.ShowDialog(this);
+            }
+
+            changeLoginMenu();
         }
 
         private void twitchBotToolStripMenuItem_Click(object sender, EventArgs e)
@@ -368,6 +376,12 @@ namespace RagnaCustoms.Views
             _premiumStatus = status;
             if (_premiumStatusLabel == null) return;
 
+            if (_premiumSubscribeButton != null)
+            {
+                _premiumSubscribeButton.Visible = status != PremiumStatus.Premium
+                    && status != PremiumStatus.Checking;
+            }
+
             string text;
             Color color;
             switch (status)
@@ -417,6 +431,33 @@ namespace RagnaCustoms.Views
                 graphics.FillEllipse(brush, 2, 2, 8, 8);
                 graphics.DrawEllipse(outline, 2, 2, 8, 8);
             }
+            return bitmap;
+        }
+
+        private static Bitmap CreatePremiumBadgeImage()
+        {
+            var bitmap = new Bitmap(18, 18);
+            using (var graphics = Graphics.FromImage(bitmap))
+            using (var background = new SolidBrush(PatreonColor))
+            using (var star = new SolidBrush(Color.White))
+            {
+                graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                graphics.Clear(Color.Transparent);
+                graphics.FillEllipse(background, 1, 1, 16, 16);
+
+                var points = new PointF[10];
+                for (var index = 0; index < points.Length; index++)
+                {
+                    var angle = -Math.PI / 2 + index * Math.PI / 5;
+                    var radius = index % 2 == 0 ? 6.2f : 2.7f;
+                    points[index] = new PointF(
+                        9f + (float)Math.Cos(angle) * radius,
+                        9f + (float)Math.Sin(angle) * radius);
+                }
+
+                graphics.FillPolygon(star, points);
+            }
+
             return bitmap;
         }
 
@@ -899,9 +940,35 @@ namespace RagnaCustoms.Views
             premiumMenu.Font = CreateUiFont(9f, FontStyle.Regular);
             premiumMenu.ForeColor = TextColor;
             premiumMenu.Padding = new Padding(10, 0, 10, 0);
+            premiumMenu.Image = CreatePremiumBadgeImage();
+            playlistSearchMenu.Image = CreatePremiumBadgeImage();
+            artistSearchMenu.Image = CreatePremiumBadgeImage();
             Menu.Items.Insert(1, premiumMenu);
 
+            var whatsNewMenu = new ToolStripMenuItem(
+                GetResourceText("WhatsNew.Menu.Title", "What's new"));
+            whatsNewMenu.Click += whatsNewToolStripMenuItem_Click;
+            HelpMenuItem.DropDownItems.Insert(2, whatsNewMenu);
+
             loginToolStripMenuItem.Alignment = ToolStripItemAlignment.Right;
+            _premiumSubscribeButton = new ToolStripButton
+            {
+                Alignment = ToolStripItemAlignment.Right,
+                DisplayStyle = ToolStripItemDisplayStyle.Text,
+                Text = GetResourceText("Premium.Subscribe", "SUBSCRIBE"),
+                ToolTipText = GetResourceText("Premium.Subscribe.Tooltip", "Subscribe to Premium"),
+                Font = CreateUiFont(8f, FontStyle.Bold),
+                ForeColor = Color.White,
+                BackColor = PatreonColor,
+                Padding = new Padding(10, 0, 10, 0),
+                Margin = new Padding(4, 4, 4, 4),
+                AutoSize = false,
+                Width = 94,
+                Height = 26,
+                Visible = false
+            };
+            _premiumSubscribeButton.Click += PremiumSubscribeButton_Click;
+
             _premiumStatusLabel = new ToolStripLabel
             {
                 Alignment = ToolStripItemAlignment.Right,
@@ -912,12 +979,56 @@ namespace RagnaCustoms.Views
                 Padding = new Padding(8, 0, 8, 0),
                 Margin = new Padding(0)
             };
+            Menu.Items.Insert(Menu.Items.IndexOf(loginToolStripMenuItem), _premiumSubscribeButton);
             Menu.Items.Insert(Menu.Items.IndexOf(loginToolStripMenuItem), _premiumStatusLabel);
+        }
+
+        private void PremiumSubscribeButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo(PremiumPageUrl) { UseShellExecute = true });
+            }
+            catch (Exception exception)
+            {
+                TwitchBotLogger.Error("Unable to open the Premium subscription page.", exception);
+                MessageBox.Show(
+                    GetResourceText("Premium.Subscribe.Error", "The Premium subscription page could not be opened."),
+                    "RagnaCustoms",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+        }
+
+        private void whatsNewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString(3);
+            if (string.IsNullOrWhiteSpace(version)) return;
+
+            try
+            {
+                using (var whatsNew = new WhatsNewForm(version))
+                {
+                    whatsNew.ShowDialog(this);
+                }
+            }
+            catch (Exception exception)
+            {
+                TwitchBotLogger.Error("Unable to open the What's New window.", exception);
+                MessageBox.Show(
+                    GetResourceText("WhatsNew.Form.OpenError", "The What's New window could not be opened."),
+                    "RagnaCustoms",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
         }
 
         private void playlistSearchMenu_Click(object sender, EventArgs e)
         {
-            using (var form = new PremiumSearchForm(PremiumSearchKind.Playlists, _configuration.ApiKey))
+            using (var form = new PremiumSearchForm(
+                PremiumSearchKind.Playlists,
+                _configuration.ApiKey,
+                songIds => Presenter.DownloadSongs(songIds)))
             {
                 form.SetPremiumAccess(_premiumStatus == PremiumStatus.Premium);
                 form.ShowDialog(this);
@@ -926,7 +1037,10 @@ namespace RagnaCustoms.Views
 
         private void artistSearchMenu_Click(object sender, EventArgs e)
         {
-            using (var form = new PremiumSearchForm(PremiumSearchKind.Artists, _configuration.ApiKey))
+            using (var form = new PremiumSearchForm(
+                PremiumSearchKind.Artists,
+                _configuration.ApiKey,
+                songIds => Presenter.DownloadSongs(songIds)))
             {
                 form.SetPremiumAccess(_premiumStatus == PremiumStatus.Premium);
                 form.ShowDialog(this);
@@ -1115,6 +1229,22 @@ namespace RagnaCustoms.Views
             {
                 e.TextColor = TextColor;
                 base.OnRenderItemText(e);
+            }
+
+            protected override void OnRenderButtonBackground(ToolStripItemRenderEventArgs e)
+            {
+                var button = e.Item as ToolStripButton;
+                if (button == null || button.BackColor != PatreonColor)
+                {
+                    base.OnRenderButtonBackground(e);
+                    return;
+                }
+
+                var color = button.Selected ? Color.FromArgb(255, 91, 101) : PatreonColor;
+                using (var brush = new SolidBrush(color))
+                {
+                    e.Graphics.FillRectangle(brush, new Rectangle(Point.Empty, e.Item.Size));
+                }
             }
         }
 

@@ -56,6 +56,12 @@ namespace RagnaCustoms.Presenters
             DownloadingPresenter.ShowAsPopup();
         }
 
+        public virtual void DownloadSongs(System.Collections.Generic.IEnumerable<string> songIds)
+        {
+            DownloadingPresenter.DownloadSongs(songIds, _configuration.AutoCloseDownload);
+            DownloadingPresenter.ShowAsPopup();
+        }
+
 
 
         internal async Task CompareSongsAsync()

@@ -67,6 +67,12 @@ namespace RagnaCustoms.Services
             }
         }
 
+        public static string FormatFolderName(string value, string fallback)
+        {
+            var folderName = Sanitize(value ?? string.Empty);
+            return string.IsNullOrWhiteSpace(folderName) ? fallback : folderName;
+        }
+
         private static Dictionary<string, string> BuildVariables(SongSearchModel song, DateTime date)
         {
             var songId = CleanValue(song.Id);

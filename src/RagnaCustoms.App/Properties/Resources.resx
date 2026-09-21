@@ -323,8 +323,10 @@
   <data name="Preferences.Form.Change" xml:space="preserve"><value>CHANGE</value></data>
   <data name="Preferences.Form.BaseDirectory" xml:space="preserve"><value>Base directory:</value></data>
   <data name="Preferences.Form.CloseOnDownload" xml:space="preserve"><value>Close when download finishes</value></data>
+  <data name="Preferences.Form.OrganizePlaylists" xml:space="preserve"><value>Save playlists in playlist/&lt;name&gt;</value></data>
   <data name="Preferences.Form.MapsOrganization" xml:space="preserve"><value>Song organization</value></data>
   <data name="Preferences.Form.ByMapper" xml:space="preserve"><value>By mapper</value></data>
+  <data name="Preferences.Form.ByArtist" xml:space="preserve"><value>By artist</value></data>
   <data name="Preferences.Form.Alphabetically" xml:space="preserve"><value>Alphabetically</value></data>
   <data name="Preferences.Form.OneFolder" xml:space="preserve"><value>One folder for all songs</value></data>
   <data name="Preferences.Form.CopyRanked" xml:space="preserve"><value>Copy ranked songs to a specific folder</value></data>
@@ -424,6 +426,8 @@
   <data name="WhatsNew.Form.Ok" xml:space="preserve"><value>OK</value></data>
   <data name="WhatsNew.Form.NeverShowAgain" xml:space="preserve"><value>Don't show again</value></data>
   <data name="WhatsNew.Form.Thanks" xml:space="preserve"><value>Thanks for your feedback!</value></data>
+  <data name="WhatsNew.Form.OpenError" xml:space="preserve"><value>The What's New window could not be opened.</value></data>
+  <data name="WhatsNew.Menu.Title" xml:space="preserve"><value>What's new</value></data>
   <data name="WhatsNew.Item.Stability" xml:space="preserve"><value>Chat messages are no longer sent twice after a restart.</value></data>
   <data name="WhatsNew.Item.Queue" xml:space="preserve"><value>Your Twitch request queue is now restored after a restart.</value></data>
   <data name="WhatsNew.Item.ClearQueue" xml:space="preserve"><value>The queue can be cleared from the application or with the moderator command !clearqueue.</value></data>
@@ -431,6 +435,11 @@
   <data name="WhatsNew.Release.2.9.2.Item.Premium" xml:space="preserve"><value>Your Premium status is now visible next to Login and Logout.</value></data>
   <data name="WhatsNew.Release.2.9.2.Item.Playlists" xml:space="preserve"><value>Premium playlist and artist search pages are now available.</value></data>
   <data name="WhatsNew.Release.2.9.2.Item.Downloads" xml:space="preserve"><value>Playlist downloads and download progress are easier to follow.</value></data>
+  <data name="WhatsNew.Release.2.9.3.Item.PremiumMarker" xml:space="preserve"><value>Premium playlist and artist searches are now easier to spot.</value></data>
+  <data name="WhatsNew.Release.2.9.3.Item.Preview" xml:space="preserve"><value>Premium members can now preview songs from playlist and artist results.</value></data>
+  <data name="WhatsNew.Release.2.9.3.Item.Selection" xml:space="preserve"><value>Premium members can select exactly which songs to download before starting a batch download.</value></data>
+  <data name="WhatsNew.Release.2.9.3.Item.PlaylistFolders" xml:space="preserve"><value>Playlist downloads can now be grouped automatically in playlist/&lt;playlist name&gt;.</value></data>
+  <data name="WhatsNew.Release.2.9.3.Item.ArtistOrganization" xml:space="preserve"><value>Songs can now be organized by artist, alongside the existing organization options.</value></data>
   <data name="Premium.Menu.Title" xml:space="preserve"><value>Premium</value></data>
   <data name="Premium.Menu.Playlists" xml:space="preserve"><value>Search playlists</value></data>
   <data name="Premium.Menu.Artists" xml:space="preserve"><value>Search by artist</value></data>
@@ -459,10 +468,31 @@
   <data name="Premium.Grid.Owner" xml:space="preserve"><value>OWNER</value></data>
   <data name="Premium.Grid.Matches" xml:space="preserve"><value>MATCHES</value></data>
   <data name="Premium.Grid.Songs" xml:space="preserve"><value>SONGS</value></data>
+  <data name="Premium.Grid.Preview" xml:space="preserve"><value>PREVIEW</value></data>
+  <data name="Premium.Grid.PreviewAction" xml:space="preserve"><value>VIEW</value></data>
+  <data name="Premium.Preview.Title" xml:space="preserve"><value>Song preview - {0}</value></data>
+  <data name="Premium.Preview.Heading" xml:space="preserve"><value>SELECT SONGS TO DOWNLOAD</value></data>
+  <data name="Premium.Preview.Loading" xml:space="preserve"><value>Loading songs...</value></data>
+  <data name="Premium.Preview.Count" xml:space="preserve"><value>{0} song(s) loaded. Select what you want to download.</value></data>
+  <data name="Premium.Preview.SelectAll" xml:space="preserve"><value>SELECT ALL</value></data>
+  <data name="Premium.Preview.Clear" xml:space="preserve"><value>REMOVE ALL</value></data>
+  <data name="Premium.Preview.Download" xml:space="preserve"><value>DOWNLOAD SELECTED</value></data>
+  <data name="Premium.Preview.NoneSelected" xml:space="preserve"><value>Select at least one song.</value></data>
+  <data name="Premium.Preview.Cover" xml:space="preserve"><value>COVER</value></data>
+  <data name="Premium.Preview.Select" xml:space="preserve"><value>DL</value></data>
+  <data name="Premium.Preview.ViewList" xml:space="preserve"><value>LIST</value></data>
+  <data name="Premium.Preview.ViewGrid" xml:space="preserve"><value>GRID</value></data>
+  <data name="Premium.Preview.Artist" xml:space="preserve"><value>ARTIST</value></data>
+  <data name="Premium.Preview.Mapper" xml:space="preserve"><value>MAPPER</value></data>
+  <data name="Premium.Preview.ArtistValue" xml:space="preserve"><value>Artist: {0}</value></data>
+  <data name="Premium.Preview.MapperValue" xml:space="preserve"><value>Mapper: {0}</value></data>
   <data name="Premium.Status.Active" xml:space="preserve"><value>PREMIUM: ACTIVE</value></data>
   <data name="Premium.Status.Inactive" xml:space="preserve"><value>PREMIUM: INACTIVE</value></data>
   <data name="Premium.Status.Checking" xml:space="preserve"><value>PREMIUM: CHECKING...</value></data>
   <data name="Premium.Status.Unavailable" xml:space="preserve"><value>PREMIUM: UNAVAILABLE</value></data>
   <data name="Premium.Status.NotConnected" xml:space="preserve"><value>PREMIUM: SIGN IN</value></data>
   <data name="Premium.Status.Unknown" xml:space="preserve"><value>PREMIUM: UNKNOWN</value></data>
+  <data name="Premium.Subscribe" xml:space="preserve"><value>SUBSCRIBE</value></data>
+  <data name="Premium.Subscribe.Tooltip" xml:space="preserve"><value>Subscribe to Premium</value></data>
+  <data name="Premium.Subscribe.Error" xml:space="preserve"><value>The Premium subscription page could not be opened.</value></data>
 </root>

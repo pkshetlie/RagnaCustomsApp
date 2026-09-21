@@ -169,9 +169,15 @@ namespace RagnaCustoms.App
             {
                 using (var whatsNew = new WhatsNewForm(version))
                 {
-                    var result = whatsNew.ShowDialog(owner);
-                    if (whatsNew.DoNotShowAgain) Settings.Default.ShowWhatsNew = false;
-                    if (result == DialogResult.OK) Settings.Default.WhatsNewLastSeenVersion = version;
+                    whatsNew.ShowDialog(owner);
+                    if (whatsNew.DoNotShowAgain)
+                    {
+                        Settings.Default.ShowWhatsNew = false;
+                    }
+                    else
+                    {
+                        Settings.Default.WhatsNewLastSeenVersion = version;
+                    }
                     Settings.Default.Save();
                 }
             }

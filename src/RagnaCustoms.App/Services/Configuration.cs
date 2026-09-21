@@ -86,6 +86,18 @@ namespace RagnaCustoms.Services
             get => Get(nameof(OrderMapper)) == bool.TrueString;
             set => Set(nameof(OrderMapper), value ? bool.TrueString : bool.FalseString);
         }
+
+        public bool OrderArtist
+        {
+            get => Get(nameof(OrderArtist)) == bool.TrueString;
+            set => Set(nameof(OrderArtist), value ? bool.TrueString : bool.FalseString);
+        }
+
+        public bool OrganizePlaylistsInFolder
+        {
+            get => Get(nameof(OrganizePlaylistsInFolder)) == bool.TrueString;
+            set => Set(nameof(OrganizePlaylistsInFolder), value ? bool.TrueString : bool.FalseString);
+        }
         public bool Overlay
         {
             get => Get(nameof(Overlay)) == bool.TrueString;

@@ -50,6 +50,11 @@ namespace RagnaCustoms.Presenters
             View.DownloadPercent = default;
             SongProvider.DownloadPlaylistAsync(playlistId, DownloadProgressChanged, DownloadCompleted, DownloadTitle, DownloadError, autoClose);
         }
+        public virtual void DownloadSongs(System.Collections.Generic.IEnumerable<string> songIds, bool autoClose = false)
+        {
+            View.DownloadPercent = default;
+            SongProvider.DownloadSongsAsync(songIds, DownloadProgressChanged, DownloadCompleted, DownloadTitle, DownloadError, autoClose);
+        }
 
         public virtual void DownloadError(string message)
         {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Net;
@@ -24,18 +25,24 @@ namespace RagnaCustoms.App.Views
         private static readonly Color TextColor = Color.FromArgb(238, 246, 250);
         private static readonly Color MutedTextColor = Color.FromArgb(145, 176, 194);
         private static readonly Color AccentColor = Color.FromArgb(47, 171, 218);
+        private static readonly Color PatreonColor = Color.FromArgb(255, 66, 77);
+
+        private const string PremiumPageUrl = "https://ragnacustoms.com/premium";
 
         private const int WmNclButtonDown = 0x00A1;
         private const int HtCaption = 2;
 
         private readonly PremiumSearchKind _kind;
         private readonly PremiumSearchService _searchService;
+        private readonly Action<IEnumerable<string>> _downloadSongs;
+        private readonly List<PremiumSearchResult> _searchResults = new List<PremiumSearchResult>();
         private TextBox _searchTextBox;
         private Button _searchButton;
         private DataGridView _resultsGrid;
         private Panel _premiumNotice;
         private Label _emptyState;
         private Label _footerLabel;
+        private DataGridViewButtonColumn _previewColumn;
         private bool _hasPremiumAccess;
 
         [DllImport("user32.dll")]
@@ -44,10 +51,11 @@ namespace RagnaCustoms.App.Views
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
 
-        public PremiumSearchForm(PremiumSearchKind kind, string apiKey)
+        public PremiumSearchForm(PremiumSearchKind kind, string apiKey, Action<IEnumerable<string>> downloadSongs)
         {
             _kind = kind;
             _searchService = new PremiumSearchService(apiKey);
+            _downloadSongs = downloadSongs;
             _hasPremiumAccess = false;
             BuildForm();
         }
@@ -322,6 +330,17 @@ namespace RagnaCustoms.App.Views
                     ? GetLocalizedText("Premium.Grid.Owner", "OWNER")
                     : GetLocalizedText("Premium.Grid.Matches", "MATCHES"), 28));
             grid.Columns.Add(CreateColumn(GetLocalizedText("Premium.Grid.Songs", "SONGS"), 18));
+            _previewColumn = new DataGridViewButtonColumn
+            {
+                HeaderText = GetLocalizedText("Premium.Grid.Preview", "PREVIEW"),
+                Text = GetLocalizedText("Premium.Grid.PreviewAction", "VIEW"),
+                UseColumnTextForButtonValue = true,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
+                FillWeight = 22,
+                ReadOnly = true
+            };
+            grid.Columns.Add(_previewColumn);
+            grid.CellContentClick += ResultsGrid_CellContentClick;
             panel.Controls.Add(grid);
             return panel;
         }
@@ -356,10 +375,12 @@ namespace RagnaCustoms.App.Views
             {
                 Dock = DockStyle.Fill,
                 BackColor = Color.Transparent,
-                ColumnCount = 1,
+                ColumnCount = 2,
                 RowCount = 2,
                 Padding = new Padding(18, 10, 18, 10)
             };
+            content.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+            content.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 164));
             content.RowStyles.Add(new RowStyle(SizeType.Absolute, 27));
             content.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
             var title = new Label
@@ -380,11 +401,44 @@ namespace RagnaCustoms.App.Views
                 Font = CreateUiFont(9f, FontStyle.Regular),
                 TextAlign = ContentAlignment.MiddleLeft
             };
+            var subscribeButton = new Button
+            {
+                Dock = DockStyle.Fill,
+                Text = GetLocalizedText("Premium.Subscribe", "SUBSCRIBE").ToUpperInvariant(),
+                FlatStyle = FlatStyle.Flat,
+                BackColor = PatreonColor,
+                ForeColor = Color.White,
+                Font = CreateUiFont(8.5f, FontStyle.Bold),
+                Margin = new Padding(8, 2, 0, 2),
+                Cursor = Cursors.Hand
+            };
+            subscribeButton.FlatAppearance.BorderSize = 0;
+            subscribeButton.Click += PremiumSubscribeButton_Click;
             content.Controls.Add(title, 0, 0);
+            content.SetColumnSpan(title, 2);
             content.Controls.Add(label, 0, 1);
+            content.Controls.Add(subscribeButton, 1, 1);
             notice.Controls.Add(content);
             notice.Controls.Add(accent);
             return notice;
+        }
+
+        private void PremiumSubscribeButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(
+                    new System.Diagnostics.ProcessStartInfo(PremiumPageUrl) { UseShellExecute = true });
+            }
+            catch (Exception exception)
+            {
+                TwitchBotLogger.Error("Unable to open the Premium subscription page.", exception);
+                MessageBox.Show(
+                    GetLocalizedText("Premium.Subscribe.Error", "The Premium subscription page could not be opened."),
+                    "RagnaCustoms",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
         }
 
         private void SearchButton_Click(object sender, EventArgs e)
@@ -392,6 +446,17 @@ namespace RagnaCustoms.App.Views
             if (!_hasPremiumAccess || string.IsNullOrWhiteSpace(_searchTextBox.Text)) return;
 
             SearchAsync(_searchTextBox.Text.Trim());
+        }
+
+        private void ResultsGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex != _previewColumn.Index || e.RowIndex >= _searchResults.Count) return;
+
+            var result = _searchResults[e.RowIndex];
+            using (var preview = new PremiumSongsPreviewForm(_kind, result, _searchService, _downloadSongs))
+            {
+                preview.ShowDialog(this);
+            }
         }
 
         private async void SearchAsync(string query)
@@ -439,6 +504,7 @@ namespace RagnaCustoms.App.Views
         private void DisplayResults(PremiumSearchPage page)
         {
             _resultsGrid.Rows.Clear();
+            _searchResults.Clear();
             if (page == null || page.Results == null || page.Results.Count == 0)
             {
                 _emptyState.ForeColor = MutedTextColor;
@@ -454,6 +520,7 @@ namespace RagnaCustoms.App.Views
                 page.Total > 0 ? page.Total : page.Results.Count);
             foreach (var result in page.Results)
             {
+                _searchResults.Add(result);
                 _resultsGrid.Rows.Add(
                     result.Name,
                     _kind == PremiumSearchKind.Playlists ? result.Owner : result.Id,
