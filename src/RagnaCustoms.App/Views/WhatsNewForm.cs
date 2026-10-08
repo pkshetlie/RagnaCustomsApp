@@ -38,6 +38,20 @@ namespace RagnaCustoms.App.Views
         private static readonly ReleaseNotes[] KnownReleases =
         {
             new ReleaseNotes(
+                "2.9.4",
+                new[]
+                {
+                    "WhatsNew.Release.2.9.4.Item.Competitions",
+                    "WhatsNew.Release.2.9.4.Item.Folders",
+                    "WhatsNew.Release.2.9.4.Item.Progress"
+                },
+                new[]
+                {
+                    "Competitions can now be downloaded in one click.",
+                    "Competition songs are grouped automatically in <event slug>_<event id>.",
+                    "A global progress indicator shows the progress of the full competition download."
+                }),
+            new ReleaseNotes(
                 "2.9.3",
                 new[]
                 {

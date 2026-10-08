@@ -50,6 +50,17 @@ namespace RagnaCustoms.Presenters
             View.DownloadPercent = default;
             SongProvider.DownloadPlaylistAsync(playlistId, DownloadProgressChanged, DownloadCompleted, DownloadTitle, DownloadError, autoClose);
         }
+        public virtual void DownloadCompetition(int competitionId, bool autoClose = false)
+        {
+            View.DownloadPercent = default;
+            if (SongProvider is ICompetitionSongProvider competitionSongProvider)
+            {
+                competitionSongProvider.DownloadCompetitionAsync(competitionId, DownloadProgressChanged, DownloadCompleted, DownloadTitle, DownloadError, autoClose);
+                return;
+            }
+
+            DownloadError("Competition downloads are not supported by this song provider.");
+        }
         public virtual void DownloadSongs(System.Collections.Generic.IEnumerable<string> songIds, bool autoClose = false)
         {
             View.DownloadPercent = default;

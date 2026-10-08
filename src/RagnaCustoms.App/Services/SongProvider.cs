@@ -14,7 +14,14 @@ using System.Threading.Tasks;
 
 namespace RagnaCustoms.Models
 {
-    public class SongProvider : ISongProvider
+    public interface ICompetitionSongProvider
+    {
+        Task DownloadCompetitionAsync(int competitionId, Action<int> downloadProgressChanged,
+            Action<bool> downloadCompleted, Action<string> downloadTitle, Action<string> downloadError,
+            bool autoClose = false);
+    }
+
+    public class SongProvider : ISongProvider, ICompetitionSongProvider
     {
         private Configuration configuration;
 
@@ -614,6 +621,102 @@ namespace RagnaCustoms.Models
 
             downloadProgressChanged?.Invoke(100);
             downloadTitle?.Invoke("Playlist download complete");
+            downloadCompleted?.Invoke(autoClose);
+        }
+
+        public virtual async Task DownloadCompetitionAsync(int competitionId, Action<int> downloadProgressChanged,
+            Action<bool> downloadCompleted, Action<string> downloadTitle, Action<string> downloadError,
+            bool autoClose = false)
+        {
+            if (competitionId <= 0)
+            {
+                downloadError?.Invoke("The competition link is invalid.");
+                return;
+            }
+
+            List<SongSearchModel> songs;
+            string competitionFolder;
+            try
+            {
+                using var webClient = new WebClient();
+                if (!string.IsNullOrWhiteSpace(configuration.ApiKey))
+                {
+                    webClient.Headers["X-API-Key"] = configuration.ApiKey;
+                }
+
+                var json = await webClient.DownloadStringTaskAsync(
+                    new Uri("https://api.ragnacustoms.com/api/competition/" + competitionId));
+                var payload = JToken.Parse(json);
+                var competition = payload.Type == JTokenType.Object && payload["competition"] != null
+                    ? payload["competition"]
+                    : payload;
+                var songsToken = competition.Type == JTokenType.Array
+                    ? competition
+                    : competition["songs"] ?? competition["tracks"];
+
+                songs = songsToken?.ToObject<List<SongSearchModel>>() ?? new List<SongSearchModel>();
+
+                var slug = competition["slug"]?.ToString();
+                var name = competition["name"]?.ToString()
+                    ?? competition["title"]?.ToString()
+                    ?? "competition";
+                slug = string.IsNullOrWhiteSpace(slug) ? name.Slug() : slug.Slug();
+                competitionFolder = slug + "_" + competitionId;
+            }
+            catch (WebException exception)
+            {
+                var status = (exception.Response as HttpWebResponse)?.StatusCode;
+                var message = status == HttpStatusCode.NotFound
+                    ? "This competition could not be found."
+                    : status == HttpStatusCode.Unauthorized || status == HttpStatusCode.Forbidden
+                        ? "A valid API key is required to download this competition."
+                        : "The competition could not be loaded. Please try again later.";
+                downloadError?.Invoke(message);
+                return;
+            }
+            catch (Exception exception)
+            {
+                TwitchBotLogger.Error("Unable to load competition " + competitionId + ".", exception);
+                downloadError?.Invoke("The competition could not be loaded. Please try again later.");
+                return;
+            }
+
+            if (songs.Count == 0)
+            {
+                downloadTitle?.Invoke("Competition is empty");
+                downloadProgressChanged?.Invoke(100);
+                downloadCompleted?.Invoke(autoClose);
+                return;
+            }
+
+            for (var index = 0; index < songs.Count; index++)
+            {
+                var songInfo = songs[index];
+                var completed = new TaskCompletionSource<bool>();
+                try
+                {
+                    await DownloadAsync(
+                        songInfo.Id,
+                        progress => downloadProgressChanged?.Invoke(
+                            Math.Min(100, (index * 100 + progress) / songs.Count)),
+                        _ => completed.TrySetResult(true),
+                        title => downloadTitle?.Invoke(
+                            (index + 1) + "/" + songs.Count + " " + title),
+                        false,
+                        null,
+                        competitionFolder);
+                    await completed.Task;
+                }
+                catch (Exception exception)
+                {
+                    TwitchBotLogger.Error("Unable to download song " + songInfo.Id + " from competition " + competitionId + ".", exception);
+                    downloadError?.Invoke("A song in this competition could not be downloaded.");
+                    return;
+                }
+            }
+
+            downloadProgressChanged?.Invoke(100);
+            downloadTitle?.Invoke("Competition download complete");
             downloadCompleted?.Invoke(autoClose);
         }
 

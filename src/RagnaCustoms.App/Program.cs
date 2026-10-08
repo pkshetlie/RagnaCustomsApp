@@ -24,6 +24,7 @@ namespace RagnaCustoms.App
         private const string RagnacInstallCommand = "ragnac://install/";
         private const string RagnacListCommand = "ragnac://list/";
         private const string RagnacPlaylistCommand = "ragnac://playlist/";
+        private const string RagnacCompetitionCommand = "ragnac://competition/";
         private const string RagnacApiCommand = "ragnac://api/";
 
 
@@ -124,6 +125,22 @@ namespace RagnaCustoms.App
                             downloadingView = new DownloadingForm();
                             downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
                             downloadingPresenter.DownloadPlaylist(parsedPlaylistId, configuration.AutoCloseDownload);
+                            Application.Run(downloadingView);
+                        }
+                    }
+                    else if (uri.StartsWith(RagnacCompetitionCommand, StringComparison.OrdinalIgnoreCase))
+                    {
+                        var competitionId = uri.Substring(RagnacCompetitionCommand.Length);
+                        if (!int.TryParse(competitionId, out var parsedCompetitionId) || parsedCompetitionId <= 0)
+                        {
+                            MessageBox.Show("The competition link is invalid.", "RagnaCustoms", MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                        }
+                        else
+                        {
+                            downloadingView = new DownloadingForm();
+                            downloadingPresenter = new DownloadingPresenter(downloadingView, songProvider);
+                            downloadingPresenter.DownloadCompetition(parsedCompetitionId, configuration.AutoCloseDownload);
                             Application.Run(downloadingView);
                         }
                     }

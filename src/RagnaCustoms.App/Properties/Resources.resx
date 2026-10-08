@@ -432,6 +432,9 @@
   <data name="WhatsNew.Item.Queue" xml:space="preserve"><value>Your Twitch request queue is now restored after a restart.</value></data>
   <data name="WhatsNew.Item.ClearQueue" xml:space="preserve"><value>The queue can be cleared from the application or with the moderator command !clearqueue.</value></data>
   <data name="WhatsNew.Item.Logs" xml:space="preserve"><value>Diagnostic logs make connection and crash issues easier to investigate.</value></data>
+  <data name="WhatsNew.Release.2.9.4.Item.Competitions" xml:space="preserve"><value>Competitions can now be downloaded in one click.</value></data>
+  <data name="WhatsNew.Release.2.9.4.Item.Folders" xml:space="preserve"><value>Competition songs are grouped automatically in &lt;event slug&gt;_&lt;event id&gt;.</value></data>
+  <data name="WhatsNew.Release.2.9.4.Item.Progress" xml:space="preserve"><value>A global progress indicator shows the progress of the full competition download.</value></data>
   <data name="WhatsNew.Release.2.9.2.Item.Premium" xml:space="preserve"><value>Your Premium status is now visible next to Login and Logout.</value></data>
   <data name="WhatsNew.Release.2.9.2.Item.Playlists" xml:space="preserve"><value>Premium playlist and artist search pages are now available.</value></data>
   <data name="WhatsNew.Release.2.9.2.Item.Downloads" xml:space="preserve"><value>Playlist downloads and download progress are easier to follow.</value></data>
